@@ -40,8 +40,6 @@ class ConverterWindow(Adw.ApplicationWindow):
     spinner_loading = Gtk.Template.Child()
     image = Gtk.Template.Child()
     # video = Gtk.Template.Child()
-    combo_models = Gtk.Template.Child()
-    string_models = Gtk.Template.Child()
     # spin_scale = Gtk.Template.Child()
     button_output = Gtk.Template.Child()
     label_output = Gtk.Template.Child()
@@ -50,26 +48,11 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        """ Declare default models. """
-        self.model_images = {
-            'realesrgan-x4plus': _('Photo'),
-            'realesrgan-x4plus-anime': _('Cartoon/Anime'),
-        }
-
-        """ Display models. """
-        for model in self.model_images.values():
-            self.string_models.append(model)
-
         """ Connect signals. """
         self.button_input.connect('clicked', self.__open_file)
         self.button_convert.connect('clicked', self.__convert)
         self.button_output.connect('clicked', self.__output_location)
-        self.combo_models.connect('notify::selected', self.__set_model)
         # self.spin_scale.connect('value-changed', self.__update_post_convert_image_size)
-
-        # self.model_videos = [
-        #     'realesr-animevideov3',
-        # ]
 
         """ Declare variables. """
         self.convert_dialog = None
@@ -90,15 +73,14 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __convert(self, *args):
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
-        self.convert_dialog = UpscalingDialog(self)
+        self.convert_dialog = ConvertingDialog(self)
 
         """ Run in a separate thread. """
         def run():
-            command = ['realesrgan-ncnn-vulkan',
-                       '-i', self.input_file_path,
-                       '-o', self.output_file_path,
-                       '-n', list(self.model_images)[self.combo_models.get_selected()],
-                       '-s', '4',
+            command = ['magick',
+                       '-monitor',
+                       self.input_file_path,
+                       self.output_file_path,
                        ]
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
@@ -130,10 +112,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         toast.set_button_label(_('Open'))
         toast.connect('button-clicked', response)
         self.toast.add_toast(toast)
-
-    """ Set model and print. """
-    def __set_model(self, *args):
-        print(_('Model name: {}').format(list(self.model_images)[self.combo_models.get_selected()]))
 
     """ Update post-convert image size as the user adjusts the spinner. """
     # def __update_post_convert_image_size(self, *args):

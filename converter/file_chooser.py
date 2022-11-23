@@ -19,7 +19,7 @@
 from os.path import basename
 from converter.threading import RunAsync
 from gi.repository import Adw, Gtk, Gio, GdkPixbuf, GLib
-from converter.filters import get_format_filters, supported_filters, image_filters
+from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters
 from gettext import gettext as _
 
 
@@ -62,21 +62,11 @@ class FileChooser():
                     self.action_convert_image_size.set_subtitle(f'{self.image_size[1] * default_value} × {self.image_size[2] * default_value}')
                     self.image.set_pixbuf(image_file)
 
-                    # except GLib.GError:
-                        # Display video
-                    #     self.video.set_filename(self.input_file_path)
-                    #     self.video.set_visible(True)
-
-                        # Display models
-                    #     for model in self.model_videos:
-                    #         self.string_models.append(model)
-
                     """ Reset widgets. """
                     # self.spin_scale.set_value(default_value)
                     self.label_output.set_label('(None)')
                     self.button_convert.set_sensitive(False)
                     self.button_convert.set_has_tooltip(True)
-                    self.combo_models.set_selected(0)
 
                     self.stack_converter.set_visible_child_name('stack_convert')
 
@@ -109,7 +99,7 @@ class FileChooser():
 
                 """ Get all filters. """
                 filters = []
-                for filter in get_format_filters('image'):
+                for filter in get_format_filters('output_image'):
                     filters.append(filter.split('/').pop())
 
                 """ Check if output file has a file extension or format is supported. """
@@ -139,7 +129,7 @@ class FileChooser():
         dialog.set_modal(True)
         dialog.set_transient_for(self)
         dialog.connect('response', convert_content)
-        dialog.add_filter(image_filters())
-        dialog.set_current_name('.png')
+        dialog.add_filter(output_image_filters())
+        dialog.set_current_name('.jpg')
         dialog.show()
 

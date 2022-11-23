@@ -19,7 +19,9 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
+#image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
+image_formats = ['image/png']
+output_image_formats = ['image/jpeg', 'image/jpg']
 video_formats = ['video/mp4']
 
 """ Formats getter function. """
@@ -28,6 +30,8 @@ def get_format_filters(type):
         return image_formats
     elif type == 'video':
         return video_formats
+    elif type == 'output_image':
+        return output_image_formats
     else:
         return image_formats + video_formats
 
@@ -50,4 +54,8 @@ def supported_filters():
 """ Image specific filters. """
 def image_filters():
     filter = set_formats(image_formats)
+    return filter
+
+def output_image_filters():
+    filter = set_formats(output_image_formats)
     return filter
