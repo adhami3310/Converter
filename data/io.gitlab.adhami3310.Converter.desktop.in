@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Converter
+GenericName=Convert
+Comment=Convert and Manipulate images
+Exec=converter
+Icon=io.gitlab.adhami3310.Converter
+Terminal=false
+Type=Application
+Categories=GTK;GNOME;Graphics;ImageProcessing;
+Keywords=image;convert;converting;processing
+StartupNotify=true
+# Translators: Do NOT translate or transliterate this text (these are enum types)!
+X-Purism-FormFactor=Workstation;Mobile;

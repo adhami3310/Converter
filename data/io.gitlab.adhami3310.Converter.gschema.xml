@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="converter">
+	<schema id="io.gitlab.adhami3310.Converter" path="/io/gitlab/adhami3310/Converter/">
+	</schema>
+</schemalist>

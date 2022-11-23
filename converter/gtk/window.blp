@@ -1,0 +1,218 @@
+using Gtk 4.0;
+using Adw 1;
+
+template ConverterWindow : .AdwApplicationWindow {
+  default-width: "700";
+  default-height: "600";
+  width-request: "300";
+  height-request: "300";
+  title: _("Converter");
+
+  Box {
+    orientation: vertical;
+
+    HeaderBar {
+      [end]
+      MenuButton {
+        icon-name: "open-menu-symbolic";
+        menu-model: primary_menu;
+        tooltip-text: "Primary Menu";
+      }
+
+    }
+
+    .AdwToastOverlay toast {
+      Stack stack_converter {
+        transition-type: crossfade;
+
+        StackPage {
+          name: "stack_welcome_page";
+          child:
+          .AdwStatusPage {
+            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
+            title: _("Converter");
+            hexpand: true;
+            vexpand: true;
+            child:
+            Button button_input {
+              valign: center;
+              halign: center;
+              label: _("_Open Image…");
+              use-underline: true;
+
+              styles [
+                "suggested-action",
+                "pill",
+              ]
+            }
+
+            ;
+          }
+
+          ;
+        }
+
+        StackPage {
+          name: "stack_loading";
+          child:
+          .AdwStatusPage {
+            Spinner spinner_loading {
+              valign: center;
+            }
+          }
+
+          ;
+        }
+
+        StackPage {
+          name: "stack_convert";
+          child:
+          .AdwPreferencesPage {
+            .AdwPreferencesGroup {
+              Picture image {}
+                height-request: "192";
+            }
+
+            .AdwPreferencesGroup {
+              title: _("Properties");
+
+              .AdwActionRow action_image_size {
+                title:  _("Image Size");
+
+                styles [
+                  "property",
+                ]
+              }
+
+              .AdwActionRow action_convert_image_size {
+                title:  _("Post-convert Image Size");
+                tooltip-text: _("Image size after it is convertd.");
+
+                styles [
+                  "property",
+                ]
+              }
+            }
+
+            .AdwPreferencesGroup {
+              title: _("Options");
+
+              // Scaling is broken in Real-ESRGAN with values other than 4.
+
+              // .AdwActionRow {
+              //   title: _("Convert Ratio");
+              //   subtitle: _("The amount of times the resolution of the image will increase.");
+
+              //   SpinButton {
+              //     numeric: true;
+              //     valign: center;
+              //     adjustment:
+              //     Adjustment spin_scale {
+              //       step-increment: 1;
+              //       value: 4;
+              //       lower: 2;
+              //       upper: 4;
+              //     }
+
+              //     ;
+              //   }
+              // }
+
+              .AdwComboRow combo_models {
+                title: _("Type of Image");
+                model:
+                StringList string_models {}
+
+                ;
+              }
+
+              .AdwActionRow {
+                title: _("Save Location");
+                activatable-widget: button_output;
+
+                Button button_output {
+                  valign: center;
+
+                  Box {
+                    spacing: 6;
+
+                    Image {
+                      icon-name: "document-open-symbolic";
+                    }
+
+                    Label label_output {
+                      label: _("(None)");
+                    }
+                  }
+                }
+              }
+            }
+
+            .AdwPreferencesGroup {
+              Button button_convert {
+                valign: center;
+                halign: center;
+                label: _("_Convert");
+                tooltip-text: _("Save location is missing.");
+                use-underline: true;
+                sensitive: false;
+
+                styles [
+                  "suggested-action",
+                  "pill",
+                ]
+              }
+            }
+          }
+
+          ;
+        }
+
+        StackPage {
+          name: "stack_invalid_image";
+          child:
+          .AdwStatusPage {
+            icon-name: "image-missing-symbolic";
+            title: _("Could not Load Image");
+            description: _("This image could be corrupted or may use an unsupported file format.");
+            hexpand: true;
+            vexpand: true;
+          }
+
+          ;
+        }
+      }
+    }
+  }
+}
+
+menu primary_menu {
+  section {
+    // item {
+    //   label: _("New Window");
+    //   action: "app.new-window";
+    // }
+
+    item {
+      label: _("Open File…");
+      action: "app.open";
+    }
+  }
+
+  section {
+    // item {
+    //   label: _("Preferences");
+    //   action: "app.preferences";
+    // }
+
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: _("About Converter");
+      action: "app.about";
+    }
+  }
+}
