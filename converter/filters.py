@@ -19,9 +19,8 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-#image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
-image_formats = ['image/png']
-output_image_formats = ['image/jpeg', 'image/jpg']
+image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
+output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf']
 video_formats = ['video/mp4']
 
 """ Formats getter function. """

@@ -35,7 +35,6 @@ class ConverterWindow(Adw.ApplicationWindow):
     stack_converter = Gtk.Template.Child()
     button_input = Gtk.Template.Child()
     action_image_size = Gtk.Template.Child()
-    action_convert_image_size = Gtk.Template.Child()
     button_convert = Gtk.Template.Child()
     spinner_loading = Gtk.Template.Child()
     image = Gtk.Template.Child()
@@ -77,7 +76,7 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         """ Run in a separate thread. """
         def run():
-            command = ['magick',
+            command = ['convert',
                        '-monitor',
                        self.input_file_path,
                        self.output_file_path,

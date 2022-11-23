@@ -43,7 +43,6 @@ class FileChooser():
                 def run():
 
                     """ Declare variables. """
-                    default_value = 4
                     self.input_file_path = dialog.get_file().get_path()
 
                     """ Confirm file is a valid image. """
@@ -59,7 +58,6 @@ class FileChooser():
 
                     """ Display image. """
                     self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
-                    self.action_convert_image_size.set_subtitle(f'{self.image_size[1] * default_value} × {self.image_size[2] * default_value}')
                     self.image.set_pixbuf(image_file)
 
                     """ Reset widgets. """
