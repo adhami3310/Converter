@@ -17,9 +17,10 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 from os.path import basename
+from pathlib import PurePath
 from converter.threading import RunAsync
 from gi.repository import Adw, Gtk, Gio, GdkPixbuf, GLib
-from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters
+from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions
 from gettext import gettext as _
 
 
@@ -33,6 +34,7 @@ class FileChooser():
             if response == -3:
 
                 """ Do nothing if opened image is the same as selected image. """
+
                 try:
                     if self.input_file_path == dialog.get_file().get_path():
                         return
@@ -59,6 +61,7 @@ class FileChooser():
                     """ Display image. """
                     self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
                     self.image.set_pixbuf(image_file)
+                    self.filetype.grab_focus()
 
                     """ Reset widgets. """
                     # self.spin_scale.set_value(default_value)
@@ -90,15 +93,22 @@ class FileChooser():
 
     """ Select output location. """
     def output_file(self, *args):
+
+
+        def get_extension(ext):
+            if ext[0] == '.':
+                return ext[1:]
+            return ext
+
+        ext = get_extension(self.filetype.get_text())
+
         def convert_content(_dialog, response):
 
             """ Set output file path if user selects a location. """
             if response == -3:
 
                 """ Get all filters. """
-                filters = []
-                for filter in get_format_filters('output_image'):
-                    filters.append(filter.split('/').pop())
+                filters = [ext]
 
                 """ Check if output file has a file extension or format is supported. """
                 if '.' not in basename(dialog.get_file().get_path()):
@@ -107,7 +117,7 @@ class FileChooser():
 
                 elif basename(dialog.get_file().get_path()).split('.').pop().lower() not in filters:
                     filename = basename(dialog.get_file().get_path()).split('.').pop()
-                    self.toast.add_toast(Adw.Toast.new(_('’{}’ is an unsupported format'.format(filename))))
+                    self.toast.add_toast(Adw.Toast.new(_('’{}’ is of the wrong format'.format(filename))))
                     return
 
                 """ Set output path. """
@@ -118,16 +128,19 @@ class FileChooser():
                 self.label_output.set_label(basename(self.output_file_path))
                 self.button_convert.set_sensitive(True)
                 self.button_convert.set_has_tooltip(False)
+                self.button_options.set_sensitive(True)
+                self.button_options.set_has_tooltip(False)
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select output location'),
             parent=self,
             action=Gtk.FileChooserAction.SAVE
         )
+
         dialog.set_modal(True)
         dialog.set_transient_for(self)
         dialog.connect('response', convert_content)
-        dialog.add_filter(output_image_filters())
-        dialog.set_current_name('.jpg')
+        dialog.add_filter(set_formats_from_extensions([ext], ext))
+        dialog.set_current_name(str(PurePath(self.input_file_path).with_suffix(f'.{ext}').name))
         dialog.show()
 

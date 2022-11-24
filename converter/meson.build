@@ -43,7 +43,7 @@ converter_sources = [
   'filters.py',
   'threading.py',
   'dialog_converting.py',
-  'file_chooser.py',
+  'file_chooser.py'
 ]
 
 install_data(converter_sources, install_dir: moduledir)

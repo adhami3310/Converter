@@ -22,6 +22,7 @@ import subprocess
 import re
 from os.path import basename
 from gi.repository import Adw, Gtk, GLib, Gdk
+import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
@@ -32,10 +33,16 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """ Declare child widgets. """
     toast = Gtk.Template.Child()
+    quality = Gtk.Template.Child()
+    button_back = Gtk.Template.Child()
+    bgcolor = Gtk.Template.Child()
     stack_converter = Gtk.Template.Child()
     button_input = Gtk.Template.Child()
     action_image_size = Gtk.Template.Child()
+    filetype = Gtk.Template.Child()
+    quality_label = Gtk.Template.Child()
     button_convert = Gtk.Template.Child()
+    button_options = Gtk.Template.Child()
     spinner_loading = Gtk.Template.Child()
     image = Gtk.Template.Child()
     # video = Gtk.Template.Child()
@@ -46,15 +53,21 @@ class ConverterWindow(Adw.ApplicationWindow):
     """ Initialize function. """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         """ Connect signals. """
         self.button_input.connect('clicked', self.__open_file)
         self.button_convert.connect('clicked', self.__convert)
         self.button_output.connect('clicked', self.__output_location)
+        self.button_options.connect('clicked', self.__more_options)
+        self.button_back.connect('clicked', self.__less_options)
+        self.quality.connect('value-changed', self.__quality_changed)
+        self.quality.set_value(92);
+        self.bgcolor.set_rgba(Gdk.RGBA(1, 1, 1, 0));
+        self.bgcolor.connect('color-set', self.__bg_changed)
         # self.spin_scale.connect('value-changed', self.__update_post_convert_image_size)
 
         """ Declare variables. """
         self.convert_dialog = None
+        self.options_window = None
 
     """ Open file and display it if the user selected it. """
     def __open_file(self, *args):
@@ -63,6 +76,21 @@ class ConverterWindow(Adw.ApplicationWindow):
     """ Select output file location. """
     def __output_location(self, *args):
         FileChooser.output_file(self)
+
+    def __quality_changed(self, *args):
+        self.quality_label.set_label(str(int(self.quality.get_value())))
+
+    def __more_options(self, *args):
+        self.stack_converter.set_visible_child_name('options_page')
+        self.button_back.show()
+
+    def __less_options(self, *args):
+        self.stack_converter.set_visible_child_name('stack_convert')
+        self.button_back.hide()
+
+    def __bg_changed(self, *args):
+        color = self.bgcolor.get_rgba()
+        print(Gdk.RGBA.to_string(color))
 
     """ Update progress. """
     def __convert_progress(self, progress):
@@ -78,7 +106,9 @@ class ConverterWindow(Adw.ApplicationWindow):
         def run():
             command = ['convert',
                        '-monitor',
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
                        self.input_file_path,
+                       '-quality', f'{self.quality.get_value()}',
                        self.output_file_path,
                        ]
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)

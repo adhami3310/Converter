@@ -3,7 +3,7 @@ using Adw 1;
 
 template ConverterWindow : .AdwApplicationWindow {
   default-width: "700";
-  default-height: "600";
+  default-height: "700";
   width-request: "300";
   height-request: "300";
   title: _("Converter");
@@ -12,6 +12,13 @@ template ConverterWindow : .AdwApplicationWindow {
     orientation: vertical;
 
     HeaderBar {
+      Button button_back {
+        name: "button_back";
+        icon-name: 'go-previous-symbolic';
+        tooltip-text: 'Back';
+        visible: false;
+        styles ['flat']
+      }
       [end]
       MenuButton {
         icon-name: "open-menu-symbolic";
@@ -23,7 +30,7 @@ template ConverterWindow : .AdwApplicationWindow {
 
     .AdwToastOverlay toast {
       Stack stack_converter {
-        transition-type: crossfade;
+        transition-type: slide_left_right;
 
         StackPage {
           name: "stack_welcome_page";
@@ -117,6 +124,12 @@ template ConverterWindow : .AdwApplicationWindow {
               //  ;
               // }
 
+              .AdwEntryRow filetype {
+                name: "filetype";
+                title: _("Datatype");
+                text: "jpg";
+              }
+
               .AdwActionRow {
                 title: _("Save Location");
                 activatable-widget: button_output;
@@ -140,18 +153,34 @@ template ConverterWindow : .AdwApplicationWindow {
             }
 
             .AdwPreferencesGroup {
-              Button button_convert {
-                valign: center;
+              Box {
                 halign: center;
-                label: _("_Convert");
-                tooltip-text: _("Save location is missing.");
-                use-underline: true;
-                sensitive: false;
+                spacing: 6;
+                Button button_options {
+                  valign: center;
+                  halign: start;
+                  label: _("_More Options");
+                  use-underline: true;
+                  sensitive: false;
 
-                styles [
-                  "suggested-action",
-                  "pill",
-                ]
+                  styles [
+                    "pill",
+                  ]
+                }
+
+                Button button_convert {
+                  valign: center;
+                  halign: end;
+                  label: _("_Convert");
+                  tooltip-text: _("Save location is missing.");
+                  use-underline: true;
+                  sensitive: false;
+
+                  styles [
+                    "suggested-action",
+                    "pill",
+                  ]
+                }
               }
             }
           }
@@ -172,6 +201,46 @@ template ConverterWindow : .AdwApplicationWindow {
 
           ;
         }
+
+
+        StackPage {
+          name: "options_page";
+          child:
+          .AdwPreferencesPage {
+            .AdwPreferencesGroup {
+              .AdwActionRow {
+                title: _("Quality");
+
+                Scale quality {
+                  adjustment: Adjustment percentage {
+                    lower: 1;
+                    upper: 100;
+                    step-increment: 1;
+                  };
+                  hexpand: true;
+                  vexpand: true;
+                  round-digits: 0;
+                }
+
+                Label quality_label {
+
+                }
+              }
+
+              .AdwActionRow {
+                title: _("Background Color");
+
+                ColorButton bgcolor {
+                  valign: center;
+                  use-alpha: true;
+                }
+              }
+            }
+          }
+
+          ;
+        }
+
       }
     }
   }

@@ -19,7 +19,7 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
+image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml']
 output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf']
 video_formats = ['video/mp4']
 
@@ -33,6 +33,22 @@ def get_format_filters(type):
         return output_image_formats
     else:
         return image_formats + video_formats
+
+extention_to_mime = {
+    'jpg': 'image/jpeg',
+    'png': 'image/png',
+    'pdf': 'application/pdf',
+    'webp': 'application/webp'
+}
+
+def set_formats_from_extensions(extensions, name):
+    filter = Gtk.FileFilter()
+    file_extensions = []
+    for format in extensions:
+        filter.add_mime_type(extention_to_mime[format])
+    filter.set_name(name)
+    return filter
+
 
 """ Formats setter function. """
 def set_formats(formats):
