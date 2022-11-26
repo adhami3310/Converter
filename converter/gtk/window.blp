@@ -128,6 +128,14 @@ template ConverterWindow : .AdwApplicationWindow {
                 name: "filetype";
                 title: _("Datatype");
                 text: "jpg";
+                Button button_options {
+                  valign: center;
+                  Box {
+                    Label {
+                      label: _("More Options");
+                    }
+                  }
+                }
               }
 
               .AdwActionRow {
@@ -156,17 +164,7 @@ template ConverterWindow : .AdwApplicationWindow {
               Box {
                 halign: center;
                 spacing: 6;
-                Button button_options {
-                  valign: center;
-                  halign: start;
-                  label: _("_More Options");
-                  use-underline: true;
-                  sensitive: false;
 
-                  styles [
-                    "pill",
-                  ]
-                }
 
                 Button button_convert {
                   valign: center;
@@ -208,7 +206,7 @@ template ConverterWindow : .AdwApplicationWindow {
           child:
           .AdwPreferencesPage {
             .AdwPreferencesGroup {
-              .AdwActionRow {
+              .AdwActionRow quality_row {
                 title: _("Quality");
 
                 Scale quality {
@@ -227,7 +225,7 @@ template ConverterWindow : .AdwApplicationWindow {
                 }
               }
 
-              .AdwActionRow {
+              .AdwActionRow bgcolor_row {
                 title: _("Background Color");
 
                 ColorButton bgcolor {

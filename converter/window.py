@@ -34,8 +34,10 @@ class ConverterWindow(Adw.ApplicationWindow):
     """ Declare child widgets. """
     toast = Gtk.Template.Child()
     quality = Gtk.Template.Child()
+    quality_row = Gtk.Template.Child()
     button_back = Gtk.Template.Child()
     bgcolor = Gtk.Template.Child()
+    bgcolor_row = Gtk.Template.Child()
     stack_converter = Gtk.Template.Child()
     button_input = Gtk.Template.Child()
     action_image_size = Gtk.Template.Child()
@@ -63,6 +65,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.quality.set_value(92);
         self.bgcolor.set_rgba(Gdk.RGBA(1, 1, 1, 0));
         self.bgcolor.connect('color-set', self.__bg_changed)
+        self.filetype.connect('changed', self.filetype_changed)
         # self.spin_scale.connect('value-changed', self.__update_post_convert_image_size)
 
         """ Declare variables. """
@@ -77,16 +80,37 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __output_location(self, *args):
         FileChooser.output_file(self)
 
+    def filetype_changed(self, *args):
+        ext = self.filetype.get_text()
+        ext = ext[1:] if ext[0:1] == '.' else ext
+        self.output_ext = ext
+        self.__update_options()
+        self.label_output.set_label('(None)')
+        self.button_convert.set_sensitive(False)
+        self.button_convert.set_has_tooltip(True)
+
+    def __update_options(self):
+        self.quality_row.hide()
+        self.bgcolor_row.hide()
+        inext = self.input_ext
+        outext = self.output_ext
+        if {'jpg', 'webp', 'jpeg', 'pdf'}.intersection({inext, outext}):
+            self.quality_row.show()
+        if {'png', 'webp'}.intersection({inext, outext}):
+            self.bgcolor_row.show()
+
     def __quality_changed(self, *args):
         self.quality_label.set_label(str(int(self.quality.get_value())))
 
     def __more_options(self, *args):
         self.stack_converter.set_visible_child_name('options_page')
-        self.button_back.show()
 
     def __less_options(self, *args):
-        self.stack_converter.set_visible_child_name('stack_convert')
-        self.button_back.hide()
+        if self.stack_converter.get_visible_child_name() == 'stack_convert':
+            self.stack_converter.set_visible_child_name('stack_welcome_page')
+            self.button_back.hide()
+        else:
+            self.stack_converter.set_visible_child_name('stack_convert')
 
     def __bg_changed(self, *args):
         color = self.bgcolor.get_rgba()
@@ -117,9 +141,9 @@ class ConverterWindow(Adw.ApplicationWindow):
             """ Read each line, query the percentage and update the progress bar. """
             for line in iter(process.stderr.readline, ''):
                 print(line, end='')
-                res = re.match('^(\d*.\d+)%$', line)
+                res = re.search('\d\d%', line)
                 if res:
-                    GLib.idle_add(self.__convert_progress, float(res.group(1)))
+                    GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]))
 
         """ Run when run() function finishes. """
         def callback(*args):
@@ -141,6 +165,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         toast.set_button_label(_('Open'))
         toast.connect('button-clicked', response)
         self.toast.add_toast(toast)
+
 
     """ Update post-convert image size as the user adjusts the spinner. """
     # def __update_post_convert_image_size(self, *args):

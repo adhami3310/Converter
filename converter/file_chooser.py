@@ -20,9 +20,8 @@ from os.path import basename
 from pathlib import PurePath
 from converter.threading import RunAsync
 from gi.repository import Adw, Gtk, Gio, GdkPixbuf, GLib
-from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions
+from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions, is_extenstion_output
 from gettext import gettext as _
-
 
 class FileChooser():
 
@@ -37,6 +36,8 @@ class FileChooser():
 
                 try:
                     if self.input_file_path == dialog.get_file().get_path():
+                        self.stack_converter.set_visible_child_name('stack_convert')
+                        self.button_back.show()
                         return
                 except AttributeError:
                     pass
@@ -46,7 +47,6 @@ class FileChooser():
 
                     """ Declare variables. """
                     self.input_file_path = dialog.get_file().get_path()
-
                     """ Confirm file is a valid image. """
                     try:
                         print(f'Input file: {self.input_file_path}')
@@ -57,6 +57,7 @@ class FileChooser():
                         return
 
                     self.image_size = GdkPixbuf.Pixbuf.get_file_info(self.input_file_path)
+                    self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
 
                     """ Display image. """
                     self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
@@ -68,7 +69,7 @@ class FileChooser():
                     self.label_output.set_label('(None)')
                     self.button_convert.set_sensitive(False)
                     self.button_convert.set_has_tooltip(True)
-
+                    self.filetype_changed()
                     self.stack_converter.set_visible_child_name('stack_convert')
 
                 """ Run when run() function finishes. """
@@ -78,6 +79,7 @@ class FileChooser():
                 """ Run functions asynchronously. """
                 RunAsync(run, callback)
                 self.stack_converter.set_visible_child_name('stack_loading')
+                self.button_back.show()
                 self.spinner_loading.start()
 
         dialog = Gtk.FileChooserNative.new(
@@ -91,45 +93,48 @@ class FileChooser():
         dialog.add_filter(supported_filters())
         dialog.show()
 
+    def check_supported_output(self, ext):
+        if not is_extenstion_output(ext):
+            self.toast.add_toast(Adw.Toast.new(_('’{}’ is not a supported format'.format(ext))))
+            return False
+        return True
+
     """ Select output location. """
     def output_file(self, *args):
 
+        ext = self.filetype.get_text()
+        ext = ext[1:] if ext[0] == '.' else ext
 
-        def get_extension(ext):
-            if ext[0] == '.':
-                return ext[1:]
-            return ext
-
-        ext = get_extension(self.filetype.get_text())
+        if not FileChooser.check_supported_output(self, ext):
+            return
 
         def convert_content(_dialog, response):
 
             """ Set output file path if user selects a location. """
             if response == -3:
 
-                """ Get all filters. """
-                filters = [ext]
+                path = PurePath(dialog.get_file().get_path())
 
                 """ Check if output file has a file extension or format is supported. """
-                if '.' not in basename(dialog.get_file().get_path()):
+                if '.' not in str(path.name):
                     self.toast.add_toast(Adw.Toast.new(_('No file extension was specified')))
                     return
 
-                elif basename(dialog.get_file().get_path()).split('.').pop().lower() not in filters:
-                    filename = basename(dialog.get_file().get_path()).split('.').pop()
-                    self.toast.add_toast(Adw.Toast.new(_('’{}’ is of the wrong format'.format(filename))))
+                file_ext = str(path.suffix)[1:]
+                print(ext)
+                if file_ext != ext:
+                    self.toast.add_toast(Adw.Toast.new(_('’{}’ is of the wrong format'.format(file_ext))))
                     return
 
                 """ Set output path. """
-                self.output_file_path = dialog.get_file().get_path()
+                self.output_file_path = str(path)
                 print(f'Output file: {self.output_file_path}')
 
                 """ Update widgets. """
                 self.label_output.set_label(basename(self.output_file_path))
                 self.button_convert.set_sensitive(True)
                 self.button_convert.set_has_tooltip(False)
-                self.button_options.set_sensitive(True)
-                self.button_options.set_has_tooltip(False)
+                self.button_convert.grab_focus()
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select output location'),
