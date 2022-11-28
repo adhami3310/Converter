@@ -1,6 +1,13 @@
 # Converter
 Converter is a GTK4+libadwaita application that allows you to convert and manipulate a given image. It is a front-end for [ImageMagick](https://github.com/ImageMagick/ImageMagick).
 
+<div align="center">
+  <img src="data/screenshots/0.png">
+</div>
+
+## Installation
+<a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+
 ## Contributing
 Issues and merge requests are more than welcome. However, please take the following into consideration:
 
