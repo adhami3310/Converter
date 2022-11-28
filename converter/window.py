@@ -26,6 +26,10 @@ import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
+import fitz
+from svglib import svglib
+from reportlab.graphics import renderPDF
+
 
 @Gtk.Template(resource_path='/io/gitlab/adhami3310/Converter/gtk/window.ui')
 class ConverterWindow(Adw.ApplicationWindow):
@@ -38,10 +42,13 @@ class ConverterWindow(Adw.ApplicationWindow):
     button_back = Gtk.Template.Child()
     bgcolor = Gtk.Template.Child()
     bgcolor_row = Gtk.Template.Child()
+    resize_row = Gtk.Template.Child()
     stack_converter = Gtk.Template.Child()
     button_input = Gtk.Template.Child()
     action_image_size = Gtk.Template.Child()
+    action_image_type = Gtk.Template.Child()
     filetype = Gtk.Template.Child()
+    filters = Gtk.Template.Child()
     quality_label = Gtk.Template.Child()
     button_convert = Gtk.Template.Child()
     button_options = Gtk.Template.Child()
@@ -51,6 +58,28 @@ class ConverterWindow(Adw.ApplicationWindow):
     # spin_scale = Gtk.Template.Child()
     button_output = Gtk.Template.Child()
     label_output = Gtk.Template.Child()
+    resize_filter = Gtk.Template.Child()
+    resize_type = Gtk.Template.Child()
+    resize_width = Gtk.Template.Child()
+    resize_height = Gtk.Template.Child()
+    resize_width_value = Gtk.Template.Child()
+    resize_height_value = Gtk.Template.Child()
+    dpi_row = Gtk.Template.Child()
+    dpi_value = Gtk.Template.Child()
+    resize_minmax_width = Gtk.Template.Child()
+    resize_minmax_height = Gtk.Template.Child()
+    resize_minmax_width_value = Gtk.Template.Child()
+    resize_minmax_height_value = Gtk.Template.Child()
+    resize_scale_width = Gtk.Template.Child()
+    resize_scale_width_value = Gtk.Template.Child()
+    resize_scale_height = Gtk.Template.Child()
+    resize_scale_height_value = Gtk.Template.Child()
+    ratio_width = Gtk.Template.Child()
+    ratio_height = Gtk.Template.Child()
+    image_container = Gtk.Template.Child()
+    ratio_width_value = Gtk.Template.Child()
+    ratio_height_value = Gtk.Template.Child()
+    resize_filters = ['Point', 'Quadratic', 'Cubic', 'Mitchell', 'Gaussian', 'Lanczos']
 
     """ Initialize function. """
     def __init__(self, **kwargs):
@@ -66,7 +95,14 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.bgcolor.set_rgba(Gdk.RGBA(1, 1, 1, 0));
         self.bgcolor.connect('color-set', self.__bg_changed)
         self.filetype.connect('changed', self.filetype_changed)
+        self.resize_row.connect('notify::expanded', self.__update_resize)
+        self.resize_type.connect('notify::selected', self.__update_resize)
+        self.resize_width.connect('notify::selected', self.__update_resize)
+        self.resize_height.connect('notify::selected', self.__update_resize)
         # self.spin_scale.connect('value-changed', self.__update_post_convert_image_size)
+
+        for resize_filter in self.resize_filters:
+            self.filters.append(resize_filter)
 
         """ Declare variables. """
         self.convert_dialog = None
@@ -82,7 +118,7 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     def filetype_changed(self, *args):
         ext = self.filetype.get_text()
-        ext = ext[1:] if ext[0:1] == '.' else ext
+        ext = ext[1:].lower() if ext[0:1] == '.' else ext.lower()
         self.output_ext = ext
         self.__update_options()
         self.label_output.set_label('(None)')
@@ -92,12 +128,52 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __update_options(self):
         self.quality_row.hide()
         self.bgcolor_row.hide()
+        self.resize_row.hide()
+        self.dpi_row.hide()
+        self.resize_row.set_enable_expansion(False);
+        self.dpi_row.set_enable_expansion(False);
         inext = self.input_ext
         outext = self.output_ext
         if {'jpg', 'webp', 'jpeg', 'pdf'}.intersection({inext, outext}):
             self.quality_row.show()
-        if {'png', 'webp'}.intersection({inext, outext}):
+        if {'png', 'webp', 'svg'}.intersection({inext, outext}):
             self.bgcolor_row.show()
+        if inext != 'svg':
+            self.resize_row.show()
+        else:
+            self.resize_row.show()
+            self.dpi_row.show()
+
+    def __update_resize(self, *args):
+        resize_type = self.resize_type.get_selected()
+        self.resize_width.hide()
+        self.resize_height.hide()
+        self.resize_scale_width.hide()
+        self.resize_scale_height.hide()
+        self.ratio_height.hide()
+        self.ratio_width.hide()
+        self.resize_minmax_width.hide()
+        self.resize_minmax_height.hide()
+        if resize_type == 0:
+            self.resize_scale_width.show()
+            self.resize_scale_height.show()
+        elif resize_type == 4:
+            self.ratio_height.show()
+            self.ratio_width.show()
+        elif resize_type == 1:
+            self.resize_height.show()
+            self.resize_width.show()
+            if self.resize_width.get_selected() == 0:
+                self.resize_width_value.show()
+            else:
+                self.resize_width_value.hide()
+            if self.resize_height.get_selected() == 0:
+                self.resize_height_value.show()
+            else:
+                self.resize_height_value.hide()
+        else:
+            self.resize_minmax_width.show()
+            self.resize_minmax_height.show()
 
     def __quality_changed(self, *args):
         self.quality_label.set_label(str(int(self.quality.get_value())))
@@ -121,19 +197,51 @@ class ConverterWindow(Adw.ApplicationWindow):
         if self.convert_dialog:
             self.convert_dialog.set_progress(progress)
 
+    def __get_resized_commands(self):
+        if not self.resize_row.get_expanded(): return []
+        resize_filter = self.resize_filters[self.resize_filter.get_selected()]
+        resize_type = self.resize_type.get_selected()
+        if resize_type == 0:
+            def add_per(s):
+                if s[-1] == '%': return s
+                return s+'%'
+            return ['-filter', resize_filter, '-resize', add_per(self.resize_scale_width_value.get_text())+'x'+add_per(self.resize_scale_height_value.get_text())]
+        elif resize_type == 4:
+            return ['-filter', resize_filter, '-resize', self.ratio_width_value.get_text()+":"+self.ratio_height_value.get_text()]
+        elif resize_type == 1:
+            if self.resize_width.get_selected() == 0 and self.resize_height.get_selected() == 0:
+                return ['-filter', resize_filter, '-resize', self.resize_width_value.get_text()+'x'+self.resize_height_value.get_text()+'!']
+            elif self.resize_width.get_selected() == 0:
+                return ['-filter', resize_filter, '-resize', self.resize_width_value.get_text()]
+            elif self.resize_height.get_selected() == 0:
+                return ['-filter', resize_filter, '-resize', 'x'+self.resize_height_value.get_text()]
+            else:
+                return []
+        elif resize_type == 3:
+            return ['-filter', resize_filter, '-resize', self.resize_minmax_width_value.get_text()+'x'+self.resize_minmax_height_value.get_text()+'^']
+        elif resize_type == 2:
+            return ['-filter', resize_filter, '-resize', self.resize_minmax_width_value.get_text()+'x'+self.resize_minmax_height_value.get_text()]
+        return []
+
     def __convert(self, *args):
+
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)
 
+        inp = None
+
         """ Run in a separate thread. """
         def run():
-            command = ['convert',
+            command = ['magick',
                        '-monitor',
                        '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
-                       self.input_file_path,
-                       '-quality', f'{self.quality.get_value()}',
-                       self.output_file_path,
+                       inp if inp else self.input_file_path,
+                       '-flatten',
+                       '-quality',
+                       f'{self.quality.get_value()}'
+                       ]+self.__get_resized_commands()+[
+                       self.output_file_path
                        ]
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
@@ -151,9 +259,21 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.convert_dialog = None
             self.converting_completed_dialog()
 
-        """ Run functions asynchronously. """
-        RunAsync(run, callback)
-        self.convert_dialog.present()
+        if self.input_ext != 'svg':
+            """ Run functions asynchronously. """
+            RunAsync(run, callback)
+            self.convert_dialog.present()
+        else:
+            drawing = svglib.svg2rlg(self.input_file_path)
+            pdf = renderPDF.drawToString(drawing)
+
+            doc = fitz.Document(stream=pdf)
+            pix = doc.load_page(0).get_pixmap(alpha=True, dpi=72 if not self.dpi_row.get_expanded() else int(self.dpi_value.get_text()))
+            pix.save(".output.png")
+            inp = ".output.png"
+            RunAsync(run, callback)
+            self.convert_dialog.present()
+
 
     """ Ask the user if they want to open the file. """
     def converting_completed_dialog(self, *args):
@@ -161,7 +281,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             path = f'file://{self.output_file_path}'
             Gtk.show_uri(self, path, Gdk.CURRENT_TIME)
 
-        toast = Adw.Toast.new(_('Image convertd'))
+        toast = Adw.Toast.new(_('Image converted'))
         toast.set_button_label(_('Open'))
         toast.connect('button-clicked', response)
         self.toast.add_toast(toast)

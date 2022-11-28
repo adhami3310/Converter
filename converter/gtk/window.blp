@@ -36,10 +36,10 @@ template ConverterWindow : .AdwApplicationWindow {
           name: "stack_welcome_page";
           child:
           .AdwStatusPage {
-            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             title: _("Converter");
             hexpand: true;
             vexpand: true;
+            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             child:
             Button button_input {
               valign: center;
@@ -75,14 +75,21 @@ template ConverterWindow : .AdwApplicationWindow {
           name: "stack_convert";
           child:
           .AdwPreferencesPage {
-            .AdwPreferencesGroup {
+            .AdwPreferencesGroup image_container {
               Picture image {}
-                height-request: "192";
+              height-request: "192";
             }
 
             .AdwPreferencesGroup {
               title: _("Properties");
 
+              .AdwActionRow action_image_type {
+                title:  _("Image Type");
+
+                styles [
+                  "property",
+                ]
+              }
               .AdwActionRow action_image_size {
                 title:  _("Image Size");
 
@@ -231,6 +238,124 @@ template ConverterWindow : .AdwApplicationWindow {
                 ColorButton bgcolor {
                   valign: center;
                   use-alpha: true;
+                }
+              }
+
+              .AdwExpanderRow dpi_row {
+                title: _("Adjust DPI");
+                show-enable-switch: true;
+                .AdwActionRow {
+                  title: _("DPI");
+                  Entry dpi_value {
+                    styles [
+                      'text-in-row'
+                    ]
+                  }
+                }
+              }
+
+              .AdwExpanderRow resize_row {
+                title: _("Resize");
+                show-enable-switch: true;
+                .AdwComboRow resize_filter {
+                  title: _("Filter");
+                  model:
+                  StringList filters {}
+                  ;
+                }
+                .AdwComboRow resize_type {
+                  title: _("Size");
+                  model:
+                  StringList resize_types {
+                    strings [_("Percentage"),_("Exact Pixels"),_("Minimum Pixels"),_("Maximum Pixels"), _("Ratio")]
+                  }
+                  ;
+                }
+                .AdwComboRow resize_width {
+                  title: _("Width");
+                  model:
+                  StringList resize_axis_types {
+                    strings [_("Pixels"),_("Preserve Ratio")]
+                  }
+                  ;
+                  .AdwBin {
+                    Entry resize_width_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwComboRow resize_height {
+                  title: _("Height");
+                  model: resize_axis_types;
+                  .AdwBin {
+                    Entry resize_height_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow resize_minmax_width {
+                  title: _("Width");
+                  .AdwBin {
+                    Entry resize_minmax_width_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow resize_minmax_height {
+                  title: _("Height");
+                  .AdwBin {
+                    Entry resize_minmax_height_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow resize_scale_width {
+                  title: _("Width Percentage Scale");
+                  .AdwBin {
+                    Entry resize_scale_width_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow resize_scale_height {
+                  title: _("Height Percentage Scale");
+                  .AdwBin {
+                    Entry resize_scale_height_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow ratio_width {
+                  title: _("Ratio Width");
+                  .AdwBin {
+                    Entry ratio_width_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow ratio_height {
+                  title: _("Ratio Height");
+                  .AdwBin {
+                    Entry ratio_height_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
                 }
               }
             }

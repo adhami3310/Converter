@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 02:19-0500\n"
+"POT-Creation-Date: 2022-11-28 04:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,22 +18,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:3
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
-#: converter/gtk/window.blp:9 converter/gtk/window.blp:40
+#: converter/gtk/window.blp:9 converter/gtk/window.blp:39
 msgid "Converter"
-msgstr ""
-
-#: data/io.gitlab.adhami3310.Converter.desktop.in:4
-msgid "Convert"
-msgstr ""
-
-#: data/io.gitlab.adhami3310.Converter.desktop.in:5
-msgid "Convert and Manipulate images"
-msgstr ""
-
-#: data/io.gitlab.adhami3310.Converter.desktop.in:11
-msgid "image;convert;converting;processing"
 msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:6
@@ -74,23 +61,23 @@ msgstr ""
 msgid "Initial Converter release"
 msgstr ""
 
-#: converter/file_chooser.py:86
+#: converter/file_chooser.py:102
 msgid "Select an image"
 msgstr ""
 
-#: converter/file_chooser.py:98
+#: converter/file_chooser.py:114
 msgid "’{}’ is not a supported format"
 msgstr ""
 
-#: converter/file_chooser.py:120
+#: converter/file_chooser.py:136
 msgid "No file extension was specified"
 msgstr ""
 
-#: converter/file_chooser.py:126
+#: converter/file_chooser.py:142
 msgid "’{}’ is of the wrong format"
 msgstr ""
 
-#: converter/file_chooser.py:140
+#: converter/file_chooser.py:156
 msgid "Select output location"
 msgstr ""
 
@@ -110,11 +97,11 @@ msgstr ""
 msgid "Sample Image from"
 msgstr ""
 
-#: converter/window.py:164
+#: converter/window.py:284
 msgid "Image converted"
 msgstr ""
 
-#: converter/window.py:165
+#: converter/window.py:285
 msgid "Open"
 msgstr ""
 
@@ -159,61 +146,137 @@ msgid "Properties"
 msgstr ""
 
 #: converter/gtk/window.blp:87
+msgid "Image Type"
+msgstr ""
+
+#: converter/gtk/window.blp:94
 msgid "Image Size"
 msgstr ""
 
-#: converter/gtk/window.blp:96
+#: converter/gtk/window.blp:103
 msgid "Options"
 msgstr ""
 
-#: converter/gtk/window.blp:129
+#: converter/gtk/window.blp:136
 msgid "Datatype"
 msgstr ""
 
-#: converter/gtk/window.blp:135
+#: converter/gtk/window.blp:142
 msgid "More Options"
 msgstr ""
 
-#: converter/gtk/window.blp:142
+#: converter/gtk/window.blp:149
 msgid "Save Location"
 msgstr ""
 
-#: converter/gtk/window.blp:156
+#: converter/gtk/window.blp:163
 msgid "(None)"
 msgstr ""
 
-#: converter/gtk/window.blp:172
+#: converter/gtk/window.blp:179
 msgid "_Convert"
 msgstr ""
 
-#: converter/gtk/window.blp:173
+#: converter/gtk/window.blp:180
 msgid "Save location is missing."
 msgstr ""
 
-#: converter/gtk/window.blp:194
+#: converter/gtk/window.blp:201
 msgid "Could not Load Image"
 msgstr ""
 
-#: converter/gtk/window.blp:195
+#: converter/gtk/window.blp:202
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 
-#: converter/gtk/window.blp:210
+#: converter/gtk/window.blp:217
 msgid "Quality"
 msgstr ""
 
-#: converter/gtk/window.blp:229
+#: converter/gtk/window.blp:236
 msgid "Background Color"
 msgstr ""
 
-#: converter/gtk/window.blp:255
-msgid "Open File…"
+#: converter/gtk/window.blp:245
+msgid "Adjust DPI"
+msgstr ""
+
+#: converter/gtk/window.blp:248
+msgid "DPI"
+msgstr ""
+
+#: converter/gtk/window.blp:258
+msgid "Resize"
+msgstr ""
+
+#: converter/gtk/window.blp:261
+msgid "Filter"
 msgstr ""
 
 #: converter/gtk/window.blp:267
+msgid "Size"
+msgstr ""
+
+#: converter/gtk/window.blp:270
+msgid "Percentage"
+msgstr ""
+
+#: converter/gtk/window.blp:270
+msgid "Exact Pixels"
+msgstr ""
+
+#: converter/gtk/window.blp:270
+msgid "Minimum Pixels"
+msgstr ""
+
+#: converter/gtk/window.blp:270
+msgid "Maximum Pixels"
+msgstr ""
+
+#: converter/gtk/window.blp:270
+msgid "Ratio"
+msgstr ""
+
+#: converter/gtk/window.blp:275 converter/gtk/window.blp:301
+msgid "Width"
+msgstr ""
+
+#: converter/gtk/window.blp:278
+msgid "Pixels"
+msgstr ""
+
+#: converter/gtk/window.blp:278
+msgid "Preserve Ratio"
+msgstr ""
+
+#: converter/gtk/window.blp:290 converter/gtk/window.blp:311
+msgid "Height"
+msgstr ""
+
+#: converter/gtk/window.blp:321
+msgid "Width Percentage Scale"
+msgstr ""
+
+#: converter/gtk/window.blp:331
+msgid "Height Percentage Scale"
+msgstr ""
+
+#: converter/gtk/window.blp:341
+msgid "Ratio Width"
+msgstr ""
+
+#: converter/gtk/window.blp:351
+msgid "Ratio Height"
+msgstr ""
+
+#: converter/gtk/window.blp:380
+msgid "Open File…"
+msgstr ""
+
+#: converter/gtk/window.blp:392
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: converter/gtk/window.blp:272
+#: converter/gtk/window.blp:397
 msgid "About Converter"
 msgstr ""

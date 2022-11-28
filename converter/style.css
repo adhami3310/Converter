@@ -8,3 +8,7 @@ row.property label.subtitle {
   font-size: 11pt;
 }
 
+
+.text-in-row {
+  margin: 12px 0;
+}
