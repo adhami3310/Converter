@@ -58,7 +58,7 @@ class ConverterApplication(Adw.Application):
                                 application_name='Converter',
                                 application_icon='io.gitlab.adhami3310.Converter',
                                 developer_name='Khaleel Al-Adhami',
-                                version='1.1.0',
+                                version='1.1.1',
                                 copyright='Copyright © 2022 Khaleel Al-Adhami',
                                 license_type=Gtk.License.GPL_3_0_ONLY,
                                 website='https://gitlab.com/adhami3310/Converter',
