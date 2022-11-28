@@ -107,6 +107,20 @@
 		  "sha256": "a63dfc289e127a16ab60310ee6005fe83121c7a97f7c120db688f9281c9e5d0f"
 		}
 	      ]
+	    },
+	    {
+	      "name": "python3-lxml",
+	      "buildsystem": "simple",
+	      "build-commands": [
+		"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"lxml\" --no-build-isolation"
+	      ],
+	      "sources": [
+		{
+		  "type": "file",
+		  "url": "https://files.pythonhosted.org/packages/70/bb/7a2c7b4f8f434aa1ee801704bf08f1e53d7b5feba3d5313ab17003477808/lxml-4.9.1.tar.gz",
+		  "sha256": "fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f"
+		}
+	      ]
 	    }
 	  ]
 	},
