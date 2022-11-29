@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: converter/main.py:124
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-28 04:54-0500\n"
+"POT-Creation-Date: 2022-11-29 14:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,52 +56,32 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:64
-msgid "Initial Converter release"
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
+msgid "Added \"Open With\" functionality."
 msgstr ""
 
-#: converter/file_chooser.py:102
+#: converter/file_chooser.py:163
 msgid "Select an image"
 msgstr ""
 
-#: converter/file_chooser.py:114
+#: converter/file_chooser.py:175
 msgid "’{}’ is not a supported format"
 msgstr ""
 
-#: converter/file_chooser.py:136
+#: converter/file_chooser.py:197
 msgid "No file extension was specified"
 msgstr ""
 
-#: converter/file_chooser.py:142
+#: converter/file_chooser.py:203
 msgid "’{}’ is of the wrong format"
 msgstr ""
 
-#: converter/file_chooser.py:156
+#: converter/file_chooser.py:217
 msgid "Select output location"
 msgstr ""
 
 #: converter/filters.py:64
 msgid "Supported image files"
-msgstr ""
-
-#: converter/main.py:69
-msgid "Algorithms by"
-msgstr ""
-
-#: converter/main.py:75
-msgid "Code and Design Borrowed from"
-msgstr ""
-
-#: converter/main.py:85
-msgid "Sample Image from"
-msgstr ""
-
-#: converter/window.py:284
-msgid "Image converted"
-msgstr ""
-
-#: converter/window.py:285
-msgid "Open"
 msgstr ""
 
 #: converter/gtk/dialog-converting.blp:20
@@ -135,6 +114,30 @@ msgstr ""
 #: converter/gtk/help-overlay.blp:24
 msgctxt "shortcut window"
 msgid "Open Image"
+msgstr ""
+
+#: converter/window.py:304
+msgid "Image converted"
+msgstr ""
+
+#: converter/window.py:305
+msgid "Open"
+msgstr ""
+
+#: converter/main.py:83
+msgid "Algorithms by"
+msgstr ""
+
+#: converter/main.py:89
+msgid "Code and Design Borrowed from"
+msgstr ""
+
+#: converter/main.py:99
+msgid "Sample Image from"
+msgstr ""
+
+#: converter/main.py:138
+msgid "Jürgen Benvenuti <gastornis@posteo.org>"
 msgstr ""
 
 #: converter/gtk/window.blp:47
@@ -197,86 +200,86 @@ msgstr ""
 msgid "Background Color"
 msgstr ""
 
-#: converter/gtk/window.blp:245
+#: converter/gtk/window.blp:244
 msgid "Adjust DPI"
 msgstr ""
 
-#: converter/gtk/window.blp:248
+#: converter/gtk/window.blp:247
 msgid "DPI"
 msgstr ""
 
-#: converter/gtk/window.blp:258
+#: converter/gtk/window.blp:257
 msgid "Resize"
 msgstr ""
 
-#: converter/gtk/window.blp:261
+#: converter/gtk/window.blp:260
 msgid "Filter"
 msgstr ""
 
-#: converter/gtk/window.blp:267
+#: converter/gtk/window.blp:266
 msgid "Size"
 msgstr ""
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:269
 msgid "Percentage"
 msgstr ""
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:269
 msgid "Exact Pixels"
 msgstr ""
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:269
 msgid "Minimum Pixels"
 msgstr ""
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:269
 msgid "Maximum Pixels"
 msgstr ""
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:269
 msgid "Ratio"
 msgstr ""
 
-#: converter/gtk/window.blp:275 converter/gtk/window.blp:301
+#: converter/gtk/window.blp:274 converter/gtk/window.blp:300
 msgid "Width"
 msgstr ""
 
-#: converter/gtk/window.blp:278
+#: converter/gtk/window.blp:277
 msgid "Pixels"
 msgstr ""
 
-#: converter/gtk/window.blp:278
+#: converter/gtk/window.blp:277
 msgid "Preserve Ratio"
 msgstr ""
 
-#: converter/gtk/window.blp:290 converter/gtk/window.blp:311
+#: converter/gtk/window.blp:289 converter/gtk/window.blp:310
 msgid "Height"
 msgstr ""
 
-#: converter/gtk/window.blp:321
+#: converter/gtk/window.blp:320
 msgid "Width Percentage Scale"
 msgstr ""
 
-#: converter/gtk/window.blp:331
+#: converter/gtk/window.blp:330
 msgid "Height Percentage Scale"
 msgstr ""
 
-#: converter/gtk/window.blp:341
+#: converter/gtk/window.blp:340
 msgid "Ratio Width"
 msgstr ""
 
-#: converter/gtk/window.blp:351
+#: converter/gtk/window.blp:350
 msgid "Ratio Height"
 msgstr ""
 
-#: converter/gtk/window.blp:380
+#: converter/gtk/window.blp:379
 msgid "Open File…"
 msgstr ""
 
-#: converter/gtk/window.blp:392
+#: converter/gtk/window.blp:391
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: converter/gtk/window.blp:397
+#: converter/gtk/window.blp:396
 msgid "About Converter"
 msgstr ""

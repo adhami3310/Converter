@@ -60,9 +60,9 @@
   <content_rating type="oars-1.1" />
 
   <releases>
-    <release version="1.1.1" date="2022-11-28">
+    <release version="1.2.0" date="2022-11-29">
       <description>
-        <p>Fixed Bug for Fedora systems.</p>
+        <p>Added "Open With" functionality.</p>
       </description>
     </release>
   </releases>

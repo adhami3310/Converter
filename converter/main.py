@@ -37,7 +37,6 @@ class ConverterApplication(Adw.Application):
         self.create_action('quit', self.__quit, ['<primary>q'])
         self.create_action('about', self.__about_action)
         self.create_action('open', self.__open_file, ['<primary>o'])
-        self.create_action('paste', self.__paste_clipboard, ['<primary>v'])
         self.file = None
 
     def do_activate(self):
@@ -73,7 +72,7 @@ class ConverterApplication(Adw.Application):
                                 application_name='Converter',
                                 application_icon='io.gitlab.adhami3310.Converter',
                                 developer_name='Khaleel Al-Adhami',
-                                version='1.1.1',
+                                version='1.2.0',
                                 copyright='Copyright © 2022 Khaleel Al-Adhami',
                                 license_type=Gtk.License.GPL_3_0_ONLY,
                                 website='https://gitlab.com/adhami3310/Converter',
@@ -136,7 +135,7 @@ def translators():
         Name + URL:   \nKhaleel Al-Adhami https://adhami3310.gitlab.io
         Name + Email: \nKhaleel Al-Adhami <khaleel.aladhami@gmail.com>
     """
-    return _('Jürgen Benvenuti <gastornis@posteo.org>')
+    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>')
 
 def developers():
     """ Developers/Contributors list. If you have contributed code, feel free
