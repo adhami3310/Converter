@@ -33,10 +33,12 @@ class ConverterApplication(Adw.Application):
 
     def __init__(self):
         super().__init__(application_id='io.gitlab.adhami3310.Converter',
-                         flags=Gio.ApplicationFlags.FLAGS_NONE)
+                         flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE)
         self.create_action('quit', self.__quit, ['<primary>q'])
         self.create_action('about', self.__about_action)
         self.create_action('open', self.__open_file, ['<primary>o'])
+        self.create_action('paste', self.__paste_clipboard, ['<primary>v'])
+        self.file = None
 
     def do_activate(self):
         """Called when the application is activated.
@@ -48,6 +50,19 @@ class ConverterApplication(Adw.Application):
         if not self.win:
             self.win = ConverterWindow(application=self)
         self.win.present()
+        if self.file != None:
+            print(self.file)
+            FileChooser.load_command_file(self.win, self.file)
+
+    def do_command_line(self, command_line):
+        args = command_line.get_arguments()
+        if len(args) > 1:
+            self.file = command_line.create_file_for_arg(args[1]).get_path()
+        self.activate()
+        return 0
+
+    def __paste_clipboard(self, *args):
+        FileChooser.paste_clipboard(self.win)
 
     def __open_file(self, *args):
         FileChooser.open_file(self.win)

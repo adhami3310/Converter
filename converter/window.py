@@ -21,7 +21,7 @@ import os
 import subprocess
 import re
 from os.path import basename
-from gi.repository import Adw, Gtk, GLib, Gdk
+from gi.repository import Adw, Gtk, GLib, Gdk, Gio
 import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
@@ -91,8 +91,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.button_options.connect('clicked', self.__more_options)
         self.button_back.connect('clicked', self.__less_options)
         self.quality.connect('value-changed', self.__quality_changed)
-        self.quality.set_value(92);
-        self.bgcolor.set_rgba(Gdk.RGBA(1, 1, 1, 0));
+        self.quality.set_value(92)
         self.bgcolor.connect('color-set', self.__bg_changed)
         self.filetype.connect('changed', self.filetype_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
@@ -130,14 +129,22 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.bgcolor_row.hide()
         self.resize_row.hide()
         self.dpi_row.hide()
-        self.resize_row.set_enable_expansion(False);
-        self.dpi_row.set_enable_expansion(False);
+        self.resize_row.set_enable_expansion(False)
+        self.dpi_row.set_enable_expansion(False)
         inext = self.input_ext
         outext = self.output_ext
         if {'jpg', 'webp', 'jpeg', 'pdf'}.intersection({inext, outext}):
             self.quality_row.show()
         if {'png', 'webp', 'svg'}.intersection({inext, outext}):
             self.bgcolor_row.show()
+            bgcolor = Gdk.RGBA()
+            self.bgcolor.set_use_alpha(True)
+            bgcolor.parse("#00000000")
+            self.bgcolor.set_rgba(bgcolor)
+            if outext in {'jpg', 'jpeg'}:
+                self.bgcolor.set_use_alpha(False)
+                bgcolor.parse("#FFF")
+                self.bgcolor.set_rgba(bgcolor)
         if inext != 'svg':
             self.resize_row.show()
         else:
@@ -279,7 +286,20 @@ class ConverterWindow(Adw.ApplicationWindow):
     def converting_completed_dialog(self, *args):
         def response(_widget):
             path = f'file://{self.output_file_path}'
-            Gtk.show_uri(self, path, Gdk.CURRENT_TIME)
+            file = open(self.output_file_path, "r")
+            fid = file.fileno()
+            connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+            proxy = Gio.DBusProxy.new_sync(connection,
+                                            Gio.DBusProxyFlags.NONE,
+                                            None,
+                                            "org.freedesktop.portal.Desktop",
+                                            "/org/freedesktop/portal/desktop",
+                                            "org.freedesktop.portal.OpenURI",
+                                            None)
+            try:
+                proxy.call_with_unix_fd_list_sync("OpenFile", GLib.Variant("(sha{sv})",("",0,{"ask": GLib.Variant("b", True)})), Gio.DBusCallFlags.NONE, -1, Gio.UnixFDList.new_from_array([fid]), None)
+            except Exception as e:
+                print("Error: %s\n" % str(e))
 
         toast = Adw.Toast.new(_('Image converted'))
         toast.set_button_label(_('Open'))
