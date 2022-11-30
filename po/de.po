@@ -8,14 +8,13 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-29 14:47-0500\n"
-"PO-Revision-Date: 2022-11-29 12:13+0100\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
@@ -62,7 +61,7 @@ msgstr "Übersicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
 msgid "Added \"Open With\" functionality."
-msgstr ""
+msgstr "»Öffnen mit«-Funktion hinzugefügt."
 
 #: converter/file_chooser.py:163
 msgid "Select an image"
@@ -145,6 +144,8 @@ msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>"
 msgstr ""
+"Jürgen Benvenuti <gastornis@posteo.org>\n"
+"Irénée Thirion <irenee.thirion@e.email>"
 
 #: converter/gtk/window.blp:47
 msgid "_Open Image…"
@@ -155,9 +156,8 @@ msgid "Properties"
 msgstr "Eigenschaften"
 
 #: converter/gtk/window.blp:87
-#, fuzzy
 msgid "Image Type"
-msgstr "Bildgröße"
+msgstr "Bildtyp"
 
 #: converter/gtk/window.blp:94
 msgid "Image Size"
@@ -211,75 +211,75 @@ msgstr "Hintergrundfarbe"
 
 #: converter/gtk/window.blp:244
 msgid "Adjust DPI"
-msgstr ""
+msgstr "DPI anpassen"
 
 #: converter/gtk/window.blp:247
 msgid "DPI"
-msgstr ""
+msgstr "DPI"
 
 #: converter/gtk/window.blp:257
 msgid "Resize"
-msgstr ""
+msgstr "Größe ändern"
 
 #: converter/gtk/window.blp:260
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: converter/gtk/window.blp:266
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 #: converter/gtk/window.blp:269
 msgid "Percentage"
-msgstr ""
+msgstr "Prozent"
 
 #: converter/gtk/window.blp:269
 msgid "Exact Pixels"
-msgstr ""
+msgstr "Genaue Pixelanzahl"
 
 #: converter/gtk/window.blp:269
 msgid "Minimum Pixels"
-msgstr ""
+msgstr "Mindestpixelanzahl"
 
 #: converter/gtk/window.blp:269
 msgid "Maximum Pixels"
-msgstr ""
+msgstr "Höchstpixelanzahl"
 
 #: converter/gtk/window.blp:269
 msgid "Ratio"
-msgstr ""
+msgstr "Seitenverhältnis"
 
 #: converter/gtk/window.blp:274 converter/gtk/window.blp:300
 msgid "Width"
-msgstr ""
+msgstr "Breite"
 
 #: converter/gtk/window.blp:277
 msgid "Pixels"
-msgstr ""
+msgstr "Pixel"
 
 #: converter/gtk/window.blp:277
 msgid "Preserve Ratio"
-msgstr ""
+msgstr "Seitenverhältnis beibehalten"
 
 #: converter/gtk/window.blp:289 converter/gtk/window.blp:310
 msgid "Height"
-msgstr ""
+msgstr "Höhe"
 
 #: converter/gtk/window.blp:320
 msgid "Width Percentage Scale"
-msgstr ""
+msgstr "Prozentwert Breitenskalierung"
 
 #: converter/gtk/window.blp:330
 msgid "Height Percentage Scale"
-msgstr ""
+msgstr "Prozentwert Höhenskalierung"
 
 #: converter/gtk/window.blp:340
 msgid "Ratio Width"
-msgstr ""
+msgstr "Seitenverhältnis Breite"
 
 #: converter/gtk/window.blp:350
 msgid "Ratio Height"
-msgstr ""
+msgstr "Seitenverhältnis Höhe"
 
 #: converter/gtk/window.blp:379
 msgid "Open File…"
