@@ -98,7 +98,7 @@ class ConverterApplication(Adw.Application):
         about.add_acknowledgement_section(
             _("Sample Image from"),
             [
-
+                "Samuel Custodio https://github.com/samuelcust/flappy-bird-assets"
             ]
         )
         about.add_legal_section(
