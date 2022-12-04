@@ -8,6 +8,19 @@ row.property label.subtitle {
   font-size: 11pt;
 }
 
+treeview.view {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+treeview.view>:active {
+  margin: 0;
+  padding: 10px;
+  border: none;
+  background: red;
+}
 
 .text-in-row {
   margin: 12px 0;

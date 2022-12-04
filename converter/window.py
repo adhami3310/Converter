@@ -26,6 +26,7 @@ import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
+from converter.filters import output_image_extensions
 import fitz
 from svglib import svglib
 from reportlab.graphics import renderPDF
@@ -54,8 +55,7 @@ class ConverterWindow(Adw.ApplicationWindow):
     button_options = Gtk.Template.Child()
     spinner_loading = Gtk.Template.Child()
     image = Gtk.Template.Child()
-    # video = Gtk.Template.Child()
-    # spin_scale = Gtk.Template.Child()
+    supported_output_datatypes = Gtk.Template.Child()
     button_output = Gtk.Template.Child()
     label_output = Gtk.Template.Child()
     resize_filter = Gtk.Template.Child()
@@ -93,7 +93,11 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.quality.connect('value-changed', self.__quality_changed)
         self.quality.set_value(92)
         self.bgcolor.connect('color-set', self.__bg_changed)
-        self.filetype.connect('changed', self.filetype_changed)
+
+        for supported_file_type in output_image_extensions:
+            self.supported_output_datatypes.append(supported_file_type)
+
+        self.filetype.connect('notify::selected', self.filetype_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
         self.resize_type.connect('notify::selected', self.__update_resize)
         self.resize_width.connect('notify::selected', self.__update_resize)
@@ -116,8 +120,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         FileChooser.output_file(self)
 
     def filetype_changed(self, *args):
-        ext = self.filetype.get_text()
-        ext = ext[1:].lower() if ext[0:1] == '.' else ext.lower()
+        ext = output_image_extensions[self.filetype.get_selected()]
+        ext = ext.lower() if ext[0:1] == '.' else ext.lower()
         self.output_ext = ext
         self.__update_options()
         self.label_output.set_label('(None)')
