@@ -22,7 +22,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 import sys
-from gi.repository import Adw, Gtk, Gio
+from gi.repository import Adw, Gtk, Gio, GLib
 from .window import ConverterWindow
 from converter.file_chooser import FileChooser
 from gettext import gettext as _
@@ -34,6 +34,13 @@ class ConverterApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id='io.gitlab.adhami3310.Converter',
                          flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE)
+        self.settings = Gio.Settings("io.gitlab.adhami3310.Converter")
+        popular = Gio.SimpleAction.new_stateful(
+            'popular', None, GLib.Variant('b', self.settings.get_boolean('show-less-popular'))
+        )
+        popular.connect('change-state', self.__on_popular)
+        self.add_action(popular)
+        self.set_accels_for_action('app.popular', ['<Primary>H'])
         self.create_action('quit', self.__quit, ['<primary>q'])
         self.create_action('about', self.__about_action)
         self.create_action('open', self.__open_file, ['<primary>o'])
@@ -60,11 +67,12 @@ class ConverterApplication(Adw.Application):
         self.activate()
         return 0
 
-    def __paste_clipboard(self, *args):
-        FileChooser.paste_clipboard(self.win)
-
     def __open_file(self, *args):
         FileChooser.open_file(self.win)
+
+    def __on_popular(self, action, value, *args):
+        action.props.state = value
+        self.win.toggle_datatype()
 
     def __about_action(self, *args):
         """Callback for the app.about action."""
@@ -135,7 +143,7 @@ def translators():
         Name + URL:   \nKhaleel Al-Adhami https://adhami3310.gitlab.io
         Name + Email: \nKhaleel Al-Adhami <khaleel.aladhami@gmail.com>
     """
-    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>')
+    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>\nMattia Borda <mattiagiovanni.borda@icloud.com>')
 
 def developers():
     """ Developers/Contributors list. If you have contributed code, feel free

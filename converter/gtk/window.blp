@@ -131,18 +131,9 @@ template ConverterWindow : .AdwApplicationWindow {
               //  ;
               // }
 
-              .AdwEntryRow filetype {
-                name: "filetype";
+              .AdwComboRow filetype {
                 title: _("Datatype");
-                text: "jpg";
-                Button button_options {
-                  valign: center;
-                  Box {
-                    Label {
-                      label: _("More Options");
-                    }
-                  }
-                }
+                model: StringList supported_output_datatypes {};
               }
 
               .AdwActionRow {
@@ -172,6 +163,13 @@ template ConverterWindow : .AdwApplicationWindow {
                 halign: center;
                 spacing: 6;
 
+                Button button_options {
+                  valign: center;
+                  label: _("More Options");
+                  styles [
+                    "pill",
+                  ]
+                }
 
                 Button button_convert {
                   valign: center;
@@ -378,6 +376,13 @@ menu primary_menu {
     item {
       label: _("Open File…");
       action: "app.open";
+    }
+  }
+
+  section {
+    item {
+      label: _("Show Less Popular Datatypes");
+      action: "app.popular";
     }
   }
 

@@ -21,7 +21,7 @@ import subprocess
 from pathlib import PurePath
 from converter.threading import RunAsync
 from gi.repository import Adw, Gtk, Gio, GdkPixbuf, GLib, Gdk
-from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions, is_extenstion_output, extention_to_mime
+from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions, is_extenstion_output, extention_to_mime, output_image_extensions
 from gettext import gettext as _
 
 class FileChooser():
@@ -179,7 +179,7 @@ class FileChooser():
     """ Select output location. """
     def output_file(self, *args):
 
-        ext = self.filetype.get_text()
+        ext = output_image_extensions[self.filetype.get_selected()]
         ext = ext[1:] if ext[0] == '.' else ext
 
         if not FileChooser.check_supported_output(self, ext):
