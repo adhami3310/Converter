@@ -26,7 +26,7 @@ import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
-from converter.filters import output_image_extensions
+from converter.filters import output_image_extensions, popular_output_image_extensions
 import fitz
 from svglib import svglib
 from reportlab.graphics import renderPDF
@@ -93,12 +93,9 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.quality.connect('value-changed', self.__quality_changed)
         self.quality.set_value(92)
         self.bgcolor.connect('color-set', self.__bg_changed)
-
-        for supported_file_type in output_image_extensions:
-            self.supported_output_datatypes.append(supported_file_type)
-
-        self.filetype.set_selected(output_image_extensions.index("pdf"));
-
+        self.settings = Gio.Settings("io.gitlab.adhami3310.Converter")
+        self.update_output_datatype()
+        self.settings.connect("changed::show-less-popular", self.update_output_datatype)
         self.filetype.connect('notify::selected', self.filetype_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
         self.resize_type.connect('notify::selected', self.__update_resize)
@@ -121,9 +118,25 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __output_location(self, *args):
         FileChooser.output_file(self)
 
+    def toggle_datatype(self, *args):
+        show_less_popular = self.settings.get_boolean("show-less-popular")
+        self.settings.set_boolean("show-less-popular", not show_less_popular)
+        self.update_output_datatype()
+
+    def update_output_datatype(self, *args):
+        if self.settings.get_boolean("show-less-popular"):
+            self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
+            for supported_file_type in output_image_extensions:
+                self.supported_output_datatypes.append(supported_file_type)
+            self.filetype.set_selected(output_image_extensions.index("pdf"))
+        else:
+            self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
+            for supported_file_type in popular_output_image_extensions:
+                self.supported_output_datatypes.append(supported_file_type)
+            self.filetype.set_selected(popular_output_image_extensions.index("pdf"))
+
     def filetype_changed(self, *args):
-        ext = output_image_extensions[self.filetype.get_selected()]
-        ext = ext.lower() if ext[0:1] == '.' else ext.lower()
+        ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
         self.output_ext = ext
         self.__update_options()
         self.label_output.set_label('(None)')

@@ -23,6 +23,7 @@ image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/sv
 image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg']
 output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf']
 output_image_extensions = sorted(['png', 'jpg', 'jpeg', 'webp', 'pdf'])
+popular_output_image_extensions = sorted(['png', 'jpg', 'webp', 'pdf'])
 
 """ Formats getter function. """
 def get_format_filters(type):
