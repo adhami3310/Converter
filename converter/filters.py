@@ -19,11 +19,11 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml']
-image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg']
-output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf']
-output_image_extensions = sorted(['png', 'jpg', 'jpeg', 'webp', 'pdf'])
-popular_output_image_extensions = sorted(['png', 'jpg', 'webp', 'pdf'])
+image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml', 'image/heic', 'image/bmp']
+image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp']
+output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf', 'image/heic', 'image/heif', 'image/bmp']
+output_image_extensions = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif'])
+popular_output_image_extensions = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic'])
 
 """ Formats getter function. """
 def get_format_filters(type):
@@ -39,8 +39,11 @@ extention_to_mime = {
     'jpeg': 'image/jpeg',
     'png': 'image/png',
     'pdf': 'application/pdf',
-    'webp': 'application/webp',
-    'svg': 'image/svg+xml'
+    'webp': 'image/webp',
+    'svg': 'image/svg+xml',
+    'heic': 'image/heic',
+    'heif': 'image/heif',
+    'bmp': 'image/bmp'
 }
 
 def is_extenstion_output(extension):
