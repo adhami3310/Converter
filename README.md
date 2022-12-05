@@ -8,6 +8,28 @@ Converter is a GTK4+libadwaita application that allows you to convert and manipu
 ## Installation
 <a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
+## Features
+
+Converter supports converting from the following datatypes:
+ - image/jpeg
+ - image/png
+ - image/webp (preview not available)
+ - image/svg+xml (through svglib Python library)
+
+Into the following datatypes:
+ - image/jpeg
+ - image/png
+ - image/webp
+ - application/pdf
+
+It also supports the following options:
+ - Changing quality value of lossy compression.
+ - Changing the color value of the alpha layer.
+ - Changing the DPI of SVG images.
+ - Scaleing and resizing the image to given resolution or ratio.
+
+ImageMagick supports many other datatypes. I will add more and possibly even add more options. If you want me to make something of a higher priority please start an issue.
+
 ## Contributing
 Issues and merge requests are more than welcome. However, please take the following into consideration:
 

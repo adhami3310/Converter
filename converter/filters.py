@@ -22,7 +22,7 @@ from gi.repository import Gtk
 image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml']
 image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg']
 output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf']
-output_image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'pdf']
+output_image_extensions = sorted(['png', 'jpg', 'jpeg', 'webp', 'pdf'])
 
 """ Formats getter function. """
 def get_format_filters(type):

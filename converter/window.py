@@ -97,6 +97,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         for supported_file_type in output_image_extensions:
             self.supported_output_datatypes.append(supported_file_type)
 
+        self.filetype.set_selected(output_image_extensions.index("pdf"));
+
         self.filetype.connect('notify::selected', self.filetype_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
         self.resize_type.connect('notify::selected', self.__update_resize)
