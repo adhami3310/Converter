@@ -53,7 +53,7 @@ class FileChooser():
                     self.action_image_size.set_subtitle('Unknown')
                     self.image_size = [0, '', '']
                 self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
-                self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext]})')
+                self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
                 self.filetype.grab_focus()
 
                 """ Reset widgets. """
@@ -130,7 +130,7 @@ class FileChooser():
                         self.action_image_size.set_subtitle('Unknown')
                         self.image_size = [0, '', '']
                     self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
-                    self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext]})')
+                    self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
                     self.filetype.grab_focus()
 
                     """ Reset widgets. """
@@ -179,8 +179,7 @@ class FileChooser():
     """ Select output location. """
     def output_file(self, *args):
 
-        ext = output_image_extensions[self.filetype.get_selected()]
-        ext = ext[1:] if ext[0] == '.' else ext
+        ext = self.output_ext
 
         if not FileChooser.check_supported_output(self, ext):
             return

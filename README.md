@@ -13,14 +13,18 @@ Converter is a GTK4+libadwaita application that allows you to convert and manipu
 Converter supports converting from the following datatypes:
  - image/jpeg
  - image/png
- - image/webp (preview not available)
- - image/svg+xml (through svglib Python library)
+ - image/webp
+ - image/svg+xml (scaling pending)
+ - image/heif and image/heic
+ - image/bmp
 
 Into the following datatypes:
  - image/jpeg
  - image/png
  - image/webp
  - application/pdf
+ - image/heif and image/heic
+ - image/bmp
 
 It also supports the following options:
  - Changing quality value of lossy compression.

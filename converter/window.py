@@ -27,9 +27,6 @@ from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
 from converter.filters import output_image_extensions, popular_output_image_extensions
-import fitz
-from svglib import svglib
-from reportlab.graphics import renderPDF
 
 
 @Gtk.Template(resource_path='/io/gitlab/adhami3310/Converter/gtk/window.ui')
@@ -64,8 +61,6 @@ class ConverterWindow(Adw.ApplicationWindow):
     resize_height = Gtk.Template.Child()
     resize_width_value = Gtk.Template.Child()
     resize_height_value = Gtk.Template.Child()
-    dpi_row = Gtk.Template.Child()
-    dpi_value = Gtk.Template.Child()
     resize_minmax_width = Gtk.Template.Child()
     resize_minmax_height = Gtk.Template.Child()
     resize_minmax_width_value = Gtk.Template.Child()
@@ -134,6 +129,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             for supported_file_type in popular_output_image_extensions:
                 self.supported_output_datatypes.append(supported_file_type)
             self.filetype.set_selected(popular_output_image_extensions.index("pdf"))
+        self.output_ext = 'pdf'
 
     def filetype_changed(self, *args):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
@@ -147,9 +143,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.quality_row.hide()
         self.bgcolor_row.hide()
         self.resize_row.hide()
-        self.dpi_row.hide()
         self.resize_row.set_enable_expansion(False)
-        self.dpi_row.set_enable_expansion(False)
         inext = self.input_ext
         outext = self.output_ext
         if {'jpg', 'webp', 'jpeg', 'pdf'}.intersection({inext, outext}):
@@ -164,12 +158,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 self.bgcolor.set_use_alpha(False)
                 bgcolor.parse("#FFF")
                 self.bgcolor.set_rgba(bgcolor)
-        if inext != 'svg':
-            self.resize_row.show()
-        else:
-            self.resize_row.show()
-            self.dpi_row.show()
-
+        self.resize_row.show()
     def __update_resize(self, *args):
         resize_type = self.resize_type.get_selected()
         self.resize_width.hide()
@@ -260,7 +249,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         """ Run in a separate thread. """
         def run():
             command = ['magick',
-                       '-monitor',
+                      '-monitor',
                        '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
                        inp if inp else self.input_file_path,
                        '-flatten',
@@ -269,6 +258,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                        ]+self.__get_resized_commands()+[
                        self.output_file_path
                        ]
+#            command = ['magick', '-version']
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
             print(*command)
@@ -285,20 +275,9 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.convert_dialog = None
             self.converting_completed_dialog()
 
-        if self.input_ext != 'svg':
-            """ Run functions asynchronously. """
-            RunAsync(run, callback)
-            self.convert_dialog.present()
-        else:
-            drawing = svglib.svg2rlg(self.input_file_path)
-            pdf = renderPDF.drawToString(drawing)
-
-            doc = fitz.Document(stream=pdf)
-            pix = doc.load_page(0).get_pixmap(alpha=True, dpi=72 if not self.dpi_row.get_expanded() else int(self.dpi_value.get_text()))
-            pix.save(".output.png")
-            inp = ".output.png"
-            RunAsync(run, callback)
-            self.convert_dialog.present()
+        """ Run functions asynchronously. """
+        RunAsync(run, callback)
+        self.convert_dialog.present()
 
 
     """ Ask the user if they want to open the file. """

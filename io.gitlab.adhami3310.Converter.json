@@ -3,6 +3,9 @@
 	"runtime": "org.gnome.Platform",
 	"runtime-version": "43",
 	"sdk": "org.gnome.Sdk",
+	"sdk-extensions" : [
+		"org.freedesktop.Sdk.Extension.rust-stable"
+	],
 	"command": "converter",
 	"finish-args": [
 		"--share=ipc",
@@ -22,6 +25,12 @@
 		"*.la",
 		"*.a"
 	],
+	"build-options": {
+		"append-path" : "/usr/lib/sdk/rust-stable/bin",
+		"env" : {
+			"CARGO_HOME" : "/run/build/converter/cargo"
+		}
+	},
 	"modules": [
 		{
 			"name": "blueprint-compiler",
@@ -36,98 +45,134 @@
 			]
 		},
 		{
-			"name": "swig",
-			"buildsystem": "autotools",
+			"name": "x265",
+			"buildsystem": "simple",
+			"build-commands": [
+				"cmake source -DCMAKE_INSTALL_PREFIX=/app",
+				"make",
+				"make install",
+				"rm -vf /app/lib/libx265.a",
+				"ls /app/lib"
+			],
 			"sources": [
 				{
-					"type": "git",
-					"url": "https://github.com/swig/swig.git",
-					"commit": "60af317956714c23452c1593575511e0577e08ac"
+					"type": "archive",
+					"url": "http://anduin.linuxfromscratch.org/BLFS/x265/x265_3.4.tar.gz",
+					"sha256": "c2047f23a6b729e5c70280d23223cb61b57bfe4ad4e8f1471eeee2a61d148672"
 				}
 			]
 		},
 		{
-			"name": "python3-modules",
+			"name": "libde265",
 			"buildsystem": "simple",
-			"build-commands": [],
-			"modules": [
+			"build-commands": [
+				"./autogen.sh",
+				"./configure --prefix=/app --disable-dec265 --disable-sherlock265",
+				"make",
+				"make install"
+			],
+			"sources": [
 				{
-					"name": "python3-svglib",
-					"buildsystem": "simple",
-					"build-commands": [
-						"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"svglib\" --no-build-isolation"
-					],
-					"sources": [
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/16/11/da8d395299ca166aa56d9436e26fe8440e5443471de16ccd9a1d06f5993a/Pillow-9.3.0.tar.gz",
-							"sha256": "c935a22a557a560108d780f9a0fc426dd7459940dc54faa49d83249c8d3e760f"
-						},
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/9d/3a/e39436efe51894243ff145a37c4f9a030839b97779ebcc4f13b3ba21c54e/cssselect2-0.7.0-py3-none-any.whl",
-							"sha256": "fd23a65bfd444595913f02fc71f6b286c29261e354c41d722ca7a261a49b5969"
-						},
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/70/bb/7a2c7b4f8f434aa1ee801704bf08f1e53d7b5feba3d5313ab17003477808/lxml-4.9.1.tar.gz",
-							"sha256": "fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f"
-						},
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/b8/ac/10d68a650b321bd8c4d8cbefd9994e7727d57b381c9bdb0a013273011e62/reportlab-3.6.12.tar.gz",
-							"sha256": "b13cebf4e397bba14542bcd023338b6ff2c151a3a12aabca89eecbf972cb361a"
-						},
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/ee/cd/8b19f6299541862deea19b26a9efe269ff843fa15a9fd833ff0fec2ac22c/svglib-1.4.1.tar.gz",
-							"sha256": "48c24706c23bb4262173b6fa49eabb10afa15b8412f14283120549517ccfa314"
-						},
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/da/99/fd23634d6962c2791fb8cb6ccae1f05dcbfc39bce36bba8b1c9a8d92eae8/tinycss2-1.2.1-py3-none-any.whl",
-							"sha256": "2b80a96d41e7c3914b8cda8bc7f705a4d9c49275616e886103dd839dfc847847"
-						},
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl",
-							"sha256": "a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"
-						}
-					]
-				},
+					"type": "git",
+					"url": "https://github.com/strukturag/libde265.git",
+					"commit": "b578ae56eb2eb257e19158282c2af9d552565c1c"
+				}
+			]
+		},
+		{
+			"name": "python3-docutils",
+			"buildsystem": "simple",
+			"build-commands": [
+				"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"docutils\" --no-build-isolation"
+			],
+			"sources": [
 				{
-					"name": "python3-pymupdf",
-					"buildsystem": "simple",
-					"build-commands": [
-						"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"pymupdf\" --no-build-isolation"
-					],
-					"sources": [
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/61/14/632eefe5568ee7a4ec95aa7fc9c63996ff6a6d2464d4e3a9dc35da11a409/PyMuPDF-1.21.0.tar.gz",
-							"sha256": "a63dfc289e127a16ab60310ee6005fe83121c7a97f7c120db688f9281c9e5d0f"
-						}
-					]
-				},
+					"type": "file",
+					"url": "https://files.pythonhosted.org/packages/93/69/e391bd51bc08ed9141ecd899a0ddb61ab6465309f1eb470905c0c8868081/docutils-0.19-py3-none-any.whl",
+					"sha256": "5e1de4d849fee02c63b040a4a3fd567f4ab104defd8a5511fbbc24a8a017efbc"
+				}
+			]
+		},
+		{
+			"name": "gdk-pixbuf",
+			"buildsystem": "meson",
+			"sources": [
 				{
-					"name": "python3-lxml",
-					"buildsystem": "simple",
-					"build-commands": [
-						"pip3 install --verbose --exists-action=i --ignore-installed --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"lxml\" --no-build-isolation"
-					],
-					"sources": [
-						{
-							"type": "file",
-							"url": "https://files.pythonhosted.org/packages/70/bb/7a2c7b4f8f434aa1ee801704bf08f1e53d7b5feba3d5313ab17003477808/lxml-4.9.1.tar.gz",
-							"sha256": "fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f"
-						}
-					]
+					"type": "git",
+					"url": "https://gitlab.gnome.org/GNOME/gdk-pixbuf.git",
+					"commit": "da8aa8352adff2836b1aba5f8a291e5b6e27dd1b"
+				}
+			]
+		},
+		{
+			"name": "librsvg",
+			"buildsystem": "simple",
+			"build-commands": [
+				"./autogen.sh --prefix=/app",
+				"make",
+				"make install"
+			],
+			"sources": [
+				"cargo-sources.json",
+				{
+					"type": "git",
+					"url": "https://gitlab.gnome.org/GNOME/librsvg.git",
+					"commit": "b25889ade2a875ef079f322101c1f2f0804e9dcb"
+				}
+			],
+			"build-options": {
+				"env" : {
+					"CARGO_HOME" : "/run/build/librsvg/cargo"
+				}
+			}
+		},
+		{
+			"name": "webp-pixbuf-loader",
+			"buildsystem": "meson",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/aruiz/webp-pixbuf-loader.git",
+					"commit": "f91f79c05ff90b41774eda613dc10a2a0d996bc8"
+				}
+			]
+		},
+		{
+			"name": "libheif",
+			"buildsystem": "simple",
+			"build-commands": [
+				"./configure --prefix=/app",
+				"make",
+				"make install",
+				"/app/bin/gdk-pixbuf-query-loaders > /app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/strukturag/libheif/releases/download/v1.14.0/libheif-1.14.0.tar.gz",
+					"sha256": "9a2b969d827e162fa9eba582ebd0c9f6891f16e426ef608d089b1f24962295b5"
+				}
+			]
+		},
+		{
+			"name": "liblqr",
+			"buildsystem": "autotools",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/carlobaldassi/liblqr.git",
+					"commit": "7b88c05cec2f0e60125e1cfcad18c79721a2b27c"
 				}
 			]
 		},
 		{
 			"name": "magick",
-			"buildsystem": "autotools",
+			"buildsystem": "simple",
+			"build-commands": [
+				"./configure --prefix=/app --with-heic=yes --with-rsvg=yes",
+				"make",
+				"make install"
+			],
 			"sources": [
 				{
 					"type": "git",
