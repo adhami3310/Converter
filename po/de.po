@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
 #: converter/gtk/window.blp:9 converter/gtk/window.blp:39
@@ -61,7 +61,7 @@ msgstr "Übersicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
 msgid "Added HEIC as well as BMP support."
-msgstr ""
+msgstr "Unterstützung für HEIC und BMP hinzugefügt."
 
 #: converter/file_chooser.py:167
 msgid "Select an image"
@@ -140,14 +140,14 @@ msgid "Sample Image from"
 msgstr "Beispielbild von"
 
 #: converter/main.py:146
-#, fuzzy
 msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
 "Mattia Borda <mattiagiovanni.borda@icloud.com>"
 msgstr ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Irénée Thirion <irenee.thirion@e.email>"
+"Irénée Thirion <irenee.thirion@e.email>\n"
+"Mattia Borda <mattiagiovanni.borda@icloud.com>"
 
 #: converter/gtk/window.blp:47
 msgid "_Open Image…"
@@ -212,13 +212,12 @@ msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
 #: converter/gtk/window.blp:242
-#, fuzzy
 msgid "Scale Preserving Ratio"
-msgstr "Seitenverhältnis beibehalten"
+msgstr "Seitenverhältnis beim Skalieren beibehalten"
 
 #: converter/gtk/window.blp:245
 msgid "Dimension"
-msgstr ""
+msgstr "Abmessungen"
 
 #: converter/gtk/window.blp:248 converter/gtk/window.blp:292
 #: converter/gtk/window.blp:318
@@ -231,14 +230,12 @@ msgid "Height"
 msgstr "Höhe"
 
 #: converter/gtk/window.blp:253
-#, fuzzy
 msgid "Width in Pixels"
-msgstr "Mindestpixelanzahl"
+msgstr "Breite in Pixeln"
 
 #: converter/gtk/window.blp:263
-#, fuzzy
 msgid "Height in Pixels"
-msgstr "Mindestpixelanzahl"
+msgstr "Höhe in Pixeln"
 
 #: converter/gtk/window.blp:275
 msgid "Resize"
@@ -302,7 +299,7 @@ msgstr "Datei öffnen …"
 
 #: converter/gtk/window.blp:404
 msgid "Show Less Popular Datatypes"
-msgstr ""
+msgstr "Weniger gängige Datentypen anzeigen"
 
 #: converter/gtk/window.blp:416
 msgid "Keyboard Shortcuts"
@@ -328,7 +325,7 @@ msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml:6
 msgid "Shows less popular datatypes in the menu"
-msgstr ""
+msgstr "Weniger gängige Datentypen im Menü anzeigen"
 
 #~ msgid "Added \"Open With\" functionality."
 #~ msgstr "»Öffnen mit«-Funktion hinzugefügt."
