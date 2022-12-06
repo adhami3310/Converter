@@ -41,6 +41,7 @@ class ConverterWindow(Adw.ApplicationWindow):
     bgcolor = Gtk.Template.Child()
     bgcolor_row = Gtk.Template.Child()
     resize_row = Gtk.Template.Child()
+    svg_size_row = Gtk.Template.Child()
     stack_converter = Gtk.Template.Child()
     button_input = Gtk.Template.Child()
     action_image_size = Gtk.Template.Child()
@@ -55,8 +56,13 @@ class ConverterWindow(Adw.ApplicationWindow):
     supported_output_datatypes = Gtk.Template.Child()
     button_output = Gtk.Template.Child()
     label_output = Gtk.Template.Child()
+    svg_size_width = Gtk.Template.Child()
+    svg_size_height = Gtk.Template.Child()
+    svg_size_width_value = Gtk.Template.Child()
+    svg_size_height_value = Gtk.Template.Child()
     resize_filter = Gtk.Template.Child()
     resize_type = Gtk.Template.Child()
+    svg_size_type = Gtk.Template.Child()
     resize_width = Gtk.Template.Child()
     resize_height = Gtk.Template.Child()
     resize_width_value = Gtk.Template.Child()
@@ -96,7 +102,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.resize_type.connect('notify::selected', self.__update_resize)
         self.resize_width.connect('notify::selected', self.__update_resize)
         self.resize_height.connect('notify::selected', self.__update_resize)
-        # self.spin_scale.connect('value-changed', self.__update_post_convert_image_size)
+        self.svg_size_row.connect('notify::expanded', self.__update_size)
+        self.svg_size_type.connect('notify::selected', self.__update_size)
 
         for resize_filter in self.resize_filters:
             self.filters.append(resize_filter)
@@ -144,20 +151,24 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.bgcolor_row.hide()
         self.resize_row.hide()
         self.resize_row.set_enable_expansion(False)
+        self.svg_size_row.hide()
+        self.svg_size_row.set_enable_expansion(False)
         inext = self.input_ext
         outext = self.output_ext
-        if {'jpg', 'webp', 'jpeg', 'pdf'}.intersection({inext, outext}):
+        if {'jpg', 'webp', 'jpeg', 'pdf', 'heif', 'heic'}.intersection({inext, outext}):
             self.quality_row.show()
-        if {'png', 'webp', 'svg'}.intersection({inext, outext}):
+        if {'png', 'webp', 'svg', 'heic', 'heif'}.intersection({inext, outext}):
             self.bgcolor_row.show()
             bgcolor = Gdk.RGBA()
             self.bgcolor.set_use_alpha(True)
             bgcolor.parse("#00000000")
             self.bgcolor.set_rgba(bgcolor)
-            if outext in {'jpg', 'jpeg'}:
+            if outext in {'jpg', 'jpeg', 'pdf', 'bmp'}:
                 self.bgcolor.set_use_alpha(False)
                 bgcolor.parse("#FFF")
                 self.bgcolor.set_rgba(bgcolor)
+        if inext == 'svg':
+            self.svg_size_row.show()
         self.resize_row.show()
     def __update_resize(self, *args):
         resize_type = self.resize_type.get_selected()
@@ -189,6 +200,14 @@ class ConverterWindow(Adw.ApplicationWindow):
         else:
             self.resize_minmax_width.show()
             self.resize_minmax_height.show()
+
+    def __update_size(self, *args):
+        if self.svg_size_type.get_selected() == 0:
+            self.svg_size_width.show()
+            self.svg_size_height.hide()
+        else:
+            self.svg_size_height.show()
+            self.svg_size_width.hide()
 
     def __quality_changed(self, *args):
         self.quality_label.set_label(str(int(self.quality.get_value())))
@@ -238,20 +257,26 @@ class ConverterWindow(Adw.ApplicationWindow):
             return ['-filter', resize_filter, '-resize', self.resize_minmax_width_value.get_text()+'x'+self.resize_minmax_height_value.get_text()]
         return []
 
+    def __get_sized_commands(self):
+        if not self.svg_size_row.get_expanded(): return []
+        if self.svg_size_type.get_selected() == 0:
+            return ['-size', self.svg_size_width_value.get_text()]
+        else:
+            return ['-size', 'x'+self.svg_size_height_value.get_text()]
+
     def __convert(self, *args):
 
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)
 
-        inp = None
-
         """ Run in a separate thread. """
         def run():
             command = ['magick',
                       '-monitor',
-                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
-                       inp if inp else self.input_file_path,
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}'
+                       ]+self.__get_sized_commands()+[
+                       self.input_file_path,
                        '-flatten',
                        '-quality',
                        f'{self.quality.get_value()}'

@@ -14,7 +14,7 @@ Converter supports converting from the following datatypes:
  - image/jpeg
  - image/png
  - image/webp
- - image/svg+xml (scaling pending)
+ - image/svg+xml (with scaling)
  - image/heif and image/heic
  - image/bmp
 
