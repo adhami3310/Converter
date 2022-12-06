@@ -238,6 +238,39 @@ template ConverterWindow : .AdwApplicationWindow {
                 }
               }
 
+              .AdwExpanderRow svg_size_row {
+                title: _("Scale Preserving Ratio");
+                show-enable-switch: true;
+                .AdwComboRow svg_size_type {
+                  title: _("Dimension");
+                  model:
+                  StringList svg_size_axis_types {
+                    strings [_("Width"),_("Height")]
+                  }
+                  ;
+                }
+                .AdwActionRow svg_size_width {
+                  title: _("Width in Pixels");
+                  .AdwBin {
+                    Entry svg_size_width_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+                .AdwActionRow svg_size_height {
+                  title: _("Height in Pixels");
+                  .AdwBin {
+                    Entry svg_size_height_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+              }
+
               .AdwExpanderRow resize_row {
                 title: _("Resize");
                 show-enable-switch: true;
