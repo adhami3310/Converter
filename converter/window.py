@@ -155,9 +155,9 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_row.set_enable_expansion(False)
         inext = self.input_ext
         outext = self.output_ext
-        if {'jpg', 'webp', 'jpeg', 'pdf', 'heif', 'heic'}.intersection({inext, outext}):
+        if {'jpg', 'webp', 'jpeg', 'pdf', 'heif', 'heic', 'avif', 'jxl'}.intersection({inext, outext}):
             self.quality_row.show()
-        if {'png', 'webp', 'svg', 'heic', 'heif'}.intersection({inext, outext}):
+        if {'png', 'webp', 'svg', 'heic', 'heif', 'avif', 'jxl'}.intersection({inext, outext}):
             self.bgcolor_row.show()
             bgcolor = Gdk.RGBA()
             self.bgcolor.set_use_alpha(True)
