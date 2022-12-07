@@ -269,21 +269,22 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)
-
+        inp = None
+        out = None
         """ Run in a separate thread. """
         def run():
             command = ['magick',
                       '-monitor',
                        '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}'
                        ]+self.__get_sized_commands()+[
-                       self.input_file_path,
+                       inp if inp else self.input_file_path,
                        '-flatten',
                        '-quality',
                        f'{self.quality.get_value()}'
                        ]+self.__get_resized_commands()+[
-                       self.output_file_path
+                       out if out else self.output_file_path
                        ]
-#            command = ['magick', '-version']
+#            command = ['magick', 'identify', '-list', 'format']
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
             print(*command)
@@ -301,7 +302,15 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.converting_completed_dialog()
 
         """ Run functions asynchronously. """
-        RunAsync(run, callback)
+        if self.input_ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
+            out = 'temp.png'
+            def convert_to_temp_callback():
+                inp = 'temp.png'
+                out = None
+                RunAsync(run, callback)
+            RunAsync(run, convert_to_temp_callback)
+        else:
+            RunAsync(run, callback)
         self.convert_dialog.present()
 
 

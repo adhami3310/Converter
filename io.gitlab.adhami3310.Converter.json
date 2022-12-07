@@ -25,12 +25,6 @@
 		"*.la",
 		"*.a"
 	],
-	"build-options": {
-		"append-path" : "/usr/lib/sdk/rust-stable/bin",
-		"env" : {
-			"CARGO_HOME" : "/run/build/converter/cargo"
-		}
-	},
 	"modules": [
 		{
 			"name": "blueprint-compiler",
@@ -41,41 +35,6 @@
 					"url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
 					"tag": "v0.4.0",
 					"commit": "75a6d95988736ec0471d22ceb07579c0cedac2ad"
-				}
-			]
-		},
-		{
-			"name": "x265",
-			"buildsystem": "simple",
-			"build-commands": [
-				"cmake source -DCMAKE_INSTALL_PREFIX=/app",
-				"make",
-				"make install",
-				"rm -vf /app/lib/libx265.a",
-				"ls /app/lib"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "http://anduin.linuxfromscratch.org/BLFS/x265/x265_3.4.tar.gz",
-					"sha256": "c2047f23a6b729e5c70280d23223cb61b57bfe4ad4e8f1471eeee2a61d148672"
-				}
-			]
-		},
-		{
-			"name": "libde265",
-			"buildsystem": "simple",
-			"build-commands": [
-				"./autogen.sh",
-				"./configure --prefix=/app --disable-dec265 --disable-sherlock265",
-				"make",
-				"make install"
-			],
-			"sources": [
-				{
-					"type": "git",
-					"url": "https://github.com/strukturag/libde265.git",
-					"commit": "b578ae56eb2eb257e19158282c2af9d552565c1c"
 				}
 			]
 		},
@@ -121,6 +80,7 @@
 				}
 			],
 			"build-options": {
+				"append-path" : "/usr/lib/sdk/rust-stable/bin",
 				"env" : {
 					"CARGO_HOME" : "/run/build/librsvg/cargo"
 				}
@@ -139,18 +99,140 @@
 		},
 		{
 			"name": "libheif",
-			"buildsystem": "simple",
-			"build-commands": [
-				"./configure --prefix=/app",
-				"make",
-				"make install",
-				"/app/bin/gdk-pixbuf-query-loaders > /app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+			"cleanup": [
+				"/bin"
+			],
+			"modules": [
+				{
+					"name": "libde265",
+					"config-opts": [
+						"--disable-dec265",
+						"--disable-encoder",
+						"--disable-sherlock265"
+					],
+					"cleanup": [
+						"/bin"
+					],
+					"sources": [
+						{
+							"type": "archive",
+							"url": "https://github.com/strukturag/libde265/releases/download/v1.0.9/libde265-1.0.9.tar.gz",
+							"sha256": "29bc6b64bf658d81a4446a3f98e0e4636fd4fd3d971b072d440cef987d5439de",
+							"x-checker-data": {
+								"type": "anitya",
+								"project-id": 11239,
+								"stable-only": true,
+								"url-template": "https://github.com/strukturag/libde265/releases/download/v$version/libde265-$version.tar.gz"
+							}
+						}
+					]
+				},
+				{
+					"name": "libx265",
+					"buildsystem": "cmake",
+					"subdir": "source",
+					"config-opts": [
+						"-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
+						"-DEXTRA_LINK_FLAGS=-L.",
+						"-DLINKED_10BIT=ON",
+						"-DLINKED_12BIT=ON"
+					],
+					"cleanup": [
+						"/bin"
+					],
+					"sources": [
+						{
+							"type": "archive",
+							"url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+							"sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
+							"x-checker-data": {
+								"type": "anitya",
+								"project-id": 7275,
+								"stable-only": true,
+								"url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+							}
+						},
+						{
+							"type": "shell",
+							"commands": [
+								"ln -s ${FLATPAK_DEST}/lib/libx265-10.a",
+								"ln -s ${FLATPAK_DEST}/lib/libx265-12.a",
+								"rm -fr ${FLATPAK_DEST}/lib/libx265.so*"
+							]
+						}
+					],
+					"modules": [
+						{
+							"name": "libx265-10bpc",
+							"buildsystem": "cmake",
+							"subdir": "source",
+							"config-opts": [
+								"-DHIGH_BIT_DEPTH=ON",
+								"-DEXPORT_C_API=OFF",
+								"-DENABLE_SHARED=OFF",
+								"-DENABLE_CLI=OFF",
+								"-DENABLE_ASSEMBLY=OFF"
+							],
+							"sources": [
+								{
+									"type": "archive",
+									"url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+									"sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
+									"x-checker-data": {
+										"type": "anitya",
+										"project-id": 7275,
+										"stable-only": true,
+										"url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+									}
+								}
+							],
+							"post-install": [
+								"mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-10.a"
+							]
+						},
+						{
+							"name": "libx265-12bpc",
+							"buildsystem": "cmake",
+							"subdir": "source",
+							"config-opts": [
+								"-DHIGH_BIT_DEPTH=ON",
+								"-DEXPORT_C_API=OFF",
+								"-DENABLE_SHARED=OFF",
+								"-DENABLE_CLI=OFF",
+								"-DENABLE_ASSEMBLY=OFF",
+								"-DMAIN12=ON"
+							],
+							"sources": [
+								{
+									"type": "archive",
+									"url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+									"sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
+									"x-checker-data": {
+										"type": "anitya",
+										"project-id": 7275,
+										"stable-only": true,
+										"url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+									}
+								}
+							],
+							"post-install": [
+								"mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-12.a"
+							]
+						}
+					]
+				}
 			],
 			"sources": [
 				{
 					"type": "archive",
-					"url": "https://github.com/strukturag/libheif/releases/download/v1.14.0/libheif-1.14.0.tar.gz",
-					"sha256": "9a2b969d827e162fa9eba582ebd0c9f6891f16e426ef608d089b1f24962295b5"
+					"url": "https://github.com/strukturag/libheif/releases/download/v1.13.0/libheif-1.13.0.tar.gz",
+					"sha256": "c20ae01bace39e89298f6352f1ff4a54b415b33b9743902da798e8a1e51d7ca1",
+					"x-checker-data": {
+						"type": "anitya",
+						"project-id": 64439,
+						"stable-only": true,
+						"url-template": "https://github.com/strukturag/libheif/releases/download/v$version/libheif-$version.tar.gz"
+					}
 				}
 			]
 		},
@@ -162,6 +244,78 @@
 					"type": "git",
 					"url": "https://github.com/carlobaldassi/liblqr.git",
 					"commit": "7b88c05cec2f0e60125e1cfcad18c79721a2b27c"
+				}
+			]
+		},
+		{
+			"name": "imath",
+			"buildsystem": "cmake",
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.6.tar.gz",
+					"sha256": "ea5592230f5ab917bea3ceab266cf38eb4aa4a523078d46eac0f5a89c52304db"
+				}
+			]
+		},
+		{
+			"name": "openexr",
+			"buildsystem": "cmake",
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.5.tar.gz",
+					"sha256": "93925805c1fc4f8162b35f0ae109c4a75344e6decae5a240afdfce25f8a433ec"
+				}
+			]
+		},
+		{
+			"name": "libjxl",
+			"config-opts": [
+				"-DBUILD_TESTING=OFF",
+				"-DJPEGXL_ENABLE_BENCHMARK=OFF",
+				"-DJPEGXL_ENABLE_DOXYGEN=OFF",
+				"-DJPEGXL_ENABLE_EXAMPLES=OFF",
+				"-DJPEGXL_ENABLE_JNI=OFF",
+				"-DJPEGXL_ENABLE_MANPAGES=OFF",
+				"-DJPEGXL_ENABLE_PLUGINS=OFF",
+				"-DJPEGXL_ENABLE_SJPEG=OFF",
+				"-DJPEGXL_ENABLE_SKCMS=OFF",
+				"-DJPEGXL_ENABLE_TCMALLOC=OFF",
+				"-DJPEGXL_ENABLE_TOOLS=OFF",
+				"-DJPEGXL_FORCE_SYSTEM_BROTLI=ON",
+				"-DJPEGXL_FORCE_SYSTEM_HWY=ON",
+				"-DJPEGXL_FORCE_SYSTEM_LCMS2=ON",
+				"-DJPEGXL_WARNINGS_AS_ERRORS=OFF"
+			],
+			"buildsystem": "cmake-ninja",
+			"builddir": true,
+			"modules": [
+				{
+					"name": "libhwy",
+					"config-opts": [
+						"-DBUILD_TESTING=OFF",
+						"-DBUILD_SHARED_LIBS=OFF",
+						"-DHWY_ENABLE_EXAMPLES=OFF",
+						"-DHWY_ENABLE_TESTS=OFF",
+						"-DHWY_FORCE_STATIC_LIBS=ON"
+					],
+					"buildsystem": "cmake-ninja",
+					"builddir": true,
+					"sources": [
+						{
+							"type": "archive",
+							"url": "https://github.com/google/highway/archive/refs/tags/1.0.2.tar.gz",
+							"sha256": "e8ef71236ac0d97f12d553ec1ffc5b6375d57b5f0b860c7447dd69b6ed1072db"
+						}
+					]
+				}
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/libjxl/libjxl/archive/refs/tags/v0.7.0.tar.gz",
+					"sha256": "3114bba1fabb36f6f4adc2632717209aa6f84077bc4e93b420e0d63fa0455c5e"
 				}
 			]
 		},
@@ -178,6 +332,22 @@
 					"type": "git",
 					"url": "https://github.com/ImageMagick/ImageMagick.git",
 					"commit": "cbfe7265e210932a34d4949a90633a65c3f013b3"
+				}
+			]
+		},
+		{
+			"name": "gdk-pixbuff-jxl-loader",
+			"buildsystem": "simple",
+			"build-commands": [
+				"cd plugins/gdk-pixbuf && cmake -DCMAKE_INSTALL_PREFIX=/app",
+				"cd plugins/gdk-pixbuf && make install",
+				"/app/bin/gdk-pixbuf-query-loaders > /app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://gitlab.com/wg1/jpeg-xl/-/archive/6e459e032a978886fced9714fad59567a39fd47d/jpeg-xl-6e459e032a978886fced9714fad59567a39fd47d.tar.gz?path=plugins/gdk-pixbuf",
+					"sha256": "dd965108bbf342c060b721f4cca9880ebacc2bd36dae3db5e8e2ca3fdc86fe02"
 				}
 			]
 		},
