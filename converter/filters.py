@@ -19,11 +19,11 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml', 'image/heic', 'image/bmp', 'image/avif']
-image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif']
-output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf', 'image/heic', 'image/heif', 'image/bmp', 'image/avif']
-output_image_extensions = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif'])
-popular_output_image_extensions = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif'])
+image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml', 'image/heic', 'image/bmp', 'image/avif', 'image/jxl']
+image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl']
+output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf', 'image/heic', 'image/heif', 'image/bmp', 'image/avif', 'image/jxl']
+output_image_extensions = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl'])
+popular_output_image_extensions = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl'])
 
 """ Formats getter function. """
 def get_format_filters(type):
@@ -44,7 +44,8 @@ extention_to_mime = {
     'heic': 'image/heic',
     'heif': 'image/heif',
     'bmp': 'image/bmp',
-    'avif': 'iamge/avif'
+    'avif': 'iamge/avif',
+    'jxl': 'image/jxl'
 }
 
 def is_extenstion_output(extension):
