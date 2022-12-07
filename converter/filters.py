@@ -44,7 +44,7 @@ extention_to_mime = {
     'heic': 'image/heic',
     'heif': 'image/heif',
     'bmp': 'image/bmp',
-    'avif': 'iamge/avif',
+    'avif': 'image/avif',
     'jxl': 'image/jxl'
 }
 
