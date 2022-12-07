@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-05 20:42-0500\n"
+"POT-Creation-Date: 2022-12-07 09:40-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -60,7 +60,8 @@ msgid "Overview"
 msgstr "Übersicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-msgid "Added HEIC as well as BMP support."
+#, fuzzy
+msgid "Added AVIF and JXL support."
 msgstr "Unterstützung für HEIC und BMP hinzugefügt."
 
 #: converter/file_chooser.py:167
@@ -83,7 +84,7 @@ msgstr "»{}« hat das falsche Format"
 msgid "Select output location"
 msgstr "Ausgabeort auswählen"
 
-#: converter/filters.py:68
+#: converter/filters.py:70
 msgid "Supported image files"
 msgstr "Unterstützte Bilddateien"
 
@@ -119,11 +120,11 @@ msgctxt "shortcut window"
 msgid "Open Image"
 msgstr "Bild öffnen"
 
-#: converter/window.py:327
+#: converter/window.py:336
 msgid "Image converted"
 msgstr "Bild wurde umgewandelt"
 
-#: converter/window.py:328
+#: converter/window.py:337
 msgid "Open"
 msgstr "Öffnen"
 
@@ -135,11 +136,11 @@ msgstr "Algorithmen von"
 msgid "Code and Design Borrowed from"
 msgstr "Code und Gestaltung entlehnt von"
 
-#: converter/main.py:107
+#: converter/main.py:108
 msgid "Sample Image from"
 msgstr "Beispielbild von"
 
-#: converter/main.py:146
+#: converter/main.py:147
 msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
