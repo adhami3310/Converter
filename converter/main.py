@@ -80,7 +80,7 @@ class ConverterApplication(Adw.Application):
                                 application_name='Converter',
                                 application_icon='io.gitlab.adhami3310.Converter',
                                 developer_name='Khaleel Al-Adhami',
-                                version='1.3.0',
+                                version='1.3.1',
                                 copyright='Copyright © 2022 Khaleel Al-Adhami',
                                 license_type=Gtk.License.GPL_3_0_ONLY,
                                 website='https://gitlab.com/adhami3310/Converter',
@@ -96,6 +96,7 @@ class ConverterApplication(Adw.Application):
         about.add_acknowledgement_section(
             _("Code and Design Borrowed from"),
             [
+                "GIMP https://gitlab.gnome.org/GNOME/gimp"
                 "Upscaler https://gitlab.com/TheEvilSkeleton/Upscaler",
                 "Avvie https://github.com/Taiko2k/Avvie",
                 "Bottles https://github.com/bottlesdevs/Bottles",

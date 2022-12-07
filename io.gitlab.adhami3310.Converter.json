@@ -4,8 +4,7 @@
 	"runtime-version": "43",
 	"sdk": "org.gnome.Sdk",
 	"sdk-extensions" : [
-		"org.freedesktop.Sdk.Extension.rust-stable",
-		"org.freedesktop.Sdk.Extension.llvm14"
+		"org.freedesktop.Sdk.Extension.rust-stable"
 	],
 	"command": "converter",
 	"finish-args": [
@@ -26,12 +25,6 @@
 		"*.la",
 		"*.a"
 	],
-	"build-options": {
-		"append-path" : "/usr/lib/sdk/rust-stable/bin",
-		"env" : {
-			"CARGO_HOME" : "/run/build/converter/cargo"
-		}
-	},
 	"modules": [
 		{
 			"name": "blueprint-compiler",
@@ -87,6 +80,7 @@
 				}
 			],
 			"build-options": {
+				"append-path" : "/usr/lib/sdk/rust-stable/bin",
 				"env" : {
 					"CARGO_HOME" : "/run/build/librsvg/cargo"
 				}
@@ -106,8 +100,7 @@
 		{
 			"name": "libheif",
 			"cleanup": [
-				"/bin",
-				"/share/thumbnailers"
+				"/bin"
 			],
 			"modules": [
 				{

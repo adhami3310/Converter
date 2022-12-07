@@ -10,21 +10,16 @@ Converter is a GTK4+libadwaita application that allows you to convert and manipu
 
 ## Features
 
-Converter supports converting from the following datatypes:
- - image/jpeg
- - image/png
- - image/webp
- - image/svg+xml (with scaling)
- - image/heif and image/heic
- - image/bmp
-
-Into the following datatypes:
- - image/jpeg
- - image/png
- - image/webp
- - application/pdf
- - image/heif and image/heic
- - image/bmp
+Converter supports converting the following datatypes:
+ - image/jpeg (RW)
+ - image/png (RW)
+ - image/webp (RW)
+ - image/svg+xml (R) (with scaling)
+ - image/heif (RW) and image/heic (RW)
+ - image/bmp (RW)
+ - image/avif (RW)
+ - image/jxl (RW)
+ - application/pdf (W)
 
 It also supports the following options:
  - Changing quality value of lossy compression.
