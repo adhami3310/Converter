@@ -60,9 +60,8 @@ msgid "Overview"
 msgstr "Übersicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-#, fuzzy
 msgid "Added AVIF and JXL support."
-msgstr "Unterstützung für HEIC und BMP hinzugefügt."
+msgstr "Unterstützung für AVIF und JXL hinzugefügt."
 
 #: converter/file_chooser.py:167
 msgid "Select an image"
