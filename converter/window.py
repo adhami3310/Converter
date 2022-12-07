@@ -283,7 +283,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                        ]+self.__get_resized_commands()+[
                        self.output_file_path
                        ]
-            command = ['magick', 'identify', '-list', 'format']
+#            command = ['magick', 'identify', '-list', 'format']
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
             print(*command)
