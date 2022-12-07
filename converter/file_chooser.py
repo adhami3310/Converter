@@ -26,66 +26,61 @@ from gettext import gettext as _
 
 class FileChooser():
 
+    """ Run in a separate thread. """
     def load_command_file(self, file_path, *args):
         """ Run in a separate thread. """
-        def load_file():
-            """ Run in a separate thread. """
-            def run():
-                """ Confirm file is a valid image. """
-                displayed = True
-                try:
-                    print(f'Input file: {self.input_file_path}')
-                    image_file = GdkPixbuf.Pixbuf.new_from_file(self.input_file_path)
-                except GLib.GError:
-                    print(f'Invalid image file path')
-                    self.stack_converter.set_visible_child_name('stack_invalid_image')
-                    displayed = False
+        def run():
+            """ Confirm file is a valid image. """
+            displayed = True
+            try:
+                print(f'Input file: {self.input_file_path}')
+                image_file = GdkPixbuf.Pixbuf.new_from_file(self.input_file_path)
+            except GLib.GError:
+                print(f'Invalid image file path')
+                self.stack_converter.set_visible_child_name('stack_invalid_image')
+                displayed = False
 #                        return
 
-                if displayed:
-                    self.image_size = GdkPixbuf.Pixbuf.get_file_info(self.input_file_path)
+            if displayed:
+                self.image_size = GdkPixbuf.Pixbuf.get_file_info(self.input_file_path)
 
-                    """ Display image. """
-                    self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
-                    self.image.set_pixbuf(image_file)
-                else:
-                    self.image.set_pixbuf(None)
-                    self.action_image_size.set_subtitle('Unknown')
-                    self.image_size = [0, '', '']
-                self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
-                self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
-                self.filetype.grab_focus()
+                """ Display image. """
+                self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
+                self.image.set_pixbuf(image_file)
+            else:
+                self.image.set_pixbuf(None)
+                self.action_image_size.set_subtitle('Unknown')
+                self.image_size = [0, '', '']
+            self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
+            self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
+            self.filetype.grab_focus()
 
-                """ Reset widgets. """
-                # self.spin_scale.set_value(default_value)
-                self.label_output.set_label('(None)')
-                self.button_convert.set_sensitive(False)
-                self.button_convert.set_has_tooltip(True)
-                self.resize_scale_height_value.set_text("100")
-                self.resize_scale_width_value.set_text("100")
-                self.ratio_width_value.set_text("1")
-                self.ratio_height_value.set_text("1")
-                self.resize_width_value.set_text(str(self.image_size[1]))
-                self.resize_height_value.set_text(str(self.image_size[2]))
-                self.svg_size_width_value.set_text(str(self.image_size[1]))
-                self.svg_size_height_value.set_text(str(self.image_size[2]))
-                self.resize_minmax_width_value.set_text(str(self.image_size[1]))
-                self.resize_minmax_height_value.set_text(str(self.image_size[2]))
-                self.filetype_changed()
-                self.stack_converter.set_visible_child_name('stack_convert')
-                self.button_back.show()
+            """ Reset widgets. """
+            # self.spin_scale.set_value(default_value)
+            self.resize_scale_height_value.set_text("100")
+            self.resize_scale_width_value.set_text("100")
+            self.ratio_width_value.set_text("1")
+            self.ratio_height_value.set_text("1")
+            self.resize_width_value.set_text(str(self.image_size[1]))
+            self.resize_height_value.set_text(str(self.image_size[2]))
+            self.svg_size_width_value.set_text(str(self.image_size[1]))
+            self.svg_size_height_value.set_text(str(self.image_size[2]))
+            self.resize_minmax_width_value.set_text(str(self.image_size[1]))
+            self.resize_minmax_height_value.set_text(str(self.image_size[2]))
+            self.filetype_changed()
+            self.stack_converter.set_visible_child_name('stack_convert')
+            self.button_back.show()
 
-            """ Run when run() function finishes. """
-            def callback(*args):
-                self.spinner_loading.stop()
+        """ Run when run() function finishes. """
+        def callback(*args):
+            self.spinner_loading.stop()
 
-            self.input_file_path = file_path
+        self.input_file_path = file_path
 
-            """ Run functions asynchronously. """
-            RunAsync(run, callback)
-            self.stack_converter.set_visible_child_name('stack_loading')
-            self.spinner_loading.start()
-        load_file()
+        """ Run functions asynchronously. """
+        RunAsync(run, callback)
+        self.stack_converter.set_visible_child_name('stack_loading')
+        self.spinner_loading.start()
 
 
     """ Open and load file. """
@@ -94,74 +89,7 @@ class FileChooser():
 
             """ Run if the user selects an image. """
             if response == -3:
-
-                """ Do nothing if opened image is the same as selected image. """
-
-                try:
-                    if self.input_file_path == dialog.get_file().get_path():
-                        self.stack_converter.set_visible_child_name('stack_convert')
-                        self.button_back.show()
-                        return
-                except AttributeError:
-                    pass
-
-                """ Run in a separate thread. """
-                def run():
-
-                    """ Declare variables. """
-                    self.input_file_path = dialog.get_file().get_path()
-                    """ Confirm file is a valid image. """
-                    displayed = True
-                    try:
-                        print(f'Input file: {self.input_file_path}')
-                        image_file = GdkPixbuf.Pixbuf.new_from_file(self.input_file_path)
-                    except GLib.GError:
-                        print(f'Invalid image file path')
-                        self.stack_converter.set_visible_child_name('stack_invalid_image')
-                        displayed = False
-#                        return
-
-                    if displayed:
-                        self.image_size = GdkPixbuf.Pixbuf.get_file_info(self.input_file_path)
-
-                        """ Display image. """
-                        self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
-                        self.image.set_pixbuf(image_file)
-                    else:
-                        self.image.set_pixbuf(None)
-                        self.action_image_size.set_subtitle('Unknown')
-                        self.image_size = [0, '', '']
-                    self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
-                    self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
-                    self.filetype.grab_focus()
-
-                    """ Reset widgets. """
-                    # self.spin_scale.set_value(default_value)
-                    self.label_output.set_label('(None)')
-                    self.button_convert.set_sensitive(False)
-                    self.button_convert.set_has_tooltip(True)
-                    self.resize_scale_height_value.set_text("100")
-                    self.resize_scale_width_value.set_text("100")
-                    self.ratio_width_value.set_text("1")
-                    self.ratio_height_value.set_text("1")
-                    self.resize_width_value.set_text(str(self.image_size[1]))
-                    self.resize_height_value.set_text(str(self.image_size[2]))
-                    self.svg_size_width_value.set_text(str(self.image_size[1]))
-                    self.svg_size_height_value.set_text(str(self.image_size[2]))
-                    self.resize_minmax_width_value.set_text(str(self.image_size[1]))
-                    self.resize_minmax_height_value.set_text(str(self.image_size[2]))
-                    self.filetype_changed()
-                    self.stack_converter.set_visible_child_name('stack_convert')
-                    self.button_back.show()
-
-                """ Run when run() function finishes. """
-                def callback(*args):
-                    self.spinner_loading.stop()
-
-                """ Run functions asynchronously. """
-                RunAsync(run, callback)
-                self.stack_converter.set_visible_child_name('stack_loading')
-                self.spinner_loading.start()
+                FileChooser.load_command_file(self, dialog.get_file().get_path())
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select an image'),
@@ -209,12 +137,7 @@ class FileChooser():
                 """ Set output path. """
                 self.output_file_path = str(path)
                 print(f'Output file: {self.output_file_path}')
-
-                """ Update widgets. """
-                self.label_output.set_label(basename(self.output_file_path))
-                self.button_convert.set_sensitive(True)
-                self.button_convert.set_has_tooltip(False)
-                self.button_convert.grab_focus()
+                self.convert()
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select output location'),

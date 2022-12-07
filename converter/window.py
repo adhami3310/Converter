@@ -54,8 +54,6 @@ class ConverterWindow(Adw.ApplicationWindow):
     spinner_loading = Gtk.Template.Child()
     image = Gtk.Template.Child()
     supported_output_datatypes = Gtk.Template.Child()
-    button_output = Gtk.Template.Child()
-    label_output = Gtk.Template.Child()
     svg_size_width = Gtk.Template.Child()
     svg_size_height = Gtk.Template.Child()
     svg_size_width_value = Gtk.Template.Child()
@@ -87,8 +85,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
         """ Connect signals. """
         self.button_input.connect('clicked', self.__open_file)
-        self.button_convert.connect('clicked', self.__convert)
-        self.button_output.connect('clicked', self.__output_location)
+        self.button_convert.connect('clicked', self.__convert_output)
         self.button_options.connect('clicked', self.__more_options)
         self.button_back.connect('clicked', self.__less_options)
         self.quality.connect('value-changed', self.__quality_changed)
@@ -116,10 +113,6 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __open_file(self, *args):
         FileChooser.open_file(self)
 
-    """ Select output file location. """
-    def __output_location(self, *args):
-        FileChooser.output_file(self)
-
     def toggle_datatype(self, *args):
         show_less_popular = self.settings.get_boolean("show-less-popular")
         self.settings.set_boolean("show-less-popular", not show_less_popular)
@@ -142,9 +135,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
         self.output_ext = ext
         self.__update_options()
-        self.label_output.set_label('(None)')
-        self.button_convert.set_sensitive(False)
-        self.button_convert.set_has_tooltip(True)
 
     def __update_options(self):
         self.quality_row.hide()
@@ -170,6 +160,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         if inext == 'svg':
             self.svg_size_row.show()
         self.resize_row.show()
+
     def __update_resize(self, *args):
         resize_type = self.resize_type.get_selected()
         self.resize_width.hide()
@@ -264,8 +255,10 @@ class ConverterWindow(Adw.ApplicationWindow):
         else:
             return ['-size', 'x'+self.svg_size_height_value.get_text()]
 
-    def __convert(self, *args):
+    def __convert_output(self, *args):
+        FileChooser.output_file(self)
 
+    def convert(self, *args):
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)

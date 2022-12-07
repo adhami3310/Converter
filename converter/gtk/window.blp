@@ -136,26 +136,6 @@ template ConverterWindow : .AdwApplicationWindow {
                 model: StringList supported_output_datatypes {};
               }
 
-              .AdwActionRow {
-                title: _("Save Location");
-                activatable-widget: button_output;
-
-                Button button_output {
-                  valign: center;
-
-                  Box {
-                    spacing: 6;
-
-                    Image {
-                      icon-name: "document-open-symbolic";
-                    }
-
-                    Label label_output {
-                      label: _("(None)");
-                    }
-                  }
-                }
-              }
             }
 
             .AdwPreferencesGroup {
@@ -175,9 +155,7 @@ template ConverterWindow : .AdwApplicationWindow {
                   valign: center;
                   halign: end;
                   label: _("_Convert");
-                  tooltip-text: _("Save location is missing.");
                   use-underline: true;
-                  sensitive: false;
 
                   styles [
                     "suggested-action",
