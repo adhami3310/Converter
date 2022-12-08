@@ -18,7 +18,7 @@
 
 from os.path import basename
 import subprocess
-from pathlib import PurePath
+from pathlib import PurePath, Path
 from converter.threading import RunAsync
 from gi.repository import Adw, Gtk, Gio, GdkPixbuf, GLib, Gdk
 from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions, is_extenstion_output, extention_to_mime, output_image_extensions
@@ -27,7 +27,7 @@ from gettext import gettext as _
 class FileChooser():
 
     """ Run in a separate thread. """
-    def load_command_file(self, file_path, *args):
+    def load_command_file(self, file_path: str, *args):
         """ Run in a separate thread. """
         def run():
             """ Confirm file is a valid image. """
@@ -150,5 +150,7 @@ class FileChooser():
         dialog.connect('response', convert_content)
         dialog.add_filter(set_formats_from_extensions([ext], ext))
         dialog.set_current_name(str(PurePath(self.input_file_path).with_suffix(f'.{ext}').name))
+        parent_absolute_path = str(Path(self.input_file_path).parent.absolute())
+        if not parent_absolute_path.startswith("/run"):
+            dialog.set_current_folder(Gio.File.new_for_path(parent_absolute_path))
         dialog.show()
-

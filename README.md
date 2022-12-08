@@ -1,8 +1,10 @@
+<div align="center">
 # Converter
-Converter is a GTK4+libadwaita application that allows you to convert and manipulate a given image. It is a front-end for [ImageMagick](https://github.com/ImageMagick/ImageMagick).
+A simple and easy-to-use Flatpak application build with GTK4+libadwaita for converting and manipulating images with [ImageMagick](https://github.com/ImageMagick/ImageMagick).
 
 <div align="center">
   <img src="data/screenshots/0.png">
+</div>
 </div>
 
 ## Installation
@@ -63,3 +65,8 @@ ninja -C build
 sudo ninja -C build install
 ```
 
+## Acknowledgment
+
+This is a fork of [`Upscaler`](https://gitlab.com/TheEvilSkeleton/Upscaler) by Hari Rana (TheEvilSkeleton) to convert images instead of upscaling them. Check out their project!
+
+This app uses a variety of library but the main one is [ImageMagick](https://github.com/ImageMagick/ImageMagick), which without their generous contribution to the open source community this would be nearly impossible to make.

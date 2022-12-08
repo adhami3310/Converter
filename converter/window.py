@@ -1,6 +1,6 @@
 # window.py: main window
 #
-# Copyright (C) 2022 Hari Rana / TheEvilSkeleton
+# Copyright (C) 2022 Khaleel Al-Adhami / adhami3310
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@ import os
 import subprocess
 import re
 from os.path import basename
-from gi.repository import Adw, Gtk, GLib, Gdk, Gio
+import gi
+gi.require_version('GdkWayland', '4.0')
+from gi.repository import Adw, Gtk, GLib, Gdk, Gio, GdkWayland
 import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
@@ -83,17 +85,16 @@ class ConverterWindow(Adw.ApplicationWindow):
     """ Initialize function. """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.settings = Gio.Settings('io.gitlab.adhami3310.Converter')
+        self.update_output_datatype()
+
         """ Connect signals. """
         self.button_input.connect('clicked', self.__open_file)
         self.button_convert.connect('clicked', self.__convert_output)
         self.button_options.connect('clicked', self.__more_options)
-        self.button_back.connect('clicked', self.__less_options)
+        self.button_back.connect('clicked', self.__go_back)
         self.quality.connect('value-changed', self.__quality_changed)
-        self.quality.set_value(92)
-        self.bgcolor.connect('color-set', self.__bg_changed)
-        self.settings = Gio.Settings("io.gitlab.adhami3310.Converter")
-        self.update_output_datatype()
-        self.settings.connect("changed::show-less-popular", self.update_output_datatype)
+        self.settings.connect('changed::show-less-popular', self.update_output_datatype)
         self.filetype.connect('notify::selected', self.filetype_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
         self.resize_type.connect('notify::selected', self.__update_resize)
@@ -113,56 +114,74 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __open_file(self, *args):
         FileChooser.open_file(self)
 
+    """Toggle visibility of less popular datatypes"""
     def toggle_datatype(self, *args):
         show_less_popular = self.settings.get_boolean("show-less-popular")
         self.settings.set_boolean("show-less-popular", not show_less_popular)
         self.update_output_datatype()
 
+    """Update list of output datatypes"""
     def update_output_datatype(self, *args):
-        if self.settings.get_boolean("show-less-popular"):
+        if self.settings.get_boolean('show-less-popular'):
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
             for supported_file_type in output_image_extensions:
                 self.supported_output_datatypes.append(supported_file_type)
-            self.filetype.set_selected(output_image_extensions.index("pdf"))
+            self.filetype.set_selected(output_image_extensions.index('pdf'))
         else:
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
             for supported_file_type in popular_output_image_extensions:
                 self.supported_output_datatypes.append(supported_file_type)
-            self.filetype.set_selected(popular_output_image_extensions.index("pdf"))
+            self.filetype.set_selected(popular_output_image_extensions.index('pdf'))
         self.output_ext = 'pdf'
 
+    """Selected output filetype changed"""
     def filetype_changed(self, *args):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
         self.output_ext = ext
         self.__update_options()
 
+    """Updates visible options"""
     def __update_options(self):
+
+        """Hida all options"""
         self.quality_row.hide()
         self.bgcolor_row.hide()
         self.resize_row.hide()
         self.resize_row.set_enable_expansion(False)
         self.svg_size_row.hide()
         self.svg_size_row.set_enable_expansion(False)
+
         inext = self.input_ext
         outext = self.output_ext
-        if {'jpg', 'webp', 'jpeg', 'pdf', 'heif', 'heic', 'avif', 'jxl'}.intersection({inext, outext}):
+
+        """Datatypes that can have compression"""
+        if {'jpg', 'webp', 'jpeg', 'heif', 'heic', 'avif', 'jxl'}.intersection({inext, outext}):
+            self.quality.set_value(92)
             self.quality_row.show()
-        if {'png', 'webp', 'svg', 'heic', 'heif', 'avif', 'jxl'}.intersection({inext, outext}):
+
+        """Datatypes with an alpha layer"""
+        if inext in {'png', 'webp', 'svg', 'heic', 'heif', 'avif', 'jxl'}:
             self.bgcolor_row.show()
-            bgcolor = Gdk.RGBA()
+
             self.bgcolor.set_use_alpha(True)
-            bgcolor.parse("#00000000")
-            self.bgcolor.set_rgba(bgcolor)
+            self.bgcolor.set_rgba(Gdk.RGBA().parse('#00000000'))
+
+            """Datatypes with no alpha layer"""
             if outext in {'jpg', 'jpeg', 'pdf', 'bmp'}:
                 self.bgcolor.set_use_alpha(False)
-                bgcolor.parse("#FFF")
-                self.bgcolor.set_rgba(bgcolor)
+                self.bgcolor.set_rgba(Gdk.RGBA().parse('#FFFFFF'))
+
+        """SVG scaling option"""
         if inext == 'svg':
             self.svg_size_row.show()
+
         self.resize_row.show()
 
+    """Updates visible resize options"""
     def __update_resize(self, *args):
         resize_type = self.resize_type.get_selected()
+
+        """Hide all resize options"""
         self.resize_width.hide()
         self.resize_height.hide()
         self.resize_scale_width.hide()
@@ -171,13 +190,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.ratio_width.hide()
         self.resize_minmax_width.hide()
         self.resize_minmax_height.hide()
-        if resize_type == 0:
+
+        """Show relevant resize options"""
+        if resize_type == 0: #percentage
             self.resize_scale_width.show()
             self.resize_scale_height.show()
-        elif resize_type == 4:
-            self.ratio_height.show()
-            self.ratio_width.show()
-        elif resize_type == 1:
+        elif resize_type == 1: #exact
             self.resize_height.show()
             self.resize_width.show()
             if self.resize_width.get_selected() == 0:
@@ -188,52 +206,55 @@ class ConverterWindow(Adw.ApplicationWindow):
                 self.resize_height_value.show()
             else:
                 self.resize_height_value.hide()
-        else:
+        elif resize_type == 2 or resize_type == 3: #min or max
             self.resize_minmax_width.show()
             self.resize_minmax_height.show()
+        elif resize_type == 4: #ratio
+            self.ratio_height.show()
+            self.ratio_width.show()
 
+    """Update scaling width vs height"""
     def __update_size(self, *args):
-        if self.svg_size_type.get_selected() == 0:
+        if self.svg_size_type.get_selected() == 0: #width
             self.svg_size_width.show()
             self.svg_size_height.hide()
-        else:
+        else: #height
             self.svg_size_height.show()
             self.svg_size_width.hide()
 
+    """Update label showing quality"""
     def __quality_changed(self, *args):
         self.quality_label.set_label(str(int(self.quality.get_value())))
 
+    """Press more options"""
     def __more_options(self, *args):
         self.stack_converter.set_visible_child_name('options_page')
 
-    def __less_options(self, *args):
+    """Pressed the back button"""
+    def __go_back(self, *args):
         if self.stack_converter.get_visible_child_name() == 'stack_convert':
+            """On Converting Stack"""
             self.stack_converter.set_visible_child_name('stack_welcome_page')
             self.button_back.hide()
         else:
+            """On More Options"""
             self.stack_converter.set_visible_child_name('stack_convert')
 
-    def __bg_changed(self, *args):
-        color = self.bgcolor.get_rgba()
-        print(Gdk.RGBA.to_string(color))
-
-    """ Update progress. """
+    """ Update progress """
     def __convert_progress(self, progress):
         if self.convert_dialog:
             self.convert_dialog.set_progress(progress)
 
+    """Get resize commands of ImageMagick"""
     def __get_resized_commands(self):
         if not self.resize_row.get_expanded(): return []
         resize_filter = self.resize_filters[self.resize_filter.get_selected()]
         resize_type = self.resize_type.get_selected()
-        if resize_type == 0:
+        if resize_type == 0: #percentage
             def add_per(s):
-                if s[-1] == '%': return s
-                return s+'%'
+                return s if s[-1] == '%' else s+'%'
             return ['-filter', resize_filter, '-resize', add_per(self.resize_scale_width_value.get_text())+'x'+add_per(self.resize_scale_height_value.get_text())]
-        elif resize_type == 4:
-            return ['-filter', resize_filter, '-resize', self.ratio_width_value.get_text()+":"+self.ratio_height_value.get_text()]
-        elif resize_type == 1:
+        if resize_type == 1: #exact
             if self.resize_width.get_selected() == 0 and self.resize_height.get_selected() == 0:
                 return ['-filter', resize_filter, '-resize', self.resize_width_value.get_text()+'x'+self.resize_height_value.get_text()+'!']
             elif self.resize_width.get_selected() == 0:
@@ -242,12 +263,15 @@ class ConverterWindow(Adw.ApplicationWindow):
                 return ['-filter', resize_filter, '-resize', 'x'+self.resize_height_value.get_text()]
             else:
                 return []
-        elif resize_type == 3:
-            return ['-filter', resize_filter, '-resize', self.resize_minmax_width_value.get_text()+'x'+self.resize_minmax_height_value.get_text()+'^']
-        elif resize_type == 2:
+        if resize_type == 2: #min
             return ['-filter', resize_filter, '-resize', self.resize_minmax_width_value.get_text()+'x'+self.resize_minmax_height_value.get_text()]
+        if resize_type == 3: #max
+            return ['-filter', resize_filter, '-resize', self.resize_minmax_width_value.get_text()+'x'+self.resize_minmax_height_value.get_text()+'^']
+        if resize_type == 4: #ratio
+            return ['-filter', resize_filter, '-resize', self.ratio_width_value.get_text()+':'+self.ratio_height_value.get_text()]
         return []
 
+    """Get SVG scaling as ImageMagick command"""
     def __get_sized_commands(self):
         if not self.svg_size_row.get_expanded(): return []
         if self.svg_size_type.get_selected() == 0:
@@ -255,15 +279,17 @@ class ConverterWindow(Adw.ApplicationWindow):
         else:
             return ['-size', 'x'+self.svg_size_height_value.get_text()]
 
+    """Choose location of output"""
     def __convert_output(self, *args):
         FileChooser.output_file(self)
 
+    """Converts the input file to the output file using CLI"""
     def convert(self, *args):
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)
-        inp = None
-        out = None
+        inp = None #overwrites input_file_path
+        out = None #overwrites output_file_path
         """ Run in a separate thread. """
         def run():
             command = ['magick',
@@ -275,8 +301,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                        '-quality',
                        f'{self.quality.get_value()}'
                        ]+self.__get_resized_commands()+[
-                       out if out else self.output_file_path
-                       ]
+                       out if out else self.output_file_path]
 #            command = ['magick', 'identify', '-list', 'format']
             process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
@@ -310,32 +335,30 @@ class ConverterWindow(Adw.ApplicationWindow):
     """ Ask the user if they want to open the file. """
     def converting_completed_dialog(self, *args):
         def response(_widget):
-            path = f'file://{self.output_file_path}'
-            file = open(self.output_file_path, "r")
-            fid = file.fileno()
-            connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
-            proxy = Gio.DBusProxy.new_sync(connection,
-                                            Gio.DBusProxyFlags.NONE,
-                                            None,
-                                            "org.freedesktop.portal.Desktop",
-                                            "/org/freedesktop/portal/desktop",
-                                            "org.freedesktop.portal.OpenURI",
-                                            None)
-            try:
-                proxy.call_with_unix_fd_list_sync("OpenFile", GLib.Variant("(sha{sv})",("",0,{"ask": GLib.Variant("b", True)})), Gio.DBusCallFlags.NONE, -1, Gio.UnixFDList.new_from_array([fid]), None)
-            except Exception as e:
-                print("Error: %s\n" % str(e))
-
+            def show_uri(handle, fid):
+                connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+                proxy = Gio.DBusProxy.new_sync(connection,
+                                               Gio.DBusProxyFlags.NONE,
+                                               None,
+                                               'org.freedesktop.portal.Desktop',
+                                               '/org/freedesktop/portal/desktop',
+                                               'org.freedesktop.portal.OpenURI',
+                                                None)
+                try:
+                    print(handle)
+                    proxy.call_with_unix_fd_list_sync('OpenFile',
+                                                      GLib.Variant('(sha{sv})', (handle, 0, {'ask': GLib.Variant('b', True)})),
+                                                      Gio.DBusCallFlags.NONE,
+                                                      -1,
+                                                      Gio.UnixFDList.new_from_array([fid]),
+                                                      None)
+                except Exception as e:
+                    print(f'Error: {e}')
+            output_file = open(self.output_file_path, 'r')
+            fid = output_file.fileno()
+            show_uri('', fid)
         toast = Adw.Toast.new(_('Image converted'))
         toast.set_button_label(_('Open'))
         toast.connect('button-clicked', response)
         self.toast.add_toast(toast)
 
-
-    """ Update post-convert image size as the user adjusts the spinner. """
-    # def __update_post_convert_image_size(self, *args):
-    #     convert_image_size = [
-    #         self.image_size[1] * int(self.spin_scale.get_value()),
-    #         self.image_size[2] * int(self.spin_scale.get_value()),
-    #     ]
-    #     self.action_convert_image_size.set_subtitle(f'{convert_image_size[0]} × {convert_image_size[1]}')
