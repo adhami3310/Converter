@@ -1,10 +1,16 @@
 <div align="center">
-# Converter
-A simple and easy-to-use Flatpak application build with GTK4+libadwaita for converting and manipulating images with [ImageMagick](https://github.com/ImageMagick/ImageMagick).
+<h1>Converter</h1>
 
-<div align="center">
-  <img src="data/screenshots/0.png">
-</div>
+A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
+
+[![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
+![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)
+[![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
+
+<br>
+
+<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
+
 </div>
 
 ## Installation
