@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-07 09:40-0500\n"
-"PO-Revision-Date: 2022-12-03 19:26+0100\n"
+"PO-Revision-Date: 2022-12-08 12:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
 #: converter/gtk/window.blp:9 converter/gtk/window.blp:39
@@ -62,7 +62,7 @@ msgstr "Anteprima"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
 msgid "Added AVIF and JXL support."
-msgstr ""
+msgstr "Aggiunto supporto per AVIF e JXL."
 
 #: converter/file_chooser.py:167
 msgid "Select an image"
@@ -141,14 +141,14 @@ msgid "Sample Image from"
 msgstr "Immagine di esempio di"
 
 #: converter/main.py:147
-#, fuzzy
 msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
 "Mattia Borda <mattiagiovanni.borda@icloud.com>"
 msgstr ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Irénée Thirion <irenee.thirion@e.email>"
+"Irénée Thirion <irenee.thirion@e.email>\n"
+"Mattia Borda <mattiagiovanni.borda@icloud.com>"
 
 #: converter/gtk/window.blp:47
 msgid "_Open Image…"
@@ -212,13 +212,12 @@ msgid "Background Color"
 msgstr "Colore di sfondo"
 
 #: converter/gtk/window.blp:242
-#, fuzzy
 msgid "Scale Preserving Ratio"
-msgstr "Mantieni proporzioni"
+msgstr "Ridimensiona mantenendo proporzioni"
 
 #: converter/gtk/window.blp:245
 msgid "Dimension"
-msgstr ""
+msgstr "Dimensione"
 
 #: converter/gtk/window.blp:248 converter/gtk/window.blp:292
 #: converter/gtk/window.blp:318
@@ -231,14 +230,12 @@ msgid "Height"
 msgstr "Altezza"
 
 #: converter/gtk/window.blp:253
-#, fuzzy
 msgid "Width in Pixels"
-msgstr "Pixel minimi"
+msgstr "Larghezza (pixel)"
 
 #: converter/gtk/window.blp:263
-#, fuzzy
 msgid "Height in Pixels"
-msgstr "Pixel minimi"
+msgstr "Altezza (pixel)"
 
 #: converter/gtk/window.blp:275
 msgid "Resize"
@@ -302,7 +299,7 @@ msgstr "Apri file…"
 
 #: converter/gtk/window.blp:404
 msgid "Show Less Popular Datatypes"
-msgstr ""
+msgstr "Mostra tipi di immagini meno popolari"
 
 #: converter/gtk/window.blp:416
 msgid "Keyboard Shortcuts"
@@ -328,7 +325,7 @@ msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml:6
 msgid "Shows less popular datatypes in the menu"
-msgstr ""
+msgstr "Mostra tipi di immagini meno popolari nel menu"
 
 #~ msgid "Added \"Open With\" functionality."
 #~ msgstr "Aggiunta funzione \"Apri con\"."
