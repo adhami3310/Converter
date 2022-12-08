@@ -3,11 +3,8 @@
 
 A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
 
-<br>
-<br>
-
 [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
-![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)
+[![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/tags/v1.3.1)
 [![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
 
 
