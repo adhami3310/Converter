@@ -1,78 +1,79 @@
-<div align="center">
-<h1>Converter</h1>
+    <div align="center">
+    <h1>Converter</h1>
 
-A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
+    A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
 
-[![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
-![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)
-[![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
+    <br>
 
-<br>
+    [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
+    ![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)
+    [![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
 
-<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
 
-</div>
+    <img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
 
-## Installation
-<a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+    </div>
 
-## Features
+    ## Installation
+    <a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
-Converter supports converting the following datatypes:
- - image/jpeg (RW)
- - image/png (RW)
- - image/webp (RW)
- - image/svg+xml (R) (with scaling)
- - image/heif (RW) and image/heic (RW)
- - image/bmp (RW)
- - image/avif (RW)
- - image/jxl (RW)
- - application/pdf (W)
+    ## Features
 
-It also supports the following options:
- - Changing quality value of lossy compression.
- - Changing the color value of the alpha layer.
- - Changing the DPI of SVG images.
- - Scaleing and resizing the image to given resolution or ratio.
+    Converter supports converting the following datatypes:
+     - image/jpeg (RW)
+     - image/png (RW)
+     - image/webp (RW)
+     - image/svg+xml (R) (with scaling)
+     - image/heif (RW) and image/heic (RW)
+     - image/bmp (RW)
+     - image/avif (RW)
+     - image/jxl (RW)
+     - application/pdf (W)
 
-ImageMagick supports many other datatypes. I will add more and possibly even add more options. If you want me to make something of a higher priority please start an issue.
+    It also supports the following options:
+     - Changing quality value of lossy compression.
+     - Changing the color value of the alpha layer.
+     - Changing the DPI of SVG images.
+     - Scaleing and resizing the image to given resolution or ratio.
 
-## Contributing
-Issues and merge requests are more than welcome. However, please take the following into consideration:
+    ImageMagick supports many other datatypes. I will add more and possibly even add more options. If you want me to make something of a higher priority please start an issue.
 
-- This project follows the [GNOME Code of Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct)
-- Only Flatpak is supported
+    ## Contributing
+    Issues and merge requests are more than welcome. However, please take the following into consideration:
 
-## Development
+    - This project follows the [GNOME Code of Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct)
+    - Only Flatpak is supported
 
-### GNOME Builder
-The recommended method is to use GNOME Builder:
+    ## Development
 
-1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/) from Flathub
-1. Open Builder and select "Clone Repository..."
-1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
-1. Press "Run Project" (▶) at the top, or `Ctrl`+`Shift`+`[Spacebar]`.
+    ### GNOME Builder
+    The recommended method is to use GNOME Builder:
 
-### Flatpak
-You can install Converter from the latest commit:
+    1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/) from Flathub
+    1. Open Builder and select "Clone Repository..."
+    1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
+    1. Press "Run Project" (▶) at the top, or `Ctrl`+`Shift`+`[Spacebar]`.
 
-1. Install [`org.flatpak.Builder`](https://github.com/flathub/org.flatpak.Builder) from Flathub
-1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
-1. Run `flatpak run org.flatpak.Builder --install --install-deps-from=flathub --default-branch=master --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository (use `--user` if necessary)
+    ### Flatpak
+    You can install Converter from the latest commit:
 
-### Meson
-You can build and install on your host system by directly using the Meson buildsystem:
+    1. Install [`org.flatpak.Builder`](https://github.com/flathub/org.flatpak.Builder) from Flathub
+    1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
+    1. Run `flatpak run org.flatpak.Builder --install --install-deps-from=flathub --default-branch=master --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository (use `--user` if necessary)
 
-1. Install `blueprint-compiler`
-1. Run the following commands (with `/usr` prefix):
-```
-meson --prefix=/usr build
-ninja -C build
-sudo ninja -C build install
-```
+    ### Meson
+    You can build and install on your host system by directly using the Meson buildsystem:
 
-## Acknowledgment
+    1. Install `blueprint-compiler`
+    1. Run the following commands (with `/usr` prefix):
+    ```
+    meson --prefix=/usr build
+    ninja -C build
+    sudo ninja -C build install
+    ```
 
-This is a fork of [`Upscaler`](https://gitlab.com/TheEvilSkeleton/Upscaler) by Hari Rana (TheEvilSkeleton) to convert images instead of upscaling them. Check out their project!
+    ## Acknowledgment
 
-This app uses a variety of library but the main one is [ImageMagick](https://github.com/ImageMagick/ImageMagick), which without their generous contribution to the open source community this would be nearly impossible to make.
+    This is a fork of [`Upscaler`](https://gitlab.com/TheEvilSkeleton/Upscaler) by Hari Rana (TheEvilSkeleton) to convert images instead of upscaling them. Check out their project!
+
+    This app uses a variety of library but the main one is [ImageMagick](https://github.com/ImageMagick/ImageMagick), which without their generous contribution to the open source community this would be nearly impossible to make.
