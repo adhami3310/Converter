@@ -28,6 +28,9 @@ template ConverterWindow : .AdwApplicationWindow {
 
     }
 
+
+
+
     .AdwToastOverlay toast {
       Stack stack_converter {
         transition-type: slide_left_right;
@@ -41,16 +44,23 @@ template ConverterWindow : .AdwApplicationWindow {
             vexpand: true;
             icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             child:
-            Button button_input {
-              valign: center;
-              halign: center;
-              label: _("_Open Image…");
-              use-underline: true;
+            Box{
+              orientation: vertical;
+              spacing: 12;
+              Button button_input {
+                valign: center;
+                halign: center;
+                label: _("_Open Image…");
+                use-underline: true;
 
-              styles [
-                "suggested-action",
-                "pill",
-              ]
+                styles [
+                  "suggested-action",
+                  "pill",
+                ]
+              }
+              Label drop_label {
+                label: _("…or just drop it");
+              }
             }
 
             ;
@@ -66,6 +76,17 @@ template ConverterWindow : .AdwApplicationWindow {
             Spinner spinner_loading {
               valign: center;
             }
+          }
+
+          ;
+        }
+
+        StackPage {
+          name: "stack_drop";
+          child:
+          .AdwStatusPage drop_overlay {
+            icon-name: "system-run-symbolic";
+            title: _("Drop the image to load it");
           }
 
           ;
@@ -173,7 +194,7 @@ template ConverterWindow : .AdwApplicationWindow {
           name: "stack_invalid_image";
           child:
           .AdwStatusPage invalid_image {
-            icon-name: "image-missing-symbolic";
+            icon-name: "im-symbolic";
             title: _("Could not Load Image");
             description: _("This image could be corrupted or may use an unsupported file format.");
             hexpand: true;

@@ -29,7 +29,7 @@ class FileChooser:
         callback_good = data[0][0]
         callback_bad = data[0][1]
         input_file_path = data[1]
-        input_ext = basename(splitext(input_file_path)[1])[1:]
+        input_ext = basename(splitext(input_file_path)[1])[1:].lower()
 
         if input_ext not in converter.filters.supported_input_formats:
             callback_bad(_(f'’{input_ext}’ is not supported'))
@@ -62,8 +62,9 @@ class FileChooser:
 
     """ Run in a separate thread. """
     @staticmethod
-    def load_file(file, callback_good, callback_error):
+    def load_file(file, callback_start, callback_good, callback_error):
         print(f"Input file: {file.get_path()}")
+        callback_start()
         file.read_async(GLib.PRIORITY_DEFAULT,
                         None,
                         FileChooser.__open_file_done,
@@ -72,7 +73,7 @@ class FileChooser:
 
     """ Open and load file. """
     @staticmethod
-    def open_file(parent, callback_good, callback_error, *args):
+    def open_file(parent, current_path, callback_start, callback_good, callback_error, *args):
         def load_file(_dialog, response):
 
             """ Run if the user selects an image. """
@@ -81,7 +82,10 @@ class FileChooser:
                 return
 
             file = dialog.get_file()
-            FileChooser.load_file(file, callback_good, callback_error)
+            if file.get_path() == current_path:
+                return
+
+            FileChooser.load_file(file, callback_start, callback_good, callback_error)
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select an image'),

@@ -92,7 +92,12 @@ class ConverterWindow(Adw.ApplicationWindow):
     ratio_width_value = Gtk.Template.Child()
     ratio_height_value = Gtk.Template.Child()
     invalid_image = Gtk.Template.Child()
+    drop_overlay = Gtk.Template.Child()
+    content = Gdk.ContentFormats.new_for_gtype(Gio.File)
+    target = Gtk.DropTarget(formats=content, actions=Gdk.DragAction.COPY)
     resize_filters = ['Point', 'Quadratic', 'Cubic', 'Mitchell', 'Gaussian', 'Lanczos']
+
+    style_provider = Gtk.CssProvider()
 
     """ Initialize function. """
     def __init__(self, **kwargs):
@@ -115,6 +120,10 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.resize_height.connect('notify::selected', self.__update_resize)
         self.svg_size_row.connect('notify::expanded', self.__update_size)
         self.svg_size_type.connect('notify::selected', self.__update_size)
+        self.target.connect('drop', self.__on_drop)
+        self.add_controller(self.target)
+        self.target.connect('enter', self.__on_enter)
+        self.target.connect('leave', self.__on_leave)
 
         for resize_filter in self.resize_filters:
             self.filters.append(resize_filter)
@@ -122,6 +131,16 @@ class ConverterWindow(Adw.ApplicationWindow):
         """ Declare variables. """
         self.convert_dialog = None
         self.options_window = None
+        self.input_file_path = None
+
+        gtk_context = self.drop_overlay.get_style_context()
+        Gtk.StyleContext.add_class(gtk_context, "dragndrop_overlay")
+        self.style_provider.load_from_data(b".dragndrop_overlay { background: rgba(41, 65, 94, 0.2);}")
+        Gtk.StyleContext.add_provider(
+            gtk_context,
+            self.style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_USER
+        )
 
     def __on_file_open(self, input_file_path, pixbuf):
         """ Set variables. """
@@ -151,25 +170,42 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     def __on_file_open_error(self, error):
         if error:
+            self.input_file_path = None
             self.stack_converter.set_visible_child_name('stack_invalid_image')
             self.invalid_image.set_description(str(error))
-        else:
+        elif self.input_file_path is not None:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
+        else:
+            self.stack_converter.set_visible_child_name('stack_convert')
+
+    def __on_file_start(self):
+        self.stack_converter.set_visible_child_name('stack_loading')
+        self.spinner_loading.start()
 
     """ Open file and display it. """
     def load_file(self, file_path):
-        self.stack_converter.set_visible_child_name('stack_loading')
-        self.spinner_loading.start()
+        if file_path == self.input_file_path: return
+        self.input_file_path = None
         file = Gio.File.new_for_path(file_path)
         FileChooser.load_file(file,
+                              self.__on_file_start,
+                              self.__on_file_open,
+                              self.__on_file_open_error)
+
+    """ Open gfile and display it. """
+    def load_gfile(self, gfile):
+        if gfile.get_path() == self.input_file_path: return
+        self.input_file_path = None
+        FileChooser.load_file(gfile,
+                              self.__on_file_start,
                               self.__on_file_open,
                               self.__on_file_open_error)
 
         """ Open a file chooser and load the file. """
     def open_file(self, *args):
-        self.stack_converter.set_visible_child_name('stack_loading')
-        self.spinner_loading.start()
         FileChooser.open_file(self,
+                              self.input_file_path,
+                              self.__on_file_start,
                               self.__on_file_open,
                               self.__on_file_open_error)
 
@@ -194,6 +230,19 @@ class ConverterWindow(Adw.ApplicationWindow):
                                 directory,
                                 good,
                                 bad)
+
+    def __on_drop(self, _, file: Gio.File, *args):
+        self.load_gfile(file)
+
+    def __on_enter(self,*args):
+        self.stack_converter.set_transition_type(1)
+        self.previous_stack = self.stack_converter.get_visible_child_name()
+        self.stack_converter.set_visible_child_name('stack_drop')
+        return Gdk.DragAction.COPY
+
+    def __on_leave(self, *args):
+        self.stack_converter.set_visible_child_name(self.previous_stack)
+        self.stack_converter.set_transition_type(6)
 
     """Toggle visibility of less popular datatypes"""
     def toggle_datatype(self, *args):
