@@ -11,7 +11,7 @@
 
   <description>
     <p>
-      Converter allows you to convert and manipulate a given image. It is a front-end for ImageMagick.
+      A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
     </p>
   </description>
 

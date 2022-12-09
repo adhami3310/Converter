@@ -1,6 +1,6 @@
-# main.py: main application
+# main.py: main application, base borrowed from TheEvilSkeleton/Upscaler
 #
-# Copyright (C) 2022 Hari Rana / TheEvilSkeleton
+# Copyright (C) 2022 Khaleel Al-Adhami / adhami3310
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ gi.require_version('Adw', '1')
 import sys
 from gi.repository import Adw, Gtk, Gio, GLib
 from .window import ConverterWindow
-from converter.file_chooser import FileChooser
 from gettext import gettext as _
 
 
@@ -56,9 +55,8 @@ class ConverterApplication(Adw.Application):
         if not self.win:
             self.win = ConverterWindow(application=self)
         self.win.present()
-        if self.file != None:
-            print(self.file)
-            FileChooser.load_command_file(self.win, self.file)
+        if self.file is not None:
+            self.win.load_file(self.file)
 
     def do_command_line(self, command_line):
         args = command_line.get_arguments()
@@ -68,7 +66,7 @@ class ConverterApplication(Adw.Application):
         return 0
 
     def __open_file(self, *args):
-        FileChooser.open_file(self.win)
+        self.win.open_file()
 
     def __on_popular(self, action, value, *args):
         action.props.state = value

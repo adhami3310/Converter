@@ -4,7 +4,7 @@
 A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
 
 [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
-[![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/tags/v1.3.1)
+[![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/tags)
 [![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
 
 
@@ -14,6 +14,8 @@ A simple and easy-to-use Flatpak application build with libadwaita for convertin
 
 ## Installation
 <a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+
+It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory.
 
 ## Features
 
@@ -57,7 +59,7 @@ You can install Converter from the latest commit:
 
 1. Install [`org.flatpak.Builder`](https://github.com/flathub/org.flatpak.Builder) from Flathub
 1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
-1. Run `flatpak run org.flatpak.Builder --install --install-deps-from=flathub --default-branch=master --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository (use `--user` if necessary)
+1. Run `flatpak run org.flatpak.Builder --install --user --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository.
 
 ### Meson
 You can build and install on your host system by directly using the Meson buildsystem:
@@ -70,7 +72,9 @@ ninja -C build
 sudo ninja -C build install
 ```
 
-## Acknowledgment
+## Credits
+
+Actively developed by Khaleel Al-Adhami.
 
 This is a fork of [`Upscaler`](https://gitlab.com/TheEvilSkeleton/Upscaler) by Hari Rana (TheEvilSkeleton) to convert images instead of upscaling them. Check out their project!
 

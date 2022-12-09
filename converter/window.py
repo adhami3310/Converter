@@ -20,16 +20,26 @@
 import os
 import subprocess
 import re
-from os.path import basename
+from os.path import basename, splitext, dirname
 import gi
-gi.require_version('GdkWayland', '4.0')
-from gi.repository import Adw, Gtk, GLib, Gdk, Gio, GdkWayland
+from gi.repository import Adw, Gtk, GLib, Gdk, Gio
 import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
-from converter.filters import output_image_extensions, popular_output_image_extensions
+import converter.filters
 
+RESIZE_QUALITY = 92
+
+class ConversionFailed(Exception):
+    """Raised when ImageMagick fails. """
+    def __init__(self, result_code, output):
+        super().__init__()
+        self.result_code = result_code
+        self.output = output
+
+    def __str__(self):
+        return f'Conversion failed.\nResult code: {self.result_code}\nOutput: {self.output}'
 
 @Gtk.Template(resource_path='/io/gitlab/adhami3310/Converter/gtk/window.ui')
 class ConverterWindow(Adw.ApplicationWindow):
@@ -85,17 +95,18 @@ class ConverterWindow(Adw.ApplicationWindow):
     """ Initialize function. """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
         self.settings = Gio.Settings('io.gitlab.adhami3310.Converter')
         self.update_output_datatype()
 
         """ Connect signals. """
-        self.button_input.connect('clicked', self.__open_file)
-        self.button_convert.connect('clicked', self.__convert_output)
+        self.button_input.connect('clicked', self.open_file)
+        self.button_convert.connect('clicked', self.__output_location)
         self.button_options.connect('clicked', self.__more_options)
         self.button_back.connect('clicked', self.__go_back)
         self.quality.connect('value-changed', self.__quality_changed)
         self.settings.connect('changed::show-less-popular', self.update_output_datatype)
-        self.filetype.connect('notify::selected', self.filetype_changed)
+        self.filetype.connect('notify::selected', self.__filetype_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
         self.resize_type.connect('notify::selected', self.__update_resize)
         self.resize_width.connect('notify::selected', self.__update_resize)
@@ -110,9 +121,76 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.convert_dialog = None
         self.options_window = None
 
-    """ Open file and display it if the user selected it. """
-    def __open_file(self, *args):
-        FileChooser.open_file(self)
+    def __on_file_open(self, input_file_path, pixbuf):
+        """ Set variables. """
+        self.input_file_path = input_file_path
+        self.input_ext = basename(splitext(self.input_file_path)[1])[1:]
+        self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({converter.filters.extention_to_mime[self.input_ext.lower()]})')
+        self.image_size = (pixbuf.get_width(), pixbuf.get_height())
+
+        """ Display image. """
+        self.action_image_size.set_subtitle(f'{self.image_size[0]} × {self.image_size[1]}')
+        self.image.set_pixbuf(pixbuf)
+
+        """ Reset widgets. """
+        self.resize_scale_height_value.set_text("100")
+        self.resize_scale_width_value.set_text("100")
+        self.ratio_width_value.set_text("1")
+        self.ratio_height_value.set_text("1")
+        self.resize_width_value.set_text(str(self.image_size[0]))
+        self.resize_height_value.set_text(str(self.image_size[1]))
+        self.svg_size_width_value.set_text(str(self.image_size[0]))
+        self.svg_size_height_value.set_text(str(self.image_size[1]))
+        self.resize_minmax_width_value.set_text(str(self.image_size[0]))
+        self.resize_minmax_height_value.set_text(str(self.image_size[1]))
+        self.__filetype_changed()
+        self.stack_converter.set_visible_child_name('stack_convert')
+        self.button_back.show()
+
+    def __on_file_open_error(self, error):
+        if error:
+            self.stack_converter.set_visible_child_name('stack_invalid_image')
+        else:
+            self.stack_converter.set_visible_child_name('stack_welcome_page')
+
+    """ Open file and display it. """
+    def load_file(self, file_path):
+        self.stack_converter.set_visible_child_name('stack_loading')
+        self.spinner_loading.start()
+        file = Gio.File.new_for_path(file_path)
+        FileChooser.load_file(file,
+                              self.__on_file_open,
+                              self.__on_file_open_error)
+
+        """ Open a file chooser and load the file. """
+    def open_file(self, *args):
+        self.stack_converter.set_visible_child_name('stack_loading')
+        self.spinner_loading.start()
+        FileChooser.open_file(self,
+                              self.__on_file_open,
+                              self.__on_file_open_error)
+
+    """ Select output file location. """
+    def __output_location(self, *args):
+        def good(output_file_path):
+            """ Set variables. """
+            self.output_file_path = output_file_path
+            self.__convert()
+
+        def bad(message):
+            if message:
+                self.toast.add_toast(Adw.Toast.new(message))
+
+        base_path = basename(splitext(self.input_file_path)[0])
+        directory = dirname(self.input_file_path)
+        if not directory.startswith("/home"):
+            directory = None
+        FileChooser.output_file(self,
+                                f'{base_path}.{self.output_ext}',
+                                self.output_ext,
+                                directory,
+                                good,
+                                bad)
 
     """Toggle visibility of less popular datatypes"""
     def toggle_datatype(self, *args):
@@ -124,18 +202,18 @@ class ConverterWindow(Adw.ApplicationWindow):
     def update_output_datatype(self, *args):
         if self.settings.get_boolean('show-less-popular'):
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
-            for supported_file_type in output_image_extensions:
+            for supported_file_type in converter.filters.supported_output_formats:
                 self.supported_output_datatypes.append(supported_file_type)
-            self.filetype.set_selected(output_image_extensions.index('pdf'))
+            self.filetype.set_selected(converter.filters.supported_output_formats.index('pdf'))
         else:
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
-            for supported_file_type in popular_output_image_extensions:
+            for supported_file_type in converter.filters.popular_supported_output_formats:
                 self.supported_output_datatypes.append(supported_file_type)
-            self.filetype.set_selected(popular_output_image_extensions.index('pdf'))
+            self.filetype.set_selected(converter.filters.popular_supported_output_formats.index('pdf'))
         self.output_ext = 'pdf'
 
     """Selected output filetype changed"""
-    def filetype_changed(self, *args):
+    def __filetype_changed(self, *args):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
         self.output_ext = ext
         self.__update_options()
@@ -156,7 +234,7 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         """Datatypes that can have compression"""
         if {'jpg', 'webp', 'jpeg', 'heif', 'heic', 'avif', 'jxl'}.intersection({inext, outext}):
-            self.quality.set_value(92)
+            self.quality.set_value(RESIZE_QUALITY)
             self.quality_row.show()
 
         """Datatypes with an alpha layer"""
@@ -164,12 +242,16 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.bgcolor_row.show()
 
             self.bgcolor.set_use_alpha(True)
-            self.bgcolor.set_rgba(Gdk.RGBA().parse('#00000000'))
+            bgcolor = Gdk.RGBA()
+            bgcolor.parse('#00000000')
+            self.bgcolor.set_rgba(bgcolor)
 
             """Datatypes with no alpha layer"""
             if outext in {'jpg', 'jpeg', 'pdf', 'bmp'}:
                 self.bgcolor.set_use_alpha(False)
-                self.bgcolor.set_rgba(Gdk.RGBA().parse('#FFFFFF'))
+                bgcolor = Gdk.RGBA()
+                bgcolor.parse('#FFFFFF')
+                self.bgcolor.set_rgba(bgcolor)
 
         """SVG scaling option"""
         if inext == 'svg':
@@ -279,12 +361,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         else:
             return ['-size', 'x'+self.svg_size_height_value.get_text()]
 
-    """Choose location of output"""
-    def __convert_output(self, *args):
-        FileChooser.output_file(self)
-
     """Converts the input file to the output file using CLI"""
-    def convert(self, *args):
+    def __convert(self, *args):
 
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)
