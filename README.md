@@ -17,7 +17,9 @@ A simple and easy-to-use Flatpak application build with libadwaita for convertin
 
 It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory.
 
-## Features
+## About
+
+Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like.
 
 Converter supports converting the following datatypes:
  - image/jpeg (RW)
@@ -78,4 +80,4 @@ Actively developed by Khaleel Al-Adhami.
 
 This is a fork of [`Upscaler`](https://gitlab.com/TheEvilSkeleton/Upscaler) by Hari Rana (TheEvilSkeleton) to convert images instead of upscaling them. Check out their project!
 
-This app uses a variety of library but the main one is [ImageMagick](https://github.com/ImageMagick/ImageMagick), which without their generous contribution to the open source community this would be nearly impossible to make.
+This app uses a variety of libraries but the main one is [ImageMagick](https://github.com/ImageMagick/ImageMagick), which without their generous contribution to the open source community this would be nearly impossible to make.
