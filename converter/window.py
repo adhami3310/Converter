@@ -22,7 +22,8 @@ import subprocess
 import re
 from os.path import basename, splitext, dirname
 import gi
-from gi.repository import Adw, Gtk, GLib, Gdk, Gio
+from gi.repository import Adw, Gtk, GLib, Gdk, Gio, Pango
+from sys import exit
 import time
 from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
@@ -366,6 +367,13 @@ class ConverterWindow(Adw.ApplicationWindow):
     """Converts the input file to the output file using CLI"""
     def __convert(self, *args):
 
+        def reset_widgets():
+            self.button_convert.set_sensitive(True)
+            self.progressbar.set_text(_('Loading…'))
+            self.progressbar.set_fraction(0)
+
+
+
         """ Since GTK is not thread safe, prepare some data in the main thread. """
         self.convert_dialog = ConvertingDialog(self)
         inp = None #overwrites input_file_path
@@ -383,21 +391,26 @@ class ConverterWindow(Adw.ApplicationWindow):
                        ]+self.__get_resized_commands()+[
                        out if out else self.output_file_path]
 #            command = ['magick', 'identify', '-list', 'format']
-            process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
             print(*command)
+            output = ''
             """ Read each line, query the percentage and update the progress bar. """
-            for line in iter(process.stderr.readline, ''):
+            for line in iter(self.process.stderr.readline, ''):
                 print(line, end='')
+                output += line
                 res = re.search('\d\d%', line)
                 if res:
                     GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]))
+            result = self.process.poll()
+            if result != 0:
+                raise ConversionFailed(result, output)
 
         """ Run when run() function finishes. """
-        def callback(*args):
+        def callback(result, error):
             self.convert_dialog.close()
             self.convert_dialog = None
-            self.converting_completed_dialog()
+            self.converting_completed_dialog(error)
 
         """ Run functions asynchronously. """
         if self.input_ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
@@ -410,10 +423,10 @@ class ConverterWindow(Adw.ApplicationWindow):
         else:
             RunAsync(run, callback)
         self.convert_dialog.present()
-
+        self.button_upscale.set_sensitive(False)
 
     """ Ask the user if they want to open the file. """
-    def converting_completed_dialog(self, *args):
+    def converting_completed_dialog(self, error):
         def response(_widget):
             def show_uri(handle, fid):
                 connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
@@ -437,8 +450,47 @@ class ConverterWindow(Adw.ApplicationWindow):
             output_file = open(self.output_file_path, 'r')
             fid = output_file.fileno()
             show_uri('', fid)
-        toast = Adw.Toast.new(_('Image converted'))
-        toast.set_button_label(_('Open'))
-        toast.connect('button-clicked', response)
-        self.toast.add_toast(toast)
+        toast = None
+        if error is None:
+            toast = Adw.Toast.new(_('Image converted'))
+            toast.set_button_label(_('Open'))
+            toast.connect('button-clicked', response)
+            self.toast.add_toast(toast)
+        else:
+            dialog = Adw.MessageDialog.new(self,
+                                           _('Error while processing'),
+                                           None)
+            sw = Gtk.ScrolledWindow()
+            sw.set_min_content_height(200)
+            sw.set_min_content_width(400)
+            sw.add_css_class('card')
+
+            text = Gtk.Label()
+            text.set_label(str(error))
+            text.set_margin_top(12)
+            text.set_margin_bottom(12)
+            text.set_margin_start(12)
+            text.set_margin_end(12)
+            text.set_xalign(0)
+            text.set_yalign(0)
+            text.add_css_class('monospace')
+            text.set_wrap(True)
+            text.set_wrap_mode(Pango.WrapMode.WORD_CHAR)
+
+            sw.set_child(text)
+            dialog.set_extra_child(sw)
+
+            def error_response(dialog, response_id):
+                if response_id == 'copy':
+                    clipboard = Gdk.Display.get_default().get_clipboard()
+                    clipboard.set(str(error))
+                    toast = Adw.Toast.new(_('Error copied to clipboard'))
+                    self.toast.add_toast(toast)
+                dialog.close()
+
+            dialog.add_response('copy', _('_Copy to clipboard'))
+            dialog.set_response_appearance('copy', Adw.ResponseAppearance.SUGGESTED)
+            dialog.add_response('ok', _('_Dismiss'))
+            dialog.connect('response', error_response)
+            dialog.present()
 

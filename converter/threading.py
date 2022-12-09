@@ -64,11 +64,8 @@ class RunAsync(threading.Thread):
                           f"{self.task_func}\nException: {exception}")
 
             error = exception
-            _ex_type, _ex_value, trace = sys.exc_info()
-            traceback.print_tb(trace)
-            traceback_info = '\n'.join(traceback.format_tb(trace))
 
-            logging.write_log([str(exception), traceback_info])
         self.source_id = GLib.idle_add(self.callback, result, error)
         return self.source_id
+
 
