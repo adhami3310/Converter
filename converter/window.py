@@ -90,6 +90,7 @@ class ConverterWindow(Adw.ApplicationWindow):
     image_container = Gtk.Template.Child()
     ratio_width_value = Gtk.Template.Child()
     ratio_height_value = Gtk.Template.Child()
+    invalid_image = Gtk.Template.Child()
     resize_filters = ['Point', 'Quadratic', 'Cubic', 'Mitchell', 'Gaussian', 'Lanczos']
 
     """ Initialize function. """
@@ -150,6 +151,7 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __on_file_open_error(self, error):
         if error:
             self.stack_converter.set_visible_child_name('stack_invalid_image')
+            self.invalid_image.set_description(str(error))
         else:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
 

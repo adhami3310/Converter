@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-from os.path import basename
+from os.path import basename, splitext, dirname
 from pathlib import PurePath, Path
 from gi.repository import Gtk, Gio, GdkPixbuf, GLib, Gdk
 import converter.filters
@@ -29,6 +29,11 @@ class FileChooser:
         callback_good = data[0][0]
         callback_bad = data[0][1]
         input_file_path = data[1]
+        input_ext = basename(splitext(input_file_path)[1])[1:]
+
+        if input_ext not in converter.filters.supported_input_formats:
+            callback_bad(_(f'’{input_ext}’ is not supported'))
+            return
 
         try:
             pixbuf = GdkPixbuf.Pixbuf.new_from_stream_finish(result)

@@ -19,7 +19,7 @@ It is advised that you manually give it "All user files" (filesystem=home) throu
 
 ## About
 
-Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like.
+Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Converter from various writers, content creators, etc.
 
 Converter supports converting the following datatypes:
  - image/jpeg (RW)
