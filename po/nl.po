@@ -1,28 +1,27 @@
-# Italian translation for Converter.
-# Copyright (C) 2022 Khaleel Al-Adhami
-# This file is distributed under the same license as the Converter package.
-# Mattia Borda <mattiagiovanni.borda@icloud.com>, 2022.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 #
+# Heimen Stoffels <vistausss@fastmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-07 09:40-0500\n"
-"PO-Revision-Date: 2022-12-08 12:05+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: it\n"
+"PO-Revision-Date: 2022-12-09 17:52+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: Dutch\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
 #: converter/gtk/window.blp:9 converter/gtk/window.blp:39
 #: data/io.gitlab.adhami3310.Converter.desktop.in:3
 msgid "Converter"
-msgstr "Converter"
+msgstr "Convertering"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:6
 msgid "Khaleel Al-Adhami"
@@ -30,115 +29,115 @@ msgstr "Khaleel Al-Adhami"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:7
 msgid "Convert and manipulate images"
-msgstr "Converti e manipola immagini"
+msgstr "Converteer en bewerk afbeeldingen"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:13
 msgid ""
 "Converter allows you to convert and manipulate a given image. It is a front-"
 "end for ImageMagick."
 msgstr ""
-"Converter permette di convertire e manipolare un'immagine. È un'interfaccia "
-"grafica di ImageMagick."
+"Met Convertering - een frontend voor ImageMagick - kun je afbeeldingen"
+" converteren en bewerken."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:26
 msgid "image"
-msgstr "immagine"
+msgstr "Afbeelding"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:27
 msgid "convert"
-msgstr "converti"
+msgstr "Converteren"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:28
 msgid "converting"
-msgstr "conversione"
+msgstr "Bezig met converteren…"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:29
 msgid "processing"
-msgstr "elaborazione"
+msgstr "Bezig met verwerken…"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:45
 msgid "Overview"
-msgstr "Anteprima"
+msgstr "Overzicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
 msgid "Added AVIF and JXL support."
-msgstr "Aggiunto supporto per AVIF e JXL."
+msgstr "Nieuw: avif- en jxl-ondersteuning."
 
 #: converter/file_chooser.py:167
 msgid "Select an image"
-msgstr "Seleziona un'immagine"
+msgstr "Kies een afbeelding"
 
 #: converter/file_chooser.py:179
 msgid "’{}’ is not a supported format"
-msgstr "’{}’ non è un formato supportato"
+msgstr "‘{}’ is geen ondersteund bestandsformaat"
 
 #: converter/file_chooser.py:200
 msgid "No file extension was specified"
-msgstr "Non è stata specificata alcuna estensione"
+msgstr "Er is geen bestandsextensie opgegeven"
 
 #: converter/file_chooser.py:206
 msgid "’{}’ is of the wrong format"
-msgstr "’{}’ non è un formato corretto"
+msgstr "‘{}’ is geen geldig formaat"
 
 #: converter/file_chooser.py:220
 msgid "Select output location"
-msgstr "Seleziona posizione del risultato"
+msgstr "Kies een opslaglocatie"
 
 #: converter/filters.py:70
 msgid "Supported image files"
-msgstr "File immagine supportati"
+msgstr "Ondersteunde bestanden"
 
 #: converter/gtk/dialog-converting.blp:20
 msgid "Converting…"
-msgstr "Conversione…"
+msgstr "Bezig met converteren…"
 
 #: converter/gtk/dialog-converting.blp:21
 msgid "This could take a while."
-msgstr "Potrebbe richiedere del tempo."
+msgstr "Dit kan even duren."
 
 #: converter/gtk/dialog-converting.blp:25
 msgid "Loading…"
-msgstr "Caricamento…"
+msgstr "Bezig met laden…"
 
 #: converter/gtk/help-overlay.blp:11
 msgctxt "shortcut window"
 msgid "General"
-msgstr "Generali"
+msgstr "Algemeen"
 
 #: converter/gtk/help-overlay.blp:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
-msgstr "Mostra scorciatoie da tastiera"
+msgstr "Sneltoetsen tonen"
 
 #: converter/gtk/help-overlay.blp:19
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Esci"
+msgstr "Afsluiten"
 
 #: converter/gtk/help-overlay.blp:24
 msgctxt "shortcut window"
 msgid "Open Image"
-msgstr "Apri immagine"
+msgstr "Afbeelding openen"
 
 #: converter/window.py:336
 msgid "Image converted"
-msgstr "Immagine convertita"
+msgstr "De afbeelding is geconverteerd"
 
 #: converter/window.py:337
 msgid "Open"
-msgstr "Apri"
+msgstr "Openen"
 
 #: converter/main.py:91
 msgid "Algorithms by"
-msgstr "Algoritmi di"
+msgstr "De algoritmen zijn gemaakt door"
 
 #: converter/main.py:97
 msgid "Code and Design Borrowed from"
-msgstr "Codice e design presi in prestito da"
+msgstr "De code en het ontwerp zijn afgeleid van"
 
 #: converter/main.py:108
 msgid "Sample Image from"
-msgstr "Immagine di esempio di"
+msgstr "De voorbeeldfoto is afkomstig van"
 
 #: converter/main.py:147
 msgid ""
@@ -152,186 +151,175 @@ msgstr ""
 
 #: converter/gtk/window.blp:47
 msgid "_Open Image…"
-msgstr "Apri immagine…"
+msgstr "Afbeelding _openen…"
 
 #: converter/gtk/window.blp:84
 msgid "Properties"
-msgstr "Proprietà"
+msgstr "Eigenschappen"
 
 #: converter/gtk/window.blp:87
 msgid "Image Type"
-msgstr "Tipo di immagine"
+msgstr "Afbeeldingstype"
 
 #: converter/gtk/window.blp:94
 msgid "Image Size"
-msgstr "Dimensione dell'immagine"
+msgstr "Afbeeldingsgrootte"
 
 #: converter/gtk/window.blp:103
 msgid "Options"
-msgstr "Opzioni"
+msgstr "Opties"
 
 #: converter/gtk/window.blp:135
 msgid "Datatype"
-msgstr "Tipo di immagine"
+msgstr "Gegevenstype"
 
 #: converter/gtk/window.blp:140
 msgid "Save Location"
-msgstr "Posizione di salvataggio"
+msgstr "Opslaglocatie"
 
 #: converter/gtk/window.blp:154
 msgid "(None)"
-msgstr "(Nessuna)"
+msgstr "(geen)"
 
 #: converter/gtk/window.blp:168
 msgid "More Options"
-msgstr "Altre opzioni"
+msgstr "Meer opties"
 
 #: converter/gtk/window.blp:177
 msgid "_Convert"
-msgstr "Converti"
+msgstr "_Converteren"
 
 #: converter/gtk/window.blp:178
 msgid "Save location is missing."
-msgstr "Non è stata impostata una posizione dove salvare il risultato."
+msgstr "Er is geen opslaglocatie gekozen."
 
 #: converter/gtk/window.blp:199
 msgid "Could not Load Image"
-msgstr "Impossibile caricare l'immagine"
+msgstr "De afbeelding kan niet worden geladen"
 
 #: converter/gtk/window.blp:200
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
-"Questa immagine potrebbe essere danneggiata o in un formato non supportato."
+"De afbeelding is beschadigd of het bestandstype wordt niet ondersteund."
 
 #: converter/gtk/window.blp:215
 msgid "Quality"
-msgstr "Qualità"
+msgstr "Kwaliteit"
 
 #: converter/gtk/window.blp:234
 msgid "Background Color"
-msgstr "Colore di sfondo"
+msgstr "Achtergrondkleur"
 
 #: converter/gtk/window.blp:242
 msgid "Scale Preserving Ratio"
-msgstr "Ridimensiona mantenendo proporzioni"
+msgstr "Beeldverhouding"
 
 #: converter/gtk/window.blp:245
 msgid "Dimension"
-msgstr "Dimensione"
+msgstr "Afmetingen"
 
 #: converter/gtk/window.blp:248 converter/gtk/window.blp:292
 #: converter/gtk/window.blp:318
 msgid "Width"
-msgstr "Larghezza"
+msgstr "Breedte"
 
 #: converter/gtk/window.blp:248 converter/gtk/window.blp:307
 #: converter/gtk/window.blp:328
 msgid "Height"
-msgstr "Altezza"
+msgstr "Hoogte"
 
 #: converter/gtk/window.blp:253
 msgid "Width in Pixels"
-msgstr "Larghezza (pixel)"
+msgstr "Breedte (in pixels)"
 
 #: converter/gtk/window.blp:263
 msgid "Height in Pixels"
-msgstr "Altezza (pixel)"
+msgstr "Lengte (in pixels)"
 
 #: converter/gtk/window.blp:275
 msgid "Resize"
-msgstr "Ridimensiona"
+msgstr "Grootte aanpassen"
 
 #: converter/gtk/window.blp:278
 msgid "Filter"
-msgstr "Filtro"
+msgstr "Filteren"
 
 #: converter/gtk/window.blp:284
 msgid "Size"
-msgstr "Dimensione"
+msgstr "Grootte"
 
 #: converter/gtk/window.blp:287
 msgid "Percentage"
-msgstr "Percentuale"
+msgstr "Percentage"
 
 #: converter/gtk/window.blp:287
 msgid "Exact Pixels"
-msgstr "Pixel esatti"
+msgstr "Pixelverhouding"
 
 #: converter/gtk/window.blp:287
 msgid "Minimum Pixels"
-msgstr "Pixel minimi"
+msgstr "Minimumaantal pixels"
 
 #: converter/gtk/window.blp:287
 msgid "Maximum Pixels"
-msgstr "Pixel massimi"
+msgstr "Maximumaantal pixels"
 
 #: converter/gtk/window.blp:287
 msgid "Ratio"
-msgstr "Fattore"
+msgstr "Verhouding"
 
 #: converter/gtk/window.blp:295
 msgid "Pixels"
-msgstr "Pixel"
+msgstr "pixels"
 
 #: converter/gtk/window.blp:295
 msgid "Preserve Ratio"
-msgstr "Mantieni proporzioni"
+msgstr "Beeldverhouding behouden"
 
 #: converter/gtk/window.blp:338
 msgid "Width Percentage Scale"
-msgstr "Percentuale larghezza"
+msgstr "Breedtepercentage"
 
 #: converter/gtk/window.blp:348
 msgid "Height Percentage Scale"
-msgstr "Percentuale altezza"
+msgstr "Lengtepercentage"
 
 #: converter/gtk/window.blp:358
 msgid "Ratio Width"
-msgstr "Fattore larghezza"
+msgstr "Beeldverhoudingsbreedte"
 
 #: converter/gtk/window.blp:368
 msgid "Ratio Height"
-msgstr "Fattore altezza"
+msgstr "Beeldverhoudingshoogte"
 
 #: converter/gtk/window.blp:397
 msgid "Open File…"
-msgstr "Apri file…"
+msgstr "Bestand openen…"
 
 #: converter/gtk/window.blp:404
 msgid "Show Less Popular Datatypes"
-msgstr "Mostra tipi di immagini meno popolari"
+msgstr "Minder gebruikte formaten tonen"
 
 #: converter/gtk/window.blp:416
 msgid "Keyboard Shortcuts"
-msgstr "Scorciatoie da tastiera"
+msgstr "Sneltoetsen"
 
 #: converter/gtk/window.blp:421
 msgid "About Converter"
-msgstr "Informazioni su Converter"
+msgstr "Over Convertering"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in:4
 msgid "Convert"
-msgstr "Converti"
+msgstr "Converteren"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in:5
 msgid "Convert and Manipulate images"
-msgstr "Converti e manipola immagini"
+msgstr "Converteer en bewerk afbeeldingen"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in:11
 msgid "image;convert;converting;processing"
-msgstr ""
-"image;convert;converting;processing;immagine;converti;conversione;"
-"elaborazione"
+msgstr "afbeelding;converteren;convertering;verwerking;bewerken;"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml:6
 msgid "Shows less popular datatypes in the menu"
-msgstr "Mostra tipi di immagini meno popolari nel menu"
-
-#~ msgid "Added \"Open With\" functionality."
-#~ msgstr "Aggiunta funzione \"Apri con\"."
-
-#~ msgid "Adjust DPI"
-#~ msgstr "Regola DPI"
-
-#~ msgid "DPI"
-#~ msgstr "DPI"
+msgstr "Minder gebruikte formaten tonen in menu"
