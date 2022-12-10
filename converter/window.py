@@ -150,8 +150,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         if 'image/png' in cb.get_formats().get_mime_types():
             def load_clipboard(_, result, userdata):
                 image = cb.read_texture_finish(result)
-                image.save_to_png("temp.png")
-                self.load_file("temp.png")
+                image.save_to_png("converted.png")
+                self.load_file("converted.png")
             cb.read_texture_async(None, load_clipboard, None)
 
     def __on_file_open(self, input_file_path, pixbuf):
@@ -475,9 +475,9 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         """ Run functions asynchronously. """
         if self.input_ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
-            out = 'temp.png'
+            out = 'converted.png'
             def convert_to_temp_callback():
-                inp = 'temp.png'
+                inp = 'converted.png'
                 out = None
                 RunAsync(run, callback)
             RunAsync(run, convert_to_temp_callback)
