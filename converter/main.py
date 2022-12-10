@@ -146,7 +146,7 @@ def translators():
         Name + URL:   \nKhaleel Al-Adhami https://adhami3310.gitlab.io
         Name + Email: \nKhaleel Al-Adhami <khaleel.aladhami@gmail.com>
     """
-    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>\nMattia Borda <mattiagiovanni.borda@icloud.com>\nHeimen Stoffels\nSergio <sergiovg01@outlook.com>')
+    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>\nMattia Borda <mattiagiovanni.borda@icloud.com>\nHeimen Stoffels\nSergio <sergiovg01@outlook.com>\nÅke Engelbrektson <eson@svenskasprakfiler.se>')
 
 def developers():
     """ Developers/Contributors list. If you have contributed code, feel free
