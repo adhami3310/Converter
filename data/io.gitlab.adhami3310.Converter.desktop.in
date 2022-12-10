@@ -2,7 +2,7 @@
 Name=Converter
 GenericName=Convert
 Comment=Convert and Manipulate images
-Exec=converter
+Exec=converter %u
 Icon=io.gitlab.adhami3310.Converter
 Terminal=false
 Type=Application
@@ -11,5 +11,4 @@ Keywords=image;convert;converting;processing
 StartupNotify=true
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;
-Exec=converter %u
 MimeType=image/png;image/jpeg;image/webp;image/svg+xml;image/heic;image/heif;image/bmp;image/avif;image/jxl

@@ -1,6 +1,6 @@
-# filters.py: list container getter and setter functions regarding filters
+# filters.py: supported filetypes and filter helpers
 #
-# Copyright (C) 2022 Hari Rana / TheEvilSkeleton
+# Copyright (C) 2022 Khaleel Al-Adhami / adhami3310
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,20 +19,9 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-image_formats = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml', 'image/heic', 'image/bmp', 'image/avif', 'image/jxl']
-image_extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl']
-output_image_formats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf', 'image/heic', 'image/heif', 'image/bmp', 'image/avif', 'image/jxl']
-output_image_extensions = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl'])
-popular_output_image_extensions = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl'])
-
-""" Formats getter function. """
-def get_format_filters(type):
-    if type == 'image':
-        return image_formats
-    elif type == 'output_image':
-        return output_image_formats
-    else:
-        return image_formats
+supported_input_formats = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl']
+supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl'])
+popular_supported_output_formats = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl'])
 
 extention_to_mime = {
     'jpg': 'image/jpeg',
@@ -44,43 +33,22 @@ extention_to_mime = {
     'heic': 'image/heic',
     'heif': 'image/heif',
     'bmp': 'image/bmp',
-    'avif': 'iamge/avif',
+    'avif': 'image/avif',
     'jxl': 'image/jxl'
 }
 
-def is_extenstion_output(extension):
-    return extension in output_image_extensions
+""" Formats getter function. """
+def get_format_filters(type):
+    if type == 'input':
+        return [extention_to_mime[image] for image in supported_input_formats]
+    elif type == "popular_output":
+        return [extention_to_mime[image] for image in popular_supported_output_formats]
+    elif type == "output":
+        return [extention_to_mime[image] for image in supported_output_formats]
 
-def set_formats_from_extensions(extensions, name):
+def get_file_filter(name, formats):
     filter = Gtk.FileFilter()
-    file_extensions = []
-    for format in extensions:
+    for format in formats:
         filter.add_mime_type(extention_to_mime[format])
     filter.set_name(name)
-    return filter
-
-
-""" Formats setter function. """
-def set_formats(formats):
-    filter = Gtk.FileFilter()
-    file_extensions = []
-    for format in formats:
-        filter.add_mime_type(format)
-
-    filter.set_name(_('Supported image files'))
-    return filter
-
-""" Supported filters. """
-def supported_filters():
-    # filter = set_formats(image_formats + video_formats)
-    filter = set_formats(image_formats)
-    return filter
-
-""" Image specific filters. """
-def image_filters():
-    filter = set_formats(image_formats)
-    return filter
-
-def output_image_filters():
-    filter = set_formats(output_image_formats)
     return filter

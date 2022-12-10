@@ -16,216 +16,124 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-from os.path import basename
-import subprocess
-from pathlib import PurePath
-from converter.threading import RunAsync
-from gi.repository import Adw, Gtk, Gio, GdkPixbuf, GLib, Gdk
-from converter.filters import get_format_filters, supported_filters, image_filters, output_image_filters, set_formats_from_extensions, is_extenstion_output, extention_to_mime, output_image_extensions
+from os.path import basename, splitext, dirname
+from pathlib import PurePath, Path
+from gi.repository import Gtk, Gio, GdkPixbuf, GLib, Gdk
+import converter.filters
 from gettext import gettext as _
 
-class FileChooser():
+class FileChooser:
 
-    def load_command_file(self, file_path, *args):
-        """ Run in a separate thread. """
-        def load_file():
-            """ Run in a separate thread. """
-            def run():
-                """ Confirm file is a valid image. """
-                displayed = True
-                try:
-                    print(f'Input file: {self.input_file_path}')
-                    image_file = GdkPixbuf.Pixbuf.new_from_file(self.input_file_path)
-                except GLib.GError:
-                    print(f'Invalid image file path')
-                    self.stack_converter.set_visible_child_name('stack_invalid_image')
-                    displayed = False
-#                        return
+    @staticmethod
+    def __load_image_done(_obj, result, data):
+        callback_good = data[0][0]
+        callback_bad = data[0][1]
+        input_file_path = data[1]
+        input_ext = basename(splitext(input_file_path)[1])[1:].lower()
 
-                if displayed:
-                    self.image_size = GdkPixbuf.Pixbuf.get_file_info(self.input_file_path)
+        if input_ext not in converter.filters.supported_input_formats:
+            callback_bad(_(f'’{input_ext}’ is not supported'))
+            return
 
-                    """ Display image. """
-                    self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
-                    self.image.set_pixbuf(image_file)
-                else:
-                    self.image.set_pixbuf(None)
-                    self.action_image_size.set_subtitle('Unknown')
-                    self.image_size = [0, '', '']
-                self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
-                self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
-                self.filetype.grab_focus()
+        try:
+            pixbuf = GdkPixbuf.Pixbuf.new_from_stream_finish(result)
+        except GLib.Error as error:
+            print(f"Unable to load image, {error}")
+            callback_bad(error)
+            return
 
-                """ Reset widgets. """
-                # self.spin_scale.set_value(default_value)
-                self.label_output.set_label('(None)')
-                self.button_convert.set_sensitive(False)
-                self.button_convert.set_has_tooltip(True)
-                self.resize_scale_height_value.set_text("100")
-                self.resize_scale_width_value.set_text("100")
-                self.ratio_width_value.set_text("1")
-                self.ratio_height_value.set_text("1")
-                self.resize_width_value.set_text(str(self.image_size[1]))
-                self.resize_height_value.set_text(str(self.image_size[2]))
-                self.svg_size_width_value.set_text(str(self.image_size[1]))
-                self.svg_size_height_value.set_text(str(self.image_size[2]))
-                self.resize_minmax_width_value.set_text(str(self.image_size[1]))
-                self.resize_minmax_height_value.set_text(str(self.image_size[2]))
-                self.filetype_changed()
-                self.stack_converter.set_visible_child_name('stack_convert')
-                self.button_back.show()
+        callback_good(input_file_path, pixbuf)
 
-            """ Run when run() function finishes. """
-            def callback(*args):
-                self.spinner_loading.stop()
+    @staticmethod
+    def __open_file_done(file, result, callbacks):
+        callback_bad = callbacks[1]
 
-            self.input_file_path = file_path
+        try:
+            input_stream = file.read_finish(result)
+        except GLib.Error as error:
+            print(f"Unable to open file, {error}")
+            callback_bad(error)
+            return
 
-            """ Run functions asynchronously. """
-            RunAsync(run, callback)
-            self.stack_converter.set_visible_child_name('stack_loading')
-            self.spinner_loading.start()
-        load_file()
+        GdkPixbuf.Pixbuf.new_from_stream_async(input_stream,
+                                               None,
+                                               FileChooser.__load_image_done,
+                                               (callbacks, file.get_path()))
+
+    """ Run in a separate thread. """
+    @staticmethod
+    def load_file(file, callback_start, callback_good, callback_error):
+        print(f"Input file: {file.get_path()}")
+        callback_start()
+        file.read_async(GLib.PRIORITY_DEFAULT,
+                        None,
+                        FileChooser.__open_file_done,
+                        (callback_good, callback_error))
 
 
     """ Open and load file. """
-    def open_file(self, *args):
+    @staticmethod
+    def open_file(parent, current_path, callback_start, callback_good, callback_error, *args):
         def load_file(_dialog, response):
 
             """ Run if the user selects an image. """
-            if response == -3:
+            if response != Gtk.ResponseType.ACCEPT:
+                callback_error(None)
+                return
 
-                """ Do nothing if opened image is the same as selected image. """
+            file = dialog.get_file()
+            if file.get_path() == current_path:
+                return
 
-                try:
-                    if self.input_file_path == dialog.get_file().get_path():
-                        self.stack_converter.set_visible_child_name('stack_convert')
-                        self.button_back.show()
-                        return
-                except AttributeError:
-                    pass
-
-                """ Run in a separate thread. """
-                def run():
-
-                    """ Declare variables. """
-                    self.input_file_path = dialog.get_file().get_path()
-                    """ Confirm file is a valid image. """
-                    displayed = True
-                    try:
-                        print(f'Input file: {self.input_file_path}')
-                        image_file = GdkPixbuf.Pixbuf.new_from_file(self.input_file_path)
-                    except GLib.GError:
-                        print(f'Invalid image file path')
-                        self.stack_converter.set_visible_child_name('stack_invalid_image')
-                        displayed = False
-#                        return
-
-                    if displayed:
-                        self.image_size = GdkPixbuf.Pixbuf.get_file_info(self.input_file_path)
-
-                        """ Display image. """
-                        self.action_image_size.set_subtitle(f'{self.image_size[1]} × {self.image_size[2]}')
-                        self.image.set_pixbuf(image_file)
-                    else:
-                        self.image.set_pixbuf(None)
-                        self.action_image_size.set_subtitle('Unknown')
-                        self.image_size = [0, '', '']
-                    self.input_ext = str(PurePath(self.input_file_path).suffix)[1:]
-                    self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({extention_to_mime[self.input_ext.lower()]})')
-                    self.filetype.grab_focus()
-
-                    """ Reset widgets. """
-                    # self.spin_scale.set_value(default_value)
-                    self.label_output.set_label('(None)')
-                    self.button_convert.set_sensitive(False)
-                    self.button_convert.set_has_tooltip(True)
-                    self.resize_scale_height_value.set_text("100")
-                    self.resize_scale_width_value.set_text("100")
-                    self.ratio_width_value.set_text("1")
-                    self.ratio_height_value.set_text("1")
-                    self.resize_width_value.set_text(str(self.image_size[1]))
-                    self.resize_height_value.set_text(str(self.image_size[2]))
-                    self.svg_size_width_value.set_text(str(self.image_size[1]))
-                    self.svg_size_height_value.set_text(str(self.image_size[2]))
-                    self.resize_minmax_width_value.set_text(str(self.image_size[1]))
-                    self.resize_minmax_height_value.set_text(str(self.image_size[2]))
-                    self.filetype_changed()
-                    self.stack_converter.set_visible_child_name('stack_convert')
-                    self.button_back.show()
-
-                """ Run when run() function finishes. """
-                def callback(*args):
-                    self.spinner_loading.stop()
-
-                """ Run functions asynchronously. """
-                RunAsync(run, callback)
-                self.stack_converter.set_visible_child_name('stack_loading')
-                self.spinner_loading.start()
+            FileChooser.load_file(file, callback_start, callback_good, callback_error)
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select an image'),
-            parent=self,
+            parent=parent,
             action=Gtk.FileChooserAction.OPEN
         )
         dialog.set_modal(True)
-        dialog.set_transient_for(self)
         dialog.connect('response', load_file)
-        dialog.add_filter(supported_filters())
+        dialog.add_filter(converter.filters.get_file_filter(_("Supported image files"), converter.filters.supported_input_formats))
         dialog.show()
 
-    def check_supported_output(self, ext):
-        if not is_extenstion_output(ext):
-            self.toast.add_toast(Adw.Toast.new(_('’{}’ is not a supported format'.format(ext))))
-            return False
-        return True
-
     """ Select output location. """
-    def output_file(self, *args):
-
-        ext = self.output_ext
-
-        if not FileChooser.check_supported_output(self, ext):
-            return
-
+    @staticmethod
+    def output_file(parent, default_name, format, default_folder, callback_good, callback_bad, *args):
         def convert_content(_dialog, response):
 
             """ Set output file path if user selects a location. """
-            if response == -3:
+            if response != Gtk.ResponseType.ACCEPT:
+                callback_bad(None)
+                return
 
-                path = PurePath(dialog.get_file().get_path())
+            path = PurePath(dialog.get_file().get_path())
 
-                """ Check if output file has a file extension or format is supported. """
-                if '.' not in str(path.name):
-                    self.toast.add_toast(Adw.Toast.new(_('No file extension was specified')))
-                    return
+            """ Check if output file has a file extension or format is supported. """
+            if '.' not in str(path.name):
+                callback_bad(_('No file extension was specified'))
+                return
 
-                file_ext = str(path.suffix)[1:]
-                print(ext)
-                if file_ext != ext:
-                    self.toast.add_toast(Adw.Toast.new(_('’{}’ is of the wrong format'.format(file_ext))))
-                    return
+            file_ext = str(path.suffix)[1:]
 
-                """ Set output path. """
-                self.output_file_path = str(path)
-                print(f'Output file: {self.output_file_path}')
+            if file_ext != format:
+                callback_bad(_(f'’{file_ext}’ is of the wrong format'))
+                return
 
-                """ Update widgets. """
-                self.label_output.set_label(basename(self.output_file_path))
-                self.button_convert.set_sensitive(True)
-                self.button_convert.set_has_tooltip(False)
-                self.button_convert.grab_focus()
+            """ Set output path. """
+            output_file_path = str(path)
+            print(f'Output file: {output_file_path}')
+            callback_good(output_file_path)
 
         dialog = Gtk.FileChooserNative.new(
             title=_('Select output location'),
-            parent=self,
+            parent=parent,
             action=Gtk.FileChooserAction.SAVE
         )
 
         dialog.set_modal(True)
-        dialog.set_transient_for(self)
         dialog.connect('response', convert_content)
-        dialog.add_filter(set_formats_from_extensions([ext], ext))
-        dialog.set_current_name(str(PurePath(self.input_file_path).with_suffix(f'.{ext}').name))
+        dialog.add_filter(converter.filters.get_file_filter(format, [format]))
+        dialog.set_current_name(default_name)
+        if default_folder is not None: dialog.set_current_folder(Gio.File.new_for_path(default_folder))
         dialog.show()
-

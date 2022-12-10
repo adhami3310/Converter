@@ -1,14 +1,25 @@
-# Converter
-Converter is a GTK4+libadwaita application that allows you to convert and manipulate a given image. It is a front-end for [ImageMagick](https://github.com/ImageMagick/ImageMagick).
-
 <div align="center">
-  <img src="data/screenshots/0.png">
+<h1>Converter</h1>
+
+A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
+
+[![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
+[![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/tags)
+[![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
+
+
+<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
+
 </div>
 
 ## Installation
 <a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
-## Features
+It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory.
+
+## About
+
+Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Converter from various writers, content creators, etc.
 
 Converter supports converting the following datatypes:
  - image/jpeg (RW)
@@ -50,7 +61,7 @@ You can install Converter from the latest commit:
 
 1. Install [`org.flatpak.Builder`](https://github.com/flathub/org.flatpak.Builder) from Flathub
 1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
-1. Run `flatpak run org.flatpak.Builder --install --install-deps-from=flathub --default-branch=master --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository (use `--user` if necessary)
+1. Run `flatpak run org.flatpak.Builder --install --user --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository.
 
 ### Meson
 You can build and install on your host system by directly using the Meson buildsystem:
@@ -63,3 +74,10 @@ ninja -C build
 sudo ninja -C build install
 ```
 
+## Credits
+
+Actively developed by Khaleel Al-Adhami.
+
+This is a fork of [`Upscaler`](https://gitlab.com/TheEvilSkeleton/Upscaler) by Hari Rana (TheEvilSkeleton) to convert images instead of upscaling them. Check out their project!
+
+This app uses a variety of libraries but the main one is [ImageMagick](https://github.com/ImageMagick/ImageMagick), which without their generous contribution to the open source community this would be nearly impossible to make.
