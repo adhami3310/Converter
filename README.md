@@ -3,12 +3,12 @@
 
 A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
 
+<img src="data/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg" alt="Converter icon">
+
 [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
 [![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/tags)
 [![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
 
-
-<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
 
 </div>
 
@@ -20,6 +20,8 @@ It is advised that you manually give it "All user files" (filesystem=home) throu
 ## About
 
 Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Converter from various writers, content creators, etc.
+
+<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
 
 Converter supports converting the following datatypes:
  - image/jpeg (RW)
@@ -37,6 +39,8 @@ It also supports the following options:
  - Changing the color value of the alpha layer.
  - Changing the DPI of SVG images.
  - Scaleing and resizing the image to given resolution or ratio.
+
+You can also drag and drop as well as paste the copied image into the app!
 
 ImageMagick supports many other datatypes. I will add more and possibly even add more options. If you want me to make something of a higher priority please start an issue.
 
