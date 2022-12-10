@@ -442,15 +442,15 @@ class ConverterWindow(Adw.ApplicationWindow):
         """ Run in a separate thread. """
         def run():
             command = ['magick',
-                      '-monitor',
-                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}'
+                      '-monitor'
                        ]+self.__get_sized_commands()+[
                        inp if inp else self.input_file_path,
-                       '-flatten',
+#                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
+#                       '-opaque', 'none',
                        '-quality',
                        f'{self.quality.get_value()}'
                        ]+self.__get_resized_commands()+[
-                       out if out else self.output_file_path]
+                       out if out else self.output_file_path+"blug.pdf"]
 #            command = ['magick', 'identify', '-list', 'format']
             self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
@@ -484,7 +484,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         else:
             RunAsync(run, callback)
         self.convert_dialog.present()
-        self.button_upscale.set_sensitive(False)
+        self.button_convert.set_sensitive(False)
 
     """ Ask the user if they want to open the file. """
     def converting_completed_dialog(self, error):
