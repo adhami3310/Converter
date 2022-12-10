@@ -43,6 +43,7 @@ class ConverterApplication(Adw.Application):
         self.create_action('quit', self.__quit, ['<primary>q'])
         self.create_action('about', self.__about_action)
         self.create_action('open', self.__open_file, ['<primary>o'])
+        self.create_action('paste', self.__paste, ['<primary>v'])
         self.file = None
 
     def do_activate(self):
@@ -64,6 +65,9 @@ class ConverterApplication(Adw.Application):
             self.file = command_line.create_file_for_arg(args[1]).get_path()
         self.activate()
         return 0
+
+    def __paste(self, *args):
+        self.win.load_cb()
 
     def __open_file(self, *args):
         self.win.open_file()

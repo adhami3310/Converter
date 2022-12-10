@@ -142,6 +142,18 @@ class ConverterWindow(Adw.ApplicationWindow):
             Gtk.STYLE_PROVIDER_PRIORITY_USER
         )
 
+    """Loads an image from the clipboard"""
+    def load_cb(self):
+        display = self.get_display()
+        cb = display.get_clipboard()
+        print(cb.get_formats().get_mime_types())
+        if 'image/png' in cb.get_formats().get_mime_types():
+            def load_clipboard(_, result, userdata):
+                image = cb.read_texture_finish(result)
+                image.save_to_png("temp.png")
+                self.load_file("temp.png")
+            cb.read_texture_async(None, load_clipboard, None)
+
     def __on_file_open(self, input_file_path, pixbuf):
         """ Set variables. """
         self.input_file_path = input_file_path
