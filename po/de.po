@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
 #: converter/gtk/window.blp:9 converter/gtk/window.blp:42
@@ -36,6 +36,8 @@ msgid ""
 "A simple and easy-to-use Flatpak application build with libadwaita for "
 "converting and manipulating images."
 msgstr ""
+"Eine einfache und leicht zu bedienende Flatpak-Anwendung zum Umwandeln und "
+"Bearbeiten von Bildern, erstellt mit Libadwaita."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:26
 msgid "image"
@@ -62,9 +64,9 @@ msgid "Added AVIF and JXL support."
 msgstr "Unterstützung für AVIF und JXL hinzugefügt."
 
 #: converter/file_chooser.py:35
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "’{input_ext}’ is not supported"
-msgstr "»{}« ist kein unterstütztes Format"
+msgstr "»{input_ext}« wird nicht unterstützt"
 
 #: converter/file_chooser.py:91
 msgid "Select an image"
@@ -79,9 +81,9 @@ msgid "No file extension was specified"
 msgstr "Es wurde keine Dateiendung angegeben"
 
 #: converter/file_chooser.py:120
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "’{file_ext}’ is of the wrong format"
-msgstr "»{}« hat das falsche Format"
+msgstr "»{file_ext}« hat das falsche Format"
 
 #: converter/file_chooser.py:129
 msgid "Select output location"
@@ -128,21 +130,20 @@ msgid "Open"
 msgstr "Öffnen"
 
 #: converter/window.py:522
-#, fuzzy
 msgid "Error while processing"
-msgstr "Verarbeitung läuft"
+msgstr "Fehler bei der Verarbeitung"
 
 #: converter/window.py:548
 msgid "Error copied to clipboard"
-msgstr ""
+msgstr "Fehler in die Zwischenablage kopiert"
 
 #: converter/window.py:552
 msgid "_Copy to clipboard"
-msgstr ""
+msgstr "In die Zwischenablage _kopieren"
 
 #: converter/window.py:554
 msgid "_Dismiss"
-msgstr ""
+msgstr "_Verwerfen"
 
 #: converter/main.py:93
 msgid "Algorithms by"
@@ -157,7 +158,6 @@ msgid "Sample Image from"
 msgstr "Beispielbild von"
 
 #: converter/main.py:149
-#, fuzzy
 msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
@@ -167,7 +167,9 @@ msgid ""
 msgstr ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
-"Mattia Borda <mattiagiovanni.borda@icloud.com>"
+"Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
+"Heimen Stoffels\n"
+"Sergio <sergiovg01@outlook.com>"
 
 #: converter/gtk/window.blp:53
 msgid "_Open Image…"
@@ -175,11 +177,11 @@ msgstr "Bild ö_ffnen …"
 
 #: converter/gtk/window.blp:62
 msgid "…or just drop it"
-msgstr ""
+msgstr "… oder einfach hier ablegen"
 
 #: converter/gtk/window.blp:89
 msgid "Drop the image to load it"
-msgstr ""
+msgstr "Das Bild ablegen, um es zu laden"
 
 #: converter/gtk/window.blp:105
 msgid "Properties"
