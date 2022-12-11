@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Converter\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/adhami3310/Converter/-/issues/\n"
 "POT-Creation-Date: 2022-12-09 21:27-0500\n"
-"PO-Revision-Date: 2022-12-11 03:53+0300\n"
+"PO-Revision-Date: 2022-12-11 12:26+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -179,7 +179,7 @@ msgstr "Görüntü _Aç…"
 
 #: converter/gtk/window.blp:62
 msgid "…or just drop it"
-msgstr ".. veya buraya sürükle bırak"
+msgstr "veya buraya sürükleyip bırakabilirsiniz."
 
 #: converter/gtk/window.blp:89
 msgid "Drop the image to load it"
