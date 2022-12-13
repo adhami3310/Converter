@@ -19,8 +19,8 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-supported_input_formats = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl']
-supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl'])
+supported_input_formats = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl', 'tiff', 'tif']
+supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl', 'tif', 'tiff'])
 popular_supported_output_formats = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl'])
 compressed_formats = sorted(['zip', 'tar.gz'])
 
@@ -37,7 +37,9 @@ extention_to_mime = {
     'avif': 'image/avif',
     'jxl': 'image/jxl',
     'zip': 'application/zip',
-    'tar.gz': 'application/gzip'
+    'tar.gz': 'application/gzip',
+    'tiff': 'image/tiff',
+    'tif': 'image/tiff'
 }
 
 """ Formats getter function. """

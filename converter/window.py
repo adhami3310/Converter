@@ -595,7 +595,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         if len(input_file_paths) > 1:
             convert_group(input_file_paths, output_file_path)
         else:
-            convert_individual(input_file_paths[0], output_file_path, callback)
+            convert_individual(input_file_paths[0], output_file_path, 1, 1, callback)
         self.stack_converter.set_visible_child_name('stack_converting')
         self.button_convert.set_sensitive(False)
 
