@@ -92,40 +92,6 @@ template ConverterWindow : .AdwApplicationWindow {
           ;
         }
 
-        StackPage {
-          name: "stack_converting";
-          child:
-          .AdwStatusPage {
-            title: _("Converting…");
-            description: _("This could take a while.");
-
-            Box {
-              orientation: vertical;
-              spacing: 36;
-
-              ProgressBar progressbar {
-                valign: center;
-                halign: center;
-                show-text: true;
-                text: _("Loading…");
-              }
-
-              Button button_cancel {
-                valign: center;
-                halign: center;
-                label: _("_Cancel");
-                use-underline: true;
-
-                styles [
-                  "destructive-action",
-                  "pill",
-                ]
-              }
-            }
-          }
-
-          ;
-        }
 
 
         StackPage {
@@ -421,6 +387,40 @@ template ConverterWindow : .AdwApplicationWindow {
           ;
         }
 
+        StackPage {
+          name: "stack_converting";
+          child:
+          .AdwStatusPage {
+            title: _("Converting…");
+            description: _("This could take a while.");
+
+            Box {
+              orientation: vertical;
+              spacing: 36;
+
+              ProgressBar progressbar {
+                valign: center;
+                halign: center;
+                show-text: true;
+                text: _("Loading…");
+              }
+
+              Button button_cancel {
+                valign: center;
+                halign: center;
+                label: _("_Cancel");
+                use-underline: true;
+
+                styles [
+                  "destructive-action",
+                  "pill",
+                ]
+              }
+            }
+          }
+
+          ;
+        }
       }
     }
   }
