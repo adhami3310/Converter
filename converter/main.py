@@ -44,7 +44,7 @@ class ConverterApplication(Adw.Application):
         self.create_action('about', self.__about_action)
         self.create_action('open', self.__open_file, ['<primary>o'])
         self.create_action('paste', self.__paste, ['<primary>v'])
-        self.file = None
+        self.files = None
 
     def do_activate(self):
         """Called when the application is activated.
@@ -56,13 +56,13 @@ class ConverterApplication(Adw.Application):
         if not self.win:
             self.win = ConverterWindow(application=self)
         self.win.present()
-        if self.file is not None:
-            self.win.load_file(self.file)
+        if self.files is not None:
+            self.win.load_file(self.files)
 
     def do_command_line(self, command_line):
         args = command_line.get_arguments()
         if len(args) > 1:
-            self.file = command_line.create_file_for_arg(args[1]).get_path()
+            self.files = [command_line.create_file_for_arg(arg).get_path() for arg in args[1:]]
         self.activate()
         return 0
 
