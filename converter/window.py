@@ -524,7 +524,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 if res:
                     GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]), current, count)
             result = self.process.poll()
-            if result != 0:
+            if result != 0 and result != None:
                 raise ConversionFailed(result, output)
 
         """ Run when run() function finishes. """
@@ -552,10 +552,20 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         def convert_group(input_file_paths, output_file_path):
 
-            def input_path_to_output_path(current_input_file_path):
-                return basename(splitext(current_input_file_path)[0]) + '.' + self.output_ext
+            def path_to_basename(file_path):
+                return basename(splitext(file_path)[0])
 
-            output_file_paths = [input_path_to_output_path(path) for path in input_file_paths]
+            def path_to_ext(file_path):
+                return splitext(file_path)[1][1:]
+
+            def input_path_to_output_path(current_input_file_path, i=0):
+                basename = path_to_basename(current_input_file_path)
+                count = output_basenames[:i].count(basename)
+                all_count = output_basenames.count(basename)
+                return basename + (f'-{count+1}' if all_count > 1 else '') + '.' + self.output_ext
+
+            output_basenames = [path_to_basename(path) for path in input_file_paths]
+            output_file_paths = [input_path_to_output_path(path, i) for i, path in enumerate(input_file_paths)]
 
             def convert_individual_callback(i, finalcallback, result, error):
                 if error != None or i >= len(input_file_paths) or self.cancelled:
@@ -571,14 +581,22 @@ class ConverterWindow(Adw.ApplicationWindow):
                     reset_widgets()
                     return
                 if error:
+                    self.stack_converter.set_visible_child_name('stack_convert')
+                    reset_widgets()
                     self.converting_completed_dialog(error)
                     return
                 RunAsync(compress, callback)
 
             def compress():
-                command = ['zip', '-FSm', output_file_path] + output_file_paths
-
-                self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+                def join_find():
+                    result = []
+                    for path in output_file_paths:
+                        result += ['-name', path_to_basename(path) + '*.' + self.output_ext, '-o']
+                    return result[:-1]
+                find_command = ['find', '-maxdepth', '1', '-type', 'f', '('] + join_find() + [')', '-print']
+                command = ['zip', '-FSm', output_file_path, '-@']
+                find_process = subprocess.Popen(find_command, stdout=subprocess.PIPE)
+                self.process = subprocess.Popen(command, stdin=find_process.stdout, stderr=subprocess.PIPE, universal_newlines=True)
                 print('Running: ', end='')
                 print(*command)
                 output = ''
@@ -587,7 +605,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                     print(line, end='')
                     output += line
                 result = self.process.poll()
-                if result != 0:
+                if result != 0 and result != None:
                     raise ConversionFailed(result, output)
 
             convert_individual_callback(0, group_completed, [], None)
@@ -604,6 +622,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.cancelled = True
             self.process.kill()
             self.stack_converter.set_visible_child_name('stack_convert')
+            self.button_convert.set_sensitive(True)
         self.close_dialog(function)
 
     """ Prompt the user to close the dialog. """
