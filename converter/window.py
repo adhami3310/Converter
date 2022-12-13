@@ -22,15 +22,15 @@ import subprocess
 import re
 from os.path import basename, splitext, dirname
 import gi
-from gi.repository import Adw, Gtk, GLib, Gdk, Gio, Pango
+from gi.repository import Adw, Gtk, GLib, Gdk, Gio, Pango, GdkPixbuf
 from sys import exit
 import time
-from converter.dialog_converting import ConvertingDialog
 from converter.threading import RunAsync
 from converter.file_chooser import FileChooser
 import converter.filters
 
 RESIZE_QUALITY = 92
+THUMBNAIL_MAX = 3
 
 class ConversionFailed(Exception):
     """Raised when ImageMagick fails. """
@@ -93,6 +93,10 @@ class ConverterWindow(Adw.ApplicationWindow):
     ratio_height_value = Gtk.Template.Child()
     invalid_image = Gtk.Template.Child()
     drop_overlay = Gtk.Template.Child()
+    button_cancel = Gtk.Template.Child()
+    progressbar = Gtk.Template.Child()
+    compression = Gtk.Template.Child()
+    supported_compression = Gtk.Template.Child()
     content = Gdk.ContentFormats.new_for_gtype(Gio.File)
     target = Gtk.DropTarget(formats=content, actions=Gdk.DragAction.COPY)
     resize_filters = ['Point', 'Quadratic', 'Cubic', 'Mitchell', 'Gaussian', 'Lanczos']
@@ -103,8 +107,10 @@ class ConverterWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        """ Declare variables. """
+        self.options_window = None
+        self.input_file_paths = []
         self.settings = Gio.Settings('io.gitlab.adhami3310.Converter')
-        self.update_output_datatype()
 
         """ Connect signals. """
         self.button_input.connect('clicked', self.open_file)
@@ -114,12 +120,14 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.quality.connect('value-changed', self.__quality_changed)
         self.settings.connect('changed::show-less-popular', self.update_output_datatype)
         self.filetype.connect('notify::selected', self.__filetype_changed)
+        self.compression.connect('notify::selected', self.__compression_changed)
         self.resize_row.connect('notify::expanded', self.__update_resize)
         self.resize_type.connect('notify::selected', self.__update_resize)
         self.resize_width.connect('notify::selected', self.__update_resize)
         self.resize_height.connect('notify::selected', self.__update_resize)
         self.svg_size_row.connect('notify::expanded', self.__update_size)
         self.svg_size_type.connect('notify::selected', self.__update_size)
+        self.button_cancel.connect('clicked', self.__cancel)
         self.target.connect('drop', self.__on_drop)
         self.add_controller(self.target)
         self.target.connect('enter', self.__on_enter)
@@ -128,10 +136,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         for resize_filter in self.resize_filters:
             self.filters.append(resize_filter)
 
-        """ Declare variables. """
-        self.convert_dialog = None
-        self.options_window = None
-        self.input_file_path = None
 
         gtk_context = self.drop_overlay.get_style_context()
         Gtk.StyleContext.add_class(gtk_context, "dragndrop_overlay")
@@ -154,16 +158,51 @@ class ConverterWindow(Adw.ApplicationWindow):
                 self.load_file("converted.png")
             cb.read_texture_async(None, load_clipboard, None)
 
-    def __on_file_open(self, input_file_path, pixbuf):
-        """ Set variables. """
-        self.input_file_path = input_file_path
-        self.input_ext = basename(splitext(self.input_file_path)[1])[1:]
-        self.action_image_type.set_subtitle(f'{self.input_ext.upper()} ({converter.filters.extention_to_mime[self.input_ext.lower()]})')
-        self.image_size = (pixbuf.get_width(), pixbuf.get_height())
+    def __on_paths_received(self, files, paths):
+        self.input_file_paths = paths
+        self.pixbufs = []
+        for file in files[:THUMBNAIL_MAX]:
+            file.read_async(GLib.PRIORITY_DEFAULT,
+                                None,
+                                FileChooser.open_file_done,
+                                (self.__recieve_image, self.__on_file_open_error))
 
+
+    def __recieve_image(self, paths, pixbufs):
+        print(self.pixbufs)
+        self.pixbufs += pixbufs
+        if len(self.pixbufs) >= min(THUMBNAIL_MAX, len(self.input_file_paths)):
+            self.__on_file_open()
+
+    def __on_file_open(self):
+        self.compression.hide()
+        self.action_image_size.hide()
+
+        """ Set variables. """
+        if len(self.input_file_paths) > 1:
+            self.compression.show()
+        self.input_exts = [splitext(file_path)[1][1:].upper() for file_path in self.input_file_paths]
+        self.action_image_type.set_subtitle(", ".join(set([f'{ext.upper()} ({converter.filters.extention_to_mime[ext.lower()]})' for ext in self.input_exts])))
+        if len(self.pixbufs) == 1:
+            self.image_size = (self.pixbufs[0].get_width(), self.pixbufs[0].get_height())
+        else:
+            self.image_size = (1920, 1080)
         """ Display image. """
-        self.action_image_size.set_subtitle(f'{self.image_size[0]} × {self.image_size[1]}')
-        self.image.set_pixbuf(pixbuf)
+        if len(self.pixbufs) == 1:
+            self.image_container.show()
+            self.action_image_size.set_subtitle(f'{self.image_size[0]} × {self.image_size[1]}')
+            self.action_image_size.show()
+            self.image.set_pixbuf(self.pixbufs[0])
+        else:
+            def stack_images(p):
+                side = min(min([q.get_width() for q in p]), min([q.get_height() for q in p]))
+                overlap = 0.2
+                result = GdkPixbuf.Pixbuf.new(0, True, 8, side + (len(p)-1)*overlap*side, side + (len(p)-1)*overlap*side)
+                for i, q in enumerate(p):
+                    q.scale(result, i*overlap*side, i*overlap*side, side, side, i*overlap*side, i*overlap*side, max(side/q.props.width, side/q.props.height), max(side/q.props.width, side/q.props.height), 2)
+                return result
+            self.image_container.show()
+            self.image.set_pixbuf(stack_images(self.pixbufs))
 
         """ Reset widgets. """
         self.resize_scale_height_value.set_text("100")
@@ -177,15 +216,17 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.resize_minmax_width_value.set_text(str(self.image_size[0]))
         self.resize_minmax_height_value.set_text(str(self.image_size[1]))
         self.__filetype_changed()
+        self.__compression_changed()
+        self.update_output_datatype()
         self.stack_converter.set_visible_child_name('stack_convert')
         self.button_back.show()
 
     def __on_file_open_error(self, error):
         if error:
-            self.input_file_path = None
+            self.input_file_paths = []
             self.stack_converter.set_visible_child_name('stack_invalid_image')
             self.invalid_image.set_description(str(error))
-        elif self.input_file_path is not None:
+        elif self.input_file_paths:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
         else:
             self.stack_converter.set_visible_child_name('stack_convert')
@@ -195,30 +236,30 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.spinner_loading.start()
 
     """ Open file and display it. """
-    def load_file(self, file_path):
-        if file_path == self.input_file_path: return
-        self.input_file_path = None
+    def load_file(self, file_paths):
+        if len(file_paths) == len(self.input_file_paths) == 1 and file_paths[0] == self.input_file_paths[0]: return
+        self.input_file_paths = []
         file = Gio.File.new_for_path(file_path)
         FileChooser.load_file(file,
                               self.__on_file_start,
-                              self.__on_file_open,
+                              self.__on_paths_received,
                               self.__on_file_open_error)
 
     """ Open gfile and display it. """
-    def load_gfile(self, gfile):
-        if gfile.get_path() == self.input_file_path: return
-        self.input_file_path = None
+    def load_gfile(self, gfiles):
+        if len(gfiles) == len(self.input_file_paths) == 1 and gfiles[0].get_path() == self.input_file_paths[0]: return
+        self.input_file_paths = []
         FileChooser.load_file(gfile,
                               self.__on_file_start,
-                              self.__on_file_open,
+                              self.__on_paths_received,
                               self.__on_file_open_error)
 
         """ Open a file chooser and load the file. """
     def open_file(self, *args):
         FileChooser.open_file(self,
-                              self.input_file_path,
+                              self.input_file_paths,
                               self.__on_file_start,
-                              self.__on_file_open,
+                              self.__on_paths_received,
                               self.__on_file_open_error)
 
     """ Select output file location. """
@@ -232,13 +273,17 @@ class ConverterWindow(Adw.ApplicationWindow):
             if message:
                 self.toast.add_toast(Adw.Toast.new(message))
 
-        base_path = basename(splitext(self.input_file_path)[0])
-        directory = dirname(self.input_file_path)
+        base_path = basename(splitext(self.input_file_paths[0])[0])
+        directory = dirname(self.input_file_paths[0])
         if not directory.startswith("/home"):
             directory = None
+        if len(self.input_file_paths) > 1:
+            ext = self.compression_ext
+        else:
+            ext = self.output_ext
         FileChooser.output_file(self,
-                                f'{base_path}.{self.output_ext}',
-                                self.output_ext,
+                                f'{base_path}.{ext}',
+                                ext,
                                 directory,
                                 good,
                                 bad)
@@ -264,6 +309,12 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """Update list of output datatypes"""
     def update_output_datatype(self, *args):
+        if len(self.input_file_paths) > 1:
+            self.supported_compression.splice(0, len(self.supported_compression))
+            for supported_file_type in converter.filters.compressed_formats:
+                self.supported_compression.append(supported_file_type)
+            self.compression.set_selected(converter.filters.compressed_formats.index('zip'))
+        self.compression_ext = 'zip'
         if self.settings.get_boolean('show-less-popular'):
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
             for supported_file_type in converter.filters.supported_output_formats:
@@ -282,6 +333,10 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.output_ext = ext
         self.__update_options()
 
+    def __compression_changed(self, *args):
+        ext = self.supported_compression.get_string(self.compression.get_selected())
+        self.compression_ext = ext
+
     """Updates visible options"""
     def __update_options(self):
 
@@ -293,16 +348,16 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_row.hide()
         self.svg_size_row.set_enable_expansion(False)
 
-        inext = self.input_ext
+        inext = set(self.input_exts)
         outext = self.output_ext
 
         """Datatypes that can have compression"""
-        if {'jpg', 'webp', 'jpeg', 'heif', 'heic', 'avif', 'jxl'}.intersection({inext, outext}):
+        if {'jpg', 'webp', 'jpeg', 'heif', 'heic', 'avif', 'jxl'}.intersection(inext | { outext }):
             self.quality.set_value(RESIZE_QUALITY)
             self.quality_row.show()
 
         """Datatypes with an alpha layer"""
-        if inext in {'png', 'webp', 'svg', 'heic', 'heif', 'avif', 'jxl'}:
+        if inext.intersection({'png', 'webp', 'svg', 'heic', 'heif', 'avif', 'jxl'}):
             self.bgcolor_row.show()
 
             self.bgcolor.set_use_alpha(True)
@@ -318,7 +373,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 self.bgcolor.set_rgba(bgcolor)
 
         """SVG scaling option"""
-        if inext == 'svg':
+        if 'svg' in inext:
             self.svg_size_row.show()
 
         self.resize_row.show()
@@ -388,8 +443,13 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """ Update progress """
     def __convert_progress(self, progress):
-        if self.convert_dialog:
-            self.convert_dialog.set_progress(progress)
+        if self.stack_converter.get_visible_child_name() == 'stack_converting':
+            self.set_progress(progress)
+
+    def set_progress(self, progress):
+        progress_str = str(progress) if str(progress)[-1] == '%' else str(progress) + '%'
+        self.progressbar.set_text(progress_str)
+        self.progressbar.set_fraction(progress / 100)
 
     """Get resize commands of ImageMagick"""
     def __get_resized_commands(self):
@@ -428,39 +488,39 @@ class ConverterWindow(Adw.ApplicationWindow):
     """Converts the input file to the output file using CLI"""
     def __convert(self, *args):
 
+        """ Since GTK is not thread safe, prepare some data in the main thread. """
+        self.cancelled = False
+
         def reset_widgets():
             self.button_convert.set_sensitive(True)
             self.progressbar.set_text(_('Loading…'))
             self.progressbar.set_fraction(0)
+            self.cancelled = False
 
-
-
-        """ Since GTK is not thread safe, prepare some data in the main thread. """
-        self.convert_dialog = ConvertingDialog(self)
-        inp = None #overwrites input_file_path
-        out = None #overwrites output_file_path
         """ Run in a separate thread. """
-        def run():
+        def convert(input_file, output_file):
+            ext = basename(splitext(input_file)[1])[1:].upper()
+            print('converting ', input_file, ' to ', output_file)
             command = ['magick',
                       '-monitor'
-                       ]+self.__get_sized_commands()+[
-                       inp if inp else self.input_file_path,
-#                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
-#                       '-opaque', 'none',
+                       ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
+                       input_file,
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
+                       '-flatten',
                        '-quality',
                        f'{self.quality.get_value()}'
                        ]+self.__get_resized_commands()+[
-                       out if out else self.output_file_path+"blug.pdf"]
+                       output_file]
 #            command = ['magick', 'identify', '-list', 'format']
-            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             print('Running: ', end='')
             print(*command)
+            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
             output = ''
             """ Read each line, query the percentage and update the progress bar. """
             for line in iter(self.process.stderr.readline, ''):
                 print(line, end='')
                 output += line
-                res = re.search('\d\d%', line)
+                res = re.search('.\d\d%', line)
                 if res:
                     GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]))
             result = self.process.poll()
@@ -469,22 +529,100 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         """ Run when run() function finishes. """
         def callback(result, error):
-            self.convert_dialog.close()
-            self.convert_dialog = None
-            self.converting_completed_dialog(error)
+            if self.cancelled == True:
+                self.toast.add_toast(Adw.Toast.new(_('Converting Cancelled')))
+            else:
+                self.converting_completed_dialog(error)
 
-        """ Run functions asynchronously. """
-        if self.input_ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
-            out = 'converted.png'
-            def convert_to_temp_callback():
-                inp = 'converted.png'
-                out = None
-                RunAsync(run, callback)
-            RunAsync(run, convert_to_temp_callback)
+            self.stack_converter.set_visible_child_name('stack_convert')
+            reset_widgets()
+
+        input_file_paths = self.input_file_paths
+        output_file_path = self.output_file_path
+
+        def convert_individual(input_file_path, output_file_path, callback):
+            """ Run functions asynchronously. """
+            ext = splitext(input_file_path)[1].upper()
+            if ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
+                def convert_to_temp_callback():
+                    RunAsync(lambda: convert("converted.png", output_file_path), callback)
+                RunAsync(lambda: convert(input_file_path, "converted.png"), convert_to_temp_callback)
+            else:
+                RunAsync(lambda: convert(input_file_path, output_file_path), callback)
+
+        def convert_group(input_file_paths, output_file_path):
+
+            def input_path_to_output_path(current_input_file_path):
+                return basename(splitext(current_input_file_path)[0]) + '.' + self.output_ext
+
+            output_file_paths = [input_path_to_output_path(path) for path in input_file_paths]
+
+            def convert_individual_callback(i, finalcallback, result, error):
+                if error != None or i >= len(input_file_paths) or self.cancelled:
+                    finalcallback(result, error)
+                    return
+                current_input_file_path = input_file_paths[i]
+                current_output_file_path = output_file_paths[i]
+                convert_individual(current_input_file_path, current_output_file_path, lambda result, error: convert_individual_callback(i+1, finalcallback, result, error))
+
+            def group_completed(result, error):
+                if self.cancelled == True:
+                    self.toast.add_toast(Adw.Toast.new(_('Converting Cancelled')))
+                    reset_widgets()
+                    return
+                if error:
+                    self.converting_completed_dialog(error)
+                    return
+                RunAsync(compress, callback)
+
+            def compress():
+                command = ['zip', '-FSm', output_file_path] + output_file_paths
+
+                self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+                print('Running: ', end='')
+                print(*command)
+                output = ''
+                """ Read each line """
+                for line in iter(self.process.stderr.readline, ''):
+                    print(line, end='')
+                    output += line
+                result = self.process.poll()
+                if result != 0:
+                    raise ConversionFailed(result, output)
+
+            convert_individual_callback(0, group_completed, [], None)
+
+        if len(input_file_paths) > 1:
+            convert_group(input_file_paths, output_file_path)
         else:
-            RunAsync(run, callback)
-        self.convert_dialog.present()
+            convert_individual(input_file_paths[0], output_file_path, callback)
+        self.stack_converter.set_visible_child_name('stack_converting')
         self.button_convert.set_sensitive(False)
+
+    def __cancel(self, *args):
+        def function():
+            self.cancelled = True
+            self.process.kill()
+            self.stack_converter.set_visible_child_name('stack_convert')
+        self.close_dialog(function)
+
+    """ Prompt the user to close the dialog. """
+    def close_dialog(self, function):
+        self.stop_converting_dialog = Adw.MessageDialog.new(
+            self,
+            _('Stop converting?'),
+            _('You will lose all progress.'),
+        )
+        def response(dialog, response_id):
+            if response_id == 'stop':
+                function()
+
+        self.stop_converting_dialog.add_response('cancel', _('_Cancel'))
+        self.stop_converting_dialog.add_response('stop', _('_Stop'))
+        self.stop_converting_dialog.set_response_appearance('stop', Adw.ResponseAppearance.DESTRUCTIVE)
+        self.stop_converting_dialog.connect('response', response)
+        self.stop_converting_dialog.present()
+
 
     """ Ask the user if they want to open the file. """
     def converting_completed_dialog(self, error):
@@ -554,4 +692,12 @@ class ConverterWindow(Adw.ApplicationWindow):
             dialog.add_response('ok', _('_Dismiss'))
             dialog.connect('response', error_response)
             dialog.present()
+
+    """ Close dialog. """
+    def do_close_request(self):
+        if self.stack_converter.get_visible_child_name() == 'stack_converting':
+            def function():
+                exit()
+            self.close_dialog(function)
+            return True
 

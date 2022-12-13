@@ -4,6 +4,7 @@
     <file preprocess="xml-stripblanks">gtk/window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">gtk/dialog-converting.ui</file>
+    <file>logo.svg</file>
     <file>style.css</file>
     <file>style-hc.css</file>
   </gresource>
