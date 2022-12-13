@@ -1,7 +1,7 @@
 <div align="center">
 <h1>Converter</h1>
 
-A simple and easy-to-use Flatpak application build with libadwaita for converting and manipulating images.
+A simple and easy-to-use Flatpak application built with libadwaita for converting and manipulating images.
 
 <img src="data/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg" width="128" height="128" alt="Converter icon">
 
