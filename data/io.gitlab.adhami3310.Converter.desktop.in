@@ -2,7 +2,7 @@
 Name=Converter
 GenericName=Convert
 Comment=Convert and Manipulate images
-Exec=converter %u
+Exec=converter %U
 Icon=io.gitlab.adhami3310.Converter
 Terminal=false
 Type=Application
