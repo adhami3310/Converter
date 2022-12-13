@@ -552,10 +552,16 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         def convert_group(input_file_paths, output_file_path):
 
-            def input_path_to_output_path(current_input_file_path):
-                return basename(splitext(current_input_file_path)[0]) + '.' + self.output_ext
+            def input_path_to_basename(current_input_file_path):
+                return basename(splitext(current_input_file_path)[0])
 
-            output_file_paths = [input_path_to_output_path(path) for path in input_file_paths]
+            def input_path_to_output_path(current_input_file_path, i=0):
+                basename = input_path_to_basename(current_input_file_path)
+                count = output_basenames[:i].count(basename)
+                return basename + (f'-{count}' if count != 0 else '') + '.' + self.output_ext
+
+            output_basenames = [input_path_to_basename(path) for path in input_file_paths]
+            output_file_paths = [input_path_to_output_path(path, i) for i, path in enumerate(input_file_paths)]
 
             def convert_individual_callback(i, finalcallback, result, error):
                 if error != None or i >= len(input_file_paths) or self.cancelled:
