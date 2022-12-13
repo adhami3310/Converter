@@ -97,7 +97,7 @@ class ConverterWindow(Adw.ApplicationWindow):
     progressbar = Gtk.Template.Child()
     compression = Gtk.Template.Child()
     supported_compression = Gtk.Template.Child()
-    content = Gdk.ContentFormats.new_for_gtype(Gio.File)
+    content = Gdk.ContentFormats.new_for_gtype(Gdk.FileList)
     target = Gtk.DropTarget(formats=content, actions=Gdk.DragAction.COPY)
     resize_filters = ['Point', 'Quadratic', 'Cubic', 'Mitchell', 'Gaussian', 'Lanczos']
 
@@ -155,7 +155,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             def load_clipboard(_, result, userdata):
                 image = cb.read_texture_finish(result)
                 image.save_to_png("converted.png")
-                self.load_file("converted.png")
+                self.load_file(["converted.png"])
             cb.read_texture_async(None, load_clipboard, None)
 
     def __on_paths_received(self, files, paths):
@@ -169,7 +169,6 @@ class ConverterWindow(Adw.ApplicationWindow):
 
 
     def __recieve_image(self, paths, pixbufs):
-        print(self.pixbufs)
         self.pixbufs += pixbufs
         if len(self.pixbufs) >= min(THUMBNAIL_MAX, len(self.input_file_paths)):
             self.__on_file_open()
@@ -226,7 +225,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.input_file_paths = []
             self.stack_converter.set_visible_child_name('stack_invalid_image')
             self.invalid_image.set_description(str(error))
-        elif self.input_file_paths:
+        elif not self.input_file_paths:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
         else:
             self.stack_converter.set_visible_child_name('stack_convert')
@@ -239,17 +238,18 @@ class ConverterWindow(Adw.ApplicationWindow):
     def load_file(self, file_paths):
         if len(file_paths) == len(self.input_file_paths) == 1 and file_paths[0] == self.input_file_paths[0]: return
         self.input_file_paths = []
-        file = Gio.File.new_for_path(file_path)
-        FileChooser.load_file(file,
+        files = [Gio.File.new_for_path(fp) for fp in file_paths]
+        FileChooser.load_file(files,
                               self.__on_file_start,
                               self.__on_paths_received,
                               self.__on_file_open_error)
 
     """ Open gfile and display it. """
     def load_gfile(self, gfiles):
+        gfiles = gfiles.get_files()
         if len(gfiles) == len(self.input_file_paths) == 1 and gfiles[0].get_path() == self.input_file_paths[0]: return
         self.input_file_paths = []
-        FileChooser.load_file(gfile,
+        FileChooser.load_file(gfiles,
                               self.__on_file_start,
                               self.__on_paths_received,
                               self.__on_file_open_error)
