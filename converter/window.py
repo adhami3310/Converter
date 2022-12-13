@@ -442,13 +442,13 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.stack_converter.set_visible_child_name('stack_convert')
 
     """ Update progress """
-    def __convert_progress(self, progress):
+    def __convert_progress(self, progress, current=1, count=1):
         if self.stack_converter.get_visible_child_name() == 'stack_converting':
-            self.set_progress(progress)
+            self.set_progress(progress, current, count)
 
-    def set_progress(self, progress):
+    def set_progress(self, progress, current, count):
         progress_str = str(progress) if str(progress)[-1] == '%' else str(progress) + '%'
-        self.progressbar.set_text(progress_str)
+        self.progressbar.set_text(f'{current}/{count}, {progress_str}')
         self.progressbar.set_fraction(progress / 100)
 
     """Get resize commands of ImageMagick"""
@@ -498,7 +498,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.cancelled = False
 
         """ Run in a separate thread. """
-        def convert(input_file, output_file):
+        def convert(input_file, output_file, current, count):
             ext = basename(splitext(input_file)[1])[1:].upper()
             print('converting ', input_file, ' to ', output_file)
             command = ['magick',
@@ -522,7 +522,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 output += line
                 res = re.search('.\d\d%', line)
                 if res:
-                    GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]))
+                    GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]), current, count)
             result = self.process.poll()
             if result != 0:
                 raise ConversionFailed(result, output)
@@ -540,15 +540,15 @@ class ConverterWindow(Adw.ApplicationWindow):
         input_file_paths = self.input_file_paths
         output_file_path = self.output_file_path
 
-        def convert_individual(input_file_path, output_file_path, callback):
+        def convert_individual(input_file_path, output_file_path, current, count, callback):
             """ Run functions asynchronously. """
             ext = splitext(input_file_path)[1].upper()
             if ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
                 def convert_to_temp_callback():
-                    RunAsync(lambda: convert("converted.png", output_file_path), callback)
-                RunAsync(lambda: convert(input_file_path, "converted.png"), convert_to_temp_callback)
+                    RunAsync(lambda: convert("converted.png", output_file_path, current, count), callback)
+                RunAsync(lambda: convert(input_file_path, "converted.png", current, count), convert_to_temp_callback)
             else:
-                RunAsync(lambda: convert(input_file_path, output_file_path), callback)
+                RunAsync(lambda: convert(input_file_path, output_file_path, current, count), callback)
 
         def convert_group(input_file_paths, output_file_path):
 
@@ -563,7 +563,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                     return
                 current_input_file_path = input_file_paths[i]
                 current_output_file_path = output_file_paths[i]
-                convert_individual(current_input_file_path, current_output_file_path, lambda result, error: convert_individual_callback(i+1, finalcallback, result, error))
+                convert_individual(current_input_file_path, current_output_file_path, i+1, len(input_file_paths), lambda result, error: convert_individual_callback(i+1, finalcallback, result, error))
 
             def group_completed(result, error):
                 if self.cancelled == True:
