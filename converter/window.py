@@ -214,9 +214,9 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_height_value.set_text(str(self.image_size[1]))
         self.resize_minmax_width_value.set_text(str(self.image_size[0]))
         self.resize_minmax_height_value.set_text(str(self.image_size[1]))
-        self.__filetype_changed()
         self.__compression_changed()
         self.update_output_datatype()
+        self.__filetype_changed()
         self.stack_converter.set_visible_child_name('stack_convert')
         self.button_back.show()
 
@@ -348,8 +348,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_row.hide()
         self.svg_size_row.set_enable_expansion(False)
 
-        inext = set(self.input_exts)
-        outext = self.output_ext
+        inext = set([s.lower() for s in self.input_exts])
+        outext = self.output_ext.lower()
 
         """Datatypes that can have compression"""
         if {'jpg', 'webp', 'jpeg', 'heif', 'heic', 'avif', 'jxl'}.intersection(inext | { outext }):
@@ -357,7 +357,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.quality_row.show()
 
         """Datatypes with an alpha layer"""
-        if inext.intersection({'png', 'webp', 'svg', 'heic', 'heif', 'avif', 'jxl'}):
+        if inext.intersection({'png', 'webp', 'heic', 'heif', 'avif', 'jxl'}):
             self.bgcolor_row.show()
 
             self.bgcolor.set_use_alpha(True)
