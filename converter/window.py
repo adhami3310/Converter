@@ -339,10 +339,10 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """Updates visible options"""
     def __update_options(self):
+        if self.output_ext is None: return
 
         """Hida all options"""
         self.quality_row.hide()
-        self.bgcolor_row.hide()
         self.resize_row.hide()
         self.resize_row.set_enable_expansion(False)
         self.svg_size_row.hide()
@@ -360,18 +360,21 @@ class ConverterWindow(Adw.ApplicationWindow):
         if inext.intersection({'png', 'webp', 'heic', 'heif', 'avif', 'jxl'}):
             self.bgcolor_row.show()
 
-            self.bgcolor.set_use_alpha(True)
-            bgcolor = Gdk.RGBA()
-            bgcolor.parse('#00000000')
-            self.bgcolor.set_rgba(bgcolor)
-
             """Datatypes with no alpha layer"""
             if outext in {'jpg', 'jpeg', 'pdf', 'bmp'}:
-                self.bgcolor.set_use_alpha(False)
-                bgcolor = Gdk.RGBA()
-                bgcolor.parse('#FFFFFF')
-                self.bgcolor.set_rgba(bgcolor)
-
+                if self.bgcolor.get_use_alpha() == True:
+                    self.bgcolor.set_use_alpha(False)
+                    bgcolor = Gdk.RGBA()
+                    bgcolor.parse('#FFFFFF')
+                    self.bgcolor.set_rgba(bgcolor)
+            else:
+                if self.bgcolor.get_use_alpha() == False:
+                    self.bgcolor.set_use_alpha(True)
+                    bgcolor = Gdk.RGBA()
+                    bgcolor.parse('#00000000')
+                    self.bgcolor.set_rgba(bgcolor)
+        else:
+            self.bgcolor_row.hide()
         """SVG scaling option"""
         if 'svg' in inext:
             self.svg_size_row.show()
