@@ -204,6 +204,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.image.set_pixbuf(stack_images(self.pixbufs))
 
         """ Reset widgets. """
+        self.quality.set_value(RESIZE_QUALITY)
         self.resize_scale_height_value.set_text("100")
         self.resize_scale_width_value.set_text("100")
         self.ratio_width_value.set_text("1")
@@ -353,7 +354,6 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         """Datatypes that can have compression"""
         if {'jpg', 'webp', 'jpeg', 'heif', 'heic', 'avif', 'jxl'}.intersection(inext | { outext }):
-            self.quality.set_value(RESIZE_QUALITY)
             self.quality_row.show()
 
         """Datatypes with an alpha layer"""
