@@ -19,9 +19,9 @@
 from gi.repository import Gtk
 
 """ Declare lists. """
-supported_input_formats = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl', 'tiff', 'tif']
-supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl', 'tif', 'tiff'])
-popular_supported_output_formats = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl'])
+supported_input_formats = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl', 'tiff', 'tif', 'pdf', 'gif', 'ico']
+supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl', 'tif', 'tiff', 'gif'])
+popular_supported_output_formats = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl', 'gif'])
 compressed_formats = sorted(['zip', 'tar.gz'])
 
 extention_to_mime = {
@@ -39,7 +39,9 @@ extention_to_mime = {
     'zip': 'application/zip',
     'tar.gz': 'application/gzip',
     'tiff': 'image/tiff',
-    'tif': 'image/tiff'
+    'tif': 'image/tiff',
+    'gif': 'image/gif',
+    'ico': 'image/x-icon'
 }
 
 """ Formats getter function. """
@@ -54,6 +56,6 @@ def get_format_filters(type):
 def get_file_filter(name, formats):
     filter = Gtk.FileFilter()
     for format in formats:
-        filter.add_mime_type(extention_to_mime[format])
+        filter.add_mime_type(extention_to_mime[format.lower()])
     filter.set_name(name)
     return filter

@@ -5,7 +5,6 @@ gnome = import('gnome')
 blueprints = custom_target('blueprints',
   input: files(
     'gtk/help-overlay.blp',
-    'gtk/dialog-converting.blp',
     'gtk/window.blp',
   ),
   output: '.',
@@ -27,6 +26,11 @@ conf.set('PYTHON', python.find_installation('python3').path())
 conf.set('VERSION', meson.project_version())
 conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set('pkgdatadir', pkgdatadir)
+conf.set('application_name', application_name)
+conf.set('app_version', app_version)
+conf.set('profile', profile)
+conf.set('app_id', app_id)
+conf.set('app_icon', app_icon)
 
 configure_file(
   input: 'converter.in',
@@ -42,7 +46,6 @@ converter_sources = [
   'window.py',
   'filters.py',
   'threading.py',
-  'dialog_converting.py',
   'file_chooser.py'
 ]
 

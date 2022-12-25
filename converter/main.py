@@ -82,7 +82,7 @@ class ConverterApplication(Adw.Application):
                                 application_name='Converter',
                                 application_icon='io.gitlab.adhami3310.Converter',
                                 developer_name='Khaleel Al-Adhami',
-                                version='1.4.0',
+                                version='1.5.0',
                                 copyright='Copyright © 2022 Khaleel Al-Adhami',
                                 license_type=Gtk.License.GPL_3_0_ONLY,
                                 website='https://gitlab.com/adhami3310/Converter',
@@ -90,15 +90,9 @@ class ConverterApplication(Adw.Application):
         about.set_translator_credits(translators())
         about.set_developers(developers())
         about.add_acknowledgement_section(
-            _("Algorithms by"),
-            [
-
-            ]
-        )
-        about.add_acknowledgement_section(
             _("Code and Design Borrowed from"),
             [
-                "GIMP https://gitlab.gnome.org/GNOME/gimp"
+                "GIMP https://gitlab.gnome.org/GNOME/gimp",
                 "Upscaler https://gitlab.com/TheEvilSkeleton/Upscaler",
                 "Avvie https://github.com/Taiko2k/Avvie",
                 "Bottles https://github.com/bottlesdevs/Bottles",
@@ -146,7 +140,7 @@ def translators():
         Name + URL:   \nKhaleel Al-Adhami https://adhami3310.gitlab.io
         Name + Email: \nKhaleel Al-Adhami <khaleel.aladhami@gmail.com>
     """
-    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>\nMattia Borda <mattiagiovanni.borda@icloud.com>\nHeimen Stoffels\nSergio <sergiovg01@outlook.com>\nÅke Engelbrektson <eson@svenskasprakfiler.se>\nSabri Ünal <libreajans@gmail.com>')
+    return _('Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>\nMattia Borda <mattiagiovanni.borda@icloud.com>\nHeimen Stoffels\nSergio <sergiovg01@outlook.com>\nÅke Engelbrektson <eson@svenskasprakfiler.se>\nSabri Ünal <libreajans@gmail.com>\nAzat Zinnetullin')
 
 def developers():
     """ Developers/Contributors list. If you have contributed code, feel free
