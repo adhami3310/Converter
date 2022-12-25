@@ -31,14 +31,19 @@ Converter supports converting the following datatypes:
  - image/heif (RW) and image/heic (RW)
  - image/bmp (RW)
  - image/avif (RW)
- - image/jxl (RW)
- - application/pdf (W)
+ - image/jxl (RW) (no animation support)
+ - application/pdf (RW) (with scaling via ghostscript)
+ - image/tiff (RW)
+ - image/gif (RW)
+ - image/x-icon (R)
 
 It also supports the following options:
  - Changing quality value of lossy compression.
  - Changing the color value of the alpha layer.
  - Changing the DPI of SVG images.
  - Scaleing and resizing the image to given resolution or ratio.
+ - Dividing animated GIF and WEBP into its individual frames.
+ - Batch processing of images.
 
 You can also drag and drop as well as paste the copied image into the app!
 
