@@ -320,6 +320,17 @@
 			]
 		},
 		{
+			"name": "gs",
+			"buildsystem": "autotools",
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs1000/ghostscript-10.0.0.tar.gz",
+					"sha256": "a57764d70caf85e2fc0b0f59b83b92e25775631714dcdb97cc6e0cea414bb5a3"
+				}
+			]
+		},
+		{
 			"name": "magick",
 			"buildsystem": "simple",
 			"build-commands": [
@@ -355,6 +366,10 @@
 			"name": "converter",
 			"builddir": true,
 			"buildsystem": "meson",
+			"config-opts": [
+				"--buildtype=release",
+				"-Dprofile=development"
+			],
 			"sources": [
 				{
 					"type": "dir",

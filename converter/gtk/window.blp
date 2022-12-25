@@ -244,6 +244,17 @@ template ConverterWindow : .AdwApplicationWindow {
                 }
               }
 
+              .AdwActionRow dpi {
+                title: _("DPI");
+                .AdwBin {
+                  Entry dpi_value {
+                    styles [
+                      'text-in-row'
+                    ]
+                  }
+                }
+              }
+
               .AdwExpanderRow svg_size_row {
                 title: _("Scale Preserving Ratio");
                 show-enable-switch: true;

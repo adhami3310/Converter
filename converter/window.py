@@ -23,6 +23,7 @@ import re
 from os.path import basename, splitext, dirname
 import gi
 from gi.repository import Adw, Gtk, GLib, Gdk, Gio, Pango, GdkPixbuf
+from gettext import gettext as _
 from sys import exit
 import time
 from converter.threading import RunAsync
@@ -96,6 +97,8 @@ class ConverterWindow(Adw.ApplicationWindow):
     button_cancel = Gtk.Template.Child()
     progressbar = Gtk.Template.Child()
     compression = Gtk.Template.Child()
+    dpi = Gtk.Template.Child()
+    dpi_value = Gtk.Template.Child()
     supported_compression = Gtk.Template.Child()
     content = Gdk.ContentFormats.new_for_gtype(Gdk.FileList)
     target = Gtk.DropTarget(formats=content, actions=Gdk.DragAction.COPY)
@@ -110,6 +113,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         """ Declare variables. """
         self.options_window = None
         self.input_file_paths = []
+        self.collection = False
         self.settings = Gio.Settings('io.gitlab.adhami3310.Converter')
 
         """ Connect signals. """
@@ -160,13 +164,32 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     def __on_paths_received(self, files, paths):
         self.input_file_paths = paths
-        self.pixbufs = []
-        for file in files[:THUMBNAIL_MAX]:
-            file.read_async(GLib.PRIORITY_DEFAULT,
-                                None,
-                                FileChooser.open_file_done,
-                                (self.__recieve_image, self.__on_file_open_error))
+        self.collection = False
 
+        def collect_pixbuf(*args):
+            self.pixbufs = []
+            for file in files[:THUMBNAIL_MAX]:
+                file.read_async(GLib.PRIORITY_DEFAULT,
+                                    None,
+                                    FileChooser.open_file_done,
+                                    (self.__recieve_image, self.__on_file_open_error))
+        
+        def get_first_animated():
+            command = ['magick',
+                      'identify',
+                       paths[0]]
+            print('Running: ', end='')
+            print(*command)
+            self.process = subprocess.Popen(command, stdout=subprocess.PIPE)
+            count = len(self.process.stdout.readlines())
+            if count > 1:
+                self.collection = True
+
+        if len(paths) > 1:
+            self.collection = True
+            collect_pixbuf()
+        else:
+            RunAsync(get_first_animated, collect_pixbuf)
 
     def __recieve_image(self, paths, pixbufs):
         self.pixbufs += pixbufs
@@ -177,17 +200,18 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.compression.hide()
         self.action_image_size.hide()
 
+        self.pixbufs = [p for p in self.pixbufs if p is not None]
+
         """ Set variables. """
-        if len(self.input_file_paths) > 1:
+        if self.collection:
             self.compression.show()
         self.input_exts = [splitext(file_path)[1][1:].upper() for file_path in self.input_file_paths]
         self.action_image_type.set_subtitle(", ".join(set([f'{ext.upper()} ({converter.filters.extention_to_mime[ext.lower()]})' for ext in self.input_exts])))
-        if len(self.pixbufs) == 1:
-            self.image_size = (self.pixbufs[0].get_width(), self.pixbufs[0].get_height())
-        else:
-            self.image_size = (1920, 1080)
         """ Display image. """
-        if len(self.pixbufs) == 1:
+        if len(self.pixbufs) == 0:
+            self.image_size = (1000, 1000)
+        elif len(self.input_file_paths) == 1:
+            self.image_size = (self.pixbufs[0].get_width(), self.pixbufs[0].get_height())
             self.image_container.show()
             self.action_image_size.set_subtitle(f'{self.image_size[0]} × {self.image_size[1]}')
             self.action_image_size.show()
@@ -200,6 +224,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 for i, q in enumerate(p):
                     q.scale(result, i*overlap*side, i*overlap*side, side, side, i*overlap*side, i*overlap*side, max(side/q.props.width, side/q.props.height), max(side/q.props.width, side/q.props.height), 2)
                 return result
+            self.image_size = (self.pixbufs[0].get_width(), self.pixbufs[0].get_height())
             self.image_container.show()
             self.image.set_pixbuf(stack_images(self.pixbufs))
 
@@ -215,6 +240,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_height_value.set_text(str(self.image_size[1]))
         self.resize_minmax_width_value.set_text(str(self.image_size[0]))
         self.resize_minmax_height_value.set_text(str(self.image_size[1]))
+        self.dpi_value.set_text("300")
         self.__compression_changed()
         self.update_output_datatype()
         self.__filetype_changed()
@@ -223,9 +249,7 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     def __on_file_open_error(self, error):
         if error:
-            self.input_file_paths = []
-            self.stack_converter.set_visible_child_name('stack_invalid_image')
-            self.invalid_image.set_description(str(error))
+            self.__recieve_image(None, [None])
         elif not self.input_file_paths:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
         else:
@@ -256,6 +280,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                               self.__on_file_open_error)
 
         """ Open a file chooser and load the file. """
+
     def open_file(self, *args):
         FileChooser.open_file(self,
                               self.input_file_paths,
@@ -278,10 +303,10 @@ class ConverterWindow(Adw.ApplicationWindow):
         directory = dirname(self.input_file_paths[0])
         if not directory.startswith("/home"):
             directory = None
-        if len(self.input_file_paths) > 1:
+        if self.collection:
             ext = self.compression_ext
         else:
-            ext = self.output_ext
+            ext = self.output_ext.lower()
         FileChooser.output_file(self,
                                 f'{base_path}.{ext}',
                                 ext,
@@ -310,7 +335,7 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """Update list of output datatypes"""
     def update_output_datatype(self, *args):
-        if len(self.input_file_paths) > 1:
+        if self.collection:
             self.supported_compression.splice(0, len(self.supported_compression))
             for supported_file_type in converter.filters.compressed_formats:
                 self.supported_compression.append(supported_file_type)
@@ -320,19 +345,20 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
             for supported_file_type in converter.filters.supported_output_formats:
                 self.supported_output_datatypes.append(supported_file_type)
-            self.filetype.set_selected(converter.filters.supported_output_formats.index('pdf'))
+            self.filetype.set_selected(converter.filters.supported_output_formats.index('png'))
         else:
             self.supported_output_datatypes.splice(0, len(self.supported_output_datatypes))
             for supported_file_type in converter.filters.popular_supported_output_formats:
                 self.supported_output_datatypes.append(supported_file_type)
-            self.filetype.set_selected(converter.filters.popular_supported_output_formats.index('pdf'))
-        self.output_ext = 'pdf'
+            self.filetype.set_selected(converter.filters.popular_supported_output_formats.index('png'))
+        self.output_ext = 'png'
 
     """Selected output filetype changed"""
     def __filetype_changed(self, *args):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
-        self.output_ext = ext
-        self.__update_options()
+        if ext:
+            self.output_ext = ext.upper()
+            self.__update_options()
 
     def __compression_changed(self, *args):
         ext = self.supported_compression.get_string(self.compression.get_selected())
@@ -348,6 +374,7 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.resize_row.set_enable_expansion(False)
         self.svg_size_row.hide()
         self.svg_size_row.set_enable_expansion(False)
+        self.dpi.hide()
 
         inext = set([s.lower() for s in self.input_exts])
         outext = self.output_ext.lower()
@@ -375,9 +402,14 @@ class ConverterWindow(Adw.ApplicationWindow):
                     self.bgcolor.set_rgba(bgcolor)
         else:
             self.bgcolor_row.hide()
+
+
         """SVG scaling option"""
         if 'svg' in inext:
             self.svg_size_row.show()
+
+        if 'pdf' in inext:
+            self.dpi.show()
 
         self.resize_row.show()
 
@@ -500,15 +532,102 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.progressbar.set_fraction(0)
             self.cancelled = False
 
+        def path_to_basename(file_path):
+            return basename(splitext(file_path)[0])
+
+        def path_to_ext(file_path):
+            return splitext(file_path)[1][1:]
+
+
         """ Run in a separate thread. """
-        def convert(input_file, output_file, current, count):
+        def convert_direct(input_file, output_file, current, count):
             ext = basename(splitext(input_file)[1])[1:].upper()
             print('converting ', input_file, ' to ', output_file)
             command = ['magick',
                       '-monitor'
                        ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
                        input_file,
-                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
+                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
+                       '-quality',
+                       f'{self.quality.get_value()}'
+                       ]+self.__get_resized_commands()+[
+                       output_file]
+            print('Running: ', end='')
+            print(*command)
+            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+            output = ''
+            """ Read each line, query the percentage and update the progress bar. """
+            for line in iter(self.process.stderr.readline, ''):
+                print(line, end='')
+                output += line
+                res = re.search('.\d\d%', line)
+                if res:
+                    GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]), current, count)
+            result = self.process.poll()
+            if result != 0 and result != None:
+                raise ConversionFailed(result, output)
+
+        """ Run in a separate thread. """
+        def convert_coalesce(input_file, output_file, current, count):
+            print('converting ', input_file, ' to ', output_file)
+            command = ['magick',
+                      '-monitor',
+                       input_file,
+                       '-coalesce',
+                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
+                       '-quality',
+                       f'{self.quality.get_value()}'
+                       ]+self.__get_resized_commands()+[
+                       output_file]
+            print('Running: ', end='')
+            print(*command)
+            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+            output = ''
+            """ Read each line, query the percentage and update the progress bar. """
+            for line in iter(self.process.stderr.readline, ''):
+                print(line, end='')
+                output += line
+                res = re.search('.\d\d%', line)
+                if res:
+                    GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]), current, count)
+            result = self.process.poll()
+            if result != 0 and result != None:
+                raise ConversionFailed(result, output)
+
+        """ Run in a separate thread. """
+        def convert_pdf(input_file, output_file, current, count):
+            print('converting ', input_file, ' to ', output_file)
+            command = ['gs',
+                       '-sDEVICE=png16m',
+                       '-dTextAlphaBits=4',
+                       '-o',
+                       path_to_basename(output_file)+'%03d.'+path_to_ext(output_file),
+                       '-r' + self.dpi_value.get_text(),
+                       input_file]
+            print('Running: ', end='')
+            print(*command)
+            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+            output = ''
+            """ Read each line, query the percentage and update the progress bar. """
+            for line in iter(self.process.stderr.readline, ''):
+                print(line, end='')
+                output += line
+                res = re.search('.\d\d%', line)
+                if res:
+                    GLib.idle_add(self.__convert_progress, int(res.group(0)[:-1]), current, count)
+            result = self.process.poll()
+            if result != 0 and result != None:
+                raise ConversionFailed(result, output)
+        
+        """ Run in a separate thread. """
+        def convert_first_frame(input_file, output_file, current, count):
+            ext = basename(splitext(input_file)[1])[1:].upper()
+            print('converting ', input_file, ' to ', output_file)
+            command = ['magick',
+                       '-monitor'
+                       ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
+                       input_file+"[0]",
+                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
                        '-flatten',
                        '-quality',
                        f'{self.quality.get_value()}'
@@ -545,27 +664,63 @@ class ConverterWindow(Adw.ApplicationWindow):
 
         def convert_individual(input_file_path, output_file_path, current, count, callback):
             """ Run functions asynchronously. """
-            ext = splitext(input_file_path)[1].upper()
+            ext = splitext(input_file_path)[1][1:].upper()
             if ext == 'SVG' and self.output_ext in {'HEIF', 'HEIC'}:
-                def convert_to_temp_callback():
-                    RunAsync(lambda: convert("converted.png", output_file_path, current, count), callback)
-                RunAsync(lambda: convert(input_file_path, "converted.png", current, count), convert_to_temp_callback)
+                def convert_to_temp_callback(res, err):
+                    RunAsync(lambda: convert_first_frame("converted_853356789.png", output_file_path, current, count, True), callback)
+                RunAsync(lambda: convert_first_frame(input_file_path, "converted_853356789.png", current, count), convert_to_temp_callback)
+            elif ext == 'GIF' and self.output_ext == 'WEBP':
+                RunAsync(lambda: convert_direct(input_file_path, output_file_path, current, count), callback)
+            elif ext == 'WEBP' and self.output_ext == 'GIF':
+                RunAsync(lambda: convert_direct(input_file_path, output_file_path, current, count), callback)
+            elif ext in {'GIF', 'WEBP'}:
+                RunAsync(lambda: convert_coalesce(input_file_path, output_file_path, current, count), callback)
+            elif ext == 'ICO':
+                RunAsync(lambda: convert_direct(input_file_path, output_file_path, current, count), callback)
+            elif ext == 'PDF':
+                def convert_to_temp_callback(page_count, result, error):
+                    if error:
+                        callback(result, None)
+                        return
+                    page_number = '%03d' % page_count
+                    output_path = path_to_basename(output_file_path) + page_number + '.' + path_to_ext(output_file_path)
+                    if page_count == 1:
+                        output_path = output_file_path
+                    RunAsync(lambda: convert_first_frame('converted_853356789' + page_number +'.png',
+                                                         output_path,
+                                                         current,
+                                                         count),
+                             lambda res, err: convert_to_temp_callback(page_count+1, res, err))
+                RunAsync(lambda: convert_pdf(input_file_path, 'converted_853356789.png', current, count), lambda res, err: convert_to_temp_callback(1, res, err))
             else:
-                RunAsync(lambda: convert(input_file_path, output_file_path, current, count), callback)
+                RunAsync(lambda: convert_first_frame(input_file_path, output_file_path, current, count), callback)
+
+        def cleanupStart(result, error):
+            if error:
+                callback(result, error)
+            RunAsync(cleanup, cleanupCallback)
+
+        def cleanup():
+            print('cleaning')
+            command = ['find',
+                       '.',
+                       '-name',
+                       'converted_853356789*',
+                       '-delete']
+            print('Running: ', end='')
+            print(*command)
+            self.process = subprocess.Popen(command, stderr=subprocess.PIPE, universal_newlines=True)
+        
+        def cleanupCallback(result, error):
+            callback(result, error)
 
         def convert_group(input_file_paths, output_file_path):
-
-            def path_to_basename(file_path):
-                return basename(splitext(file_path)[0])
-
-            def path_to_ext(file_path):
-                return splitext(file_path)[1][1:]
 
             def input_path_to_output_path(current_input_file_path, i=0):
                 basename = path_to_basename(current_input_file_path)
                 count = output_basenames[:i].count(basename)
                 all_count = output_basenames.count(basename)
-                return basename + (f'-{count+1}' if all_count > 1 else '') + '.' + self.output_ext
+                return basename + (f'-{count+1}' if all_count > 1 else '') + '.' + self.output_ext.lower()
 
             output_basenames = [path_to_basename(path) for path in input_file_paths]
             output_file_paths = [input_path_to_output_path(path, i) for i, path in enumerate(input_file_paths)]
@@ -588,13 +743,13 @@ class ConverterWindow(Adw.ApplicationWindow):
                     reset_widgets()
                     self.converting_completed_dialog(error)
                     return
-                RunAsync(compress, callback)
+                RunAsync(compress, cleanupStart)
 
             def compress():
                 def join_find():
                     result = []
                     for path in output_file_paths:
-                        result += ['-name', path_to_basename(path) + '*.' + self.output_ext, '-o']
+                        result += ['-name', path_to_basename(path) + '*.' + self.output_ext.lower(), '-o']
                     return result[:-1]
                 find_command = ['find', '-maxdepth', '1', '-type', 'f', '('] + join_find() + [')', '-print']
                 command = ['zip', '-FSm', output_file_path, '-@']
@@ -613,10 +768,10 @@ class ConverterWindow(Adw.ApplicationWindow):
 
             convert_individual_callback(0, group_completed, [], None)
 
-        if len(input_file_paths) > 1:
+        if self.collection:
             convert_group(input_file_paths, output_file_path)
         else:
-            convert_individual(input_file_paths[0], output_file_path, 1, 1, callback)
+            convert_individual(input_file_paths[0], output_file_path, 1, 1, cleanupStart)
         self.stack_converter.set_visible_child_name('stack_converting')
         self.button_convert.set_sensitive(False)
 

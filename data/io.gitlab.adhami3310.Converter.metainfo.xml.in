@@ -60,9 +60,9 @@
   <content_rating type="oars-1.1" />
 
   <releases>
-    <release version="1.4.0" date="2022-12-10">
+    <release version="1.5.0" date="2022-12-25">
       <description>
-        <p>You can now drag and drop into the application or paste your image directly into it.</p>
+        <p>Added batch processing and support for GIF, PDF, TIFF, and ICO.</p>
       </description>
     </release>
   </releases>

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-09 21:27-0500\n"
+"POT-Creation-Date: 2022-12-25 11:29-0600\n"
 "PO-Revision-Date: 2022-12-09 17:52+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch\n"
@@ -17,11 +17,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.12.0\n"
 
+#: data/io.gitlab.adhami3310.Converter.desktop.in:3
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
 #: converter/gtk/window.blp:9 converter/gtk/window.blp:42
-#: data/io.gitlab.adhami3310.Converter.desktop.in:3
 msgid "Converter"
 msgstr "Convertering"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in:4
+msgid "Convert"
+msgstr "Converteren"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in:5
+msgid "Convert and Manipulate images"
+msgstr "Converteer en bewerk afbeeldingen"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in:11
+msgid "image;convert;converting;processing"
+msgstr "afbeelding;converteren;convertering;verwerking;bewerken;"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml:6
+msgid "Shows less popular datatypes in the menu"
+msgstr "Minder gebruikte formaten tonen in menu"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:6
 msgid "Khaleel Al-Adhami"
@@ -33,7 +49,7 @@ msgstr "Converteer en bewerk afbeeldingen"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:13
 msgid ""
-"A simple and easy-to-use Flatpak application build with libadwaita for "
+"A simple and easy-to-use Flatpak application built with libadwaita for "
 "converting and manipulating images."
 msgstr ""
 
@@ -58,15 +74,15 @@ msgid "Overview"
 msgstr "Overzicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-msgid "Added AVIF and JXL support."
-msgstr "Nieuw: avif- en jxl-ondersteuning."
+msgid "Added batch processing and support for GIF, PDF, TIFF, and ICO."
+msgstr ""
 
-#: converter/file_chooser.py:35
+#: converter/file_chooser.py:67
 #, fuzzy, python-brace-format
 msgid "’{input_ext}’ is not supported"
 msgstr "‘{}’ is geen ondersteund bestandsformaat"
 
-#: converter/file_chooser.py:91
+#: converter/file_chooser.py:90
 msgid "Select an image"
 msgstr "Kies een afbeelding"
 
@@ -86,18 +102,6 @@ msgstr "‘{}’ is geen geldig formaat"
 #: converter/file_chooser.py:129
 msgid "Select output location"
 msgstr "Kies een opslaglocatie"
-
-#: converter/gtk/dialog-converting.blp:20
-msgid "Converting…"
-msgstr "Bezig met converteren…"
-
-#: converter/gtk/dialog-converting.blp:21
-msgid "This could take a while."
-msgstr "Dit kan even duren."
-
-#: converter/gtk/dialog-converting.blp:25 converter/window.py:433
-msgid "Loading…"
-msgstr "Bezig met laden…"
 
 #: converter/gtk/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -119,56 +123,6 @@ msgctxt "shortcut window"
 msgid "Open Image"
 msgstr "Afbeelding openen"
 
-#: converter/window.py:516
-msgid "Image converted"
-msgstr "De afbeelding is geconverteerd"
-
-#: converter/window.py:517
-msgid "Open"
-msgstr "Openen"
-
-#: converter/window.py:522
-#, fuzzy
-msgid "Error while processing"
-msgstr "Bezig met verwerken…"
-
-#: converter/window.py:548
-msgid "Error copied to clipboard"
-msgstr ""
-
-#: converter/window.py:552
-msgid "_Copy to clipboard"
-msgstr ""
-
-#: converter/window.py:554
-msgid "_Dismiss"
-msgstr ""
-
-#: converter/main.py:93
-msgid "Algorithms by"
-msgstr "De algoritmen zijn gemaakt door"
-
-#: converter/main.py:99
-msgid "Code and Design Borrowed from"
-msgstr "De code en het ontwerp zijn afgeleid van"
-
-#: converter/main.py:110
-msgid "Sample Image from"
-msgstr "De voorbeeldfoto is afkomstig van"
-
-#: converter/main.py:149
-#, fuzzy
-msgid ""
-"Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Irénée Thirion <irenee.thirion@e.email>\n"
-"Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
-"Heimen Stoffels\n"
-"Sergio <sergiovg01@outlook.com>"
-msgstr ""
-"Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Irénée Thirion <irenee.thirion@e.email>\n"
-"Mattia Borda <mattiagiovanni.borda@icloud.com>"
-
 #: converter/gtk/window.blp:53
 msgid "_Open Image…"
 msgstr "Afbeelding _openen…"
@@ -181,164 +135,249 @@ msgstr ""
 msgid "Drop the image to load it"
 msgstr ""
 
-#: converter/gtk/window.blp:105
+#: converter/gtk/window.blp:107
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: converter/gtk/window.blp:108
+#: converter/gtk/window.blp:110
 msgid "Image Type"
 msgstr "Afbeeldingstype"
 
-#: converter/gtk/window.blp:115
+#: converter/gtk/window.blp:117
 msgid "Image Size"
 msgstr "Afbeeldingsgrootte"
 
-#: converter/gtk/window.blp:124
+#: converter/gtk/window.blp:126
 msgid "Options"
 msgstr "Opties"
 
-#: converter/gtk/window.blp:156
-msgid "Datatype"
-msgstr "Gegevenstype"
+#: converter/gtk/window.blp:158
+#, fuzzy
+msgid "Convert to"
+msgstr "Converteren"
 
-#: converter/gtk/window.blp:169
+#: converter/gtk/window.blp:163
+msgid "Compress as"
+msgstr ""
+
+#: converter/gtk/window.blp:176
 msgid "More Options"
 msgstr "Meer opties"
 
-#: converter/gtk/window.blp:178
+#: converter/gtk/window.blp:185
 msgid "_Convert"
 msgstr "_Converteren"
 
-#: converter/gtk/window.blp:198
+#: converter/gtk/window.blp:205
 msgid "Could not Load Image"
 msgstr "De afbeelding kan niet worden geladen"
 
-#: converter/gtk/window.blp:199
+#: converter/gtk/window.blp:206
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "De afbeelding is beschadigd of het bestandstype wordt niet ondersteund."
 
-#: converter/gtk/window.blp:214
+#: converter/gtk/window.blp:221
 msgid "Quality"
 msgstr "Kwaliteit"
 
-#: converter/gtk/window.blp:233
+#: converter/gtk/window.blp:240
 msgid "Background Color"
 msgstr "Achtergrondkleur"
 
-#: converter/gtk/window.blp:241
+#: converter/gtk/window.blp:248
+msgid "DPI"
+msgstr ""
+
+#: converter/gtk/window.blp:259
 msgid "Scale Preserving Ratio"
 msgstr "Beeldverhouding"
 
-#: converter/gtk/window.blp:244
+#: converter/gtk/window.blp:262
 msgid "Dimension"
 msgstr "Afmetingen"
 
-#: converter/gtk/window.blp:247 converter/gtk/window.blp:291
-#: converter/gtk/window.blp:317
+#: converter/gtk/window.blp:265 converter/gtk/window.blp:309
+#: converter/gtk/window.blp:335
 msgid "Width"
 msgstr "Breedte"
 
-#: converter/gtk/window.blp:247 converter/gtk/window.blp:306
-#: converter/gtk/window.blp:327
+#: converter/gtk/window.blp:265 converter/gtk/window.blp:324
+#: converter/gtk/window.blp:345
 msgid "Height"
 msgstr "Hoogte"
 
-#: converter/gtk/window.blp:252
+#: converter/gtk/window.blp:270
 msgid "Width in Pixels"
 msgstr "Breedte (in pixels)"
 
-#: converter/gtk/window.blp:262
+#: converter/gtk/window.blp:280
 msgid "Height in Pixels"
 msgstr "Lengte (in pixels)"
 
-#: converter/gtk/window.blp:274
+#: converter/gtk/window.blp:292
 msgid "Resize"
 msgstr "Grootte aanpassen"
 
-#: converter/gtk/window.blp:277
+#: converter/gtk/window.blp:295
 msgid "Filter"
 msgstr "Filteren"
 
-#: converter/gtk/window.blp:283
+#: converter/gtk/window.blp:301
 msgid "Size"
 msgstr "Grootte"
 
-#: converter/gtk/window.blp:286
+#: converter/gtk/window.blp:304
 msgid "Percentage"
 msgstr "Percentage"
 
-#: converter/gtk/window.blp:286
+#: converter/gtk/window.blp:304
 msgid "Exact Pixels"
 msgstr "Pixelverhouding"
 
-#: converter/gtk/window.blp:286
+#: converter/gtk/window.blp:304
 msgid "Minimum Pixels"
 msgstr "Minimumaantal pixels"
 
-#: converter/gtk/window.blp:286
+#: converter/gtk/window.blp:304
 msgid "Maximum Pixels"
 msgstr "Maximumaantal pixels"
 
-#: converter/gtk/window.blp:286
+#: converter/gtk/window.blp:304
 msgid "Ratio"
 msgstr "Verhouding"
 
-#: converter/gtk/window.blp:294
+#: converter/gtk/window.blp:312
 msgid "Pixels"
 msgstr "pixels"
 
-#: converter/gtk/window.blp:294
+#: converter/gtk/window.blp:312
 msgid "Preserve Ratio"
 msgstr "Beeldverhouding behouden"
 
-#: converter/gtk/window.blp:337
+#: converter/gtk/window.blp:355
 msgid "Width Percentage Scale"
 msgstr "Breedtepercentage"
 
-#: converter/gtk/window.blp:347
+#: converter/gtk/window.blp:365
 msgid "Height Percentage Scale"
 msgstr "Lengtepercentage"
 
-#: converter/gtk/window.blp:357
+#: converter/gtk/window.blp:375
 msgid "Ratio Width"
 msgstr "Beeldverhoudingsbreedte"
 
-#: converter/gtk/window.blp:367
+#: converter/gtk/window.blp:385
 msgid "Ratio Height"
 msgstr "Beeldverhoudingshoogte"
 
-#: converter/gtk/window.blp:396
+#: converter/gtk/window.blp:405
+msgid "Converting…"
+msgstr "Bezig met converteren…"
+
+#: converter/gtk/window.blp:406
+msgid "This could take a while."
+msgstr "Dit kan even duren."
+
+#: converter/gtk/window.blp:416 converter/window.py:531
+msgid "Loading…"
+msgstr "Bezig met laden…"
+
+#: converter/gtk/window.blp:422 converter/window.py:797
+msgid "_Cancel"
+msgstr ""
+
+#: converter/gtk/window.blp:448
 msgid "Open File…"
 msgstr "Bestand openen…"
 
-#: converter/gtk/window.blp:403
+#: converter/gtk/window.blp:455
 msgid "Show Less Popular Datatypes"
 msgstr "Minder gebruikte formaten tonen"
 
-#: converter/gtk/window.blp:415
+#: converter/gtk/window.blp:467
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: converter/gtk/window.blp:420
+#: converter/gtk/window.blp:472
 msgid "About Converter"
 msgstr "Over Convertering"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:4
-msgid "Convert"
-msgstr "Converteren"
+#: converter/main.py:93
+msgid "Code and Design Borrowed from"
+msgstr "De code en het ontwerp zijn afgeleid van"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:5
-msgid "Convert and Manipulate images"
-msgstr "Converteer en bewerk afbeeldingen"
+#: converter/main.py:104
+msgid "Sample Image from"
+msgstr "De voorbeeldfoto is afkomstig van"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:11
-msgid "image;convert;converting;processing"
-msgstr "afbeelding;converteren;convertering;verwerking;bewerken;"
+#: converter/main.py:143
+#, fuzzy
+msgid ""
+"Jürgen Benvenuti <gastornis@posteo.org>\n"
+"Irénée Thirion <irenee.thirion@e.email>\n"
+"Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
+"Heimen Stoffels\n"
+"Sergio <sergiovg01@outlook.com>\n"
+"Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
+"Sabri Ünal <libreajans@gmail.com>\n"
+"Azat Zinnetullin"
+msgstr ""
+"Jürgen Benvenuti <gastornis@posteo.org>\n"
+"Irénée Thirion <irenee.thirion@e.email>\n"
+"Mattia Borda <mattiagiovanni.borda@icloud.com>"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml:6
-msgid "Shows less popular datatypes in the menu"
-msgstr "Minder gebruikte formaten tonen in menu"
+#: converter/window.py:655 converter/window.py:738
+#, fuzzy
+msgid "Converting Cancelled"
+msgstr "Bezig met converteren…"
+
+#: converter/window.py:790
+#, fuzzy
+msgid "Stop converting?"
+msgstr "Bezig met converteren…"
+
+#: converter/window.py:791
+msgid "You will lose all progress."
+msgstr ""
+
+#: converter/window.py:798
+msgid "_Stop"
+msgstr ""
+
+#: converter/window.py:831
+msgid "Image converted"
+msgstr "De afbeelding is geconverteerd"
+
+#: converter/window.py:832
+msgid "Open"
+msgstr "Openen"
+
+#: converter/window.py:837
+#, fuzzy
+msgid "Error while processing"
+msgstr "Bezig met verwerken…"
+
+#: converter/window.py:863
+msgid "Error copied to clipboard"
+msgstr ""
+
+#: converter/window.py:867
+msgid "_Copy to clipboard"
+msgstr ""
+
+#: converter/window.py:869
+msgid "_Dismiss"
+msgstr ""
+
+#~ msgid "Added AVIF and JXL support."
+#~ msgstr "Nieuw: avif- en jxl-ondersteuning."
+
+#~ msgid "Algorithms by"
+#~ msgstr "De algoritmen zijn gemaakt door"
+
+#~ msgid "Datatype"
+#~ msgstr "Gegevenstype"
 
 #~ msgid ""
 #~ "Converter allows you to convert and manipulate a given image. It is a "
