@@ -17,6 +17,11 @@ A simple and easy-to-use Flatpak application built with libadwaita for convertin
 
 It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory.
 
+### Third Party Packages
+You may also be able to obtain Converter from your distribution's package manager. Note these packages are maintained independently and thus may differ from the official version on Flathub. Please report any issues experienced to the package maintainer.
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/converter.svg)](https://repology.org/project/converter/versions)
+
 ## About
 
 Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Converter from various writers, content creators, etc.
