@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Converter\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-25 11:47-0600\n"
-"PO-Revision-Date: 2022-12-11 12:26+0300\n"
+"PO-Revision-Date: 2022-12-31 01:53+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -36,7 +36,8 @@ msgstr "Görüntüleri Dönüştür ve Düzenle"
 #: data/io.gitlab.adhami3310.Converter.desktop.in:11
 msgid "image;convert;converting;processing"
 msgstr ""
-"image;convert;converting;processing;resim;görüntü;dönüştür;dönüştürme;işleme;"
+"image;convert;converting;processing;resim;görüntü;dönüştür;dönüştürme;"
+"işleme;"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml:6
 msgid "Shows less popular datatypes in the menu"
@@ -51,13 +52,12 @@ msgid "Convert and manipulate images"
 msgstr "Görüntüleri dönüştür ve düzenle"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:13
-#, fuzzy
 msgid ""
 "A simple and easy-to-use Flatpak application built with libadwaita for "
 "converting and manipulating images."
 msgstr ""
-"Görüntüleri dönüştürmek ve değiştirmek için libadwaita içeren basit ve "
-"kullanımı kolay Flatpak uygulaması."
+"Görüntüleri dönüştürmek ve değiştirmek için libadwaita ile inşa edilmiş "
+"basit ve kullanımı kolay Flatpak uygulaması."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:26
 msgid "image"
@@ -81,7 +81,7 @@ msgstr "Genel Görünüm"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
 msgid "Added batch processing and support for GIF, PDF, TIFF, and ICO."
-msgstr ""
+msgstr "Toplu işleme ile GIF, PDF, TIFF ve ICO desteği eklendi."
 
 #: converter/file_chooser.py:67
 #, python-brace-format
@@ -158,13 +158,12 @@ msgid "Options"
 msgstr "Seçenekler"
 
 #: converter/gtk/window.blp:158
-#, fuzzy
 msgid "Convert to"
-msgstr "Dönüştür"
+msgstr "Şuna Dönüştür"
 
 #: converter/gtk/window.blp:163
 msgid "Compress as"
-msgstr ""
+msgstr "Sıkıştır"
 
 #: converter/gtk/window.blp:176
 msgid "More Options"
@@ -194,7 +193,7 @@ msgstr "Arka Plan Rengi"
 
 #: converter/gtk/window.blp:248
 msgid "DPI"
-msgstr ""
+msgstr "DPI"
 
 #: converter/gtk/window.blp:259
 msgid "Scale Preserving Ratio"
@@ -292,7 +291,7 @@ msgstr "Yükleniyor…"
 
 #: converter/gtk/window.blp:422 converter/window.py:797
 msgid "_Cancel"
-msgstr ""
+msgstr "_İptal Et"
 
 #: converter/gtk/window.blp:448
 msgid "Open File…"
@@ -319,7 +318,6 @@ msgid "Sample Image from"
 msgstr "Örnek Görüntü kaynağı"
 
 #: converter/main.py:143
-#, fuzzy
 msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
@@ -334,25 +332,26 @@ msgstr ""
 "Irénée Thirion <irenee.thirion@e.email>\n"
 "Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
 "Heimen Stoffels\n"
-"Sergio <sergiovg01@outlook.com>"
+"Sergio <sergiovg01@outlook.com>\n"
+"Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
+"Sabri Ünal <libreajans@gmail.com>\n"
+"Azat Zinnetullin"
 
 #: converter/window.py:655 converter/window.py:738
-#, fuzzy
 msgid "Converting Cancelled"
-msgstr "Dönüştürülüyor…"
+msgstr "Dönüştürme İptal Edildi"
 
 #: converter/window.py:790
-#, fuzzy
 msgid "Stop converting?"
-msgstr "dönüştürülüyor"
+msgstr "Dönüştürme durdurulsun mu?"
 
 #: converter/window.py:791
 msgid "You will lose all progress."
-msgstr ""
+msgstr "Tüm ilerleme kaybolacak."
 
 #: converter/window.py:798
 msgid "_Stop"
-msgstr ""
+msgstr "_Durdur"
 
 #: converter/window.py:831
 msgid "Image converted"
@@ -377,12 +376,3 @@ msgstr "Panoya _kopyala"
 #: converter/window.py:869
 msgid "_Dismiss"
 msgstr "_Vazgeç"
-
-#~ msgid "Added AVIF and JXL support."
-#~ msgstr "AVIF ve JXL desteği eklendi."
-
-#~ msgid "Algorithms by"
-#~ msgstr "Algoritmalar"
-
-#~ msgid "Datatype"
-#~ msgstr "Veri türü"
