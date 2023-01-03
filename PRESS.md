@@ -8,3 +8,4 @@ A collection of content mentioning Converter from various writers, content creat
  - [Convert Images with Converter App](https://connectwww.com/convert-images-with-converter-app/65013/)
  - [Converter – Stupid Simple App to Convert Photo Images in Linux Desktop/Phone](https://fostips.com/simple-app-convert-photo-linux/)
  - [Bildmanipulation mit Converter](https://gnulinux.ch/bildmanipulation-mit-converter)
+ - [‘Converter’ is a Slick Image Conversion Tool for Linux](https://www.omgubuntu.co.uk/2023/01/gtk-image-converter-app-for-linux)
