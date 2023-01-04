@@ -140,16 +140,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         for resize_filter in self.resize_filters:
             self.filters.append(resize_filter)
 
-
-        gtk_context = self.drop_overlay.get_style_context()
-        Gtk.StyleContext.add_class(gtk_context, "dragndrop_overlay")
-        self.style_provider.load_from_data(b".dragndrop_overlay { background: rgba(41, 65, 94, 0.2);}")
-        Gtk.StyleContext.add_provider(
-            gtk_context,
-            self.style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_USER
-        )
-
     """Loads an image from the clipboard"""
     def load_cb(self):
         display = self.get_display()

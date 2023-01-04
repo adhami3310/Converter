@@ -85,7 +85,11 @@ template ConverterWindow : .AdwApplicationWindow {
           child:
           .AdwStatusPage drop_overlay {
             icon-name: "insert-image-symbolic";
-            title: _("Drop the image to load it");
+            title: _("Drop Here to Open");
+
+            styles [
+              "dragndrop_overlay"
+            ]
           }
 
           ;
