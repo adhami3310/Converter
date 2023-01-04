@@ -39,14 +39,16 @@ template ConverterWindow : .AdwApplicationWindow {
           name: "stack_welcome_page";
           child:
           .AdwStatusPage {
+            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             title: _("Converter");
+            description: _("Click “Open Image…” or drag an image here.");
             hexpand: true;
             vexpand: true;
-            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             child:
-            Box{
+            Box {
               orientation: vertical;
               spacing: 12;
+
               Button button_input {
                 valign: center;
                 halign: center;
@@ -57,9 +59,6 @@ template ConverterWindow : .AdwApplicationWindow {
                   "suggested-action",
                   "pill",
                 ]
-              }
-              Label drop_label {
-                label: _("…or just drop it");
               }
             }
 
