@@ -318,14 +318,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.load_gfile(file)
 
     def __on_enter(self,*args):
-        self.stack_converter.set_transition_type(1)
         self.previous_stack = self.stack_converter.get_visible_child_name()
         self.stack_converter.set_visible_child_name('stack_drop')
         return Gdk.DragAction.COPY
 
     def __on_leave(self, *args):
         self.stack_converter.set_visible_child_name(self.previous_stack)
-        self.stack_converter.set_transition_type(6)
 
     """Toggle visibility of less popular datatypes"""
     def toggle_datatype(self, *args):
