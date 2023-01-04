@@ -133,9 +133,9 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_type.connect('notify::selected', self.__update_size)
         self.button_cancel.connect('clicked', self.__cancel)
         self.target.connect('drop', self.__on_drop)
-        self.add_controller(self.target)
         self.target.connect('enter', self.__on_enter)
         self.target.connect('leave', self.__on_leave)
+        self.add_controller(self.target)
 
         for resize_filter in self.resize_filters:
             self.filters.append(resize_filter)
@@ -158,11 +158,14 @@ class ConverterWindow(Adw.ApplicationWindow):
         if 'image/png' in cb.get_formats().get_mime_types():
             def load_clipboard(_, result, userdata):
                 image = cb.read_texture_finish(result)
-                image.save_to_png("converted.png")
-                self.load_file(["converted.png"])
+                image.save_to_png("converted_8533567899.png")
+                self.load_file(["converted_8533567899.png"])
             cb.read_texture_async(None, load_clipboard, None)
 
     def __on_paths_received(self, files, paths):
+        def path_to_ext(file_path):
+            return splitext(file_path)[1][1:]
+        
         self.input_file_paths = paths
         self.collection = False
 
@@ -172,7 +175,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 file.read_async(GLib.PRIORITY_DEFAULT,
                                     None,
                                     FileChooser.open_file_done,
-                                    (self.__recieve_image, self.__on_file_open_error))
+                                    (self.__recieve_image, self.__on_file_load_error))
         
         def get_first_animated():
             command = ['magick',
@@ -247,9 +250,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.stack_converter.set_visible_child_name('stack_convert')
         self.button_back.show()
 
+    def __on_file_load_error(self, error):
+        self.__recieve_image(None, [None])
+
     def __on_file_open_error(self, error):
         if error:
-            self.__recieve_image(None, [None])
+            self.stack_converter.set_visible_child_name('stack_invalid_image')
         elif not self.input_file_paths:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
         else:
@@ -279,8 +285,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                               self.__on_paths_received,
                               self.__on_file_open_error)
 
-        """ Open a file chooser and load the file. """
-
+    """ Open a file chooser and load the file. """
     def open_file(self, *args):
         FileChooser.open_file(self,
                               self.input_file_paths,
