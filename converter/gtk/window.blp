@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template ConverterWindow : .AdwApplicationWindow {
-  default-width: "700";
+  default-width: "750";
   default-height: "750";
   width-request: "300";
   height-request: "300";
@@ -33,20 +33,22 @@ template ConverterWindow : .AdwApplicationWindow {
 
     .AdwToastOverlay toast {
       Stack stack_converter {
-        transition-type: slide_left_right;
+        transition-type: crossfade;
 
         StackPage {
           name: "stack_welcome_page";
           child:
           .AdwStatusPage {
+            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             title: _("Converter");
+            description: _("Click “Open Image…” or drag an image here.");
             hexpand: true;
             vexpand: true;
-            icon-name: "io.gitlab.adhami3310.Converter-symbolic";
             child:
-            Box{
+            Box {
               orientation: vertical;
               spacing: 12;
+
               Button button_input {
                 valign: center;
                 halign: center;
@@ -57,9 +59,6 @@ template ConverterWindow : .AdwApplicationWindow {
                   "suggested-action",
                   "pill",
                 ]
-              }
-              Label drop_label {
-                label: _("…or just drop it");
               }
             }
 
@@ -86,7 +85,11 @@ template ConverterWindow : .AdwApplicationWindow {
           child:
           .AdwStatusPage drop_overlay {
             icon-name: "insert-image-symbolic";
-            title: _("Drop the image to load it");
+            title: _("Drop Here to Open");
+
+            styles [
+              "dragndrop_overlay"
+            ]
           }
 
           ;

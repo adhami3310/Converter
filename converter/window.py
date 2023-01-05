@@ -133,22 +133,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.svg_size_type.connect('notify::selected', self.__update_size)
         self.button_cancel.connect('clicked', self.__cancel)
         self.target.connect('drop', self.__on_drop)
-        self.add_controller(self.target)
         self.target.connect('enter', self.__on_enter)
         self.target.connect('leave', self.__on_leave)
+        self.add_controller(self.target)
 
         for resize_filter in self.resize_filters:
             self.filters.append(resize_filter)
-
-
-        gtk_context = self.drop_overlay.get_style_context()
-        Gtk.StyleContext.add_class(gtk_context, "dragndrop_overlay")
-        self.style_provider.load_from_data(b".dragndrop_overlay { background: rgba(41, 65, 94, 0.2);}")
-        Gtk.StyleContext.add_provider(
-            gtk_context,
-            self.style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_USER
-        )
 
     """Loads an image from the clipboard"""
     def load_cb(self):
@@ -158,8 +148,8 @@ class ConverterWindow(Adw.ApplicationWindow):
         if 'image/png' in cb.get_formats().get_mime_types():
             def load_clipboard(_, result, userdata):
                 image = cb.read_texture_finish(result)
-                image.save_to_png("converted.png")
-                self.load_file(["converted.png"])
+                image.save_to_png("converted_8533567899.png")
+                self.load_file(["converted_8533567899.png"])
             cb.read_texture_async(None, load_clipboard, None)
 
     def __on_paths_received(self, files, paths):
@@ -172,7 +162,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                 file.read_async(GLib.PRIORITY_DEFAULT,
                                     None,
                                     FileChooser.open_file_done,
-                                    (self.__recieve_image, self.__on_file_open_error))
+                                    (self.__recieve_image, self.__on_file_load_error))
         
         def get_first_animated():
             command = ['magick',
@@ -245,17 +235,20 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.update_output_datatype()
         self.__filetype_changed()
         self.stack_converter.set_visible_child_name('stack_convert')
-        self.button_back.show()
+
+    def __on_file_load_error(self, error):
+        self.__recieve_image(None, [None])
 
     def __on_file_open_error(self, error):
         if error:
-            self.__recieve_image(None, [None])
+            self.stack_converter.set_visible_child_name('stack_invalid_image')
         elif not self.input_file_paths:
             self.stack_converter.set_visible_child_name('stack_welcome_page')
         else:
             self.stack_converter.set_visible_child_name('stack_convert')
 
     def __on_file_start(self):
+        self.button_back.hide()
         self.stack_converter.set_visible_child_name('stack_loading')
         self.spinner_loading.start()
 
@@ -279,8 +272,7 @@ class ConverterWindow(Adw.ApplicationWindow):
                               self.__on_paths_received,
                               self.__on_file_open_error)
 
-        """ Open a file chooser and load the file. """
-
+    """ Open a file chooser and load the file. """
     def open_file(self, *args):
         FileChooser.open_file(self,
                               self.input_file_paths,
@@ -318,14 +310,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.load_gfile(file)
 
     def __on_enter(self,*args):
-        self.stack_converter.set_transition_type(1)
         self.previous_stack = self.stack_converter.get_visible_child_name()
         self.stack_converter.set_visible_child_name('stack_drop')
         return Gdk.DragAction.COPY
 
     def __on_leave(self, *args):
         self.stack_converter.set_visible_child_name(self.previous_stack)
-        self.stack_converter.set_transition_type(6)
 
     """Toggle visibility of less popular datatypes"""
     def toggle_datatype(self, *args):
@@ -464,17 +454,14 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """Press more options"""
     def __more_options(self, *args):
+        self.button_back.show()
         self.stack_converter.set_visible_child_name('options_page')
 
     """Pressed the back button"""
     def __go_back(self, *args):
-        if self.stack_converter.get_visible_child_name() == 'stack_convert':
-            """On Converting Stack"""
-            self.stack_converter.set_visible_child_name('stack_welcome_page')
-            self.button_back.hide()
-        else:
-            """On More Options"""
-            self.stack_converter.set_visible_child_name('stack_convert')
+        """On More Options"""
+        self.button_back.hide()
+        self.stack_converter.set_visible_child_name('stack_convert')
 
     """ Update progress """
     def __convert_progress(self, progress, current=1, count=1):
