@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-25 11:47-0600\n"
+"POT-Creation-Date: 2023-01-04 22:16-0600\n"
 "PO-Revision-Date: 2022-12-20 17:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in:3
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
-#: converter/gtk/window.blp:9 converter/gtk/window.blp:42
+#: converter/gtk/window.blp:9 converter/gtk/window.blp:43
 msgid "Converter"
 msgstr "Конвертер"
 
@@ -79,7 +79,7 @@ msgid "Overview"
 msgstr "Обзор"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-msgid "Added batch processing and support for GIF, PDF, TIFF, and ICO."
+msgid "Made UI adjustments."
 msgstr ""
 
 #: converter/file_chooser.py:67
@@ -128,184 +128,184 @@ msgctxt "shortcut window"
 msgid "Open Image"
 msgstr "Открыть изображение"
 
-#: converter/gtk/window.blp:53
+#: converter/gtk/window.blp:44
+msgid "Click “Open Image…” or drag an image here."
+msgstr ""
+
+#: converter/gtk/window.blp:55
 msgid "_Open Image…"
 msgstr "_Открыть изображение..."
 
-#: converter/gtk/window.blp:62
-msgid "…or just drop it"
-msgstr "...или просто перетащите его"
+#: converter/gtk/window.blp:88
+msgid "Drop Here to Open"
+msgstr ""
 
-#: converter/gtk/window.blp:89
-msgid "Drop the image to load it"
-msgstr "Перетащите изображение, чтобы загрузить его"
-
-#: converter/gtk/window.blp:107
+#: converter/gtk/window.blp:110
 msgid "Properties"
 msgstr "Свойства"
 
-#: converter/gtk/window.blp:110
+#: converter/gtk/window.blp:113
 msgid "Image Type"
 msgstr "Тип изображения"
 
-#: converter/gtk/window.blp:117
+#: converter/gtk/window.blp:120
 msgid "Image Size"
 msgstr "Размер изображения"
 
-#: converter/gtk/window.blp:126
+#: converter/gtk/window.blp:129
 msgid "Options"
 msgstr "Параметры"
 
-#: converter/gtk/window.blp:158
+#: converter/gtk/window.blp:161
 #, fuzzy
 msgid "Convert to"
 msgstr "Конвертировать"
 
-#: converter/gtk/window.blp:163
+#: converter/gtk/window.blp:166
 msgid "Compress as"
 msgstr ""
 
-#: converter/gtk/window.blp:176
+#: converter/gtk/window.blp:179
 msgid "More Options"
 msgstr "Дополнительные параметры"
 
-#: converter/gtk/window.blp:185
+#: converter/gtk/window.blp:188
 msgid "_Convert"
 msgstr "_ Конвертировать"
 
-#: converter/gtk/window.blp:205
+#: converter/gtk/window.blp:208
 msgid "Could not Load Image"
 msgstr "Не удалось загрузить изображение"
 
-#: converter/gtk/window.blp:206
+#: converter/gtk/window.blp:209
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Это изображение может быть повреждено или использовать неподдерживаемый "
 "формат файла."
 
-#: converter/gtk/window.blp:221
+#: converter/gtk/window.blp:224
 msgid "Quality"
 msgstr "Качество"
 
-#: converter/gtk/window.blp:240
+#: converter/gtk/window.blp:243
 msgid "Background Color"
 msgstr "Цвет фона"
 
-#: converter/gtk/window.blp:248
+#: converter/gtk/window.blp:251
 msgid "DPI"
 msgstr ""
 
-#: converter/gtk/window.blp:259
+#: converter/gtk/window.blp:262
 msgid "Scale Preserving Ratio"
 msgstr "Коэффициент сохранения масштабов"
 
-#: converter/gtk/window.blp:262
+#: converter/gtk/window.blp:265
 msgid "Dimension"
 msgstr "Размер"
 
-#: converter/gtk/window.blp:265 converter/gtk/window.blp:309
-#: converter/gtk/window.blp:335
+#: converter/gtk/window.blp:268 converter/gtk/window.blp:312
+#: converter/gtk/window.blp:338
 msgid "Width"
 msgstr "Ширина"
 
-#: converter/gtk/window.blp:265 converter/gtk/window.blp:324
-#: converter/gtk/window.blp:345
+#: converter/gtk/window.blp:268 converter/gtk/window.blp:327
+#: converter/gtk/window.blp:348
 msgid "Height"
 msgstr "Высота"
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:273
 msgid "Width in Pixels"
 msgstr "Ширина в пикселях"
 
-#: converter/gtk/window.blp:280
+#: converter/gtk/window.blp:283
 msgid "Height in Pixels"
 msgstr "Высота в пикселях"
 
-#: converter/gtk/window.blp:292
+#: converter/gtk/window.blp:295
 msgid "Resize"
 msgstr "Изменить размер"
 
-#: converter/gtk/window.blp:295
+#: converter/gtk/window.blp:298
 msgid "Filter"
 msgstr "Фильтр"
 
-#: converter/gtk/window.blp:301
+#: converter/gtk/window.blp:304
 msgid "Size"
 msgstr "Размер"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Percentage"
 msgstr "В процентах"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Exact Pixels"
 msgstr "Точное количество пикселей"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Minimum Pixels"
 msgstr "Минимум пикселей"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Maximum Pixels"
 msgstr "Максимум пикселей"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Ratio"
 msgstr "Коэффициент"
 
-#: converter/gtk/window.blp:312
+#: converter/gtk/window.blp:315
 msgid "Pixels"
 msgstr "Пикселей"
 
-#: converter/gtk/window.blp:312
+#: converter/gtk/window.blp:315
 msgid "Preserve Ratio"
 msgstr "Коэффициент сохранения"
 
-#: converter/gtk/window.blp:355
+#: converter/gtk/window.blp:358
 msgid "Width Percentage Scale"
 msgstr "Шкала ширины в процентах"
 
-#: converter/gtk/window.blp:365
+#: converter/gtk/window.blp:368
 msgid "Height Percentage Scale"
 msgstr "Шкала высоты в процентах"
 
-#: converter/gtk/window.blp:375
+#: converter/gtk/window.blp:378
 msgid "Ratio Width"
 msgstr "Соотношение  Ширины"
 
-#: converter/gtk/window.blp:385
+#: converter/gtk/window.blp:388
 msgid "Ratio Height"
 msgstr "Соотношение Высоты"
 
-#: converter/gtk/window.blp:405
+#: converter/gtk/window.blp:408
 msgid "Converting…"
 msgstr "Конвертация..."
 
-#: converter/gtk/window.blp:406
+#: converter/gtk/window.blp:409
 msgid "This could take a while."
 msgstr "Это может занять некоторое время."
 
-#: converter/gtk/window.blp:416 converter/window.py:531
+#: converter/gtk/window.blp:419 converter/window.py:518
 msgid "Loading…"
 msgstr "Загрузка..."
 
-#: converter/gtk/window.blp:422 converter/window.py:797
+#: converter/gtk/window.blp:425 converter/window.py:784
 msgid "_Cancel"
 msgstr ""
 
-#: converter/gtk/window.blp:448
+#: converter/gtk/window.blp:451
 msgid "Open File…"
 msgstr "Открыть файл..."
 
-#: converter/gtk/window.blp:455
+#: converter/gtk/window.blp:458
 msgid "Show Less Popular Datatypes"
 msgstr "Показать Менее Популярные Типы Данных"
 
-#: converter/gtk/window.blp:467
+#: converter/gtk/window.blp:470
 msgid "Keyboard Shortcuts"
 msgstr "Показать горячие клавиши"
 
-#: converter/gtk/window.blp:472
+#: converter/gtk/window.blp:475
 msgid "About Converter"
 msgstr "О конвертере"
 
@@ -335,47 +335,53 @@ msgstr ""
 "Heimen Stoffels\n"
 "Sergio <sergiovg01@outlook.com>"
 
-#: converter/window.py:655 converter/window.py:738
+#: converter/window.py:642 converter/window.py:725
 #, fuzzy
 msgid "Converting Cancelled"
 msgstr "Конвертация..."
 
-#: converter/window.py:790
+#: converter/window.py:777
 #, fuzzy
 msgid "Stop converting?"
 msgstr "конвертация"
 
-#: converter/window.py:791
+#: converter/window.py:778
 msgid "You will lose all progress."
 msgstr ""
 
-#: converter/window.py:798
+#: converter/window.py:785
 msgid "_Stop"
 msgstr ""
 
-#: converter/window.py:831
+#: converter/window.py:818
 msgid "Image converted"
 msgstr "Конвертированное изображение"
 
-#: converter/window.py:832
+#: converter/window.py:819
 msgid "Open"
 msgstr "Открыть"
 
-#: converter/window.py:837
+#: converter/window.py:824
 msgid "Error while processing"
 msgstr "Ошибка при обработке"
 
-#: converter/window.py:863
+#: converter/window.py:850
 msgid "Error copied to clipboard"
 msgstr "Ошибка скопирована в буфер обмена"
 
-#: converter/window.py:867
+#: converter/window.py:854
 msgid "_Copy to clipboard"
 msgstr "_Копировать в буфер обмена"
 
-#: converter/window.py:869
+#: converter/window.py:856
 msgid "_Dismiss"
 msgstr "_Разрешить"
+
+#~ msgid "…or just drop it"
+#~ msgstr "...или просто перетащите его"
+
+#~ msgid "Drop the image to load it"
+#~ msgstr "Перетащите изображение, чтобы загрузить его"
 
 #~ msgid "Added AVIF and JXL support."
 #~ msgstr "Добавлена поддержка AVIF и JXL."

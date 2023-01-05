@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-25 11:47-0600\n"
+"POT-Creation-Date: 2023-01-04 22:16-0600\n"
 "PO-Revision-Date: 2022-12-31 15:40+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in:3
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
-#: converter/gtk/window.blp:9 converter/gtk/window.blp:42
+#: converter/gtk/window.blp:9 converter/gtk/window.blp:43
 msgid "Converter"
 msgstr "Converter"
 
@@ -79,9 +79,8 @@ msgid "Overview"
 msgstr "Übersicht"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-msgid "Added batch processing and support for GIF, PDF, TIFF, and ICO."
+msgid "Made UI adjustments."
 msgstr ""
-"Stapelverarbeitung und Unterstützung für GIF, PDF, TIFF und ICO hinzugefügt."
 
 #: converter/file_chooser.py:67
 #, python-brace-format
@@ -129,183 +128,183 @@ msgctxt "shortcut window"
 msgid "Open Image"
 msgstr "Bild öffnen"
 
-#: converter/gtk/window.blp:53
+#: converter/gtk/window.blp:44
+msgid "Click “Open Image…” or drag an image here."
+msgstr ""
+
+#: converter/gtk/window.blp:55
 msgid "_Open Image…"
 msgstr "Bild ö_ffnen …"
 
-#: converter/gtk/window.blp:62
-msgid "…or just drop it"
-msgstr "… oder einfach hier ablegen"
+#: converter/gtk/window.blp:88
+msgid "Drop Here to Open"
+msgstr ""
 
-#: converter/gtk/window.blp:89
-msgid "Drop the image to load it"
-msgstr "Das Bild ablegen, um es zu laden"
-
-#: converter/gtk/window.blp:107
+#: converter/gtk/window.blp:110
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: converter/gtk/window.blp:110
+#: converter/gtk/window.blp:113
 msgid "Image Type"
 msgstr "Bildtyp"
 
-#: converter/gtk/window.blp:117
+#: converter/gtk/window.blp:120
 msgid "Image Size"
 msgstr "Bildgröße"
 
-#: converter/gtk/window.blp:126
+#: converter/gtk/window.blp:129
 msgid "Options"
 msgstr "Optionen"
 
-#: converter/gtk/window.blp:158
+#: converter/gtk/window.blp:161
 msgid "Convert to"
 msgstr "Umwandeln in"
 
-#: converter/gtk/window.blp:163
+#: converter/gtk/window.blp:166
 msgid "Compress as"
 msgstr "Komprimieren als"
 
-#: converter/gtk/window.blp:176
+#: converter/gtk/window.blp:179
 msgid "More Options"
 msgstr "Weitere Optionen"
 
-#: converter/gtk/window.blp:185
+#: converter/gtk/window.blp:188
 msgid "_Convert"
 msgstr "_Umwandeln"
 
-#: converter/gtk/window.blp:205
+#: converter/gtk/window.blp:208
 msgid "Could not Load Image"
 msgstr "Bild konnte nicht geladen werden"
 
-#: converter/gtk/window.blp:206
+#: converter/gtk/window.blp:209
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Dieses Bild könnte beschädigt sein oder ein nicht unterstütztes Dateiformat "
 "verwenden."
 
-#: converter/gtk/window.blp:221
+#: converter/gtk/window.blp:224
 msgid "Quality"
 msgstr "Qualität"
 
-#: converter/gtk/window.blp:240
+#: converter/gtk/window.blp:243
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: converter/gtk/window.blp:248
+#: converter/gtk/window.blp:251
 msgid "DPI"
 msgstr "DPI"
 
-#: converter/gtk/window.blp:259
+#: converter/gtk/window.blp:262
 msgid "Scale Preserving Ratio"
 msgstr "Seitenverhältnis beim Skalieren beibehalten"
 
-#: converter/gtk/window.blp:262
+#: converter/gtk/window.blp:265
 msgid "Dimension"
 msgstr "Abmessungen"
 
-#: converter/gtk/window.blp:265 converter/gtk/window.blp:309
-#: converter/gtk/window.blp:335
+#: converter/gtk/window.blp:268 converter/gtk/window.blp:312
+#: converter/gtk/window.blp:338
 msgid "Width"
 msgstr "Breite"
 
-#: converter/gtk/window.blp:265 converter/gtk/window.blp:324
-#: converter/gtk/window.blp:345
+#: converter/gtk/window.blp:268 converter/gtk/window.blp:327
+#: converter/gtk/window.blp:348
 msgid "Height"
 msgstr "Höhe"
 
-#: converter/gtk/window.blp:270
+#: converter/gtk/window.blp:273
 msgid "Width in Pixels"
 msgstr "Breite in Pixeln"
 
-#: converter/gtk/window.blp:280
+#: converter/gtk/window.blp:283
 msgid "Height in Pixels"
 msgstr "Höhe in Pixeln"
 
-#: converter/gtk/window.blp:292
+#: converter/gtk/window.blp:295
 msgid "Resize"
 msgstr "Größe ändern"
 
-#: converter/gtk/window.blp:295
+#: converter/gtk/window.blp:298
 msgid "Filter"
 msgstr "Filter"
 
-#: converter/gtk/window.blp:301
+#: converter/gtk/window.blp:304
 msgid "Size"
 msgstr "Größe"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Percentage"
 msgstr "Prozent"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Exact Pixels"
 msgstr "Genaue Pixelanzahl"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Minimum Pixels"
 msgstr "Mindestpixelanzahl"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Maximum Pixels"
 msgstr "Höchstpixelanzahl"
 
-#: converter/gtk/window.blp:304
+#: converter/gtk/window.blp:307
 msgid "Ratio"
 msgstr "Seitenverhältnis"
 
-#: converter/gtk/window.blp:312
+#: converter/gtk/window.blp:315
 msgid "Pixels"
 msgstr "Pixel"
 
-#: converter/gtk/window.blp:312
+#: converter/gtk/window.blp:315
 msgid "Preserve Ratio"
 msgstr "Seitenverhältnis beibehalten"
 
-#: converter/gtk/window.blp:355
+#: converter/gtk/window.blp:358
 msgid "Width Percentage Scale"
 msgstr "Prozentwert Breitenskalierung"
 
-#: converter/gtk/window.blp:365
+#: converter/gtk/window.blp:368
 msgid "Height Percentage Scale"
 msgstr "Prozentwert Höhenskalierung"
 
-#: converter/gtk/window.blp:375
+#: converter/gtk/window.blp:378
 msgid "Ratio Width"
 msgstr "Seitenverhältnis Breite"
 
-#: converter/gtk/window.blp:385
+#: converter/gtk/window.blp:388
 msgid "Ratio Height"
 msgstr "Seitenverhältnis Höhe"
 
-#: converter/gtk/window.blp:405
+#: converter/gtk/window.blp:408
 msgid "Converting…"
 msgstr "Umwandlung läuft …"
 
-#: converter/gtk/window.blp:406
+#: converter/gtk/window.blp:409
 msgid "This could take a while."
 msgstr "Das kann eine Weile dauern."
 
-#: converter/gtk/window.blp:416 converter/window.py:531
+#: converter/gtk/window.blp:419 converter/window.py:518
 msgid "Loading…"
 msgstr "Ladevorgang …"
 
-#: converter/gtk/window.blp:422 converter/window.py:797
+#: converter/gtk/window.blp:425 converter/window.py:784
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
-#: converter/gtk/window.blp:448
+#: converter/gtk/window.blp:451
 msgid "Open File…"
 msgstr "Datei öffnen …"
 
-#: converter/gtk/window.blp:455
+#: converter/gtk/window.blp:458
 msgid "Show Less Popular Datatypes"
 msgstr "Weniger gängige Datentypen anzeigen"
 
-#: converter/gtk/window.blp:467
+#: converter/gtk/window.blp:470
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkürzel"
 
-#: converter/gtk/window.blp:472
+#: converter/gtk/window.blp:475
 msgid "About Converter"
 msgstr "Info zu Converter"
 
@@ -337,42 +336,53 @@ msgstr ""
 "Sabri Ünal <libreajans@gmail.com>\n"
 "Azat Zinnetullin"
 
-#: converter/window.py:655 converter/window.py:738
+#: converter/window.py:642 converter/window.py:725
 msgid "Converting Cancelled"
 msgstr "Umwandlung abgebrochen"
 
-#: converter/window.py:790
+#: converter/window.py:777
 msgid "Stop converting?"
 msgstr "Umwandlung stoppen?"
 
-#: converter/window.py:791
+#: converter/window.py:778
 msgid "You will lose all progress."
 msgstr "Sie werden den gesamten Fortschritt verlieren."
 
-#: converter/window.py:798
+#: converter/window.py:785
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: converter/window.py:831
+#: converter/window.py:818
 msgid "Image converted"
 msgstr "Bild wurde umgewandelt"
 
-#: converter/window.py:832
+#: converter/window.py:819
 msgid "Open"
 msgstr "Öffnen"
 
-#: converter/window.py:837
+#: converter/window.py:824
 msgid "Error while processing"
 msgstr "Fehler bei der Verarbeitung"
 
-#: converter/window.py:863
+#: converter/window.py:850
 msgid "Error copied to clipboard"
 msgstr "Fehler in die Zwischenablage kopiert"
 
-#: converter/window.py:867
+#: converter/window.py:854
 msgid "_Copy to clipboard"
 msgstr "In die Zwischenablage _kopieren"
 
-#: converter/window.py:869
+#: converter/window.py:856
 msgid "_Dismiss"
 msgstr "_Verwerfen"
+
+#~ msgid "Added batch processing and support for GIF, PDF, TIFF, and ICO."
+#~ msgstr ""
+#~ "Stapelverarbeitung und Unterstützung für GIF, PDF, TIFF und ICO "
+#~ "hinzugefügt."
+
+#~ msgid "…or just drop it"
+#~ msgstr "… oder einfach hier ablegen"
+
+#~ msgid "Drop the image to load it"
+#~ msgstr "Das Bild ablegen, um es zu laden"
