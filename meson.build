@@ -1,5 +1,5 @@
 project('converter',
-  version: '1.5.0',
+  version: '1.5.1',
   meson_version: '>= 0.59.0',
   license: 'GPLv3',
   default_options: [ 'warning_level=2', 'werror=false', ],
