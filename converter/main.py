@@ -39,11 +39,12 @@ class ConverterApplication(Adw.Application):
         )
         popular.connect('change-state', self.__on_popular)
         self.add_action(popular)
-        self.set_accels_for_action('app.popular', ['<Primary>H'])
-        self.create_action('quit', self.__quit, ['<primary>q'])
+        self.set_accels_for_action('app.popular', ['<Control>h'])
+        self.create_action('quit', self.__quit, ['<Control>q'])
+        self.create_action('app.close', self.__quit, ['<Control>w'])
         self.create_action('about', self.__about_action)
-        self.create_action('open', self.__open_file, ['<primary>o'])
-        self.create_action('paste', self.__paste, ['<primary>v'])
+        self.create_action('open', self.__open_file, ['<Control>o'])
+        self.create_action('paste', self.__paste, ['<Control>v'])
         self.files = None
 
     def do_activate(self):
