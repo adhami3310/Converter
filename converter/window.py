@@ -153,9 +153,6 @@ class ConverterWindow(Adw.ApplicationWindow):
             cb.read_texture_async(None, load_clipboard, None)
 
     def __on_paths_received(self, files, paths):
-        def path_to_ext(file_path):
-            return splitext(file_path)[1][1:]
-        
         self.input_file_paths = paths
         self.collection = False
 
@@ -238,7 +235,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.update_output_datatype()
         self.__filetype_changed()
         self.stack_converter.set_visible_child_name('stack_convert')
-        self.button_back.show()
 
     def __on_file_load_error(self, error):
         self.__recieve_image(None, [None])
@@ -252,6 +248,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.stack_converter.set_visible_child_name('stack_convert')
 
     def __on_file_start(self):
+        self.button_back.hide()
         self.stack_converter.set_visible_child_name('stack_loading')
         self.spinner_loading.start()
 
@@ -457,17 +454,14 @@ class ConverterWindow(Adw.ApplicationWindow):
 
     """Press more options"""
     def __more_options(self, *args):
+        self.button_back.show()
         self.stack_converter.set_visible_child_name('options_page')
 
     """Pressed the back button"""
     def __go_back(self, *args):
-        if self.stack_converter.get_visible_child_name() == 'stack_convert':
-            """On Converting Stack"""
-            self.stack_converter.set_visible_child_name('stack_welcome_page')
-            self.button_back.hide()
-        else:
-            """On More Options"""
-            self.stack_converter.set_visible_child_name('stack_convert')
+        """On More Options"""
+        self.button_back.hide()
+        self.stack_converter.set_visible_child_name('stack_convert')
 
     """ Update progress """
     def __convert_progress(self, progress, current=1, count=1):
