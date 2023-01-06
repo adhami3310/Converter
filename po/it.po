@@ -2,15 +2,16 @@
 # Copyright (C) 2022 Khaleel Al-Adhami
 # This file is distributed under the same license as the Converter package.
 # Mattia Borda <mattiagiovanni.borda@icloud.com>, 2022.
+# Albano Battistella <albano.battistella@hotmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-04 22:16-0600\n"
-"PO-Revision-Date: 2022-12-08 12:05+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2023-01-06 11:05+0100\n"
+"Last-Translator: Albano Battistella\n"
+"Language-Team: italian\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,6 +56,8 @@ msgid ""
 "A simple and easy-to-use Flatpak application built with libadwaita for "
 "converting and manipulating images."
 msgstr ""
+"Un'applicazione Flatpak semplice e facile da usare creata con libadwaita per la "
+"conversione e manipolazione di immagini."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:26
 msgid "image"
@@ -78,12 +81,11 @@ msgstr "Anteprima"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
 msgid "Made UI adjustments."
-msgstr ""
+msgstr "Apportate modifiche all'interfaccia utente."
 
 #: converter/file_chooser.py:67
-#, fuzzy, python-brace-format
 msgid "’{input_ext}’ is not supported"
-msgstr "’{}’ non è un formato supportato"
+msgstr "'{input_ext}' non è supportato"
 
 #: converter/file_chooser.py:90
 msgid "Select an image"
@@ -128,7 +130,7 @@ msgstr "Apri immagine"
 
 #: converter/gtk/window.blp:44
 msgid "Click “Open Image…” or drag an image here."
-msgstr ""
+msgstr "Fai clic su "Apri immagine..." o trascina un'immagine qui."
 
 #: converter/gtk/window.blp:55
 msgid "_Open Image…"
@@ -136,7 +138,7 @@ msgstr "Apri immagine…"
 
 #: converter/gtk/window.blp:88
 msgid "Drop Here to Open"
-msgstr ""
+msgstr "Rilascia qui per aprire"
 
 #: converter/gtk/window.blp:110
 msgid "Properties"
@@ -155,13 +157,12 @@ msgid "Options"
 msgstr "Opzioni"
 
 #: converter/gtk/window.blp:161
-#, fuzzy
 msgid "Convert to"
-msgstr "Converti"
+msgstr "Converti in"
 
 #: converter/gtk/window.blp:166
 msgid "Compress as"
-msgstr ""
+msgstr "Comprimi come"
 
 #: converter/gtk/window.blp:179
 msgid "More Options"
@@ -288,7 +289,7 @@ msgstr "Caricamento…"
 
 #: converter/gtk/window.blp:425 converter/window.py:784
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancella"
 
 #: converter/gtk/window.blp:451
 msgid "Open File…"
@@ -315,7 +316,6 @@ msgid "Sample Image from"
 msgstr "Immagine di esempio di"
 
 #: converter/main.py:143
-#, fuzzy
 msgid ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
@@ -328,25 +328,28 @@ msgid ""
 msgstr ""
 "Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Irénée Thirion <irenee.thirion@e.email>\n"
-"Mattia Borda <mattiagiovanni.borda@icloud.com>"
+"Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
+"Heimen Stoffels\n"
+"Sergio <sergiovg01@outlook.com>\n"
+"Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
+"Sabri Ünal <libreajans@gmail.com>\n"
+"Azat Zinnetullin"
 
 #: converter/window.py:642 converter/window.py:725
-#, fuzzy
 msgid "Converting Cancelled"
-msgstr "Conversione…"
+msgstr "Conversione annullata"
 
 #: converter/window.py:777
-#, fuzzy
 msgid "Stop converting?"
-msgstr "conversione"
+msgstr "Interrompere la conversione?"
 
 #: converter/window.py:778
 msgid "You will lose all progress."
-msgstr ""
+msgstr "Perderai tutti i progressi."
 
 #: converter/window.py:785
 msgid "_Stop"
-msgstr ""
+msgstr "_Ferma"
 
 #: converter/window.py:818
 msgid "Image converted"
@@ -357,21 +360,20 @@ msgid "Open"
 msgstr "Apri"
 
 #: converter/window.py:824
-#, fuzzy
 msgid "Error while processing"
-msgstr "elaborazione"
+msgstr "Errore durante l'elaborazione"
 
 #: converter/window.py:850
 msgid "Error copied to clipboard"
-msgstr ""
+msgstr "Errore copiato negli appunti"
 
 #: converter/window.py:854
 msgid "_Copy to clipboard"
-msgstr ""
+msgstr "_Copia negli appunti"
 
 #: converter/window.py:856
 msgid "_Dismiss"
-msgstr ""
+msgstr "_Abbandona"
 
 #~ msgid "Added AVIF and JXL support."
 #~ msgstr "Aggiunto supporto per AVIF e JXL."
