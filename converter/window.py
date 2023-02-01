@@ -374,7 +374,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.quality_row.show()
 
         """Datatypes with an alpha layer"""
-        if inext.intersection({'png', 'webp', 'heic', 'heif', 'avif', 'jxl'}):
+        if inext.intersection({'svg', 'png', 'webp', 'heic', 'heif', 'avif', 'jxl'}):
             self.bgcolor_row.show()
 
             """Datatypes with no alpha layer"""
@@ -533,8 +533,8 @@ class ConverterWindow(Adw.ApplicationWindow):
             command = ['magick',
                       '-monitor'
                        ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
                        input_file,
-                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
                        '-quality',
                        f'{self.quality.get_value()}'
                        ]+self.__get_resized_commands()+[
@@ -613,8 +613,8 @@ class ConverterWindow(Adw.ApplicationWindow):
             command = ['magick',
                        '-monitor'
                        ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
                        input_file+"[0]",
-                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
                        '-flatten',
                        '-quality',
                        f'{self.quality.get_value()}'
