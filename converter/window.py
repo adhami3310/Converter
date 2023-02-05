@@ -23,7 +23,6 @@ import re
 from os.path import basename, splitext, dirname
 import gi
 from gi.repository import Adw, Gtk, GLib, Gdk, Gio, Pango, GdkPixbuf
-from gettext import gettext as _
 from sys import exit
 import time
 from converter.threading import RunAsync

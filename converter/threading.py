@@ -21,8 +21,6 @@ import sys
 import threading
 import traceback
 
-from gettext import gettext as _
-
 from gi.repository import GLib
 
 import logging

@@ -24,7 +24,6 @@ gi.require_version('Adw', '1')
 import sys
 from gi.repository import Adw, Gtk, Gio, GLib
 from .window import ConverterWindow
-from gettext import gettext as _
 
 
 class ConverterApplication(Adw.Application):
