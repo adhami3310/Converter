@@ -29,7 +29,7 @@ Converter is designed to give you a simple, quick, and easy-to-use tool to conve
 <img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
 
 Converter supports converting the following datatypes:
- - image/jpeg (RW)
+ - image/jpeg (RW) (through MozJPEG)
  - image/png (RW)
  - image/webp (RW)
  - image/svg+xml (R) (with scaling)
