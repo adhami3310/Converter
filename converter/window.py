@@ -23,7 +23,6 @@ import re
 from os.path import basename, splitext, dirname
 import gi
 from gi.repository import Adw, Gtk, GLib, Gdk, Gio, Pango, GdkPixbuf
-from gettext import gettext as _
 from sys import exit
 import time
 from converter.threading import RunAsync
@@ -193,8 +192,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.pixbufs = [p for p in self.pixbufs if p is not None]
 
         """ Set variables. """
-        if self.collection:
-            self.compression.show()
         self.input_exts = [splitext(file_path)[1][1:].upper() for file_path in self.input_file_paths]
         self.action_image_type.set_subtitle(", ".join(set([f'{ext.upper()} ({converter.filters.extention_to_mime[ext.lower()]})' for ext in self.input_exts])))
         """ Display image. """
@@ -295,10 +292,14 @@ class ConverterWindow(Adw.ApplicationWindow):
         directory = dirname(self.input_file_paths[0])
         if not directory.startswith("/home"):
             directory = None
-        if self.collection:
+
+        if self.collection and len(self.input_file_paths) == 1 and self.output_ext in {'GIF', 'WEBP'}:
+            ext = self.output_ext.lower()
+        elif self.collection:
             ext = self.compression_ext
         else:
             ext = self.output_ext.lower()
+
         FileChooser.output_file(self,
                                 f'{base_path}.{ext}',
                                 ext,
@@ -348,6 +349,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
         if ext:
             self.output_ext = ext.upper()
+            if self.collection and len(self.input_file_paths) == 1 and self.output_ext in {'GIF', 'WEBP'}:
+                self.compression.hide()
+            elif self.collection:
+                self.compression.show()
+            else:
+                self.compression.hide()
             self.__update_options()
 
     def __compression_changed(self, *args):
@@ -374,7 +381,7 @@ class ConverterWindow(Adw.ApplicationWindow):
             self.quality_row.show()
 
         """Datatypes with an alpha layer"""
-        if inext.intersection({'png', 'webp', 'heic', 'heif', 'avif', 'jxl'}):
+        if inext.intersection({'svg', 'png', 'webp', 'heic', 'heif', 'avif', 'jxl'}):
             self.bgcolor_row.show()
 
             """Datatypes with no alpha layer"""
@@ -533,8 +540,8 @@ class ConverterWindow(Adw.ApplicationWindow):
             command = ['magick',
                       '-monitor'
                        ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
                        input_file,
-                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
                        '-quality',
                        f'{self.quality.get_value()}'
                        ]+self.__get_resized_commands()+[
@@ -613,8 +620,8 @@ class ConverterWindow(Adw.ApplicationWindow):
             command = ['magick',
                        '-monitor'
                        ]+(self.__get_sized_commands() if ext == 'SVG' else []) +[
+                       '-background', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}',
                        input_file+"[0]",
-                       '-fill', f'{Gdk.RGBA.to_string(self.bgcolor.get_rgba())}', '-opaque', 'none',
                        '-flatten',
                        '-quality',
                        f'{self.quality.get_value()}'
@@ -755,10 +762,13 @@ class ConverterWindow(Adw.ApplicationWindow):
 
             convert_individual_callback(0, group_completed, [], None)
 
-        if self.collection:
+        if self.collection and len(self.input_file_paths) == 1 and self.output_ext in {'GIF', 'WEBP'}:
+            convert_individual(input_file_paths[0], output_file_path, 1, 1, cleanupStart)
+        elif self.collection:
             convert_group(input_file_paths, output_file_path)
         else:
             convert_individual(input_file_paths[0], output_file_path, 1, 1, cleanupStart)
+
         self.stack_converter.set_visible_child_name('stack_converting')
         self.button_convert.set_sensitive(False)
 

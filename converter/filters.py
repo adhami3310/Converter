@@ -20,7 +20,7 @@ from gi.repository import Gtk
 
 """ Declare lists. """
 supported_input_formats = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'heif', 'heic', 'bmp', 'avif', 'jxl', 'tiff', 'tif', 'pdf', 'gif', 'ico']
-supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl', 'tif', 'tiff', 'gif'])
+supported_output_formats = sorted(['bmp', 'png', 'jpg', 'jpeg', 'webp', 'pdf', 'heic', 'heif', 'avif', 'jxl', 'tif', 'tiff', 'gif', 'ico'])
 popular_supported_output_formats = sorted(['bmp', 'png', 'jpg', 'webp', 'pdf', 'heic', 'avif', 'jxl', 'gif'])
 compressed_formats = sorted(['zip', 'tar.gz'])
 

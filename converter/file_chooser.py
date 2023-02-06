@@ -20,7 +20,6 @@ from os.path import basename, splitext, dirname
 from pathlib import PurePath, Path
 from gi.repository import Gtk, Gio, GdkPixbuf, GLib, Gdk
 import converter.filters
-from gettext import gettext as _
 
 class FileChooser:
 
