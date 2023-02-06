@@ -192,8 +192,6 @@ class ConverterWindow(Adw.ApplicationWindow):
         self.pixbufs = [p for p in self.pixbufs if p is not None]
 
         """ Set variables. """
-        if self.collection:
-            self.compression.show()
         self.input_exts = [splitext(file_path)[1][1:].upper() for file_path in self.input_file_paths]
         self.action_image_type.set_subtitle(", ".join(set([f'{ext.upper()} ({converter.filters.extention_to_mime[ext.lower()]})' for ext in self.input_exts])))
         """ Display image. """
@@ -294,10 +292,14 @@ class ConverterWindow(Adw.ApplicationWindow):
         directory = dirname(self.input_file_paths[0])
         if not directory.startswith("/home"):
             directory = None
-        if self.collection:
+
+        if self.collection and len(self.input_file_paths) == 1 and self.output_ext in {'GIF', 'WEBP'}:
+            ext = self.output_ext.lower()
+        elif self.collection:
             ext = self.compression_ext
         else:
             ext = self.output_ext.lower()
+
         FileChooser.output_file(self,
                                 f'{base_path}.{ext}',
                                 ext,
@@ -347,6 +349,12 @@ class ConverterWindow(Adw.ApplicationWindow):
         ext = self.supported_output_datatypes.get_string(self.filetype.get_selected())
         if ext:
             self.output_ext = ext.upper()
+            if self.collection and len(self.input_file_paths) == 1 and self.output_ext in {'GIF', 'WEBP'}:
+                self.compression.hide()
+            elif self.collection:
+                self.compression.show()
+            else:
+                self.compression.hide()
             self.__update_options()
 
     def __compression_changed(self, *args):
@@ -754,10 +762,13 @@ class ConverterWindow(Adw.ApplicationWindow):
 
             convert_individual_callback(0, group_completed, [], None)
 
-        if self.collection:
+        if self.collection and len(self.input_file_paths) == 1 and self.output_ext in {'GIF', 'WEBP'}:
+            convert_individual(input_file_paths[0], output_file_path, 1, 1, cleanupStart)
+        elif self.collection:
             convert_group(input_file_paths, output_file_path)
         else:
             convert_individual(input_file_paths[0], output_file_path, 1, 1, cleanupStart)
+
         self.stack_converter.set_visible_child_name('stack_converting')
         self.button_convert.set_sensitive(False)
 
