@@ -60,7 +60,7 @@
 			"name": "librsvg",
 			"buildsystem": "autotools",
 			"sources": [
-				"cargo-sources.json",
+				"librsvg-cargo-sources.json",
 				{
 					"type": "git",
 					"url": "https://gitlab.gnome.org/GNOME/librsvg.git",
