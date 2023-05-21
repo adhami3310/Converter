@@ -1,7 +1,7 @@
 {
 	"app-id": "io.gitlab.adhami3310.Converter",
 	"runtime": "org.gnome.Platform",
-	"runtime-version": "43",
+	"runtime-version": "44",
 	"sdk": "org.gnome.Sdk",
 	"sdk-extensions" : [
 		"org.freedesktop.Sdk.Extension.rust-stable"
@@ -12,8 +12,12 @@
 		"--socket=fallback-x11",
 		"--device=dri",
 		"--socket=wayland",
-		"--talk-name=org.freedesktop.portal.OpenURI"
+		"--talk-name=org.freedesktop.portal.OpenURI",
+		"--env=RUST_BACKTRACE=1"
 	],
+    "build-options": {
+        "append-path": "/usr/lib/sdk/rust-stable/bin"
+    },
 	"cleanup": [
 		"/include",
 		"/lib/pkgconfig",

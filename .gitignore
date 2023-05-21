@@ -1,2 +1,18 @@
 /subprojects/blueprint-compiler
+
+# Added by cargo
+
+/target
+
+.vscode/
+target/
+build/
+_build/
+builddir/
+build-dir/
+src/config.rs
+*.ui.in~
+*.ui~
+.flatpak/
+vendor
 .flatpak-builder
