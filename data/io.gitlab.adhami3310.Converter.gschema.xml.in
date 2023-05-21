@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="converter">
+	<schema id="@app-id@" path="/io/gitlab/adhami3310/Converter/" gettext-domain="@gettext-package@">
+		<key type="b" name="show-less-popular">
+			<default>false</default>
+			<summary>Shows less popular datatypes in the menu</summary>
+		</key>
+	</schema>
+</schemalist>

@@ -12,7 +12,12 @@ row.property label.subtitle {
   margin: 12px 0;
 }
 
-.dragndrop_overlay {
+dragoverlay {
+  box-shadow: none;
+}
+
+.drag-overlay-status-page {
   background-color: alpha(@accent_bg_color, 0.5);
   color: @accent_fg_color;
 }
+

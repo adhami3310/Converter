@@ -1,0 +1,454 @@
+using Gtk 4.0;
+using Adw 1;
+
+template AppWindow : .AdwApplicationWindow {
+  default-width: "750";
+  default-height: "750";
+  width-request: "300";
+  height-request: "300";
+  title: _("Converter");
+
+  Box {
+    orientation: vertical;
+
+    .AdwHeaderBar headerbar {
+      Button back {
+        name: "button_back";
+        icon-name: 'go-previous-symbolic';
+        tooltip-text: 'Back';
+        visible: false;
+        styles ['flat']
+      }
+      [end]
+      MenuButton {
+        icon-name: "open-menu-symbolic";
+        menu-model: primary_menu;
+        tooltip-text: "Primary Menu";
+        primary: true;
+      }
+
+    }
+
+    .DragOverlay drag_overlay {
+      title: _("Drop Here to Open");
+      child:
+      .AdwToastOverlay toast_overlay {
+        Stack stack {
+          transition-type: crossfade;
+
+          StackPage {
+            name: "stack_welcome_page";
+            child:
+            .AdwStatusPage {
+              icon-name: "io.gitlab.adhami3310.Converter-symbolic";
+              title: _("Converter");
+              description: _("Click “Open Image…” or drag an image here.");
+              hexpand: true;
+              vexpand: true;
+              child:
+              Box {
+                orientation: vertical;
+                spacing: 12;
+
+                Button open_button {
+                  valign: center;
+                  halign: center;
+                  label: _("_Open Image…");
+                  use-underline: true;
+
+                  styles [
+                    "suggested-action",
+                    "pill",
+                  ]
+                }
+              }
+
+              ;
+            }
+
+            ;
+          }
+
+          StackPage {
+            name: "stack_loading";
+            child:
+            .AdwStatusPage {
+              Spinner loading_spinner {
+                valign: center;
+              }
+            }
+
+            ;
+          }
+
+          // StackPage {
+          //   name: "stack_drop";
+          //   child:
+          //   .AdwStatusPage drop_overlay {
+          //     icon-name: "insert-image-symbolic";
+          //     title: _("Drop Here to Open");
+
+          //     styles [
+          //       "dragndrop_overlay"
+          //     ]
+          //   }
+
+          //   ;
+          // }
+
+
+
+          StackPage {
+            name: "stack_convert";
+            child:
+            .AdwPreferencesPage {
+              .AdwPreferencesGroup image_container {
+                Picture image {}
+                height-request: "192";
+              }
+
+              .AdwPreferencesGroup {
+                title: _("Properties");
+
+                .AdwActionRow image_type_label {
+                  title:  _("Image Type");
+
+                  styles [
+                    "property",
+                  ]
+                }
+                .AdwActionRow image_size_label {
+                  title:  _("Image Size");
+
+                  styles [
+                    "property",
+                  ]
+                }
+              }
+
+              .AdwPreferencesGroup {
+                title: _("Options");
+
+                .AdwComboRow output_filetype {
+                  title: _("Convert to");
+                  model: StringList supported_output_filetypes {};
+                }
+
+                .AdwComboRow output_compression {
+                  title: _("Output as");
+                  model: StringList supported_compression_filetypes {};
+                }
+
+              }
+
+              .AdwPreferencesGroup {
+                Box {
+                  halign: center;
+                  spacing: 6;
+
+                  Button options_button {
+                    valign: center;
+                    label: _("More Options");
+                    styles [
+                      "pill",
+                    ]
+                  }
+
+                  Button convert_button {
+                    valign: center;
+                    halign: end;
+                    label: _("_Convert");
+                    use-underline: true;
+
+                    styles [
+                      "suggested-action",
+                      "pill",
+                    ]
+                  }
+                }
+              }
+            }
+
+            ;
+          }
+
+          StackPage {
+            name: "stack_invalid_image";
+            child:
+            .AdwStatusPage invalid_image {
+              icon-name: "im-symbolic";
+              title: _("Could not Load Image");
+              description: _("This image could be corrupted or may use an unsupported file format.");
+              hexpand: true;
+              vexpand: true;
+            }
+
+            ;
+          }
+
+
+          StackPage {
+            name: "options_page";
+            child:
+            .AdwPreferencesPage {
+              .AdwPreferencesGroup {
+                .AdwActionRow quality_row {
+                  title: _("Quality");
+
+                  Scale quality {
+                    adjustment: Adjustment percentage {
+                      lower: 1;
+                      upper: 100;
+                      step-increment: 1;
+                    };
+                    hexpand: true;
+                    vexpand: true;
+                    digits: 0;
+                    draw-value: true;
+                    value-pos: right;
+                  }
+                }
+
+                .AdwActionRow bgcolor_row {
+                  title: _("Background Color");
+
+                  ColorDialogButton bgcolor {
+                    valign: center;
+                  }
+                }
+
+                .AdwActionRow dpi_row {
+                  title: _("DPI");
+                  .AdwBin {
+                    Entry dpi_value {
+                      styles [
+                        'text-in-row'
+                      ]
+                    }
+                  }
+                }
+
+                .AdwExpanderRow svg_size_row {
+                  title: _("Scale Preserving Ratio");
+                  show-enable-switch: true;
+                  .AdwComboRow svg_size_type {
+                    title: _("Dimension");
+                    model:
+                    StringList svg_size_axis_types {
+                      strings [_("Width"),_("Height")]
+                    }
+                    ;
+                  }
+                  .AdwActionRow svg_size_width_row {
+                    title: _("Width in Pixels");
+                    .AdwBin {
+                      Entry svg_size_width_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow svg_size_height_row {
+                    title: _("Height in Pixels");
+                    .AdwBin {
+                      Entry svg_size_height_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                }
+
+                .AdwExpanderRow resize_row {
+                  title: _("Resize");
+                  show-enable-switch: true;
+                  .AdwComboRow resize_filter {
+                    title: _("Filter");
+                    model:
+                    StringList resize_filters {
+                      strings [_("Point"), _("Quadratic"), _("Cubic"), _("Mitchell"), _("Gaussian"), _("Lanczos")]
+                    }
+                    ;
+                  }
+                  .AdwComboRow resize_type {
+                    title: _("Size");
+                    model:
+                    StringList resize_types {
+                      strings [_("Percentage"),_("Exact Pixels"),_("Minimum Pixels"),_("Maximum Pixels"), _("Ratio")]
+                    }
+                    ;
+                  }
+                  .AdwComboRow resize_width_row {
+                    title: _("Width");
+                    model:
+                    StringList resize_axis_types {
+                      strings [_("Pixels"),_("Preserve Ratio")]
+                    }
+                    ;
+                    .AdwBin {
+                      Entry resize_width_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwComboRow resize_height_row {
+                    title: _("Height");
+                    model: resize_axis_types;
+                    .AdwBin {
+                      Entry resize_height_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow resize_minmax_width_row {
+                    title: _("Width");
+                    .AdwBin {
+                      Entry resize_minmax_width_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow resize_minmax_height_row {
+                    title: _("Height");
+                    .AdwBin {
+                      Entry resize_minmax_height_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow resize_scale_width_row {
+                    title: _("Width Percentage Scale");
+                    .AdwBin {
+                      Entry resize_scale_width_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow resize_scale_height_row {
+                    title: _("Height Percentage Scale");
+                    .AdwBin {
+                      Entry resize_scale_height_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow ratio_width_row {
+                    title: _("Ratio Width");
+                    .AdwBin {
+                      Entry ratio_width_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                  .AdwActionRow ratio_height_row {
+                    title: _("Ratio Height");
+                    .AdwBin {
+                      Entry ratio_height_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            ;
+          }
+
+          StackPage {
+            name: "stack_converting";
+            child:
+            .AdwStatusPage {
+              title: _("Converting…");
+              description: _("This could take a while.");
+
+              Box {
+                orientation: vertical;
+                spacing: 36;
+
+                ProgressBar progress_bar {
+                  valign: center;
+                  halign: center;
+                  show-text: true;
+                  text: _("Loading…");
+                }
+
+                Button cancel_button {
+                  valign: center;
+                  halign: center;
+                  label: _("_Cancel");
+                  use-underline: true;
+
+                  styles [
+                    "destructive-action",
+                    "pill",
+                  ]
+                }
+              }
+            }
+
+            ;
+          }
+        }
+      }
+
+      ;
+    }
+  }
+}
+
+menu primary_menu {
+  section {
+    // item {
+    //   label: _("New Window");
+    //   action: "app.new-window";
+    // }
+
+    item {
+      label: _("Open File…");
+      action: "app.open";
+    }
+  }
+
+  section {
+    item {
+      label: _("Show Less Popular Datatypes");
+      action: "app.popular";
+    }
+  }
+
+  section {
+    // item {
+    //   label: _("Preferences");
+    //   action: "app.preferences";
+    // }
+
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: _("About Converter");
+      action: "app.about";
+    }
+  }
+}
