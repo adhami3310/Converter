@@ -42,7 +42,7 @@ template AppWindow : .AdwApplicationWindow {
             .AdwStatusPage {
               icon-name: "io.gitlab.adhami3310.Converter-symbolic";
               title: _("Converter");
-              description: _("Click “Open Image…” or drag an image here.");
+              description: _("Click “Open Images…” or drag images here.");
               hexpand: true;
               vexpand: true;
               child:
@@ -53,7 +53,7 @@ template AppWindow : .AdwApplicationWindow {
                 Button open_button {
                   valign: center;
                   halign: center;
-                  label: _("_Open Image…");
+                  label: _("_Open Images…");
                   use-underline: true;
 
                   styles [
@@ -423,8 +423,13 @@ menu primary_menu {
     // }
 
     item {
-      label: _("Open File…");
+      label: _("Open Files…");
       action: "app.open";
+    }
+
+    item {
+      label: _("Paste Image…");
+      action: "app.paste";
     }
   }
 

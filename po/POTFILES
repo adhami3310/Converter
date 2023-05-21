@@ -1,9 +1,0 @@
-data/io.gitlab.adhami3310.Converter.desktop.in
-data/io.gitlab.adhami3310.Converter.gschema.xml
-data/io.gitlab.adhami3310.Converter.metainfo.xml.in
-converter/file_chooser.py
-converter/filters.py
-converter/gtk/help-overlay.blp
-converter/gtk/window.blp
-converter/main.py
-converter/window.py

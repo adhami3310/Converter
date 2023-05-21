@@ -2,7 +2,7 @@ use std::path::Path;
 use std::sync::atomic::AtomicUsize;
 
 use crate::color::Color;
-use crate::config::{APP_ID, PROFILE};
+use crate::config::APP_ID;
 use crate::drag_overlay::DragOverlay;
 use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
@@ -288,11 +288,6 @@ mod imp {
     impl ObjectImpl for AppWindow {
         fn constructed(&self) {
             self.parent_constructed();
-
-            // Devel Profile
-            if PROFILE == "Devel" {
-                self.obj().add_css_class("devel");
-            }
         }
     }
 
@@ -394,7 +389,6 @@ impl AppWindow {
     fn set_convert_progress(&self, done: usize, total: usize) {
         let msg = format!("{done}/{total}");
         self.imp().progress_bar.set_text(Some(&msg));
-        dbg!(msg);
         self.imp()
             .progress_bar
             .set_fraction((done as f64) / (total as f64));
@@ -479,7 +473,7 @@ impl AppWindow {
             glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
                 let t = clipboard.read_texture_future().await;
                 if let Ok(Some(t)) = t {
-                    let interim = JobFile::new(FileType::Png, Some(gettext("Pasted Image.png")));
+                    let interim = JobFile::new(FileType::Png, Some(format!("{}.png",gettext("Pasted Image"))));
                     t.save_to_png(interim.as_filename()).ok();
                     let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
                     this.open_success(vec![file]).await;
@@ -646,7 +640,9 @@ impl AppWindow {
     pub fn get_selected_compression(&self) -> Option<CompressionType> {
         match self.imp().output_compression.selected_item() {
             Some(o) => match o.downcast::<gtk::StringObject>() {
-                Ok(o) => Some(CompressionType::from_string(&o.string().as_str().to_lowercase()).unwrap()),
+                Ok(o) => {
+                    Some(CompressionType::from_string(&o.string().as_str().to_lowercase()).unwrap())
+                }
                 Err(_) => None,
             },
             None => None,
@@ -1299,8 +1295,6 @@ impl AppWindow {
                 .build()
                 .unwrap();
 
-            dbg!("runtime started");
-
             let sem = std::sync::Arc::new(Semaphore::new(4));
             let stop_flag = stop_flag_s.clone();
 
@@ -1312,9 +1306,7 @@ impl AppWindow {
                     let sender = sender.clone();
                     rt.spawn(async move {
                         for mut mj_command in mjs.into_iter().map(|mj| mj.get_command()) {
-                            dbg!("try to aquire permit");
                             let permit = sem.acquire().await;
-                            dbg!("aquired permit");
                             if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
                                 drop(permit);
                                 return;
@@ -1476,8 +1468,6 @@ impl AppWindow {
                         .build()
                         .unwrap();
 
-                    dbg!(&output_files);
-
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new("zip")
                             .arg("-jFSm")
@@ -1533,7 +1523,6 @@ impl AppWindow {
     }
 
     fn convert_failed(&self, error_message: String, temp_dir_path: String) {
-        dbg!(&error_message);
         self.convert_clean(temp_dir_path);
 
         if self

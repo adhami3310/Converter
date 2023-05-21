@@ -291,5 +291,4 @@ impl OutputType {
     //         x => x.as_extension().to_uppercase(),
     //     }
     // }
-
 }

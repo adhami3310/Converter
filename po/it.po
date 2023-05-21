@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-04 22:16-0600\n"
+"POT-Creation-Date: 2023-05-21 01:28-0400\n"
 "PO-Revision-Date: 2023-01-06 11:05+0100\n"
 "Last-Translator: Albano Battistella\n"
 "Language-Team: italian\n"
@@ -19,361 +19,425 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:3
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:5
-#: converter/gtk/window.blp:9 converter/gtk/window.blp:43
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
+#: data/resources/blueprints/window.blp:9
+#: data/resources/blueprints/window.blp:44 src/main.rs:30
+#: src/widgets/about_window.rs:28
 msgid "Converter"
 msgstr "Converter"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:4
-msgid "Convert"
-msgstr "Converti"
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+#, fuzzy
+msgid "Image Converter"
+msgstr "Immagine convertita"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:5
-msgid "Convert and Manipulate images"
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:7
+msgid "Convert and manipulate images"
 msgstr "Converti e manipola immagini"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
 msgid "image;convert;converting;processing"
 msgstr ""
 "image;convert;converting;processing;immagine;converti;conversione;"
 "elaborazione"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml:6
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:6
 msgid "Shows less popular datatypes in the menu"
 msgstr "Mostra tipi di immagini meno popolari nel menu"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:6
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
 msgstr "Khaleel Al-Adhami"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:7
-msgid "Convert and manipulate images"
-msgstr "Converti e manipola immagini"
-
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:13
-msgid ""
-"A simple and easy-to-use Flatpak application built with libadwaita for "
-"converting and manipulating images."
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
+msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
-"Un'applicazione Flatpak semplice e facile da usare creata con libadwaita per la "
-"conversione e manipolazione di immagini."
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:26
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
 msgid "image"
 msgstr "immagine"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:27
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:30
 msgid "convert"
 msgstr "converti"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:28
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:31
 msgid "converting"
 msgstr "conversione"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:29
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:32
 msgid "processing"
 msgstr "elaborazione"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:45
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
 msgid "Overview"
 msgstr "Anteprima"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-msgid "Made UI adjustments."
-msgstr "Apportate modifiche all'interfaccia utente."
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
+#, fuzzy
+msgid "More options"
+msgstr "Altre opzioni"
 
-#: converter/file_chooser.py:67
-msgid "’{input_ext}’ is not supported"
-msgstr "'{input_ext}' non è supportato"
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:72
+msgid "Fix various bugs."
+msgstr ""
 
-#: converter/file_chooser.py:90
-msgid "Select an image"
-msgstr "Seleziona un'immagine"
-
-#: converter/file_chooser.py:97
-msgid "Supported image files"
-msgstr "File immagine supportati"
-
-#: converter/file_chooser.py:114
-msgid "No file extension was specified"
-msgstr "Non è stata specificata alcuna estensione"
-
-#: converter/file_chooser.py:120
-#, fuzzy, python-brace-format
-msgid "’{file_ext}’ is of the wrong format"
-msgstr "’{}’ non è un formato corretto"
-
-#: converter/file_chooser.py:129
-msgid "Select output location"
-msgstr "Seleziona posizione del risultato"
-
-#: converter/gtk/help-overlay.blp:11
+#: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Generali"
 
-#: converter/gtk/help-overlay.blp:14
+#: data/resources/blueprints/help-overlay.blp:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Mostra scorciatoie da tastiera"
 
-#: converter/gtk/help-overlay.blp:19
+#: data/resources/blueprints/help-overlay.blp:19
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Esci"
 
-#: converter/gtk/help-overlay.blp:24
+#: data/resources/blueprints/help-overlay.blp:24
 msgctxt "shortcut window"
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: converter/gtk/window.blp:44
-msgid "Click “Open Image…” or drag an image here."
-msgstr "Fai clic su “Apri immagine...” o trascina un'immagine qui."
-
-#: converter/gtk/window.blp:55
-msgid "_Open Image…"
-msgstr "Apri immagine…"
-
-#: converter/gtk/window.blp:88
+#: data/resources/blueprints/window.blp:33
 msgid "Drop Here to Open"
 msgstr "Rilascia qui per aprire"
 
-#: converter/gtk/window.blp:110
+#: data/resources/blueprints/window.blp:45
+#, fuzzy
+msgid "Click “Open Images…” or drag images here."
+msgstr "Fai clic su “Apri immagine...” o trascina un'immagine qui."
+
+#: data/resources/blueprints/window.blp:56
+#, fuzzy
+msgid "_Open Images…"
+msgstr "Apri immagine…"
+
+#: data/resources/blueprints/window.blp:111
 msgid "Properties"
 msgstr "Proprietà"
 
-#: converter/gtk/window.blp:113
+#: data/resources/blueprints/window.blp:114
 msgid "Image Type"
 msgstr "Tipo di immagine"
 
-#: converter/gtk/window.blp:120
+#: data/resources/blueprints/window.blp:121
 msgid "Image Size"
 msgstr "Dimensione dell'immagine"
 
-#: converter/gtk/window.blp:129
+#: data/resources/blueprints/window.blp:130
 msgid "Options"
 msgstr "Opzioni"
 
-#: converter/gtk/window.blp:161
+#: data/resources/blueprints/window.blp:133
 msgid "Convert to"
 msgstr "Converti in"
 
-#: converter/gtk/window.blp:166
-msgid "Compress as"
-msgstr "Comprimi come"
+#: data/resources/blueprints/window.blp:138
+msgid "Output as"
+msgstr ""
 
-#: converter/gtk/window.blp:179
+#: data/resources/blueprints/window.blp:151
 msgid "More Options"
 msgstr "Altre opzioni"
 
-#: converter/gtk/window.blp:188
+#: data/resources/blueprints/window.blp:160
 msgid "_Convert"
 msgstr "Converti"
 
-#: converter/gtk/window.blp:208
+#: data/resources/blueprints/window.blp:180
 msgid "Could not Load Image"
 msgstr "Impossibile caricare l'immagine"
 
-#: converter/gtk/window.blp:209
+#: data/resources/blueprints/window.blp:181
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Questa immagine potrebbe essere danneggiata o in un formato non supportato."
 
-#: converter/gtk/window.blp:224
+#: data/resources/blueprints/window.blp:196
 msgid "Quality"
 msgstr "Qualità"
 
-#: converter/gtk/window.blp:243
+#: data/resources/blueprints/window.blp:213
 msgid "Background Color"
 msgstr "Colore di sfondo"
 
-#: converter/gtk/window.blp:251
+#: data/resources/blueprints/window.blp:221
 msgid "DPI"
 msgstr "DPI"
 
-#: converter/gtk/window.blp:262
+#: data/resources/blueprints/window.blp:232
 msgid "Scale Preserving Ratio"
 msgstr "Ridimensiona mantenendo proporzioni"
 
-#: converter/gtk/window.blp:265
+#: data/resources/blueprints/window.blp:235
 msgid "Dimension"
 msgstr "Dimensione"
 
-#: converter/gtk/window.blp:268 converter/gtk/window.blp:312
-#: converter/gtk/window.blp:338
+#: data/resources/blueprints/window.blp:238
+#: data/resources/blueprints/window.blp:284
+#: data/resources/blueprints/window.blp:310
 msgid "Width"
 msgstr "Larghezza"
 
-#: converter/gtk/window.blp:268 converter/gtk/window.blp:327
-#: converter/gtk/window.blp:348
+#: data/resources/blueprints/window.blp:238
+#: data/resources/blueprints/window.blp:299
+#: data/resources/blueprints/window.blp:320
 msgid "Height"
 msgstr "Altezza"
 
-#: converter/gtk/window.blp:273
+#: data/resources/blueprints/window.blp:243
 msgid "Width in Pixels"
 msgstr "Larghezza (pixel)"
 
-#: converter/gtk/window.blp:283
+#: data/resources/blueprints/window.blp:253
 msgid "Height in Pixels"
 msgstr "Altezza (pixel)"
 
-#: converter/gtk/window.blp:295
+#: data/resources/blueprints/window.blp:265
 msgid "Resize"
 msgstr "Ridimensiona"
 
-#: converter/gtk/window.blp:298
+#: data/resources/blueprints/window.blp:268
 msgid "Filter"
 msgstr "Filtro"
 
-#: converter/gtk/window.blp:304
+#: data/resources/blueprints/window.blp:271
+msgid "Point"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:271
+msgid "Quadratic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:271
+msgid "Cubic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:271
+msgid "Mitchell"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:271
+msgid "Gaussian"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:271
+msgid "Lanczos"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:276
 msgid "Size"
 msgstr "Dimensione"
 
-#: converter/gtk/window.blp:307
+#: data/resources/blueprints/window.blp:279
 msgid "Percentage"
 msgstr "Percentuale"
 
-#: converter/gtk/window.blp:307
+#: data/resources/blueprints/window.blp:279
 msgid "Exact Pixels"
 msgstr "Pixel esatti"
 
-#: converter/gtk/window.blp:307
+#: data/resources/blueprints/window.blp:279
 msgid "Minimum Pixels"
 msgstr "Pixel minimi"
 
-#: converter/gtk/window.blp:307
+#: data/resources/blueprints/window.blp:279
 msgid "Maximum Pixels"
 msgstr "Pixel massimi"
 
-#: converter/gtk/window.blp:307
+#: data/resources/blueprints/window.blp:279
 msgid "Ratio"
 msgstr "Fattore"
 
-#: converter/gtk/window.blp:315
+#: data/resources/blueprints/window.blp:287
 msgid "Pixels"
 msgstr "Pixel"
 
-#: converter/gtk/window.blp:315
+#: data/resources/blueprints/window.blp:287
 msgid "Preserve Ratio"
 msgstr "Mantieni proporzioni"
 
-#: converter/gtk/window.blp:358
+#: data/resources/blueprints/window.blp:330
 msgid "Width Percentage Scale"
 msgstr "Percentuale larghezza"
 
-#: converter/gtk/window.blp:368
+#: data/resources/blueprints/window.blp:340
 msgid "Height Percentage Scale"
 msgstr "Percentuale altezza"
 
-#: converter/gtk/window.blp:378
+#: data/resources/blueprints/window.blp:350
 msgid "Ratio Width"
 msgstr "Fattore larghezza"
 
-#: converter/gtk/window.blp:388
+#: data/resources/blueprints/window.blp:360
 msgid "Ratio Height"
 msgstr "Fattore altezza"
 
-#: converter/gtk/window.blp:408
+#: data/resources/blueprints/window.blp:380
 msgid "Converting…"
 msgstr "Conversione…"
 
-#: converter/gtk/window.blp:409
+#: data/resources/blueprints/window.blp:381
 msgid "This could take a while."
 msgstr "Potrebbe richiedere del tempo."
 
-#: converter/gtk/window.blp:419 converter/window.py:518
+#: data/resources/blueprints/window.blp:391 src/window.rs:1052
 msgid "Loading…"
 msgstr "Caricamento…"
 
-#: converter/gtk/window.blp:425 converter/window.py:784
+#: data/resources/blueprints/window.blp:397 src/window.rs:1624
 msgid "_Cancel"
 msgstr "Annulla"
 
-#: converter/gtk/window.blp:451
-msgid "Open File…"
+#: data/resources/blueprints/window.blp:426
+#, fuzzy
+msgid "Open Files…"
 msgstr "Apri file…"
 
-#: converter/gtk/window.blp:458
+#: data/resources/blueprints/window.blp:431
+#, fuzzy
+msgid "Paste Image…"
+msgstr "Apri immagine…"
+
+#: data/resources/blueprints/window.blp:438
 msgid "Show Less Popular Datatypes"
 msgstr "Mostra tipi di immagini meno popolari"
 
-#: converter/gtk/window.blp:470
+#: data/resources/blueprints/window.blp:450
 msgid "Keyboard Shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: converter/gtk/window.blp:475
+#: data/resources/blueprints/window.blp:455
 msgid "About Converter"
 msgstr "Informazioni su Converter"
 
-#: converter/main.py:93
+#: src/magick.rs:272
+msgid "Unknown IO error happened"
+msgstr ""
+
+#: src/widgets/about_window.rs:38
 msgid "Code and Design Borrowed from"
 msgstr "Codice e design presi in prestito da"
 
-#: converter/main.py:104
+#: src/widgets/about_window.rs:50
 msgid "Sample Image from"
 msgstr "Immagine di esempio di"
 
-#: converter/main.py:143
-msgid ""
-"Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Irénée Thirion <irenee.thirion@e.email>\n"
-"Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
-"Heimen Stoffels\n"
-"Sergio <sergiovg01@outlook.com>\n"
-"Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
-"Sabri Ünal <libreajans@gmail.com>\n"
-"Azat Zinnetullin"
+#: src/window.rs:398
+msgid "Collecting files"
 msgstr ""
-"Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Irénée Thirion <irenee.thirion@e.email>\n"
-"Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
-"Heimen Stoffels\n"
-"Sergio <sergiovg01@outlook.com>\n"
-"Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
-"Sabri Ünal <libreajans@gmail.com>\n"
-"Azat Zinnetullin"
 
-#: converter/window.py:642 converter/window.py:725
-msgid "Converting Cancelled"
-msgstr "Conversione annullata"
+#: src/window.rs:413
+msgid "Unable to access dropped files"
+msgstr ""
 
-#: converter/window.py:777
-msgid "Stop converting?"
-msgstr "Interrompere la conversione?"
+#: src/window.rs:476
+#, fuzzy
+msgid "Pasted Image"
+msgstr "Apri immagine"
 
-#: converter/window.py:778
-msgid "You will lose all progress."
-msgstr "Perderai tutti i progressi."
-
-#: converter/window.py:785
-msgid "_Stop"
-msgstr "Interrompi"
-
-#: converter/window.py:818
-msgid "Image converted"
-msgstr "Immagine convertita"
-
-#: converter/window.py:819
-msgid "Open"
-msgstr "Apri"
-
-#: converter/window.py:824
+#: src/window.rs:1548
 msgid "Error while processing"
 msgstr "Errore durante l'elaborazione"
 
-#: converter/window.py:850
-msgid "Error copied to clipboard"
-msgstr "Errore copiato negli appunti"
-
-#: converter/window.py:854
+#: src/window.rs:1569
 msgid "_Copy to clipboard"
 msgstr "Copia negli appunti"
 
-#: converter/window.py:856
+#: src/window.rs:1570
 msgid "_Dismiss"
 msgstr "Chiudi"
+
+#: src/window.rs:1578
+msgid "Error copied to clipboard"
+msgstr "Errore copiato negli appunti"
+
+#: src/window.rs:1590
+msgid "Image converted"
+msgstr "Immagine convertita"
+
+#: src/window.rs:1591
+msgid "Open"
+msgstr "Apri"
+
+#: src/window.rs:1619
+msgid "Stop converting?"
+msgstr "Interrompere la conversione?"
+
+#: src/window.rs:1620
+msgid "You will lose all progress."
+msgstr "Perderai tutti i progressi."
+
+#: src/window.rs:1624
+msgid "_Stop"
+msgstr "Interrompi"
+
+#: src/window.rs:1646
+msgid "Converting Cancelled"
+msgstr "Conversione annullata"
+
+#~ msgid "Convert"
+#~ msgstr "Converti"
+
+#~ msgid "Convert and Manipulate images"
+#~ msgstr "Converti e manipola immagini"
+
+#~ msgid ""
+#~ "A simple and easy-to-use Flatpak application built with libadwaita for "
+#~ "converting and manipulating images."
+#~ msgstr ""
+#~ "Un'applicazione Flatpak semplice e facile da usare creata con libadwaita "
+#~ "per la conversione e manipolazione di immagini."
+
+#~ msgid "Made UI adjustments."
+#~ msgstr "Apportate modifiche all'interfaccia utente."
+
+#~ msgid "’{input_ext}’ is not supported"
+#~ msgstr "'{input_ext}' non è supportato"
+
+#~ msgid "Select an image"
+#~ msgstr "Seleziona un'immagine"
+
+#~ msgid "Supported image files"
+#~ msgstr "File immagine supportati"
+
+#~ msgid "No file extension was specified"
+#~ msgstr "Non è stata specificata alcuna estensione"
+
+#, fuzzy, python-brace-format
+#~ msgid "’{file_ext}’ is of the wrong format"
+#~ msgstr "’{}’ non è un formato corretto"
+
+#~ msgid "Select output location"
+#~ msgstr "Seleziona posizione del risultato"
+
+#~ msgid "Compress as"
+#~ msgstr "Comprimi come"
+
+#~ msgid ""
+#~ "Jürgen Benvenuti <gastornis@posteo.org>\n"
+#~ "Irénée Thirion <irenee.thirion@e.email>\n"
+#~ "Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
+#~ "Heimen Stoffels\n"
+#~ "Sergio <sergiovg01@outlook.com>\n"
+#~ "Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
+#~ "Sabri Ünal <libreajans@gmail.com>\n"
+#~ "Azat Zinnetullin"
+#~ msgstr ""
+#~ "Jürgen Benvenuti <gastornis@posteo.org>\n"
+#~ "Irénée Thirion <irenee.thirion@e.email>\n"
+#~ "Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
+#~ "Heimen Stoffels\n"
+#~ "Sergio <sergiovg01@outlook.com>\n"
+#~ "Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
+#~ "Sabri Ünal <libreajans@gmail.com>\n"
+#~ "Azat Zinnetullin"
 
 #~ msgid "Added AVIF and JXL support."
 #~ msgstr "Aggiunto supporto per AVIF e JXL."
