@@ -67,9 +67,9 @@
     <content_rating type="oars-1.1" />
 
     <releases>
-        <release version="1.5.2" date="2023-02-06">
+        <release version="1.6.0" date="2023-05-21">
             <description>
-                <p>Fix various bugs.</p>
+                <p>Rust rewrite.</p>
             </description>
         </release>
     </releases>
