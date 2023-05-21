@@ -45,11 +45,7 @@
     <screenshots>
         <screenshot>
             <image>https://gitlab.com/adhami3310/Converter/-/raw/main/data/resources/screenshots/0.png</image>
-            <caption>Overview</caption>
-        </screenshot>
-        <screenshot>
-            <image>https://gitlab.com/adhami3310/Converter/-/raw/main/data/resources/screenshots/1.png</image>
-            <caption>More options</caption>
+            <caption>Converting sample image from PNG to WEBP</caption>
         </screenshot>
     </screenshots>
 
