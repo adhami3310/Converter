@@ -9,7 +9,7 @@ use gtk::{Application, License, Window};
 
 //this is non-translatable information, so it can be const
 pub const WEBSITE: &str = "https://gitlab.com/adhami3310/Converter";
-pub const ISSUE_TRACKER: &str = "https://gitlab.com/adhami3310/Converter/issues";
+pub const ISSUE_TRACKER: &str = "https://gitlab.com/adhami3310/Converter/-/issues";
 pub const DEVELOPERS: &[&str] = &["Khaleel Al-Adhami <khaleel.aladhami@gmail.com>"];
 
 #[derive(Clone, Debug)]
@@ -51,6 +51,6 @@ impl ConverterAbout {
             &["Samuel Custodio https://github.com/samuelcust/flappy-bird-assets"],
         );
         about_window.add_legal_section("ImageMagick", None, License::MitX11, None);
-        about_window.activate();
+        about_window.present();
     }
 }

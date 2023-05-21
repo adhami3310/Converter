@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template AppWindow : .AdwApplicationWindow {
+template $AppWindow : $AdwApplicationWindow {
   default-width: "750";
   default-height: "750";
   width-request: "300";
@@ -11,7 +11,7 @@ template AppWindow : .AdwApplicationWindow {
   Box {
     orientation: vertical;
 
-    .AdwHeaderBar headerbar {
+    $AdwHeaderBar headerbar {
       Button back {
         name: "button_back";
         icon-name: 'go-previous-symbolic';
@@ -29,17 +29,17 @@ template AppWindow : .AdwApplicationWindow {
 
     }
 
-    .DragOverlay drag_overlay {
+    $DragOverlay drag_overlay {
       title: _("Drop Here to Open");
       child:
-      .AdwToastOverlay toast_overlay {
+      $AdwToastOverlay toast_overlay {
         Stack stack {
           transition-type: crossfade;
 
           StackPage {
             name: "stack_welcome_page";
             child:
-            .AdwStatusPage {
+            $AdwStatusPage {
               icon-name: "io.gitlab.adhami3310.Converter-symbolic";
               title: _("Converter");
               description: _("Click “Open Images…” or drag images here.");
@@ -72,7 +72,7 @@ template AppWindow : .AdwApplicationWindow {
           StackPage {
             name: "stack_loading";
             child:
-            .AdwStatusPage {
+            $AdwStatusPage {
               Spinner loading_spinner {
                 valign: center;
               }
@@ -84,7 +84,7 @@ template AppWindow : .AdwApplicationWindow {
           // StackPage {
           //   name: "stack_drop";
           //   child:
-          //   .AdwStatusPage drop_overlay {
+          //   $AdwStatusPage drop_overlay {
           //     icon-name: "insert-image-symbolic";
           //     title: _("Drop Here to Open");
 
@@ -101,23 +101,23 @@ template AppWindow : .AdwApplicationWindow {
           StackPage {
             name: "stack_convert";
             child:
-            .AdwPreferencesPage {
-              .AdwPreferencesGroup image_container {
+            $AdwPreferencesPage {
+              $AdwPreferencesGroup image_container {
                 Picture image {}
                 height-request: "192";
               }
 
-              .AdwPreferencesGroup {
+              $AdwPreferencesGroup {
                 title: _("Properties");
 
-                .AdwActionRow image_type_label {
+                $AdwActionRow image_type_label {
                   title:  _("Image Type");
 
                   styles [
                     "property",
                   ]
                 }
-                .AdwActionRow image_size_label {
+                $AdwActionRow image_size_label {
                   title:  _("Image Size");
 
                   styles [
@@ -126,22 +126,22 @@ template AppWindow : .AdwApplicationWindow {
                 }
               }
 
-              .AdwPreferencesGroup {
+              $AdwPreferencesGroup {
                 title: _("Options");
 
-                .AdwComboRow output_filetype {
+                $AdwComboRow output_filetype {
                   title: _("Convert to");
                   model: StringList supported_output_filetypes {};
                 }
 
-                .AdwComboRow output_compression {
+                $AdwComboRow output_compression {
                   title: _("Output as");
                   model: StringList supported_compression_filetypes {};
                 }
 
               }
 
-              .AdwPreferencesGroup {
+              $AdwPreferencesGroup {
                 Box {
                   halign: center;
                   spacing: 6;
@@ -175,7 +175,7 @@ template AppWindow : .AdwApplicationWindow {
           StackPage {
             name: "stack_invalid_image";
             child:
-            .AdwStatusPage invalid_image {
+            $AdwStatusPage invalid_image {
               icon-name: "im-symbolic";
               title: _("Could not Load Image");
               description: _("This image could be corrupted or may use an unsupported file format.");
@@ -190,9 +190,9 @@ template AppWindow : .AdwApplicationWindow {
           StackPage {
             name: "options_page";
             child:
-            .AdwPreferencesPage {
-              .AdwPreferencesGroup {
-                .AdwActionRow quality_row {
+            $AdwPreferencesPage {
+              $AdwPreferencesGroup {
+                $AdwActionRow quality_row {
                   title: _("Quality");
 
                   Scale quality {
@@ -209,7 +209,7 @@ template AppWindow : .AdwApplicationWindow {
                   }
                 }
 
-                .AdwActionRow bgcolor_row {
+                $AdwActionRow bgcolor_row {
                   title: _("Background Color");
 
                   ColorDialogButton bgcolor {
@@ -217,9 +217,9 @@ template AppWindow : .AdwApplicationWindow {
                   }
                 }
 
-                .AdwActionRow dpi_row {
+                $AdwActionRow dpi_row {
                   title: _("DPI");
-                  .AdwBin {
+                  $AdwBin {
                     Entry dpi_value {
                       styles [
                         'text-in-row'
@@ -228,10 +228,10 @@ template AppWindow : .AdwApplicationWindow {
                   }
                 }
 
-                .AdwExpanderRow svg_size_row {
+                $AdwExpanderRow svg_size_row {
                   title: _("Scale Preserving Ratio");
                   show-enable-switch: true;
-                  .AdwComboRow svg_size_type {
+                  $AdwComboRow svg_size_type {
                     title: _("Dimension");
                     model:
                     StringList svg_size_axis_types {
@@ -239,9 +239,9 @@ template AppWindow : .AdwApplicationWindow {
                     }
                     ;
                   }
-                  .AdwActionRow svg_size_width_row {
+                  $AdwActionRow svg_size_width_row {
                     title: _("Width in Pixels");
-                    .AdwBin {
+                    $AdwBin {
                       Entry svg_size_width_value {
                         styles [
                           'text-in-row'
@@ -249,9 +249,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow svg_size_height_row {
+                  $AdwActionRow svg_size_height_row {
                     title: _("Height in Pixels");
-                    .AdwBin {
+                    $AdwBin {
                       Entry svg_size_height_value {
                         styles [
                           'text-in-row'
@@ -261,10 +261,10 @@ template AppWindow : .AdwApplicationWindow {
                   }
                 }
 
-                .AdwExpanderRow resize_row {
+                $AdwExpanderRow resize_row {
                   title: _("Resize");
                   show-enable-switch: true;
-                  .AdwComboRow resize_filter {
+                  $AdwComboRow resize_filter {
                     title: _("Filter");
                     model:
                     StringList resize_filters {
@@ -272,7 +272,7 @@ template AppWindow : .AdwApplicationWindow {
                     }
                     ;
                   }
-                  .AdwComboRow resize_type {
+                  $AdwComboRow resize_type {
                     title: _("Size");
                     model:
                     StringList resize_types {
@@ -280,14 +280,14 @@ template AppWindow : .AdwApplicationWindow {
                     }
                     ;
                   }
-                  .AdwComboRow resize_width_row {
+                  $AdwComboRow resize_width_row {
                     title: _("Width");
                     model:
                     StringList resize_axis_types {
                       strings [_("Pixels"),_("Preserve Ratio")]
                     }
                     ;
-                    .AdwBin {
+                    $AdwBin {
                       Entry resize_width_value {
                         styles [
                           'text-in-row'
@@ -295,10 +295,10 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwComboRow resize_height_row {
+                  $AdwComboRow resize_height_row {
                     title: _("Height");
                     model: resize_axis_types;
-                    .AdwBin {
+                    $AdwBin {
                       Entry resize_height_value {
                         styles [
                           'text-in-row'
@@ -306,9 +306,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow resize_minmax_width_row {
+                  $AdwActionRow resize_minmax_width_row {
                     title: _("Width");
-                    .AdwBin {
+                    $AdwBin {
                       Entry resize_minmax_width_value {
                         styles [
                           'text-in-row'
@@ -316,9 +316,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow resize_minmax_height_row {
+                  $AdwActionRow resize_minmax_height_row {
                     title: _("Height");
-                    .AdwBin {
+                    $AdwBin {
                       Entry resize_minmax_height_value {
                         styles [
                           'text-in-row'
@@ -326,9 +326,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow resize_scale_width_row {
+                  $AdwActionRow resize_scale_width_row {
                     title: _("Width Percentage Scale");
-                    .AdwBin {
+                    $AdwBin {
                       Entry resize_scale_width_value {
                         styles [
                           'text-in-row'
@@ -336,9 +336,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow resize_scale_height_row {
+                  $AdwActionRow resize_scale_height_row {
                     title: _("Height Percentage Scale");
-                    .AdwBin {
+                    $AdwBin {
                       Entry resize_scale_height_value {
                         styles [
                           'text-in-row'
@@ -346,9 +346,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow ratio_width_row {
+                  $AdwActionRow ratio_width_row {
                     title: _("Ratio Width");
-                    .AdwBin {
+                    $AdwBin {
                       Entry ratio_width_value {
                         styles [
                           'text-in-row'
@@ -356,9 +356,9 @@ template AppWindow : .AdwApplicationWindow {
                       }
                     }
                   }
-                  .AdwActionRow ratio_height_row {
+                  $AdwActionRow ratio_height_row {
                     title: _("Ratio Height");
-                    .AdwBin {
+                    $AdwBin {
                       Entry ratio_height_value {
                         styles [
                           'text-in-row'
@@ -376,7 +376,7 @@ template AppWindow : .AdwApplicationWindow {
           StackPage {
             name: "stack_converting";
             child:
-            .AdwStatusPage {
+            $AdwStatusPage {
               title: _("Converting…");
               description: _("This could take a while.");
 

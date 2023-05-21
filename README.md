@@ -15,7 +15,7 @@ A simple and easy-to-use Flatpak application built with libadwaita for convertin
 ## Installation
 <a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
-It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory.
+It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory. It will then also allow you to save files directly instead of compressing them when doing batch processing.
 
 ### Third Party Packages
 You may also be able to obtain Converter from your distribution's package manager. Note these packages are maintained independently and thus may differ from the official version on Flathub. Please report any issues experienced to the package maintainer.
@@ -26,7 +26,7 @@ You may also be able to obtain Converter from your distribution's package manage
 
 Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Converter from various writers, content creators, etc.
 
-<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
+<img src="data/resources/screenshots/0.png" alt="View of Converter">
 
 Converter supports converting the following datatypes:
  - image/jpeg (RW) (through MozJPEG)
