@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>@app-id@</id>
+
+    <name>Converter</name>
+    <developer_name>Khaleel Al-Adhami</developer_name>
+    <summary>Convert and manipulate images</summary>
+
+    <metadata_license>CC-BY-SA-4.0</metadata_license>
+    <project_license>GPL-3.0-only</project_license>
+
+    <description>
+        <p>
+            Convert between different image filetypes and resize them easily.
+        </p>
+    </description>
+
+    <translation type="gettext">@gettext-package@</translation>
+
+    <categories>
+        <category>Graphics</category>
+        <category>ImageProcessing</category>
+        <category>GTK</category>
+        <category>GNOME</category>
+        <category>Utility</category>
+    </categories>
+
+    <keywords>
+        <keyword>image</keyword>
+        <keyword>convert</keyword>
+        <keyword>converting</keyword>
+        <keyword>processing</keyword>
+    </keywords>
+
+    <requires>
+        <internet>offline-only</internet>
+    </requires>
+
+    <recommends>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
+    </recommends>
+
+    <screenshots>
+        <screenshot>
+            <image>https://gitlab.com/adhami3310/Converter/-/raw/main/data/resources/screenshots/0.png</image>
+            <caption>Overview</caption>
+        </screenshot>
+        <screenshot>
+            <image>https://gitlab.com/adhami3310/Converter/-/raw/main/data/resources/screenshots/1.png</image>
+            <caption>More options</caption>
+        </screenshot>
+    </screenshots>
+
+    <launchable type="desktop-id">@app-id@.desktop</launchable>
+
+    <url type="homepage">https://gitlab.com/adhami3310/Converter</url>
+    <url type="bugtracker">https://gitlab.com/adhami3310/Converter/-/issues</url>
+    <url type="help">https://gitlab.com/adhami3310/Converter/-/issues</url>
+    <url type="vcs-browser">https://gitlab.com/adhami3310/Converter</url>
+    <url type="contribute">https://gitlab.com/adhami3310/Converter</url>
+    <url type="contact">https://matrix.to/#/@adhami:matrix.org</url>
+
+    <update_contact>khaleel.aladhami@gmail.com</update_contact>
+
+    <content_rating type="oars-1.1" />
+
+    <releases>
+        <release version="1.5.2" date="2023-02-06">
+            <description>
+                <p>Fix various bugs.</p>
+            </description>
+        </release>
+    </releases>
+</component>
