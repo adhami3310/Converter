@@ -1296,7 +1296,7 @@ impl AppWindow {
                             (
                                 format!("{parent}/{stem}.{input_ext}"),
                                 input_filetype,
-                                format!("{output_stem}.{}", output_type.as_extension()),
+                                format!("{output_stem}_{f}.{}", output_type.as_extension()),
                                 f,
                             )
                         })
