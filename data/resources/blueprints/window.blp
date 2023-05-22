@@ -101,58 +101,24 @@ template $AppWindow : $AdwApplicationWindow {
           StackPage {
             name: "stack_convert";
             child:
-            $AdwPreferencesPage {
-              $AdwPreferencesGroup image_container {
-                Picture image {}
-                height-request: "192";
-              }
-
+            Overlay {
+              [overlay]
               $AdwPreferencesGroup {
-                title: _("Properties");
+                valign: end;
+                halign: center;
+                
 
-                $AdwActionRow image_type_label {
-                  title:  _("Image Type");
+                // Box {
+                //   halign: center;
+                //   spacing: 6;
 
-                  styles [
-                    "property",
-                  ]
-                }
-                $AdwActionRow image_size_label {
-                  title:  _("Image Size");
-
-                  styles [
-                    "property",
-                  ]
-                }
-              }
-
-              $AdwPreferencesGroup {
-                title: _("Options");
-
-                $AdwComboRow output_filetype {
-                  title: _("Convert to");
-                  model: StringList supported_output_filetypes {};
-                }
-
-                $AdwComboRow output_compression {
-                  title: _("Output as");
-                  model: StringList supported_compression_filetypes {};
-                }
-
-              }
-
-              $AdwPreferencesGroup {
-                Box {
-                  halign: center;
-                  spacing: 6;
-
-                  Button options_button {
-                    valign: center;
-                    label: _("More Options");
-                    styles [
-                      "pill",
-                    ]
-                  }
+                //   Button options_button {
+                //     valign: center;
+                //     label: _("More Options");
+                //     styles [
+                //       "pill",
+                //     ]
+                //   }
 
                   Button convert_button {
                     valign: center;
@@ -165,8 +131,234 @@ template $AppWindow : $AdwApplicationWindow {
                       "pill",
                     ]
                   }
-                }
+                // }
+
+                styles [
+                  "floating"
+                ]
               }
+
+              $AdwPreferencesPage {
+                $AdwPreferencesGroup image_container {
+                  Picture image {}
+                  height-request: "192";
+                }
+
+                $AdwPreferencesGroup {
+                  title: _("Properties");
+
+                  $AdwActionRow image_type_label {
+                    title:  _("Image Type");
+
+                    styles [
+                      "property",
+                    ]
+                  }
+                  $AdwActionRow image_size_label {
+                    title:  _("Image Size");
+
+                    styles [
+                      "property",
+                    ]
+                  }
+                }
+
+                $AdwPreferencesGroup {
+                  title: _("Options");
+
+                  $AdwComboRow output_filetype {
+                    title: _("Convert to");
+                    model: StringList supported_output_filetypes {};
+                  }
+
+                  $AdwComboRow output_compression {
+                    title: _("Output as");
+                    model: StringList supported_compression_filetypes {};
+                  }
+
+                }
+
+                $AdwPreferencesGroup {
+                  $AdwActionRow quality_row {
+                    title: _("Quality");
+
+                    Scale quality {
+                      adjustment: Adjustment percentage {
+                        lower: 1;
+                        upper: 100;
+                        step-increment: 1;
+                      };
+                      hexpand: true;
+                      vexpand: true;
+                      digits: 0;
+                      draw-value: true;
+                      value-pos: right;
+                    }
+                  }
+
+                  $AdwActionRow bgcolor_row {
+                    title: _("Background Color");
+
+                    ColorDialogButton bgcolor {
+                      valign: center;
+                    }
+                  }
+
+                  $AdwActionRow dpi_row {
+                    title: _("DPI");
+                    $AdwBin {
+                      Entry dpi_value {
+                        styles [
+                          'text-in-row'
+                        ]
+                      }
+                    }
+                  }
+
+                  $AdwExpanderRow svg_size_row {
+                    title: _("Scale Preserving Ratio");
+                    show-enable-switch: true;
+                    $AdwComboRow svg_size_type {
+                      title: _("Dimension");
+                      model:
+                      StringList svg_size_axis_types {
+                        strings [_("Width"),_("Height")]
+                      }
+                      ;
+                    }
+                    $AdwActionRow svg_size_width_row {
+                      title: _("Width in Pixels");
+                      $AdwBin {
+                        Entry svg_size_width_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow svg_size_height_row {
+                      title: _("Height in Pixels");
+                      $AdwBin {
+                        Entry svg_size_height_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                  }
+
+                  $AdwExpanderRow resize_row {
+                    title: _("Resize");
+                    show-enable-switch: true;
+                    $AdwComboRow resize_filter {
+                      title: _("Filter");
+                      model:
+                      StringList resize_filters {
+                        strings [_("Point"), _("Quadratic"), _("Cubic"), _("Mitchell"), _("Gaussian"), _("Lanczos")]
+                      }
+                      ;
+                    }
+                    $AdwComboRow resize_type {
+                      title: _("Size");
+                      model:
+                      StringList resize_types {
+                        strings [_("Percentage"),_("Exact Pixels"),_("Minimum Pixels"),_("Maximum Pixels"), _("Ratio")]
+                      }
+                      ;
+                    }
+                    $AdwComboRow resize_width_row {
+                      title: _("Width");
+                      model:
+                      StringList resize_axis_types {
+                        strings [_("Pixels"),_("Preserve Ratio")]
+                      }
+                      ;
+                      $AdwBin {
+                        Entry resize_width_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwComboRow resize_height_row {
+                      title: _("Height");
+                      model: resize_axis_types;
+                      $AdwBin {
+                        Entry resize_height_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow resize_minmax_width_row {
+                      title: _("Width");
+                      $AdwBin {
+                        Entry resize_minmax_width_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow resize_minmax_height_row {
+                      title: _("Height");
+                      $AdwBin {
+                        Entry resize_minmax_height_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow resize_scale_width_row {
+                      title: _("Width Percentage Scale");
+                      $AdwBin {
+                        Entry resize_scale_width_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow resize_scale_height_row {
+                      title: _("Height Percentage Scale");
+                      $AdwBin {
+                        Entry resize_scale_height_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow ratio_width_row {
+                      title: _("Ratio Width");
+                      $AdwBin {
+                        Entry ratio_width_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                    $AdwActionRow ratio_height_row {
+                      title: _("Ratio Height");
+                      $AdwBin {
+                        Entry ratio_height_value {
+                          styles [
+                            'text-in-row'
+                          ]
+                        }
+                      }
+                    }
+                  }
+                  styles ["unfloating"]
+                }
+
+              }
+
             }
 
             ;
@@ -191,183 +383,7 @@ template $AppWindow : $AdwApplicationWindow {
             name: "options_page";
             child:
             $AdwPreferencesPage {
-              $AdwPreferencesGroup {
-                $AdwActionRow quality_row {
-                  title: _("Quality");
-
-                  Scale quality {
-                    adjustment: Adjustment percentage {
-                      lower: 1;
-                      upper: 100;
-                      step-increment: 1;
-                    };
-                    hexpand: true;
-                    vexpand: true;
-                    digits: 0;
-                    draw-value: true;
-                    value-pos: right;
-                  }
-                }
-
-                $AdwActionRow bgcolor_row {
-                  title: _("Background Color");
-
-                  ColorDialogButton bgcolor {
-                    valign: center;
-                  }
-                }
-
-                $AdwActionRow dpi_row {
-                  title: _("DPI");
-                  $AdwBin {
-                    Entry dpi_value {
-                      styles [
-                        'text-in-row'
-                      ]
-                    }
-                  }
-                }
-
-                $AdwExpanderRow svg_size_row {
-                  title: _("Scale Preserving Ratio");
-                  show-enable-switch: true;
-                  $AdwComboRow svg_size_type {
-                    title: _("Dimension");
-                    model:
-                    StringList svg_size_axis_types {
-                      strings [_("Width"),_("Height")]
-                    }
-                    ;
-                  }
-                  $AdwActionRow svg_size_width_row {
-                    title: _("Width in Pixels");
-                    $AdwBin {
-                      Entry svg_size_width_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow svg_size_height_row {
-                    title: _("Height in Pixels");
-                    $AdwBin {
-                      Entry svg_size_height_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                }
-
-                $AdwExpanderRow resize_row {
-                  title: _("Resize");
-                  show-enable-switch: true;
-                  $AdwComboRow resize_filter {
-                    title: _("Filter");
-                    model:
-                    StringList resize_filters {
-                      strings [_("Point"), _("Quadratic"), _("Cubic"), _("Mitchell"), _("Gaussian"), _("Lanczos")]
-                    }
-                    ;
-                  }
-                  $AdwComboRow resize_type {
-                    title: _("Size");
-                    model:
-                    StringList resize_types {
-                      strings [_("Percentage"),_("Exact Pixels"),_("Minimum Pixels"),_("Maximum Pixels"), _("Ratio")]
-                    }
-                    ;
-                  }
-                  $AdwComboRow resize_width_row {
-                    title: _("Width");
-                    model:
-                    StringList resize_axis_types {
-                      strings [_("Pixels"),_("Preserve Ratio")]
-                    }
-                    ;
-                    $AdwBin {
-                      Entry resize_width_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwComboRow resize_height_row {
-                    title: _("Height");
-                    model: resize_axis_types;
-                    $AdwBin {
-                      Entry resize_height_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow resize_minmax_width_row {
-                    title: _("Width");
-                    $AdwBin {
-                      Entry resize_minmax_width_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow resize_minmax_height_row {
-                    title: _("Height");
-                    $AdwBin {
-                      Entry resize_minmax_height_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow resize_scale_width_row {
-                    title: _("Width Percentage Scale");
-                    $AdwBin {
-                      Entry resize_scale_width_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow resize_scale_height_row {
-                    title: _("Height Percentage Scale");
-                    $AdwBin {
-                      Entry resize_scale_height_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow ratio_width_row {
-                    title: _("Ratio Width");
-                    $AdwBin {
-                      Entry ratio_width_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                  $AdwActionRow ratio_height_row {
-                    title: _("Ratio Height");
-                    $AdwBin {
-                      Entry ratio_height_value {
-                        styles [
-                          'text-in-row'
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
+              
             }
 
             ;

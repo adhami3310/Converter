@@ -21,3 +21,10 @@ dragoverlay {
   color: @accent_fg_color;
 }
 
+.floating {
+  margin: 20px 0;
+}
+
+.unfloating {
+  margin-bottom: 55px;
+}

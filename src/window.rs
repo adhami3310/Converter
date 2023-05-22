@@ -110,8 +110,8 @@ mod imp {
         pub open_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub convert_button: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub options_button: TemplateChild<gtk::Button>,
+        // #[template_child]
+        // pub options_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub cancel_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -231,7 +231,7 @@ mod imp {
                 stack: TemplateChild::default(),
                 open_button: TemplateChild::default(),
                 convert_button: TemplateChild::default(),
-                options_button: TemplateChild::default(),
+                // options_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
                 loading_spinner: TemplateChild::default(),
                 image: TemplateChild::default(),
@@ -288,11 +288,22 @@ mod imp {
     impl ObjectImpl for AppWindow {
         fn constructed(&self) {
             self.parent_constructed();
+            let obj = self.obj();
+            obj.load_window_size();
         }
     }
 
     impl WidgetImpl for AppWindow {}
-    impl WindowImpl for AppWindow {}
+    impl WindowImpl for AppWindow {
+        fn close_request(&self) -> gtk::Inhibit {
+            if let Err(err) = self.obj().save_window_size() {
+                dbg!("Failed to save window state, {}", &err);
+            }
+
+            // Pass close request on to the parent
+            self.parent_close_request()
+        }
+    }
 
     impl ApplicationWindowImpl for AppWindow {}
     impl AdwApplicationWindowImpl for AppWindow {}
@@ -338,11 +349,11 @@ impl AppWindow {
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.convert_cancel();
             }));
-        imp.options_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
-                this.imp().back.set_visible(true);
-                this.imp().stack.set_visible_child_name("options_page");
-            }));
+        // imp.options_button
+        //     .connect_clicked(clone!(@weak self as this => move |_| {
+        //         this.imp().back.set_visible(true);
+        //         this.imp().stack.set_visible_child_name("options_page");
+        //     }));
         imp.back
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.imp().back.set_visible(false);
@@ -384,6 +395,92 @@ impl AppWindow {
         // if let Some(display) = gtk::gdk::Display::default() {
         //     gtk::StyleContext::add_provider_for_display(&display, &imp.provider, 400);
         // }
+    }
+
+    fn save_window_size(&self) -> Result<(), glib::BoolError> {
+        let imp = self.imp();
+
+        let (width, height) = self.default_size();
+
+        imp.settings.set_int("window-width", width)?;
+        imp.settings.set_int("window-height", height)?;
+
+        imp.settings
+            .set_boolean("is-maximized", self.is_maximized())?;
+
+        Ok(())
+    }
+
+    fn load_window_size(&self) {
+        let imp = self.imp();
+
+        let width = imp.settings.int("window-width");
+        let height = imp.settings.int("window-height");
+        let is_maximized = imp.settings.boolean("is-maximized");
+
+        self.set_default_size(width, height);
+
+        if is_maximized {
+            self.maximize();
+        }
+    }
+
+    fn save_options(&self) -> Result<(), glib::BoolError> {
+        let imp = self.imp();
+
+        imp.settings
+            .set_int("quality", imp.quality.value() as i32)?;
+        imp.settings
+            .set_int("dpi", imp.dpi_value.text().parse().unwrap())?;
+
+        Ok(())
+    }
+
+    fn load_options(&self) {
+        let imp = self.imp();
+
+        imp.quality.set_value(imp.settings.int("quality") as f64);
+        imp.dpi_value.set_text(&imp.settings.int("dpi").to_string());
+    }
+
+    fn save_selected_output(&self) -> Result<(), glib::BoolError> {
+        let imp = self.imp();
+
+        let output_format = self.get_selected_output().unwrap();
+
+        let pos = FileType::output_formats(true)
+            .position(|&x| x == output_format)
+            .unwrap();
+
+        imp.settings.set_enum("output-format", pos as i32)?;
+
+        Ok(())
+    }
+
+    fn load_selected_output(&self) -> FileType {
+        let imp = self.imp();
+
+        *FileType::output_formats(true).collect_vec()[imp.settings.enum_("output-format") as usize]
+    }
+
+    fn save_selected_compression(&self) -> Result<(), glib::BoolError> {
+        let imp = self.imp();
+
+        if let Some(output_format) = self.get_selected_compression() {
+            let pos = CompressionType::possible_output(false)
+                .position(|&x| x == output_format)
+                .unwrap();
+
+            imp.settings.set_enum("compression-format", pos as i32)?;
+        }
+        Ok(())
+    }
+
+    fn load_selected_compression(&self) -> CompressionType {
+        let imp = self.imp();
+
+        *CompressionType::possible_output(false).collect_vec()
+            [imp.settings.enum_("compression-format") as usize]
     }
 
     fn set_convert_progress(&self, done: usize, total: usize) {
@@ -606,7 +703,7 @@ impl AppWindow {
             }
         };
 
-        imp.quality.set_value(92.0);
+        self.load_options();
         imp.resize_scale_height_value.set_text("100");
         imp.resize_scale_width_value.set_text("100");
         imp.ratio_width_value.set_text("1");
@@ -620,7 +717,6 @@ impl AppWindow {
             .set_text(&image_width.to_string());
         imp.resize_minmax_height_value
             .set_text(&image_height.to_string());
-        imp.dpi_value.set_text("300");
         self.update_output_options();
         self.update_advanced_options();
 
@@ -650,7 +746,9 @@ impl AppWindow {
     }
 
     pub fn update_output_options(&self) {
-        let previous_option = self.get_selected_output();
+        let previous_option = self
+            .get_selected_output()
+            .unwrap_or(self.load_selected_output());
 
         let new_options = gtk::StringList::new(&[]);
         let new_list = FileType::output_formats(self.imp().settings.boolean("show-less-popular"))
@@ -659,10 +757,8 @@ impl AppWindow {
             new_options.append(&ft.as_display_string());
         }
         self.imp().output_filetype.set_model(Some(&new_options));
-        if let Some(previous_option) = previous_option {
-            if let Some(index) = new_list.into_iter().position(|p| p == &previous_option) {
-                self.imp().output_filetype.set_selected(index as u32);
-            }
+        if let Some(index) = new_list.into_iter().position(|p| p == &previous_option) {
+            self.imp().output_filetype.set_selected(index as u32);
         }
         self.update_compression_options();
     }
@@ -686,7 +782,10 @@ impl AppWindow {
                 self.imp().output_compression.set_visible(false);
             }
             _ => {
-                let previous_option = self.get_selected_compression();
+                let previous_option = self
+                    .get_selected_compression()
+                    .unwrap_or(self.load_selected_compression());
+
                 let new_options = gtk::StringList::new(&[]);
                 let sandboxed = files.iter().any(|f: &InputFile| f.is_behind_sandbox());
                 let new_list = CompressionType::possible_output(sandboxed).collect_vec();
@@ -696,10 +795,8 @@ impl AppWindow {
                 self.imp().output_compression.set_model(Some(&new_options));
                 self.imp().output_compression.set_visible(true);
 
-                if let Some(previous_option) = previous_option {
-                    if let Some(index) = new_list.into_iter().position(|p| p == &previous_option) {
-                        self.imp().output_filetype.set_selected(index as u32);
-                    }
+                if let Some(index) = new_list.into_iter().position(|p| *p == previous_option) {
+                    self.imp().output_compression.set_selected(index as u32);
                 }
             }
         }
@@ -1055,6 +1152,9 @@ impl AppWindow {
             .is_canceled
             .store(false, std::sync::atomic::Ordering::SeqCst);
         self.imp().current_jobs.replace(vec![]);
+        self.save_options().ok();
+        self.save_selected_output().ok();
+        self.save_selected_compression().ok();
 
         let output_type = self.get_selected_output().unwrap();
 

@@ -11,4 +11,4 @@ Keywords=image;convert;converting;processing
 StartupNotify=true
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;
-MimeType=image/png;image/jpeg;image/webp;image/svg+xml;image/heic;image/heif;image/bmp;image/avif;image/jxl;image/tiff;application/pdf;image/gif;image/x-icon
+MimeType=image/png;image/jpeg;image/webp;image/svg+xml;image/heic;image/heif;image/bmp;image/avif;image/jxl;image/tiff;application/pdf;image/gif;image/x-icon;image/vnd-ms.dds

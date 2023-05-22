@@ -31,6 +31,8 @@ pub enum FileType {
     Gif,
     #[enum_value(name = "ICO")]
     Ico,
+    #[enum_value(name = "DDS")]
+    Dds,
     #[enum_value(name = "Unknown")]
     #[default]
     Unknown,
@@ -42,7 +44,7 @@ impl FileType {
     pub fn is_input(&self) -> bool {
         matches!(
             self,
-            Png | Jpg | Webp | Svg | Heif | Heic | Bmp | Avif | Jxl | Tiff | Pdf | Gif | Ico | Jpeg
+            Png | Jpg | Webp | Svg | Heif | Heic | Bmp | Avif | Jxl | Tiff | Pdf | Gif | Ico | Jpeg | Dds
         )
     }
 
@@ -53,7 +55,7 @@ impl FileType {
     pub fn is_lossy(&self) -> bool {
         matches!(
             self,
-            Jpg | Jpeg | Webp | Heif | Heic | Avif | Jxl | Tiff | Pdf
+            Jpg | Jpeg | Webp | Heif | Heic | Avif | Jxl | Tiff | Pdf | Dds
         )
     }
 
@@ -65,33 +67,33 @@ impl FileType {
     }
 
     pub fn supports_pixbuff(&self) -> bool {
-        !matches!(self, Pdf)
+        !matches!(self, Pdf | Dds)
     }
 
     pub fn is_output(&self) -> bool {
         matches!(
             self,
-            Png | Jpg | Jpeg | Webp | Heif | Heic | Bmp | Avif | Jxl | Tiff | Pdf | Gif | Ico
+            Png | Jpg | Jpeg | Webp | Heif | Heic | Bmp | Avif | Jxl | Tiff | Pdf | Gif | Ico | Dds
         )
     }
 
     pub fn iterator() -> Iter<'static, Self> {
-        static FILETYPES: [FileType; 14] = [
-            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico,
+        static FILETYPES: [FileType; 15] = [
+            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds
         ];
         FILETYPES.iter()
     }
 
     pub fn input_formats() -> Iter<'static, Self> {
-        static FILETYPES: [FileType; 14] = [
-            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico,
+        static FILETYPES: [FileType; 15] = [
+            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds
         ];
         FILETYPES.iter()
     }
 
     pub fn output_formats(hidden: bool) -> Iter<'static, Self> {
-        static ALL_FILETYPES: [FileType; 12] = [
-            Png, Jpg, Webp, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico,
+        static ALL_FILETYPES: [FileType; 13] = [
+            Png, Jpg, Webp, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds
         ];
         static POPULAR_FILETYPES: [FileType; 7] = [Png, Jpg, Webp, Heif, Pdf, Gif, Ico];
         match hidden {
@@ -116,6 +118,7 @@ impl FileType {
             Pdf => "application/pdf",
             Gif => "image/gif",
             Ico => "image/x-icon",
+            Dds => "image/vnd-ms.dds",
             // ZIP => "application/zip",
             // TAR => "application/gzip",
             Unknown => "",
@@ -138,6 +141,7 @@ impl FileType {
             Pdf => "pdf",
             Gif => "gif",
             Ico => "ico",
+            Dds => "dds",
             // ZIP => "zip",
             // TAR => "tar.gz",
             Unknown => "",
@@ -164,6 +168,7 @@ impl FileType {
             "pdf" => Some(Pdf),
             "gif" => Some(Gif),
             "ico" => Some(Ico),
+            "dds" => Some(Dds),
             // "zip" => Some(ZIP),
             // "tar.gz" => Some(TAR),
             _ => None,
@@ -274,6 +279,7 @@ impl OutputType {
             "pdf" => Some(OutputType::File(Pdf)),
             "gif" => Some(OutputType::File(Gif)),
             "ico" => Some(OutputType::File(Ico)),
+            "dds" => Some(OutputType::File(Dds)),
             _ => None,
         }
     }
