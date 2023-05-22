@@ -90,9 +90,9 @@ glib::wrapper! {
 impl Default for App {
     fn default() -> Self {
         glib::Object::builder::<Self>()
-            .property("application-id", &Some(APP_ID))
-            .property("flags", &gio::ApplicationFlags::HANDLES_OPEN)
-            .property("resource-base-path", &"/io/gitlab/adhami3310/Converter/")
+            .property("application-id", Some(APP_ID))
+            .property("flags", gio::ApplicationFlags::HANDLES_OPEN)
+            .property("resource-base-path", "/io/gitlab/adhami3310/Converter/")
             .build()
     }
 }

@@ -13,7 +13,6 @@ use crate::magick::{
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use adw::{prelude::*, traits::ActionRowExt};
-use async_lock::Semaphore;
 use futures::future::join_all;
 use gettextrs::gettext;
 use glib::clone;
@@ -23,6 +22,7 @@ use itertools::Itertools;
 use shared_child::SharedChild;
 use std::sync::Arc;
 use tempfile::TempDir;
+use tokio::spawn;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ResizeFilter {
@@ -601,18 +601,17 @@ impl AppWindow {
         let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
 
         std::thread::spawn(move || {
-            let mut res = Vec::new();
             let rt = tokio::runtime::Builder::new_multi_thread()
-                .worker_threads(4)
                 .enable_all()
                 .build()
                 .unwrap();
-            for f in file_paths {
-                if let Ok(u) = rt.block_on(count_frames(f)) {
-                    res.push(u);
-                }
-            }
-            sender.send(res).expect("concurrency failure");
+            let jobs = file_paths
+                .into_iter()
+                .map(|f| async move { count_frames(f).await.unwrap_or(1) })
+                .collect_vec();
+            sender
+                .send(rt.block_on(join_all(jobs)))
+                .expect("concurrency failure");
         });
 
         receiver.attach(
@@ -1395,44 +1394,52 @@ impl AppWindow {
                 .build()
                 .unwrap();
 
-            let sem = std::sync::Arc::new(Semaphore::new(4));
             let stop_flag = stop_flag_s.clone();
+
+            fdlimit::raise_fd_limit();
 
             let jobs = magick_jobs
                 .into_iter()
                 .map(|mjs| {
-                    let sem = sem.clone();
                     let stop_flag = stop_flag.clone();
                     let sender = sender.clone();
-                    rt.spawn(async move {
-                        for mut mj_command in mjs.into_iter().map(|mj| mj.get_command()) {
-                            let permit = sem.acquire().await;
-                            if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
-                                drop(permit);
-                                return;
+                    async move {
+                        spawn(async move {
+                            for mut mj_command in mjs.into_iter().map(|mj| mj.get_command()) {
+                                if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                    return;
+                                }
+                                let std::io::Result::Ok(shared_child) = SharedChild::spawn(&mut mj_command) else {
+                                    dbg!("panic");
+                                    sender.send(ArcOrOptionError::OptionError(Some("cannot generate command".to_string()))).expect("Concurrency Issue");
+                                    return;
+                                };
+                                if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                    return;
+                                }
+                                let child_arc = std::sync::Arc::new(shared_child);
+                                sender
+                                    .send(ArcOrOptionError::Child(child_arc.clone()))
+                                    .expect("Concurrency Issue");
+                                let output = match wait_for_child(child_arc.clone()).await {
+                                    Ok(_) => None,
+                                    Err(e) => Some(e),
+                                };
+                                if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                    return;
+                                }
+
+                                sender
+                                    .send(ArcOrOptionError::OptionError(output))
+                                    .expect("Concurrency Issue");
                             }
-                            let shared_child: SharedChild =
-                                SharedChild::spawn(&mut mj_command).unwrap();
-                            let child_arc = std::sync::Arc::new(shared_child);
-                            sender
-                                .send(ArcOrOptionError::Child(child_arc.clone()))
-                                .expect("Concurrency Issue");
-                            let output = match wait_for_child(child_arc.clone()).await {
-                                Ok(_) => None,
-                                Err(e) => Some(e),
-                            };
-                            drop(permit);
-                            sender
-                                .send(ArcOrOptionError::OptionError(output))
-                                .expect("Concurrency Issue");
-                        }
-                    })
+                        })
+                        .await.ok();
+                    }
                 })
                 .collect_vec();
 
-            rt.block_on(async move {
-                join_all(jobs).await;
-            });
+            rt.block_on(join_all(jobs));
         });
 
         let dir_path = dir.path().to_str().unwrap().to_string();
@@ -1458,6 +1465,7 @@ impl AppWindow {
                     }
                     ArcOrOptionError::OptionError(e) => {
                         if let Some(e) = e {
+                            stop_flag_r.store(true, std::sync::atomic::Ordering::SeqCst);
                             this.convert_failed(e, dir_path.clone());
                             return Continue(false);
                         }
@@ -1570,7 +1578,7 @@ impl AppWindow {
 
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new("zip")
-                            .arg("-jFSm")
+                            .arg("-jFSm0")
                             .arg(path)
                             .args(output_files),
                     )
@@ -1623,16 +1631,6 @@ impl AppWindow {
     }
 
     fn convert_failed(&self, error_message: String, temp_dir_path: String) {
-        self.convert_clean(temp_dir_path);
-
-        if self
-            .imp()
-            .is_canceled
-            .load(std::sync::atomic::Ordering::SeqCst)
-        {
-            return;
-        }
-
         let mut current_jobs = self.imp().current_jobs.borrow_mut();
         for x in current_jobs.iter() {
             match x.kill() {
@@ -1683,6 +1681,7 @@ impl AppWindow {
         dialog.present();
 
         self.imp().stack.set_visible_child_name("stack_convert");
+        self.convert_clean(temp_dir_path);
     }
 
     fn convert_success(&self, temp_dir_path: String, path: String, save_format: OutputType) {

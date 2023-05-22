@@ -44,7 +44,20 @@ impl FileType {
     pub fn is_input(&self) -> bool {
         matches!(
             self,
-            Png | Jpg | Webp | Svg | Heif | Heic | Bmp | Avif | Jxl | Tiff | Pdf | Gif | Ico | Jpeg | Dds
+            Png | Jpg
+                | Webp
+                | Svg
+                | Heif
+                | Heic
+                | Bmp
+                | Avif
+                | Jxl
+                | Tiff
+                | Pdf
+                | Gif
+                | Ico
+                | Jpeg
+                | Dds
         )
     }
 
@@ -79,21 +92,21 @@ impl FileType {
 
     pub fn iterator() -> Iter<'static, Self> {
         static FILETYPES: [FileType; 15] = [
-            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds
+            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds,
         ];
         FILETYPES.iter()
     }
 
     pub fn input_formats() -> Iter<'static, Self> {
         static FILETYPES: [FileType; 15] = [
-            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds
+            Png, Jpg, Jpeg, Webp, Svg, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds,
         ];
         FILETYPES.iter()
     }
 
     pub fn output_formats(hidden: bool) -> Iter<'static, Self> {
         static ALL_FILETYPES: [FileType; 13] = [
-            Png, Jpg, Webp, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds
+            Png, Jpg, Webp, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds,
         ];
         static POPULAR_FILETYPES: [FileType; 7] = [Png, Jpg, Webp, Heif, Pdf, Gif, Ico];
         match hidden {

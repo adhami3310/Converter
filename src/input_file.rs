@@ -116,8 +116,8 @@ impl InputFile {
         };
         extension.map(|extension| {
             glib::Object::builder::<Self>()
-                .property("path", &path.to_str().unwrap())
-                .property("kind", &extension)
+                .property("path", path.to_str().unwrap())
+                .property("kind", extension)
                 .property("is-behind-sandbox", is_behind_sandbox)
                 .build()
         })

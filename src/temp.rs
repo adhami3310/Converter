@@ -5,11 +5,7 @@ use crate::magick::JobFile;
 
 pub async fn create_temporary_dir() -> std::io::Result<TempDir> {
     if ashpd::is_sandboxed().await {
-        let prefix = format!(
-            "{}/app/{}",
-            var("XDG_RUNTIME_DIR").unwrap(),
-            var("FLATPAK_ID").unwrap()
-        );
+        let prefix = format!("{}/tmp", var("XDG_CACHE_HOME").unwrap());
         Ok(tempdir_in(prefix)?)
     } else {
         Ok(tempdir()?)
