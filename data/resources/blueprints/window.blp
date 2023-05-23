@@ -164,15 +164,15 @@ template $AppWindow : $AdwApplicationWindow {
                 }
 
                 $AdwPreferencesGroup {
-                  title: _("Options");
 
                   $AdwComboRow output_filetype {
-                    title: _("Convert to");
+                    title: _("Export Format");
                     model: StringList supported_output_filetypes {};
                   }
 
                   $AdwComboRow output_compression {
-                    title: _("Output as");
+                    title: _("Save Method");
+                    subtitle: _("Compress images or use a directory");
                     model: StringList supported_compression_filetypes {};
                   }
 
@@ -263,7 +263,7 @@ template $AppWindow : $AdwApplicationWindow {
                       title: _("Size");
                       model:
                       StringList resize_types {
-                        strings [_("Percentage"),_("Exact Pixels"),_("Minimum Pixels"),_("Maximum Pixels"), _("Ratio")]
+                        strings [_("Percentage"),_("Exact Pixels")]
                       }
                       ;
                     }
@@ -293,26 +293,26 @@ template $AppWindow : $AdwApplicationWindow {
                         }
                       }
                     }
-                    $AdwActionRow resize_minmax_width_row {
-                      title: _("Width");
-                      $AdwBin {
-                        Entry resize_minmax_width_value {
-                          styles [
-                            'text-in-row'
-                          ]
-                        }
-                      }
-                    }
-                    $AdwActionRow resize_minmax_height_row {
-                      title: _("Height");
-                      $AdwBin {
-                        Entry resize_minmax_height_value {
-                          styles [
-                            'text-in-row'
-                          ]
-                        }
-                      }
-                    }
+                    // $AdwActionRow resize_minmax_width_row {
+                    //   title: _("Width");
+                    //   $AdwBin {
+                    //     Entry resize_minmax_width_value {
+                    //       styles [
+                    //         'text-in-row'
+                    //       ]
+                    //     }
+                    //   }
+                    // }
+                    // $AdwActionRow resize_minmax_height_row {
+                    //   title: _("Height");
+                    //   $AdwBin {
+                    //     Entry resize_minmax_height_value {
+                    //       styles [
+                    //         'text-in-row'
+                    //       ]
+                    //     }
+                    //   }
+                    // }
                     $AdwActionRow resize_scale_width_row {
                       title: _("Width Percentage Scale");
                       $AdwBin {
@@ -333,26 +333,26 @@ template $AppWindow : $AdwApplicationWindow {
                         }
                       }
                     }
-                    $AdwActionRow ratio_width_row {
-                      title: _("Ratio Width");
-                      $AdwBin {
-                        Entry ratio_width_value {
-                          styles [
-                            'text-in-row'
-                          ]
-                        }
-                      }
-                    }
-                    $AdwActionRow ratio_height_row {
-                      title: _("Ratio Height");
-                      $AdwBin {
-                        Entry ratio_height_value {
-                          styles [
-                            'text-in-row'
-                          ]
-                        }
-                      }
-                    }
+                    // $AdwActionRow ratio_width_row {
+                    //   title: _("Ratio Width");
+                    //   $AdwBin {
+                    //     Entry ratio_width_value {
+                    //       styles [
+                    //         'text-in-row'
+                    //       ]
+                    //     }
+                    //   }
+                    // }
+                    // $AdwActionRow ratio_height_row {
+                    //   title: _("Ratio Height");
+                    //   $AdwBin {
+                    //     Entry ratio_height_value {
+                    //       styles [
+                    //         'text-in-row'
+                    //       ]
+                    //     }
+                    //   }
+                    // }
                   }
                   styles ["unfloating"]
                 }

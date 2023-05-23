@@ -41,18 +41,18 @@ pub enum ResizeArgument {
         width: Option<usize>,
         height: Option<usize>,
     },
-    MinPixels {
-        width: usize,
-        height: usize,
-    },
-    MaxPixels {
-        width: usize,
-        height: usize,
-    },
-    Ratio {
-        width: usize,
-        height: usize,
-    },
+    // MinPixels {
+    //     width: usize,
+    //     height: usize,
+    // },
+    // MaxPixels {
+    //     width: usize,
+    //     height: usize,
+    // },
+    // Ratio {
+    //     width: usize,
+    //     height: usize,
+    // },
 }
 
 impl MagickArgument for SizeArgument {
@@ -94,15 +94,15 @@ impl MagickArgument for ResizeArgument {
             } => {
                 vec!["-resize".to_owned(), format!("x{height}")]
             }
-            ResizeArgument::MinPixels { width, height } => {
-                vec!["-resize".to_owned(), format!("{width}x{height}")]
-            }
-            ResizeArgument::MaxPixels { width, height } => {
-                vec!["-resize".to_owned(), format!("{width}x{height}^")]
-            }
-            ResizeArgument::Ratio { width, height } => {
-                vec!["-resize".to_owned(), format!("{width}:{height}")]
-            }
+            // ResizeArgument::MinPixels { width, height } => {
+            //     vec!["-resize".to_owned(), format!("{width}x{height}")]
+            // }
+            // ResizeArgument::MaxPixels { width, height } => {
+            //     vec!["-resize".to_owned(), format!("{width}x{height}^")]
+            // }
+            // ResizeArgument::Ratio { width, height } => {
+            //     vec!["-resize".to_owned(), format!("{width}:{height}")]
+            // }
             _ => vec![],
         }
     }

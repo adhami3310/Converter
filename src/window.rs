@@ -69,9 +69,9 @@ impl ResizeFilter {
 enum ResizeType {
     Percentage,
     ExactPixels,
-    MinPixels,
-    MaxPixels,
-    Ratio,
+    // MinPixels,
+    // MaxPixels,
+    // Ratio,
 }
 
 impl ResizeType {
@@ -79,9 +79,9 @@ impl ResizeType {
         match index {
             0 => Some(ResizeType::Percentage),
             1 => Some(ResizeType::ExactPixels),
-            2 => Some(ResizeType::MinPixels),
-            3 => Some(ResizeType::MaxPixels),
-            4 => Some(ResizeType::Ratio),
+            // 2 => Some(ResizeType::MinPixels),
+            // 3 => Some(ResizeType::MaxPixels),
+            // 4 => Some(ResizeType::Ratio),
             _ => None,
         }
     }
@@ -102,8 +102,6 @@ mod imp {
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[template_child]
         pub drag_overlay: TemplateChild<DragOverlay>,
-        #[template_child]
-        pub back: TemplateChild<gtk::Button>,
         #[template_child]
         pub stack: TemplateChild<gtk::Stack>,
         #[template_child]
@@ -150,10 +148,10 @@ mod imp {
         pub resize_width_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub resize_height_value: TemplateChild<gtk::Entry>,
-        #[template_child]
-        pub resize_minmax_width_value: TemplateChild<gtk::Entry>,
-        #[template_child]
-        pub resize_minmax_height_value: TemplateChild<gtk::Entry>,
+        // #[template_child]
+        // pub resize_minmax_width_value: TemplateChild<gtk::Entry>,
+        // #[template_child]
+        // pub resize_minmax_height_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub resize_scale_width_value: TemplateChild<gtk::Entry>,
         #[template_child]
@@ -164,10 +162,10 @@ mod imp {
         pub svg_size_height_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub svg_size_type: TemplateChild<adw::ComboRow>,
-        #[template_child]
-        pub ratio_width_value: TemplateChild<gtk::Entry>,
-        #[template_child]
-        pub ratio_height_value: TemplateChild<gtk::Entry>,
+        // #[template_child]
+        // pub ratio_width_value: TemplateChild<gtk::Entry>,
+        // #[template_child]
+        // pub ratio_height_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub dpi_value: TemplateChild<gtk::Entry>,
 
@@ -187,18 +185,18 @@ mod imp {
         pub resize_width_row: TemplateChild<adw::ComboRow>,
         #[template_child]
         pub resize_height_row: TemplateChild<adw::ComboRow>,
-        #[template_child]
-        pub resize_minmax_width_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub resize_minmax_height_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub resize_minmax_width_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub resize_minmax_height_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub resize_scale_width_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub resize_scale_height_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub ratio_width_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub ratio_height_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub ratio_width_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub ratio_height_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub dpi_row: TemplateChild<adw::ActionRow>,
 
@@ -227,11 +225,9 @@ mod imp {
             Self {
                 toast_overlay: TemplateChild::default(),
                 drag_overlay: TemplateChild::default(),
-                back: TemplateChild::default(),
                 stack: TemplateChild::default(),
                 open_button: TemplateChild::default(),
                 convert_button: TemplateChild::default(),
-                // options_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
                 loading_spinner: TemplateChild::default(),
                 image: TemplateChild::default(),
@@ -250,15 +246,15 @@ mod imp {
                 resize_type: TemplateChild::default(),
                 resize_width_value: TemplateChild::default(),
                 resize_height_value: TemplateChild::default(),
-                resize_minmax_width_value: TemplateChild::default(),
-                resize_minmax_height_value: TemplateChild::default(),
+                // resize_minmax_width_value: TemplateChild::default(),
+                // resize_minmax_height_value: TemplateChild::default(),
                 resize_scale_width_value: TemplateChild::default(),
                 resize_scale_height_value: TemplateChild::default(),
                 svg_size_height_value: TemplateChild::default(),
                 svg_size_width_value: TemplateChild::default(),
                 svg_size_type: TemplateChild::default(),
-                ratio_height_value: TemplateChild::default(),
-                ratio_width_value: TemplateChild::default(),
+                // ratio_height_value: TemplateChild::default(),
+                // ratio_width_value: TemplateChild::default(),
                 dpi_value: TemplateChild::default(),
                 quality_row: TemplateChild::default(),
                 bgcolor_row: TemplateChild::default(),
@@ -268,18 +264,18 @@ mod imp {
                 svg_size_height_row: TemplateChild::default(),
                 resize_width_row: TemplateChild::default(),
                 resize_height_row: TemplateChild::default(),
-                resize_minmax_width_row: TemplateChild::default(),
-                resize_minmax_height_row: TemplateChild::default(),
+                // resize_minmax_width_row: TemplateChild::default(),
+                // resize_minmax_height_row: TemplateChild::default(),
                 resize_scale_width_row: TemplateChild::default(),
                 resize_scale_height_row: TemplateChild::default(),
-                ratio_width_row: TemplateChild::default(),
-                ratio_height_row: TemplateChild::default(),
+                // ratio_width_row: TemplateChild::default(),
+                // ratio_height_row: TemplateChild::default(),
                 dpi_row: TemplateChild::default(),
                 provider: gtk::CssProvider::new(),
                 input_file_store: gio::ListStore::new(InputFile::static_type()),
 
                 settings: gio::Settings::new(APP_ID),
-                is_canceled: std::sync::Arc::new(AtomicBool::new(false)),
+                is_canceled: std::sync::Arc::new(AtomicBool::new(true)),
                 current_jobs: RefCell::new(Vec::new()),
             }
         }
@@ -300,8 +296,13 @@ mod imp {
                 dbg!("Failed to save window state, {}", &err);
             }
 
-            // Pass close request on to the parent
-            self.parent_close_request()
+            if !self.is_canceled.load(std::sync::atomic::Ordering::SeqCst) {
+                self.obj().close_dialog();
+                glib::signal::Inhibit(true)
+            } else {
+                // Pass close request on to the parent
+                self.parent_close_request()
+            }
         }
     }
 
@@ -349,16 +350,6 @@ impl AppWindow {
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.convert_cancel();
             }));
-        // imp.options_button
-        //     .connect_clicked(clone!(@weak self as this => move |_| {
-        //         this.imp().back.set_visible(true);
-        //         this.imp().stack.set_visible_child_name("options_page");
-        //     }));
-        imp.back
-            .connect_clicked(clone!(@weak self as this => move |_| {
-                this.imp().back.set_visible(false);
-                this.imp().stack.set_visible_child_name("stack_convert");
-            }));
         imp.output_filetype
             .connect_selected_notify(clone!(@weak self as this => move |_| {
                 this.update_advanced_options();
@@ -395,6 +386,41 @@ impl AppWindow {
         // if let Some(display) = gtk::gdk::Display::default() {
         //     gtk::StyleContext::add_provider_for_display(&display, &imp.provider, 400);
         // }
+    }
+
+    fn close_dialog(&self) {
+        let stop_converting_dialog = adw::MessageDialog::new(
+            Some(self),
+            Some(&gettext("Stop converting?")),
+            Some(&gettext("You will lose all progress.")),
+        );
+
+        stop_converting_dialog.add_response("cancel", &gettext("_Cancel"));
+        stop_converting_dialog.add_response("stop", &gettext("_Stop"));
+        stop_converting_dialog
+            .set_response_appearance("stop", adw::ResponseAppearance::Destructive);
+        stop_converting_dialog.connect_response(
+            None,
+            clone!(@weak self as this => move |_, response_id| {
+                if response_id == "stop" {
+                    this.imp()
+                        .is_canceled
+                        .store(true, std::sync::atomic::Ordering::SeqCst);
+                    let mut current_jobs = this.imp().current_jobs.borrow_mut();
+                    for x in current_jobs.iter() {
+                        match x.kill() {
+                            Ok(_) => {}
+                            Err(_) => {
+                                x.wait().ok();
+                            }
+                        }
+                    }
+                    current_jobs.clear();
+                    this.close();
+                }
+            }),
+        );
+        stop_converting_dialog.present();
     }
 
     fn save_window_size(&self) -> Result<(), glib::BoolError> {
@@ -553,7 +579,6 @@ impl AppWindow {
     }
 
     fn open_load(&self) {
-        self.imp().back.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_loading");
         self.imp().loading_spinner.start();
     }
@@ -705,17 +730,17 @@ impl AppWindow {
         self.load_options();
         imp.resize_scale_height_value.set_text("100");
         imp.resize_scale_width_value.set_text("100");
-        imp.ratio_width_value.set_text("1");
-        imp.ratio_height_value.set_text("1");
+        // imp.ratio_width_value.set_text("1");
+        // imp.ratio_height_value.set_text("1");
         imp.resize_width_value.set_text(&image_width.to_string());
         imp.resize_height_value.set_text(&image_height.to_string());
         imp.svg_size_width_value.set_text(&image_width.to_string());
         imp.svg_size_height_value
             .set_text(&image_height.to_string());
-        imp.resize_minmax_width_value
-            .set_text(&image_width.to_string());
-        imp.resize_minmax_height_value
-            .set_text(&image_height.to_string());
+        // imp.resize_minmax_width_value
+        //     .set_text(&image_width.to_string());
+        // imp.resize_minmax_height_value
+        //     .set_text(&image_height.to_string());
         self.update_output_options();
         self.update_advanced_options();
 
@@ -883,10 +908,10 @@ impl AppWindow {
         imp.resize_width_row.set_visible(false);
         imp.resize_scale_height_row.set_visible(false);
         imp.resize_scale_width_row.set_visible(false);
-        imp.ratio_height_row.set_visible(false);
-        imp.ratio_width_row.set_visible(false);
-        imp.resize_minmax_height_row.set_visible(false);
-        imp.resize_minmax_width_row.set_visible(false);
+        // imp.ratio_height_row.set_visible(false);
+        // imp.ratio_width_row.set_visible(false);
+        // imp.resize_minmax_height_row.set_visible(false);
+        // imp.resize_minmax_width_row.set_visible(false);
 
         match resize_type {
             ResizeType::Percentage => {
@@ -907,14 +932,14 @@ impl AppWindow {
                     _ => unreachable!("Unexpected resize width value"),
                 }
             }
-            ResizeType::MaxPixels | ResizeType::MinPixels => {
-                imp.resize_minmax_height_row.set_visible(true);
-                imp.resize_minmax_width_row.set_visible(true);
-            }
-            ResizeType::Ratio => {
-                imp.ratio_height_row.set_visible(true);
-                imp.ratio_width_row.set_visible(true);
-            }
+            // ResizeType::MaxPixels | ResizeType::MinPixels => {
+            //     imp.resize_minmax_height_row.set_visible(true);
+            //     imp.resize_minmax_width_row.set_visible(true);
+            // }
+            // ResizeType::Ratio => {
+            //     imp.ratio_height_row.set_visible(true);
+            //     imp.ratio_width_row.set_visible(true);
+            // }
         }
     }
 
@@ -1106,38 +1131,38 @@ impl AppWindow {
                     _ => None,
                 },
             }),
-            ResizeType::MaxPixels => Some(ResizeArgument::MaxPixels {
-                width: imp
-                    .resize_minmax_width_value
-                    .text()
-                    .to_string()
-                    .parse()
-                    .unwrap(),
-                height: imp
-                    .resize_minmax_height_value
-                    .text()
-                    .to_string()
-                    .parse()
-                    .unwrap(),
-            }),
-            ResizeType::MinPixels => Some(ResizeArgument::MinPixels {
-                width: imp
-                    .resize_minmax_width_value
-                    .text()
-                    .to_string()
-                    .parse()
-                    .unwrap(),
-                height: imp
-                    .resize_minmax_height_value
-                    .text()
-                    .to_string()
-                    .parse()
-                    .unwrap(),
-            }),
-            ResizeType::Ratio => Some(ResizeArgument::Ratio {
-                width: imp.ratio_width_value.text().to_string().parse().unwrap(),
-                height: imp.ratio_height_value.text().to_string().parse().unwrap(),
-            }),
+            // ResizeType::MaxPixels => Some(ResizeArgument::MaxPixels {
+            //     width: imp
+            //         .resize_minmax_width_value
+            //         .text()
+            //         .to_string()
+            //         .parse()
+            //         .unwrap(),
+            //     height: imp
+            //         .resize_minmax_height_value
+            //         .text()
+            //         .to_string()
+            //         .parse()
+            //         .unwrap(),
+            // }),
+            // ResizeType::MinPixels => Some(ResizeArgument::MinPixels {
+            //     width: imp
+            //         .resize_minmax_width_value
+            //         .text()
+            //         .to_string()
+            //         .parse()
+            //         .unwrap(),
+            //     height: imp
+            //         .resize_minmax_height_value
+            //         .text()
+            //         .to_string()
+            //         .parse()
+            //         .unwrap(),
+            // }),
+            // ResizeType::Ratio => Some(ResizeArgument::Ratio {
+            //     width: imp.ratio_width_value.text().to_string().parse().unwrap(),
+            //     height: imp.ratio_height_value.text().to_string().parse().unwrap(),
+            // }),
         }
     }
 
@@ -1465,7 +1490,6 @@ impl AppWindow {
                     }
                     ArcOrOptionError::OptionError(e) => {
                         if let Some(e) = e {
-                            stop_flag_r.store(true, std::sync::atomic::Ordering::SeqCst);
                             this.convert_failed(e, dir_path.clone());
                             return Continue(false);
                         }
@@ -1631,7 +1655,18 @@ impl AppWindow {
     }
 
     fn convert_failed(&self, error_message: String, temp_dir_path: String) {
+        self.convert_clean(temp_dir_path);
+        if self
+            .imp()
+            .is_canceled
+            .load(std::sync::atomic::Ordering::SeqCst)
+        {
+            return;
+        }
         let mut current_jobs = self.imp().current_jobs.borrow_mut();
+        self.imp()
+            .is_canceled
+            .store(true, std::sync::atomic::Ordering::SeqCst);
         for x in current_jobs.iter() {
             match x.kill() {
                 Ok(_) => {}
@@ -1681,11 +1716,13 @@ impl AppWindow {
         dialog.present();
 
         self.imp().stack.set_visible_child_name("stack_convert");
-        self.convert_clean(temp_dir_path);
     }
 
     fn convert_success(&self, temp_dir_path: String, path: String, save_format: OutputType) {
         self.convert_clean(temp_dir_path);
+        self.imp()
+            .is_canceled
+            .store(true, std::sync::atomic::Ordering::SeqCst);
         let toast = adw::Toast::new(&gettext("Image converted"));
         toast.set_button_label(Some(&gettext("Open")));
         toast.connect_button_clicked(clone!(@weak self as this => move |_| {
