@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-21 01:28-0400\n"
+"POT-Creation-Date: 2023-05-23 18:27-0400\n"
 "PO-Revision-Date: 2023-02-04 17:50+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -43,9 +43,41 @@ msgstr ""
 "image;convert;converting;processing;resim;görüntü;resim;dönüştür;dönüştürme;"
 "işleme;"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:6
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:27
 msgid "Shows less popular datatypes in the menu"
 msgstr "Daha az gözde veri türlerini menüde göster"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:31
+#, fuzzy
+msgid "Window width"
+msgstr "En/Boy Oranı Genişliği"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:35
+#, fuzzy
+msgid "Image quality"
+msgstr "Resim Türü"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:39
+msgid "Image density per inch"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:43
+#, fuzzy
+msgid "Window height"
+msgstr "En/Boy Oranı Yüksekliği"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:47
+msgid "Window maximized state"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:51
+msgid "Output format"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:55
+#, fuzzy
+msgid "Compression format"
+msgstr "Sıkıştır"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -72,16 +104,15 @@ msgid "processing"
 msgstr "işleniyor"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
-msgid "Overview"
-msgstr "Genel Görünüm"
+msgid "Converting sample image from PNG to WEBP"
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
-#, fuzzy
-msgid "More options"
-msgstr "Daha Fazla Seçenek"
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:68
+msgid "Fix variety of bugs and rework UI."
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:72
-msgid "Fix various bugs."
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Rust rewrite."
 msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:11
@@ -118,207 +149,151 @@ msgstr "“Resim Aç…” düğmesine tıklayın ya da resmi buraya sürükleyi
 msgid "_Open Images…"
 msgstr "Resim _Aç…"
 
-#: data/resources/blueprints/window.blp:111
-msgid "Properties"
-msgstr "Özellikler"
-
-#: data/resources/blueprints/window.blp:114
-msgid "Image Type"
-msgstr "Resim Türü"
-
-#: data/resources/blueprints/window.blp:121
-msgid "Image Size"
-msgstr "Resim Boyutu"
-
-#: data/resources/blueprints/window.blp:130
-msgid "Options"
-msgstr "Seçenekler"
-
-#: data/resources/blueprints/window.blp:133
-msgid "Convert to"
-msgstr "Şuna Dönüştür"
-
-#: data/resources/blueprints/window.blp:138
-msgid "Output as"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:151
-msgid "More Options"
-msgstr "Daha Fazla Seçenek"
-
-#: data/resources/blueprints/window.blp:160
+#: data/resources/blueprints/window.blp:126
 msgid "_Convert"
 msgstr "D_önüştür"
 
-#: data/resources/blueprints/window.blp:180
+#: data/resources/blueprints/window.blp:148
+msgid "Properties"
+msgstr "Özellikler"
+
+#: data/resources/blueprints/window.blp:151
+msgid "Image Type"
+msgstr "Resim Türü"
+
+#: data/resources/blueprints/window.blp:158
+msgid "Image Size"
+msgstr "Resim Boyutu"
+
+#: data/resources/blueprints/window.blp:169
+msgid "Export Format"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:174
+msgid "Save Method"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:175
+msgid "Compress images or use a directory"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:183
+msgid "Quality"
+msgstr "Kalite"
+
+#: data/resources/blueprints/window.blp:200
+msgid "Background Color"
+msgstr "Arka Plan Rengi"
+
+#: data/resources/blueprints/window.blp:208
+msgid "DPI"
+msgstr "DPI"
+
+#: data/resources/blueprints/window.blp:252
+msgid "Resize"
+msgstr "Yeniden Boyutlandır"
+
+#: data/resources/blueprints/window.blp:260
+#: data/resources/blueprints/window.blp:269
+msgid "Width"
+msgstr "Genişlik"
+
+#: data/resources/blueprints/window.blp:277
+#, fuzzy
+msgid "Preserve aspect ratio"
+msgstr "En/Boy Oranını Koru"
+
+#: data/resources/blueprints/window.blp:283
+#: data/resources/blueprints/window.blp:291
+msgid "Height"
+msgstr "Yükseklik"
+
+#: data/resources/blueprints/window.blp:305
+msgid "Percentage"
+msgstr "Yüzde"
+
+#: data/resources/blueprints/window.blp:305
+msgid "Exact Pixels"
+msgstr "Tam Pikseller"
+
+#: data/resources/blueprints/window.blp:313
+msgid "Algorithm"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Point"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Quadratic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Cubic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Mitchell"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Gaussian"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Lanczos"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:396
 msgid "Could not Load Image"
 msgstr "Resim Yüklenemedi"
 
-#: data/resources/blueprints/window.blp:181
+#: data/resources/blueprints/window.blp:397
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Bu resim bozuk olabilir veya desteklenmeyen bir dosya biçimi kullanıyor "
 "olabilir."
 
-#: data/resources/blueprints/window.blp:196
-msgid "Quality"
-msgstr "Kalite"
-
-#: data/resources/blueprints/window.blp:213
-msgid "Background Color"
-msgstr "Arka Plan Rengi"
-
-#: data/resources/blueprints/window.blp:221
-msgid "DPI"
-msgstr "DPI"
-
-#: data/resources/blueprints/window.blp:232
-msgid "Scale Preserving Ratio"
-msgstr "En/Boy Oranını Koruyarak Ölçekle"
-
-#: data/resources/blueprints/window.blp:235
-msgid "Dimension"
-msgstr "Boyut"
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:284
-#: data/resources/blueprints/window.blp:310
-msgid "Width"
-msgstr "Genişlik"
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:299
-#: data/resources/blueprints/window.blp:320
-msgid "Height"
-msgstr "Yükseklik"
-
-#: data/resources/blueprints/window.blp:243
-msgid "Width in Pixels"
-msgstr "Piksel Cinsinden Genişlik"
-
-#: data/resources/blueprints/window.blp:253
-msgid "Height in Pixels"
-msgstr "Piksel Cinsinden Yükseklik"
-
-#: data/resources/blueprints/window.blp:265
-msgid "Resize"
-msgstr "Yeniden Boyutlandır"
-
-#: data/resources/blueprints/window.blp:268
-msgid "Filter"
-msgstr "Süz"
-
-#: data/resources/blueprints/window.blp:271
-msgid "Point"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Quadratic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Cubic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Mitchell"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Gaussian"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Lanczos"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:276
-msgid "Size"
-msgstr "Boyut"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Percentage"
-msgstr "Yüzde"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Exact Pixels"
-msgstr "Tam Pikseller"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Minimum Pixels"
-msgstr "Asgari Piksel"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Maximum Pixels"
-msgstr "Azami Piksel"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Ratio"
-msgstr "En/Boy Oranı"
-
-#: data/resources/blueprints/window.blp:287
-msgid "Pixels"
-msgstr "Piksel"
-
-#: data/resources/blueprints/window.blp:287
-msgid "Preserve Ratio"
-msgstr "En/Boy Oranını Koru"
-
-#: data/resources/blueprints/window.blp:330
-msgid "Width Percentage Scale"
-msgstr "Genişlik Yüzde Ölçeği"
-
-#: data/resources/blueprints/window.blp:340
-msgid "Height Percentage Scale"
-msgstr "Yükseklik Yüzde Ölçeği"
-
-#: data/resources/blueprints/window.blp:350
-msgid "Ratio Width"
-msgstr "En/Boy Oranı Genişliği"
-
-#: data/resources/blueprints/window.blp:360
-msgid "Ratio Height"
-msgstr "En/Boy Oranı Yüksekliği"
-
-#: data/resources/blueprints/window.blp:380
+#: data/resources/blueprints/window.blp:420
 msgid "Converting…"
 msgstr "Dönüştürülüyor…"
 
-#: data/resources/blueprints/window.blp:381
+#: data/resources/blueprints/window.blp:421
 msgid "This could take a while."
 msgstr "Biraz uzun sürebilir."
 
-#: data/resources/blueprints/window.blp:391 src/window.rs:1052
+#: data/resources/blueprints/window.blp:431 src/window.rs:1299
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
-#: data/resources/blueprints/window.blp:397 src/window.rs:1624
+#: data/resources/blueprints/window.blp:437 src/window.rs:455
+#: src/window.rs:1886
 msgid "_Cancel"
 msgstr "_İptal Et"
 
-#: data/resources/blueprints/window.blp:426
+#: data/resources/blueprints/window.blp:466
 #, fuzzy
 msgid "Open Files…"
 msgstr "Dosya Aç…"
 
-#: data/resources/blueprints/window.blp:431
+#: data/resources/blueprints/window.blp:471
 #, fuzzy
 msgid "Paste Image…"
 msgstr "Resim _Aç…"
 
-#: data/resources/blueprints/window.blp:438
+#: data/resources/blueprints/window.blp:478
 msgid "Show Less Popular Datatypes"
 msgstr "Daha Az Gözde Veri Türlerini Göster"
 
-#: data/resources/blueprints/window.blp:450
+#: data/resources/blueprints/window.blp:490
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: data/resources/blueprints/window.blp:455
+#: data/resources/blueprints/window.blp:495
 msgid "About Converter"
 msgstr "Dönüştürücü Hakkında"
 
-#: src/magick.rs:272
+#: src/magick.rs:287
 msgid "Unknown IO error happened"
 msgstr ""
 
@@ -330,58 +305,110 @@ msgstr "Kod ve Tasarımın Ödünç Alındığı Kaynak"
 msgid "Sample Image from"
 msgstr "Örnek Resim kaynağı"
 
-#: src/window.rs:398
+#: src/window.rs:451 src/window.rs:1881
+msgid "Stop converting?"
+msgstr "Dönüştürme durdurulsun mu?"
+
+#: src/window.rs:452 src/window.rs:1882
+msgid "You will lose all progress."
+msgstr "Tüm ilerleme kaybolacak."
+
+#: src/window.rs:456 src/window.rs:1886
+msgid "_Stop"
+msgstr "_Durdur"
+
+#: src/window.rs:578
 msgid "Collecting files"
 msgstr ""
 
-#: src/window.rs:413
+#: src/window.rs:593
 msgid "Unable to access dropped files"
 msgstr ""
 
-#: src/window.rs:476
+#: src/window.rs:655
 #, fuzzy
 msgid "Pasted Image"
 msgstr "Resim Aç"
 
-#: src/window.rs:1548
+#: src/window.rs:1807
 msgid "Error while processing"
 msgstr "İşleme sırasında hata oluştu"
 
-#: src/window.rs:1569
+#: src/window.rs:1828
 msgid "_Copy to clipboard"
 msgstr "Panoya _kopyala"
 
-#: src/window.rs:1570
+#: src/window.rs:1829
 msgid "_Dismiss"
 msgstr "_Vazgeç"
 
-#: src/window.rs:1578
+#: src/window.rs:1837
 msgid "Error copied to clipboard"
 msgstr "Hata panoya kopyalandı"
 
-#: src/window.rs:1590
+#: src/window.rs:1852
 msgid "Image converted"
 msgstr "Resim dönüştürüldü"
 
-#: src/window.rs:1591
+#: src/window.rs:1853
 msgid "Open"
 msgstr "Aç"
 
-#: src/window.rs:1619
-msgid "Stop converting?"
-msgstr "Dönüştürme durdurulsun mu?"
-
-#: src/window.rs:1620
-msgid "You will lose all progress."
-msgstr "Tüm ilerleme kaybolacak."
-
-#: src/window.rs:1624
-msgid "_Stop"
-msgstr "_Durdur"
-
-#: src/window.rs:1646
+#: src/window.rs:1908
 msgid "Converting Cancelled"
 msgstr "Dönüştürme İptal Edildi"
+
+#~ msgid "Overview"
+#~ msgstr "Genel Görünüm"
+
+#, fuzzy
+#~ msgid "More options"
+#~ msgstr "Daha Fazla Seçenek"
+
+#~ msgid "Options"
+#~ msgstr "Seçenekler"
+
+#~ msgid "Convert to"
+#~ msgstr "Şuna Dönüştür"
+
+#~ msgid "More Options"
+#~ msgstr "Daha Fazla Seçenek"
+
+#~ msgid "Scale Preserving Ratio"
+#~ msgstr "En/Boy Oranını Koruyarak Ölçekle"
+
+#~ msgid "Dimension"
+#~ msgstr "Boyut"
+
+#~ msgid "Width in Pixels"
+#~ msgstr "Piksel Cinsinden Genişlik"
+
+#~ msgid "Height in Pixels"
+#~ msgstr "Piksel Cinsinden Yükseklik"
+
+#~ msgid "Filter"
+#~ msgstr "Süz"
+
+#~ msgid "Size"
+#~ msgstr "Boyut"
+
+#~ msgid "Minimum Pixels"
+#~ msgstr "Asgari Piksel"
+
+#~ msgid "Maximum Pixels"
+#~ msgstr "Azami Piksel"
+
+#~ msgid "Ratio"
+#~ msgstr "En/Boy Oranı"
+
+#~ msgid "Pixels"
+#~ msgstr "Piksel"
+
+#~ msgid "Width Percentage Scale"
+#~ msgstr "Genişlik Yüzde Ölçeği"
+
+#~ msgid "Height Percentage Scale"
+#~ msgstr "Yükseklik Yüzde Ölçeği"
 
 #~ msgid "Convert"
 #~ msgstr "Dönüştür"
@@ -418,9 +445,6 @@ msgstr "Dönüştürme İptal Edildi"
 
 #~ msgid "Select output location"
 #~ msgstr "Çıktı konumu seç"
-
-#~ msgid "Compress as"
-#~ msgstr "Sıkıştır"
 
 #~ msgid ""
 #~ "Jürgen Benvenuti <gastornis@posteo.org>\n"

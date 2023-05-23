@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-21 01:28-0400\n"
+"POT-Creation-Date: 2023-05-23 18:27-0400\n"
 "PO-Revision-Date: 2023-01-06 11:05+0100\n"
 "Last-Translator: Albano Battistella\n"
 "Language-Team: italian\n"
@@ -43,9 +43,41 @@ msgstr ""
 "image;convert;converting;processing;immagine;converti;conversione;"
 "elaborazione"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:6
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:27
 msgid "Shows less popular datatypes in the menu"
 msgstr "Mostra tipi di immagini meno popolari nel menu"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:31
+#, fuzzy
+msgid "Window width"
+msgstr "Fattore larghezza"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:35
+#, fuzzy
+msgid "Image quality"
+msgstr "Tipo di immagine"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:39
+msgid "Image density per inch"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:43
+#, fuzzy
+msgid "Window height"
+msgstr "Fattore altezza"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:47
+msgid "Window maximized state"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:51
+msgid "Output format"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:55
+#, fuzzy
+msgid "Compression format"
+msgstr "Comprimi come"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -72,16 +104,15 @@ msgid "processing"
 msgstr "elaborazione"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
-msgid "Overview"
-msgstr "Anteprima"
+msgid "Converting sample image from PNG to WEBP"
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
-#, fuzzy
-msgid "More options"
-msgstr "Altre opzioni"
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:68
+msgid "Fix variety of bugs and rework UI."
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:72
-msgid "Fix various bugs."
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Rust rewrite."
 msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:11
@@ -118,206 +149,151 @@ msgstr "Fai clic su “Apri immagine...” o trascina un'immagine qui."
 msgid "_Open Images…"
 msgstr "Apri immagine…"
 
-#: data/resources/blueprints/window.blp:111
-msgid "Properties"
-msgstr "Proprietà"
-
-#: data/resources/blueprints/window.blp:114
-msgid "Image Type"
-msgstr "Tipo di immagine"
-
-#: data/resources/blueprints/window.blp:121
-msgid "Image Size"
-msgstr "Dimensione dell'immagine"
-
-#: data/resources/blueprints/window.blp:130
-msgid "Options"
-msgstr "Opzioni"
-
-#: data/resources/blueprints/window.blp:133
-msgid "Convert to"
-msgstr "Converti in"
-
-#: data/resources/blueprints/window.blp:138
-msgid "Output as"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:151
-msgid "More Options"
-msgstr "Altre opzioni"
-
-#: data/resources/blueprints/window.blp:160
+#: data/resources/blueprints/window.blp:126
 msgid "_Convert"
 msgstr "Converti"
 
-#: data/resources/blueprints/window.blp:180
+#: data/resources/blueprints/window.blp:148
+msgid "Properties"
+msgstr "Proprietà"
+
+#: data/resources/blueprints/window.blp:151
+msgid "Image Type"
+msgstr "Tipo di immagine"
+
+#: data/resources/blueprints/window.blp:158
+msgid "Image Size"
+msgstr "Dimensione dell'immagine"
+
+#: data/resources/blueprints/window.blp:169
+msgid "Export Format"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:174
+msgid "Save Method"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:175
+msgid "Compress images or use a directory"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:183
+msgid "Quality"
+msgstr "Qualità"
+
+#: data/resources/blueprints/window.blp:200
+msgid "Background Color"
+msgstr "Colore di sfondo"
+
+#: data/resources/blueprints/window.blp:208
+msgid "DPI"
+msgstr "DPI"
+
+#: data/resources/blueprints/window.blp:252
+msgid "Resize"
+msgstr "Ridimensiona"
+
+#: data/resources/blueprints/window.blp:260
+#: data/resources/blueprints/window.blp:269
+msgid "Width"
+msgstr "Larghezza"
+
+#: data/resources/blueprints/window.blp:277
+#, fuzzy
+msgid "Preserve aspect ratio"
+msgstr "Mantieni proporzioni"
+
+#: data/resources/blueprints/window.blp:283
+#: data/resources/blueprints/window.blp:291
+msgid "Height"
+msgstr "Altezza"
+
+#: data/resources/blueprints/window.blp:305
+msgid "Percentage"
+msgstr "Percentuale"
+
+#: data/resources/blueprints/window.blp:305
+msgid "Exact Pixels"
+msgstr "Pixel esatti"
+
+#: data/resources/blueprints/window.blp:313
+#, fuzzy
+msgid "Algorithm"
+msgstr "Algoritmi di"
+
+#: data/resources/blueprints/window.blp:316
+msgid "Point"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Quadratic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Cubic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Mitchell"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Gaussian"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Lanczos"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:396
 msgid "Could not Load Image"
 msgstr "Impossibile caricare l'immagine"
 
-#: data/resources/blueprints/window.blp:181
+#: data/resources/blueprints/window.blp:397
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Questa immagine potrebbe essere danneggiata o in un formato non supportato."
 
-#: data/resources/blueprints/window.blp:196
-msgid "Quality"
-msgstr "Qualità"
-
-#: data/resources/blueprints/window.blp:213
-msgid "Background Color"
-msgstr "Colore di sfondo"
-
-#: data/resources/blueprints/window.blp:221
-msgid "DPI"
-msgstr "DPI"
-
-#: data/resources/blueprints/window.blp:232
-msgid "Scale Preserving Ratio"
-msgstr "Ridimensiona mantenendo proporzioni"
-
-#: data/resources/blueprints/window.blp:235
-msgid "Dimension"
-msgstr "Dimensione"
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:284
-#: data/resources/blueprints/window.blp:310
-msgid "Width"
-msgstr "Larghezza"
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:299
-#: data/resources/blueprints/window.blp:320
-msgid "Height"
-msgstr "Altezza"
-
-#: data/resources/blueprints/window.blp:243
-msgid "Width in Pixels"
-msgstr "Larghezza (pixel)"
-
-#: data/resources/blueprints/window.blp:253
-msgid "Height in Pixels"
-msgstr "Altezza (pixel)"
-
-#: data/resources/blueprints/window.blp:265
-msgid "Resize"
-msgstr "Ridimensiona"
-
-#: data/resources/blueprints/window.blp:268
-msgid "Filter"
-msgstr "Filtro"
-
-#: data/resources/blueprints/window.blp:271
-msgid "Point"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Quadratic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Cubic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Mitchell"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Gaussian"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Lanczos"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:276
-msgid "Size"
-msgstr "Dimensione"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Percentage"
-msgstr "Percentuale"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Exact Pixels"
-msgstr "Pixel esatti"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Minimum Pixels"
-msgstr "Pixel minimi"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Maximum Pixels"
-msgstr "Pixel massimi"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Ratio"
-msgstr "Fattore"
-
-#: data/resources/blueprints/window.blp:287
-msgid "Pixels"
-msgstr "Pixel"
-
-#: data/resources/blueprints/window.blp:287
-msgid "Preserve Ratio"
-msgstr "Mantieni proporzioni"
-
-#: data/resources/blueprints/window.blp:330
-msgid "Width Percentage Scale"
-msgstr "Percentuale larghezza"
-
-#: data/resources/blueprints/window.blp:340
-msgid "Height Percentage Scale"
-msgstr "Percentuale altezza"
-
-#: data/resources/blueprints/window.blp:350
-msgid "Ratio Width"
-msgstr "Fattore larghezza"
-
-#: data/resources/blueprints/window.blp:360
-msgid "Ratio Height"
-msgstr "Fattore altezza"
-
-#: data/resources/blueprints/window.blp:380
+#: data/resources/blueprints/window.blp:420
 msgid "Converting…"
 msgstr "Conversione…"
 
-#: data/resources/blueprints/window.blp:381
+#: data/resources/blueprints/window.blp:421
 msgid "This could take a while."
 msgstr "Potrebbe richiedere del tempo."
 
-#: data/resources/blueprints/window.blp:391 src/window.rs:1052
+#: data/resources/blueprints/window.blp:431 src/window.rs:1299
 msgid "Loading…"
 msgstr "Caricamento…"
 
-#: data/resources/blueprints/window.blp:397 src/window.rs:1624
+#: data/resources/blueprints/window.blp:437 src/window.rs:455
+#: src/window.rs:1886
 msgid "_Cancel"
 msgstr "Annulla"
 
-#: data/resources/blueprints/window.blp:426
+#: data/resources/blueprints/window.blp:466
 #, fuzzy
 msgid "Open Files…"
 msgstr "Apri file…"
 
-#: data/resources/blueprints/window.blp:431
+#: data/resources/blueprints/window.blp:471
 #, fuzzy
 msgid "Paste Image…"
 msgstr "Apri immagine…"
 
-#: data/resources/blueprints/window.blp:438
+#: data/resources/blueprints/window.blp:478
 msgid "Show Less Popular Datatypes"
 msgstr "Mostra tipi di immagini meno popolari"
 
-#: data/resources/blueprints/window.blp:450
+#: data/resources/blueprints/window.blp:490
 msgid "Keyboard Shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: data/resources/blueprints/window.blp:455
+#: data/resources/blueprints/window.blp:495
 msgid "About Converter"
 msgstr "Informazioni su Converter"
 
-#: src/magick.rs:272
+#: src/magick.rs:287
 msgid "Unknown IO error happened"
 msgstr ""
 
@@ -329,58 +305,110 @@ msgstr "Codice e design presi in prestito da"
 msgid "Sample Image from"
 msgstr "Immagine di esempio di"
 
-#: src/window.rs:398
+#: src/window.rs:451 src/window.rs:1881
+msgid "Stop converting?"
+msgstr "Interrompere la conversione?"
+
+#: src/window.rs:452 src/window.rs:1882
+msgid "You will lose all progress."
+msgstr "Perderai tutti i progressi."
+
+#: src/window.rs:456 src/window.rs:1886
+msgid "_Stop"
+msgstr "Interrompi"
+
+#: src/window.rs:578
 msgid "Collecting files"
 msgstr ""
 
-#: src/window.rs:413
+#: src/window.rs:593
 msgid "Unable to access dropped files"
 msgstr ""
 
-#: src/window.rs:476
+#: src/window.rs:655
 #, fuzzy
 msgid "Pasted Image"
 msgstr "Apri immagine"
 
-#: src/window.rs:1548
+#: src/window.rs:1807
 msgid "Error while processing"
 msgstr "Errore durante l'elaborazione"
 
-#: src/window.rs:1569
+#: src/window.rs:1828
 msgid "_Copy to clipboard"
 msgstr "Copia negli appunti"
 
-#: src/window.rs:1570
+#: src/window.rs:1829
 msgid "_Dismiss"
 msgstr "Chiudi"
 
-#: src/window.rs:1578
+#: src/window.rs:1837
 msgid "Error copied to clipboard"
 msgstr "Errore copiato negli appunti"
 
-#: src/window.rs:1590
+#: src/window.rs:1852
 msgid "Image converted"
 msgstr "Immagine convertita"
 
-#: src/window.rs:1591
+#: src/window.rs:1853
 msgid "Open"
 msgstr "Apri"
 
-#: src/window.rs:1619
-msgid "Stop converting?"
-msgstr "Interrompere la conversione?"
-
-#: src/window.rs:1620
-msgid "You will lose all progress."
-msgstr "Perderai tutti i progressi."
-
-#: src/window.rs:1624
-msgid "_Stop"
-msgstr "Interrompi"
-
-#: src/window.rs:1646
+#: src/window.rs:1908
 msgid "Converting Cancelled"
 msgstr "Conversione annullata"
+
+#~ msgid "Overview"
+#~ msgstr "Anteprima"
+
+#, fuzzy
+#~ msgid "More options"
+#~ msgstr "Altre opzioni"
+
+#~ msgid "Options"
+#~ msgstr "Opzioni"
+
+#~ msgid "Convert to"
+#~ msgstr "Converti in"
+
+#~ msgid "More Options"
+#~ msgstr "Altre opzioni"
+
+#~ msgid "Scale Preserving Ratio"
+#~ msgstr "Ridimensiona mantenendo proporzioni"
+
+#~ msgid "Dimension"
+#~ msgstr "Dimensione"
+
+#~ msgid "Width in Pixels"
+#~ msgstr "Larghezza (pixel)"
+
+#~ msgid "Height in Pixels"
+#~ msgstr "Altezza (pixel)"
+
+#~ msgid "Filter"
+#~ msgstr "Filtro"
+
+#~ msgid "Size"
+#~ msgstr "Dimensione"
+
+#~ msgid "Minimum Pixels"
+#~ msgstr "Pixel minimi"
+
+#~ msgid "Maximum Pixels"
+#~ msgstr "Pixel massimi"
+
+#~ msgid "Ratio"
+#~ msgstr "Fattore"
+
+#~ msgid "Pixels"
+#~ msgstr "Pixel"
+
+#~ msgid "Width Percentage Scale"
+#~ msgstr "Percentuale larghezza"
+
+#~ msgid "Height Percentage Scale"
+#~ msgstr "Percentuale altezza"
 
 #~ msgid "Convert"
 #~ msgstr "Converti"
@@ -417,9 +445,6 @@ msgstr "Conversione annullata"
 #~ msgid "Select output location"
 #~ msgstr "Seleziona posizione del risultato"
 
-#~ msgid "Compress as"
-#~ msgstr "Comprimi come"
-
 #~ msgid ""
 #~ "Jürgen Benvenuti <gastornis@posteo.org>\n"
 #~ "Irénée Thirion <irenee.thirion@e.email>\n"
@@ -441,9 +466,6 @@ msgstr "Conversione annullata"
 
 #~ msgid "Added AVIF and JXL support."
 #~ msgstr "Aggiunto supporto per AVIF e JXL."
-
-#~ msgid "Algorithms by"
-#~ msgstr "Algoritmi di"
 
 #~ msgid "Datatype"
 #~ msgstr "Tipo di immagine"

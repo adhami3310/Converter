@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-21 01:28-0400\n"
+"POT-Creation-Date: 2023-05-23 18:27-0400\n"
 "PO-Revision-Date: 2022-12-20 17:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -41,9 +41,40 @@ msgstr "Конвертация и работа с изображениями"
 msgid "image;convert;converting;processing"
 msgstr "изображение;конвертация;конвертирование;обработка"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:6
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:27
 msgid "Shows less popular datatypes in the menu"
 msgstr "Показывает в меню менее популярные типы данных"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:31
+#, fuzzy
+msgid "Window width"
+msgstr "Соотношение  Ширины"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:35
+#, fuzzy
+msgid "Image quality"
+msgstr "Тип изображения"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:39
+msgid "Image density per inch"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:43
+#, fuzzy
+msgid "Window height"
+msgstr "Соотношение Высоты"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:47
+msgid "Window maximized state"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:51
+msgid "Output format"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:55
+msgid "Compression format"
+msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -70,16 +101,15 @@ msgid "processing"
 msgstr "обработка"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
-msgid "Overview"
-msgstr "Обзор"
+msgid "Converting sample image from PNG to WEBP"
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
-#, fuzzy
-msgid "More options"
-msgstr "Дополнительные параметры"
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:68
+msgid "Fix variety of bugs and rework UI."
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:72
-msgid "Fix various bugs."
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Rust rewrite."
 msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:11
@@ -115,208 +145,152 @@ msgstr ""
 msgid "_Open Images…"
 msgstr "_Открыть изображение..."
 
-#: data/resources/blueprints/window.blp:111
-msgid "Properties"
-msgstr "Свойства"
-
-#: data/resources/blueprints/window.blp:114
-msgid "Image Type"
-msgstr "Тип изображения"
-
-#: data/resources/blueprints/window.blp:121
-msgid "Image Size"
-msgstr "Размер изображения"
-
-#: data/resources/blueprints/window.blp:130
-msgid "Options"
-msgstr "Параметры"
-
-#: data/resources/blueprints/window.blp:133
-#, fuzzy
-msgid "Convert to"
-msgstr "Конвертировать"
-
-#: data/resources/blueprints/window.blp:138
-msgid "Output as"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:151
-msgid "More Options"
-msgstr "Дополнительные параметры"
-
-#: data/resources/blueprints/window.blp:160
+#: data/resources/blueprints/window.blp:126
 msgid "_Convert"
 msgstr "_ Конвертировать"
 
-#: data/resources/blueprints/window.blp:180
+#: data/resources/blueprints/window.blp:148
+msgid "Properties"
+msgstr "Свойства"
+
+#: data/resources/blueprints/window.blp:151
+msgid "Image Type"
+msgstr "Тип изображения"
+
+#: data/resources/blueprints/window.blp:158
+msgid "Image Size"
+msgstr "Размер изображения"
+
+#: data/resources/blueprints/window.blp:169
+msgid "Export Format"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:174
+msgid "Save Method"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:175
+msgid "Compress images or use a directory"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:183
+msgid "Quality"
+msgstr "Качество"
+
+#: data/resources/blueprints/window.blp:200
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: data/resources/blueprints/window.blp:208
+msgid "DPI"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:252
+msgid "Resize"
+msgstr "Изменить размер"
+
+#: data/resources/blueprints/window.blp:260
+#: data/resources/blueprints/window.blp:269
+msgid "Width"
+msgstr "Ширина"
+
+#: data/resources/blueprints/window.blp:277
+#, fuzzy
+msgid "Preserve aspect ratio"
+msgstr "Коэффициент сохранения"
+
+#: data/resources/blueprints/window.blp:283
+#: data/resources/blueprints/window.blp:291
+msgid "Height"
+msgstr "Высота"
+
+#: data/resources/blueprints/window.blp:305
+msgid "Percentage"
+msgstr "В процентах"
+
+#: data/resources/blueprints/window.blp:305
+msgid "Exact Pixels"
+msgstr "Точное количество пикселей"
+
+#: data/resources/blueprints/window.blp:313
+#, fuzzy
+msgid "Algorithm"
+msgstr "Алгоритмы от"
+
+#: data/resources/blueprints/window.blp:316
+msgid "Point"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Quadratic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Cubic"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Mitchell"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Gaussian"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:316
+msgid "Lanczos"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:396
 msgid "Could not Load Image"
 msgstr "Не удалось загрузить изображение"
 
-#: data/resources/blueprints/window.blp:181
+#: data/resources/blueprints/window.blp:397
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Это изображение может быть повреждено или использовать неподдерживаемый "
 "формат файла."
 
-#: data/resources/blueprints/window.blp:196
-msgid "Quality"
-msgstr "Качество"
-
-#: data/resources/blueprints/window.blp:213
-msgid "Background Color"
-msgstr "Цвет фона"
-
-#: data/resources/blueprints/window.blp:221
-msgid "DPI"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:232
-msgid "Scale Preserving Ratio"
-msgstr "Коэффициент сохранения масштабов"
-
-#: data/resources/blueprints/window.blp:235
-msgid "Dimension"
-msgstr "Размер"
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:284
-#: data/resources/blueprints/window.blp:310
-msgid "Width"
-msgstr "Ширина"
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:299
-#: data/resources/blueprints/window.blp:320
-msgid "Height"
-msgstr "Высота"
-
-#: data/resources/blueprints/window.blp:243
-msgid "Width in Pixels"
-msgstr "Ширина в пикселях"
-
-#: data/resources/blueprints/window.blp:253
-msgid "Height in Pixels"
-msgstr "Высота в пикселях"
-
-#: data/resources/blueprints/window.blp:265
-msgid "Resize"
-msgstr "Изменить размер"
-
-#: data/resources/blueprints/window.blp:268
-msgid "Filter"
-msgstr "Фильтр"
-
-#: data/resources/blueprints/window.blp:271
-msgid "Point"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Quadratic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Cubic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Mitchell"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Gaussian"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Lanczos"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:276
-msgid "Size"
-msgstr "Размер"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Percentage"
-msgstr "В процентах"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Exact Pixels"
-msgstr "Точное количество пикселей"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Minimum Pixels"
-msgstr "Минимум пикселей"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Maximum Pixels"
-msgstr "Максимум пикселей"
-
-#: data/resources/blueprints/window.blp:279
-msgid "Ratio"
-msgstr "Коэффициент"
-
-#: data/resources/blueprints/window.blp:287
-msgid "Pixels"
-msgstr "Пикселей"
-
-#: data/resources/blueprints/window.blp:287
-msgid "Preserve Ratio"
-msgstr "Коэффициент сохранения"
-
-#: data/resources/blueprints/window.blp:330
-msgid "Width Percentage Scale"
-msgstr "Шкала ширины в процентах"
-
-#: data/resources/blueprints/window.blp:340
-msgid "Height Percentage Scale"
-msgstr "Шкала высоты в процентах"
-
-#: data/resources/blueprints/window.blp:350
-msgid "Ratio Width"
-msgstr "Соотношение  Ширины"
-
-#: data/resources/blueprints/window.blp:360
-msgid "Ratio Height"
-msgstr "Соотношение Высоты"
-
-#: data/resources/blueprints/window.blp:380
+#: data/resources/blueprints/window.blp:420
 msgid "Converting…"
 msgstr "Конвертация..."
 
-#: data/resources/blueprints/window.blp:381
+#: data/resources/blueprints/window.blp:421
 msgid "This could take a while."
 msgstr "Это может занять некоторое время."
 
-#: data/resources/blueprints/window.blp:391 src/window.rs:1052
+#: data/resources/blueprints/window.blp:431 src/window.rs:1299
 msgid "Loading…"
 msgstr "Загрузка..."
 
-#: data/resources/blueprints/window.blp:397 src/window.rs:1624
+#: data/resources/blueprints/window.blp:437 src/window.rs:455
+#: src/window.rs:1886
 msgid "_Cancel"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:426
+#: data/resources/blueprints/window.blp:466
 #, fuzzy
 msgid "Open Files…"
 msgstr "Открыть файл..."
 
-#: data/resources/blueprints/window.blp:431
+#: data/resources/blueprints/window.blp:471
 #, fuzzy
 msgid "Paste Image…"
 msgstr "_Открыть изображение..."
 
-#: data/resources/blueprints/window.blp:438
+#: data/resources/blueprints/window.blp:478
 msgid "Show Less Popular Datatypes"
 msgstr "Показать Менее Популярные Типы Данных"
 
-#: data/resources/blueprints/window.blp:450
+#: data/resources/blueprints/window.blp:490
 msgid "Keyboard Shortcuts"
 msgstr "Показать горячие клавиши"
 
-#: data/resources/blueprints/window.blp:455
+#: data/resources/blueprints/window.blp:495
 msgid "About Converter"
 msgstr "О конвертере"
 
-#: src/magick.rs:272
+#: src/magick.rs:287
 msgid "Unknown IO error happened"
 msgstr ""
 
@@ -328,60 +302,113 @@ msgstr "Код и дизайн взято от"
 msgid "Sample Image from"
 msgstr "Образец изображения из"
 
-#: src/window.rs:398
-msgid "Collecting files"
-msgstr ""
-
-#: src/window.rs:413
-msgid "Unable to access dropped files"
-msgstr ""
-
-#: src/window.rs:476
-#, fuzzy
-msgid "Pasted Image"
-msgstr "Открыть изображение"
-
-#: src/window.rs:1548
-msgid "Error while processing"
-msgstr "Ошибка при обработке"
-
-#: src/window.rs:1569
-msgid "_Copy to clipboard"
-msgstr "_Копировать в буфер обмена"
-
-#: src/window.rs:1570
-msgid "_Dismiss"
-msgstr "_Разрешить"
-
-#: src/window.rs:1578
-msgid "Error copied to clipboard"
-msgstr "Ошибка скопирована в буфер обмена"
-
-#: src/window.rs:1590
-msgid "Image converted"
-msgstr "Конвертированное изображение"
-
-#: src/window.rs:1591
-msgid "Open"
-msgstr "Открыть"
-
-#: src/window.rs:1619
+#: src/window.rs:451 src/window.rs:1881
 #, fuzzy
 msgid "Stop converting?"
 msgstr "конвертация"
 
-#: src/window.rs:1620
+#: src/window.rs:452 src/window.rs:1882
 msgid "You will lose all progress."
 msgstr ""
 
-#: src/window.rs:1624
+#: src/window.rs:456 src/window.rs:1886
 msgid "_Stop"
 msgstr ""
 
-#: src/window.rs:1646
+#: src/window.rs:578
+msgid "Collecting files"
+msgstr ""
+
+#: src/window.rs:593
+msgid "Unable to access dropped files"
+msgstr ""
+
+#: src/window.rs:655
+#, fuzzy
+msgid "Pasted Image"
+msgstr "Открыть изображение"
+
+#: src/window.rs:1807
+msgid "Error while processing"
+msgstr "Ошибка при обработке"
+
+#: src/window.rs:1828
+msgid "_Copy to clipboard"
+msgstr "_Копировать в буфер обмена"
+
+#: src/window.rs:1829
+msgid "_Dismiss"
+msgstr "_Разрешить"
+
+#: src/window.rs:1837
+msgid "Error copied to clipboard"
+msgstr "Ошибка скопирована в буфер обмена"
+
+#: src/window.rs:1852
+msgid "Image converted"
+msgstr "Конвертированное изображение"
+
+#: src/window.rs:1853
+msgid "Open"
+msgstr "Открыть"
+
+#: src/window.rs:1908
 #, fuzzy
 msgid "Converting Cancelled"
 msgstr "Конвертация..."
+
+#~ msgid "Overview"
+#~ msgstr "Обзор"
+
+#, fuzzy
+#~ msgid "More options"
+#~ msgstr "Дополнительные параметры"
+
+#~ msgid "Options"
+#~ msgstr "Параметры"
+
+#, fuzzy
+#~ msgid "Convert to"
+#~ msgstr "Конвертировать"
+
+#~ msgid "More Options"
+#~ msgstr "Дополнительные параметры"
+
+#~ msgid "Scale Preserving Ratio"
+#~ msgstr "Коэффициент сохранения масштабов"
+
+#~ msgid "Dimension"
+#~ msgstr "Размер"
+
+#~ msgid "Width in Pixels"
+#~ msgstr "Ширина в пикселях"
+
+#~ msgid "Height in Pixels"
+#~ msgstr "Высота в пикселях"
+
+#~ msgid "Filter"
+#~ msgstr "Фильтр"
+
+#~ msgid "Size"
+#~ msgstr "Размер"
+
+#~ msgid "Minimum Pixels"
+#~ msgstr "Минимум пикселей"
+
+#~ msgid "Maximum Pixels"
+#~ msgstr "Максимум пикселей"
+
+#~ msgid "Ratio"
+#~ msgstr "Коэффициент"
+
+#~ msgid "Pixels"
+#~ msgstr "Пикселей"
+
+#~ msgid "Width Percentage Scale"
+#~ msgstr "Шкала ширины в процентах"
+
+#~ msgid "Height Percentage Scale"
+#~ msgstr "Шкала высоты в процентах"
 
 #~ msgid "Convert"
 #~ msgstr "Конвертировать"
@@ -442,9 +469,6 @@ msgstr "Конвертация..."
 
 #~ msgid "Added AVIF and JXL support."
 #~ msgstr "Добавлена поддержка AVIF и JXL."
-
-#~ msgid "Algorithms by"
-#~ msgstr "Алгоритмы от"
 
 #~ msgid "Datatype"
 #~ msgstr "Тип данных"

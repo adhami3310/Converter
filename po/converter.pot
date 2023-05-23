@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-21 01:28-0400\n"
+"POT-Creation-Date: 2023-05-23 18:27-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,8 +38,36 @@ msgstr ""
 msgid "image;convert;converting;processing"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:6
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:27
 msgid "Shows less popular datatypes in the menu"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:31
+msgid "Window width"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:35
+msgid "Image quality"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:39
+msgid "Image density per inch"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:43
+msgid "Window height"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:47
+msgid "Window maximized state"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:51
+msgid "Output format"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:55
+msgid "Compression format"
 msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
@@ -67,15 +95,15 @@ msgid "processing"
 msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
-msgid "Overview"
+msgid "Converting sample image from PNG to WEBP"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
-msgid "More options"
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:68
+msgid "Fix variety of bugs and rework UI."
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:72
-msgid "Fix various bugs."
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Rust rewrite."
 msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:11
@@ -110,203 +138,146 @@ msgstr ""
 msgid "_Open Images…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:111
-msgid "Properties"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:114
-msgid "Image Type"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:121
-msgid "Image Size"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:130
-msgid "Options"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:133
-msgid "Convert to"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:138
-msgid "Output as"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:151
-msgid "More Options"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:160
+#: data/resources/blueprints/window.blp:126
 msgid "_Convert"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:180
-msgid "Could not Load Image"
+#: data/resources/blueprints/window.blp:148
+msgid "Properties"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:181
-msgid "This image could be corrupted or may use an unsupported file format."
+#: data/resources/blueprints/window.blp:151
+msgid "Image Type"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:196
+#: data/resources/blueprints/window.blp:158
+msgid "Image Size"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:169
+msgid "Export Format"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:174
+msgid "Save Method"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:175
+msgid "Compress images or use a directory"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:183
 msgid "Quality"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:213
+#: data/resources/blueprints/window.blp:200
 msgid "Background Color"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:221
+#: data/resources/blueprints/window.blp:208
 msgid "DPI"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:232
-msgid "Scale Preserving Ratio"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:235
-msgid "Dimension"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:284
-#: data/resources/blueprints/window.blp:310
-msgid "Width"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:238
-#: data/resources/blueprints/window.blp:299
-#: data/resources/blueprints/window.blp:320
-msgid "Height"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:243
-msgid "Width in Pixels"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:253
-msgid "Height in Pixels"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:265
+#: data/resources/blueprints/window.blp:252
 msgid "Resize"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:268
-msgid "Filter"
+#: data/resources/blueprints/window.blp:260
+#: data/resources/blueprints/window.blp:269
+msgid "Width"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:271
-msgid "Point"
+#: data/resources/blueprints/window.blp:277
+msgid "Preserve aspect ratio"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:271
-msgid "Quadratic"
+#: data/resources/blueprints/window.blp:283
+#: data/resources/blueprints/window.blp:291
+msgid "Height"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:271
-msgid "Cubic"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Mitchell"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Gaussian"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:271
-msgid "Lanczos"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:276
-msgid "Size"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:279
+#: data/resources/blueprints/window.blp:305
 msgid "Percentage"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:279
+#: data/resources/blueprints/window.blp:305
 msgid "Exact Pixels"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:279
-msgid "Minimum Pixels"
+#: data/resources/blueprints/window.blp:313
+msgid "Algorithm"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:279
-msgid "Maximum Pixels"
+#: data/resources/blueprints/window.blp:316
+msgid "Point"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:279
-msgid "Ratio"
+#: data/resources/blueprints/window.blp:316
+msgid "Quadratic"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:287
-msgid "Pixels"
+#: data/resources/blueprints/window.blp:316
+msgid "Cubic"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:287
-msgid "Preserve Ratio"
+#: data/resources/blueprints/window.blp:316
+msgid "Mitchell"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:330
-msgid "Width Percentage Scale"
+#: data/resources/blueprints/window.blp:316
+msgid "Gaussian"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:340
-msgid "Height Percentage Scale"
+#: data/resources/blueprints/window.blp:316
+msgid "Lanczos"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:350
-msgid "Ratio Width"
+#: data/resources/blueprints/window.blp:396
+msgid "Could not Load Image"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:360
-msgid "Ratio Height"
+#: data/resources/blueprints/window.blp:397
+msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 
-#: data/resources/blueprints/window.blp:380
+#: data/resources/blueprints/window.blp:420
 msgid "Converting…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:381
+#: data/resources/blueprints/window.blp:421
 msgid "This could take a while."
 msgstr ""
 
-#: data/resources/blueprints/window.blp:391 src/window.rs:1052
+#: data/resources/blueprints/window.blp:431 src/window.rs:1299
 msgid "Loading…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:397 src/window.rs:1624
+#: data/resources/blueprints/window.blp:437 src/window.rs:455
+#: src/window.rs:1886
 msgid "_Cancel"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:426
+#: data/resources/blueprints/window.blp:466
 msgid "Open Files…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:431
+#: data/resources/blueprints/window.blp:471
 msgid "Paste Image…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:438
+#: data/resources/blueprints/window.blp:478
 msgid "Show Less Popular Datatypes"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:450
+#: data/resources/blueprints/window.blp:490
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:455
+#: data/resources/blueprints/window.blp:495
 msgid "About Converter"
 msgstr ""
 
-#: src/magick.rs:272
+#: src/magick.rs:287
 msgid "Unknown IO error happened"
 msgstr ""
 
@@ -318,54 +289,54 @@ msgstr ""
 msgid "Sample Image from"
 msgstr ""
 
-#: src/window.rs:398
-msgid "Collecting files"
-msgstr ""
-
-#: src/window.rs:413
-msgid "Unable to access dropped files"
-msgstr ""
-
-#: src/window.rs:476
-msgid "Pasted Image"
-msgstr ""
-
-#: src/window.rs:1548
-msgid "Error while processing"
-msgstr ""
-
-#: src/window.rs:1569
-msgid "_Copy to clipboard"
-msgstr ""
-
-#: src/window.rs:1570
-msgid "_Dismiss"
-msgstr ""
-
-#: src/window.rs:1578
-msgid "Error copied to clipboard"
-msgstr ""
-
-#: src/window.rs:1590
-msgid "Image converted"
-msgstr ""
-
-#: src/window.rs:1591
-msgid "Open"
-msgstr ""
-
-#: src/window.rs:1619
+#: src/window.rs:451 src/window.rs:1881
 msgid "Stop converting?"
 msgstr ""
 
-#: src/window.rs:1620
+#: src/window.rs:452 src/window.rs:1882
 msgid "You will lose all progress."
 msgstr ""
 
-#: src/window.rs:1624
+#: src/window.rs:456 src/window.rs:1886
 msgid "_Stop"
 msgstr ""
 
-#: src/window.rs:1646
+#: src/window.rs:578
+msgid "Collecting files"
+msgstr ""
+
+#: src/window.rs:593
+msgid "Unable to access dropped files"
+msgstr ""
+
+#: src/window.rs:655
+msgid "Pasted Image"
+msgstr ""
+
+#: src/window.rs:1807
+msgid "Error while processing"
+msgstr ""
+
+#: src/window.rs:1828
+msgid "_Copy to clipboard"
+msgstr ""
+
+#: src/window.rs:1829
+msgid "_Dismiss"
+msgstr ""
+
+#: src/window.rs:1837
+msgid "Error copied to clipboard"
+msgstr ""
+
+#: src/window.rs:1852
+msgid "Image converted"
+msgstr ""
+
+#: src/window.rs:1853
+msgid "Open"
+msgstr ""
+
+#: src/window.rs:1908
 msgid "Converting Cancelled"
 msgstr ""
