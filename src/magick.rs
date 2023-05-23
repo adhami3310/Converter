@@ -25,22 +25,16 @@ pub trait MagickArgument {
     fn get_argument(&self) -> Vec<String>;
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum SizeArgument {
-    Width(usize),
-    Height(usize),
-}
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+// pub enum SizeArgument {
+//     Width(usize),
+//     Height(usize),
+// }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ResizeArgument {
-    Percentage {
-        width: usize,
-        height: usize,
-    },
-    ExactPixels {
-        width: Option<usize>,
-        height: Option<usize>,
-    },
+    Percentage { width: usize, height: usize },
+    ExactPixels { width: usize, height: usize },
     // MinPixels {
     //     width: usize,
     //     height: usize,
@@ -55,14 +49,14 @@ pub enum ResizeArgument {
     // },
 }
 
-impl MagickArgument for SizeArgument {
-    fn get_argument(&self) -> Vec<String> {
-        match self {
-            SizeArgument::Width(w) => vec!["-size".to_owned(), w.to_string()],
-            SizeArgument::Height(h) => vec!["-size".to_owned(), format!("x{h}")],
-        }
-    }
-}
+// impl MagickArgument for SizeArgument {
+//     fn get_argument(&self) -> Vec<String> {
+//         match self {
+//             SizeArgument::Width(w) => vec!["-size".to_owned(), w.to_string()],
+//             SizeArgument::Height(h) => vec!["-size".to_owned(), format!("x{h}")],
+//         }
+//     }
+// }
 
 impl MagickArgument for ResizeFilter {
     fn get_argument(&self) -> Vec<String> {
@@ -77,23 +71,23 @@ impl MagickArgument for ResizeArgument {
                 vec!["-resize".to_owned(), format!("{width}%x{height}%")]
             }
             ResizeArgument::ExactPixels {
-                width: Some(width),
-                height: Some(height),
+                width,
+                height,
             } => {
                 vec!["-resize".to_owned(), format!("{width}x{height}!")]
             }
-            ResizeArgument::ExactPixels {
-                width: Some(width),
-                height: None,
-            } => {
-                vec!["-resize".to_owned(), format!("{width}")]
-            }
-            ResizeArgument::ExactPixels {
-                width: None,
-                height: Some(height),
-            } => {
-                vec!["-resize".to_owned(), format!("x{height}")]
-            }
+            // ResizeArgument::ExactPixels {
+            //     width: Some(width),
+            //     height: None,
+            // } => {
+            //     vec!["-resize".to_owned(), format!("{width}")]
+            // }
+            // ResizeArgument::ExactPixels {
+            //     width: None,
+            //     height: Some(height),
+            // } => {
+            //     vec!["-resize".to_owned(), format!("x{height}")]
+            // }
             // ResizeArgument::MinPixels { width, height } => {
             //     vec!["-resize".to_owned(), format!("{width}x{height}")]
             // }
@@ -103,7 +97,7 @@ impl MagickArgument for ResizeArgument {
             // ResizeArgument::Ratio { width, height } => {
             //     vec!["-resize".to_owned(), format!("{width}:{height}")]
             // }
-            _ => vec![],
+            // _ => vec![],
         }
     }
 }
@@ -124,7 +118,7 @@ where
 pub struct MagickConvertJob {
     pub input_file: String,
     pub output_file: String,
-    pub size_arg: Option<SizeArgument>,
+    pub size_arg: Option<ResizeArgument>,
     pub background: Color,
     pub quality: usize,
     pub coalesce: bool,
@@ -210,15 +204,36 @@ impl MagickConvertJob {
 
         dbg!(self);
 
+        let size_arg = match self.size_arg {
+            None => vec![],
+            Some(ResizeArgument::ExactPixels { width, height }) => {
+                vec!["-size".to_owned(), format!("{width}x{height}")]
+            }
+            Some(ResizeArgument::Percentage { width, height: _ }) => {
+                let all_pixels = width as f64 / 100.0;
+                vec![
+                    "-density".to_owned(),
+                    ((all_pixels * 96.0) as usize).to_string(),
+                ]
+            }
+        };
+
+        dbg!(&size_arg);
+
+        let resize_arg = match regex::Regex::new(r"svg\[.*\]$").unwrap().is_match(&self.input_file) {
+            true => vec![],
+            false => self.resize_arg.get_argument(),
+        };
+
         if self.first_frame {
             command
-                .args(self.size_arg.get_argument())
+                .args(size_arg)
                 .args(["-background", &self.background.as_hex_string()])
                 .arg(self.input_file.clone())
                 .arg("-flatten")
                 .args(["-quality".to_string(), format!("{}", self.quality)])
                 .args(self.filter.get_argument())
-                .args(self.resize_arg.get_argument())
+                .args(resize_arg)
                 .arg(self.output_file.clone());
         } else {
             command
@@ -232,7 +247,7 @@ impl MagickConvertJob {
                 ])
                 .args(vec!["-quality".to_string(), format!("{}", self.quality)])
                 .args(self.filter.get_argument())
-                .args(self.resize_arg.get_argument())
+                .args(resize_arg)
                 .arg(self.output_file.clone());
         }
 

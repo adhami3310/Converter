@@ -5,4 +5,5 @@
         <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">blueprints/help-overlay.ui</file>
         <file compressed="true">style.css</file>
     </gresource>
+
 </gresources>

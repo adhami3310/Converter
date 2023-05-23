@@ -9,7 +9,7 @@ use crate::filetypes::{CompressionType, FileType, OutputType};
 use crate::input_file::InputFile;
 use crate::magick::{
     count_frames, wait_for_child, ConvertJob, GhostScriptConvertJob, JobFile, MagickConvertJob,
-    ResizeArgument, SizeArgument,
+    ResizeArgument,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use adw::{prelude::*, traits::ActionRowExt};
@@ -88,7 +88,10 @@ impl ResizeType {
 }
 
 mod imp {
-    use std::{cell::RefCell, sync::atomic::AtomicBool};
+    use std::{
+        cell::{Cell, RefCell},
+        sync::atomic::AtomicBool,
+    };
 
     use super::*;
 
@@ -143,11 +146,15 @@ mod imp {
         #[template_child]
         pub resize_filter: TemplateChild<adw::ComboRow>,
         #[template_child]
-        pub resize_type: TemplateChild<adw::ComboRow>,
+        pub resize_amount_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub resize_type: TemplateChild<gtk::DropDown>,
         #[template_child]
         pub resize_width_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub resize_height_value: TemplateChild<gtk::Entry>,
+        #[template_child]
+        pub link_axis: TemplateChild<gtk::ToggleButton>,
         // #[template_child]
         // pub resize_minmax_width_value: TemplateChild<gtk::Entry>,
         // #[template_child]
@@ -156,12 +163,12 @@ mod imp {
         pub resize_scale_width_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub resize_scale_height_value: TemplateChild<gtk::Entry>,
-        #[template_child]
-        pub svg_size_width_value: TemplateChild<gtk::Entry>,
-        #[template_child]
-        pub svg_size_height_value: TemplateChild<gtk::Entry>,
-        #[template_child]
-        pub svg_size_type: TemplateChild<adw::ComboRow>,
+        // #[template_child]
+        // pub svg_size_width_value: TemplateChild<gtk::Entry>,
+        // #[template_child]
+        // pub svg_size_height_value: TemplateChild<gtk::Entry>,
+        // #[template_child]
+        // pub svg_size_type: TemplateChild<adw::ComboRow>,
         // #[template_child]
         // pub ratio_width_value: TemplateChild<gtk::Entry>,
         // #[template_child]
@@ -175,24 +182,24 @@ mod imp {
         pub bgcolor_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub resize_row: TemplateChild<adw::ExpanderRow>,
-        #[template_child]
-        pub svg_size_row: TemplateChild<adw::ExpanderRow>,
-        #[template_child]
-        pub svg_size_width_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub svg_size_height_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub resize_width_row: TemplateChild<adw::ComboRow>,
-        #[template_child]
-        pub resize_height_row: TemplateChild<adw::ComboRow>,
+        // #[template_child]
+        // pub svg_size_row: TemplateChild<adw::ExpanderRow>,
+        // #[template_child]
+        // pub svg_size_width_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub svg_size_height_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub resize_width_row: TemplateChild<adw::ComboRow>,
+        // #[template_child]
+        // pub resize_height_row: TemplateChild<adw::ComboRow>,
         // #[template_child]
         // pub resize_minmax_width_row: TemplateChild<adw::ActionRow>,
         // #[template_child]
         // pub resize_minmax_height_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub resize_scale_width_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub resize_scale_height_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub resize_scale_width_row: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub resize_scale_height_row: TemplateChild<adw::ActionRow>,
         // #[template_child]
         // pub ratio_width_row: TemplateChild<adw::ActionRow>,
         // #[template_child]
@@ -205,6 +212,8 @@ mod imp {
         pub settings: gio::Settings,
         pub is_canceled: std::sync::Arc<AtomicBool>,
         pub current_jobs: RefCell<Vec<Arc<SharedChild>>>,
+        pub image_width: Cell<Option<u32>>,
+        pub image_height: Cell<Option<u32>>,
     }
 
     #[glib::object_subclass]
@@ -243,31 +252,33 @@ mod imp {
                 bgcolor: TemplateChild::default(),
                 resize_filters: TemplateChild::default(),
                 resize_filter: TemplateChild::default(),
+                resize_amount_row: TemplateChild::default(),
                 resize_type: TemplateChild::default(),
                 resize_width_value: TemplateChild::default(),
                 resize_height_value: TemplateChild::default(),
+                link_axis: TemplateChild::default(),
                 // resize_minmax_width_value: TemplateChild::default(),
                 // resize_minmax_height_value: TemplateChild::default(),
                 resize_scale_width_value: TemplateChild::default(),
                 resize_scale_height_value: TemplateChild::default(),
-                svg_size_height_value: TemplateChild::default(),
-                svg_size_width_value: TemplateChild::default(),
-                svg_size_type: TemplateChild::default(),
+                // svg_size_height_value: TemplateChild::default(),
+                // svg_size_width_value: TemplateChild::default(),
+                // svg_size_type: TemplateChild::default(),
                 // ratio_height_value: TemplateChild::default(),
                 // ratio_width_value: TemplateChild::default(),
                 dpi_value: TemplateChild::default(),
                 quality_row: TemplateChild::default(),
                 bgcolor_row: TemplateChild::default(),
                 resize_row: TemplateChild::default(),
-                svg_size_row: TemplateChild::default(),
-                svg_size_width_row: TemplateChild::default(),
-                svg_size_height_row: TemplateChild::default(),
-                resize_width_row: TemplateChild::default(),
-                resize_height_row: TemplateChild::default(),
+                // svg_size_row: TemplateChild::default(),
+                // svg_size_width_row: TemplateChild::default(),
+                // svg_size_height_row: TemplateChild::default(),
+                // resize_width_row: TemplateChild::default(),
+                // resize_height_row: TemplateChild::default(),
                 // resize_minmax_width_row: TemplateChild::default(),
                 // resize_minmax_height_row: TemplateChild::default(),
-                resize_scale_width_row: TemplateChild::default(),
-                resize_scale_height_row: TemplateChild::default(),
+                // resize_scale_width_row: TemplateChild::default(),
+                // resize_scale_height_row: TemplateChild::default(),
                 // ratio_width_row: TemplateChild::default(),
                 // ratio_height_row: TemplateChild::default(),
                 dpi_row: TemplateChild::default(),
@@ -277,6 +288,8 @@ mod imp {
                 settings: gio::Settings::new(APP_ID),
                 is_canceled: std::sync::Arc::new(AtomicBool::new(true)),
                 current_jobs: RefCell::new(Vec::new()),
+                image_height: Cell::new(None),
+                image_width: Cell::new(None),
             }
         }
     }
@@ -363,22 +376,66 @@ impl AppWindow {
             .connect_selected_notify(clone!(@weak self as this => move |_| {
                 this.update_resize();
             }));
-        imp.resize_width_row
-            .connect_selected_notify(clone!(@weak self as this => move |_| {
-                this.update_resize();
+        imp.resize_width_value
+            .connect_changed(clone!(@weak self as this => move |_| {
+                this.update_height_from_width();
             }));
-        imp.resize_height_row
-            .connect_selected_notify(clone!(@weak self as this => move |_| {
-                this.update_resize();
+        imp.resize_height_value
+            .connect_changed(clone!(@weak self as this => move |_| {
+                this.update_width_from_height();
             }));
-        imp.svg_size_row
-            .connect_expanded_notify(clone!(@weak self as this => move |_| {
-                this.update_svg_size();
+        imp.link_axis
+            .connect_clicked(clone!(@weak self as this => move |_| {
+                if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
+                    this.imp().link_axis.set_icon_name("chain-link-symbolic");
+                    let old_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
+                    let new_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
+                    if old_value != new_value && new_value != "" {
+                        this.imp().resize_scale_width_value.set_text(&new_value);
+                    }
+                    this.update_width_from_height();
+                } else {
+                    this.imp().link_axis.set_icon_name("chain-link-loose-symbolic");
+                }
             }));
-        imp.svg_size_type
-            .connect_selected_notify(clone!(@weak self as this => move |_| {
-                this.update_svg_size();
+
+        imp.resize_scale_height_value
+            .connect_changed(clone!(@weak self as this => move |_| {
+                if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
+                    let old_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
+                    let new_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
+                    if old_value != new_value && new_value != "" {
+                        this.imp().resize_scale_width_value.set_text(&new_value);
+                    }
+                }
             }));
+
+        imp.resize_scale_width_value
+            .connect_changed(clone!(@weak self as this => move |_| {
+                if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
+                    let old_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
+                    let new_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
+                    if old_value != new_value && new_value != "" {
+                        this.imp().resize_scale_height_value.set_text(&new_value);
+                    }
+                }
+            }));
+        // imp.resize_width_row
+        //     .connect_selected_notify(clone!(@weak self as this => move |_| {
+        //         this.update_resize();
+        //     }));
+        // imp.resize_height_row
+        //     .connect_selected_notify(clone!(@weak self as this => move |_| {
+        //         this.update_resize();
+        //     }));
+        // imp.svg_size_row
+        //     .connect_expanded_notify(clone!(@weak self as this => move |_| {
+        //         this.update_svg_size();
+        //     }));
+        // imp.svg_size_type
+        //     .connect_selected_notify(clone!(@weak self as this => move |_| {
+        //         this.update_svg_size();
+        //     }));
     }
 
     fn setup_provider(&self) {
@@ -664,8 +721,8 @@ impl AppWindow {
             }
         }
 
-        let mut image_width = 1000;
-        let mut image_height = 1000;
+        // let mut image_width = 1000;
+        // let mut image_height = 1000;
 
         match loaded_pixbuffs.len() {
             0 => {
@@ -673,10 +730,16 @@ impl AppWindow {
                 imp.image_size_label.set_visible(false);
             }
             1 => {
-                image_width = loaded_pixbuffs[0].width();
-                image_height = loaded_pixbuffs[0].height();
-                imp.image_size_label
-                    .set_subtitle(&format!("({} × {})", image_width, image_height));
+                imp.image_width.set(Some(loaded_pixbuffs[0].width() as u32));
+                imp.image_height
+                    .set(Some(loaded_pixbuffs[0].height() as u32));
+                // image_width = loaded_pixbuffs[0].width();
+                // image_height = loaded_pixbuffs[0].height();
+                imp.image_size_label.set_subtitle(&format!(
+                    "({} × {})",
+                    loaded_pixbuffs[0].width(),
+                    loaded_pixbuffs[0].height()
+                ));
                 imp.image.set_pixbuf(Some(&loaded_pixbuffs[0]));
                 imp.image_size_label.set_visible(true);
             }
@@ -720,8 +783,8 @@ impl AppWindow {
                     }
                     canvas
                 }
-                image_width = loaded_pixbuffs[0].width();
-                image_height = loaded_pixbuffs[0].height();
+                // image_width = loaded_pixbuffs[0].width();
+                // image_height = loaded_pixbuffs[0].height();
                 imp.image.set_pixbuf(Some(&stack_images(&loaded_pixbuffs)));
                 imp.image_size_label.set_visible(false);
             }
@@ -732,11 +795,20 @@ impl AppWindow {
         imp.resize_scale_width_value.set_text("100");
         // imp.ratio_width_value.set_text("1");
         // imp.ratio_height_value.set_text("1");
-        imp.resize_width_value.set_text(&image_width.to_string());
-        imp.resize_height_value.set_text(&image_height.to_string());
-        imp.svg_size_width_value.set_text(&image_width.to_string());
-        imp.svg_size_height_value
-            .set_text(&image_height.to_string());
+        if let (Some(image_width), Some(image_height)) =
+            (imp.image_width.get(), imp.image_height.get())
+        {
+            imp.resize_width_value.set_text(&image_width.to_string());
+            imp.resize_height_value.set_text(&image_height.to_string());
+            // imp.svg_size_width_value.set_text(&image_width.to_string());
+            // imp.svg_size_height_value
+            //     .set_text(&image_height.to_string());
+        } else {
+            imp.resize_width_value.set_text("");
+            imp.resize_height_value.set_text("");
+            // imp.svg_size_width_value.set_text("");
+            // imp.svg_size_height_value.set_text("");
+        }
         // imp.resize_minmax_width_value
         //     .set_text(&image_width.to_string());
         // imp.resize_minmax_height_value
@@ -853,8 +925,8 @@ impl AppWindow {
         imp.bgcolor_row.set_visible(false);
         imp.resize_row.set_visible(false);
         imp.resize_row.set_enable_expansion(false);
-        imp.svg_size_row.set_visible(false);
-        imp.svg_size_row.set_enable_expansion(false);
+        // imp.svg_size_row.set_visible(false);
+        // imp.svg_size_row.set_enable_expansion(false);
         imp.dpi_row.set_visible(false);
 
         if output_filetype.is_lossy() {
@@ -884,9 +956,11 @@ impl AppWindow {
 
         if input_filetypes
             .iter()
-            .any(|input_filetype| *input_filetype == FileType::Svg)
+            .all(|input_filetype| *input_filetype == FileType::Svg)
         {
-            imp.svg_size_row.set_visible(true);
+            imp.resize_filter.set_visible(false);
+        } else {
+            imp.resize_filter.set_visible(true);
         }
 
         if input_filetypes
@@ -899,15 +973,100 @@ impl AppWindow {
         imp.resize_row.set_visible(true);
     }
 
+    fn update_width_from_height(&self) {
+        if self.imp().link_axis.is_active() && self.imp().link_axis.is_visible() {
+            if let (Some(image_width), Some(image_height)) =
+                (self.imp().image_width.get(), self.imp().image_height.get())
+            {
+                // if self.imp().resize_height_value.is_focus() {
+                let old_value = self.imp().resize_width_value.text().as_str().to_owned();
+                let other_text = self.imp().resize_height_value.text().as_str().to_owned();
+                if other_text == "" {
+                    return;
+                }
+
+                let other_way = self
+                    .generate_height_from_width(
+                        old_value.parse().unwrap_or(0),
+                        (image_width, image_height),
+                    )
+                    .to_string();
+
+                if other_way == other_text {
+                    return;
+                }
+
+                let new_value = self
+                    .generate_width_from_height(
+                        other_text.parse().unwrap_or(0),
+                        (image_width, image_height),
+                    )
+                    .to_string();
+
+                if old_value != new_value && new_value != "0" {
+                    self.imp().resize_width_value.set_text(&new_value);
+                }
+                // }
+            }
+        }
+    }
+
+    fn generate_width_from_height(&self, height: u32, image_dim: (u32, u32)) -> u32 {
+        ((height as f64) * (image_dim.0 as f64) / (image_dim.1 as f64)).round() as u32
+    }
+
+    fn generate_height_from_width(&self, width: u32, image_dim: (u32, u32)) -> u32 {
+        ((width as f64) * (image_dim.1 as f64) / (image_dim.0 as f64)).round() as u32
+    }
+
+    fn update_height_from_width(&self) {
+        if self.imp().link_axis.is_active() && self.imp().link_axis.is_visible() {
+            if let (Some(image_width), Some(image_height)) =
+                (self.imp().image_width.get(), self.imp().image_height.get())
+            {
+                // if self.imp().resize_width_value.is_focus() {
+                let old_value = self.imp().resize_height_value.text().as_str().to_owned();
+                let other_text = self.imp().resize_width_value.text().as_str().to_owned();
+                if other_text == "" {
+                    return;
+                }
+
+                let other_way = self
+                    .generate_width_from_height(
+                        old_value.parse().unwrap_or(0),
+                        (image_width, image_height),
+                    )
+                    .to_string();
+
+                if other_way == other_text {
+                    return;
+                }
+
+                let new_value = self
+                    .generate_height_from_width(
+                        other_text.parse().unwrap_or(0),
+                        (image_width, image_height),
+                    )
+                    .to_string();
+
+                if old_value != new_value && new_value != "0" {
+                    self.imp().resize_height_value.set_text(&new_value);
+                }
+            }
+            // }
+        }
+    }
+
     fn update_resize(&self) {
         let imp = self.imp();
 
         // let resize_algorithm = ResizeFilter::from_index(imp.resize_filter.selected() as usize).unwrap();
         let resize_type = ResizeType::from_index(imp.resize_type.selected() as usize).unwrap();
-        imp.resize_height_row.set_visible(false);
-        imp.resize_width_row.set_visible(false);
-        imp.resize_scale_height_row.set_visible(false);
-        imp.resize_scale_width_row.set_visible(false);
+        imp.resize_height_value.set_visible(false);
+        imp.resize_width_value.set_visible(false);
+        imp.resize_scale_height_value.set_visible(false);
+        imp.resize_scale_width_value.set_visible(false);
+        imp.link_axis.set_visible(false);
         // imp.ratio_height_row.set_visible(false);
         // imp.ratio_width_row.set_visible(false);
         // imp.resize_minmax_height_row.set_visible(false);
@@ -915,48 +1074,41 @@ impl AppWindow {
 
         match resize_type {
             ResizeType::Percentage => {
-                imp.resize_scale_width_row.set_visible(true);
-                imp.resize_scale_height_row.set_visible(true);
+                imp.resize_scale_width_value.set_visible(true);
+                imp.resize_scale_height_value.set_visible(true);
+                imp.link_axis.set_visible(true);
             }
             ResizeType::ExactPixels => {
-                imp.resize_width_row.set_visible(true);
-                imp.resize_height_row.set_visible(true);
-                match imp.resize_width_row.selected() {
-                    0 => imp.resize_width_value.set_visible(true),
-                    1 => imp.resize_width_value.set_visible(false),
-                    _ => unreachable!("Unexpected resize width value"),
+                imp.resize_width_value.set_visible(true);
+                imp.resize_height_value.set_visible(true);
+                if imp.input_file_store.n_items() == 1 {
+                    imp.link_axis.set_visible(true);
                 }
-                match imp.resize_height_row.selected() {
-                    0 => imp.resize_height_value.set_visible(true),
-                    1 => imp.resize_height_value.set_visible(false),
-                    _ => unreachable!("Unexpected resize width value"),
-                }
-            }
-            // ResizeType::MaxPixels | ResizeType::MinPixels => {
-            //     imp.resize_minmax_height_row.set_visible(true);
-            //     imp.resize_minmax_width_row.set_visible(true);
-            // }
-            // ResizeType::Ratio => {
-            //     imp.ratio_height_row.set_visible(true);
-            //     imp.ratio_width_row.set_visible(true);
-            // }
+            } // ResizeType::MaxPixels | ResizeType::MinPixels => {
+              //     imp.resize_minmax_height_row.set_visible(true);
+              //     imp.resize_minmax_width_row.set_visible(true);
+              // }
+              // ResizeType::Ratio => {
+              //     imp.ratio_height_row.set_visible(true);
+              //     imp.ratio_width_row.set_visible(true);
+              // }
         }
     }
 
-    fn update_svg_size(&self) {
-        let imp = self.imp();
-        match imp.svg_size_type.selected() {
-            0 => {
-                imp.svg_size_width_row.set_visible(true);
-                imp.svg_size_height_row.set_visible(false);
-            }
-            1 => {
-                imp.svg_size_width_row.set_visible(false);
-                imp.svg_size_height_row.set_visible(true);
-            }
-            _ => unreachable!("Invalid SVG resize value"),
-        }
-    }
+    // fn update_svg_size(&self) {
+    //     let imp = self.imp();
+    //     match imp.svg_size_type.selected() {
+    //         0 => {
+    //             imp.svg_size_width_row.set_visible(true);
+    //             imp.svg_size_height_row.set_visible(false);
+    //         }
+    //         1 => {
+    //             imp.svg_size_width_row.set_visible(false);
+    //             imp.svg_size_height_row.set_visible(true);
+    //         }
+    //         _ => unreachable!("Invalid SVG resize value"),
+    //     }
+    // }
 
     pub fn open_files(&self, files: Vec<Option<InputFile>>) {
         let files: Vec<InputFile> = files.into_iter().flatten().collect();
@@ -1073,28 +1225,8 @@ impl AppWindow {
         }
     }
 
-    fn get_svg_size_argument(&self) -> Option<SizeArgument> {
-        let imp = self.imp();
-
-        match (imp.svg_size_row.is_expanded(), imp.svg_size_type.selected()) {
-            (true, 0) => Some(SizeArgument::Width(
-                imp.svg_size_width_value
-                    .text()
-                    .as_str()
-                    .to_owned()
-                    .parse()
-                    .unwrap(),
-            )),
-            (true, 1) => Some(SizeArgument::Height(
-                imp.svg_size_width_value
-                    .text()
-                    .as_str()
-                    .to_owned()
-                    .parse()
-                    .unwrap(),
-            )),
-            _ => None,
-        }
+    fn get_svg_size_argument(&self) -> Option<ResizeArgument> {
+        self.get_resize_argument()
     }
 
     fn get_resize_argument(&self) -> Option<ResizeArgument> {
@@ -1122,14 +1254,8 @@ impl AppWindow {
                     .unwrap(),
             }),
             ResizeType::ExactPixels => Some(ResizeArgument::ExactPixels {
-                width: match imp.resize_width_row.selected() {
-                    0 => Some(imp.resize_width_value.text().to_string().parse().unwrap()),
-                    _ => None,
-                },
-                height: match imp.resize_height_row.selected() {
-                    0 => Some(imp.resize_height_value.text().to_string().parse().unwrap()),
-                    _ => None,
-                },
+                width: imp.resize_width_value.text().to_string().parse().unwrap(),
+                height: imp.resize_height_value.text().to_string().parse().unwrap(),
             }),
             // ResizeType::MaxPixels => Some(ResizeArgument::MaxPixels {
             //     width: imp
