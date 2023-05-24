@@ -2,10 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ImageThumbnail : FlowBoxChild {
-    
     $AdwBin {
-        // hexpand: false;
-        // halign: center;
         overflow: hidden;
         Overlay {
             hexpand: true;
@@ -39,6 +36,7 @@ template $ImageThumbnail : FlowBoxChild {
             [overlay]
             Button remove {
                 icon-name: "user-trash-symbolic";
+                tooltip-text: _("Remove image");
                 styles ["circular", "image-remove", "osd"]
                 valign: start;
                 halign: end;

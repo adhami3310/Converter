@@ -23,7 +23,7 @@ template $AppWindow : $AdwApplicationWindow {
       MenuButton {
         icon-name: "open-menu-symbolic";
         menu-model: primary_menu;
-        tooltip-text: "Primary Menu";
+        tooltip-text: _("Primary Menu");
         primary: true;
       }
 
@@ -81,23 +81,6 @@ template $AppWindow : $AdwApplicationWindow {
             ;
           }
 
-          // StackPage {
-          //   name: "stack_drop";
-          //   child:
-          //   $AdwStatusPage drop_overlay {
-          //     icon-name: "insert-image-symbolic";
-          //     title: _("Drop Here to Open");
-
-          //     styles [
-          //       "dragndrop_overlay"
-          //     ]
-          //   }
-
-          //   ;
-          // }
-
-
-
           StackPage {
             name: "stack_convert";
             child:
@@ -106,32 +89,18 @@ template $AppWindow : $AdwApplicationWindow {
               $AdwPreferencesGroup {
                 valign: end;
                 halign: center;
-                
 
-                // Box {
-                //   halign: center;
-                //   spacing: 6;
+                Button convert_button {
+                  valign: center;
+                  halign: end;
+                  label: _("_Convert");
+                  use-underline: true;
 
-                //   Button options_button {
-                //     valign: center;
-                //     label: _("More Options");
-                //     styles [
-                //       "pill",
-                //     ]
-                //   }
-
-                  Button convert_button {
-                    valign: center;
-                    halign: end;
-                    label: _("_Convert");
-                    use-underline: true;
-
-                    styles [
-                      "suggested-action",
-                      "pill",
-                    ]
-                  }
-                // }
+                  styles [
+                    "suggested-action",
+                    "pill",
+                  ]
+                }
 
                 styles [
                   "floating"
@@ -148,25 +117,6 @@ template $AppWindow : $AdwApplicationWindow {
                       vexpand: false;
                     }
                   }
-
-                  // $AdwPreferencesGroup {
-                  //   title: _("Properties");
-
-                  //   $AdwActionRow image_type_label {
-                  //     title:  _("Image Type");
-
-                  //     styles [
-                  //       "property",
-                  //     ]
-                  //   }
-                  //   $AdwActionRow image_size_label {
-                  //     title:  _("Image Size");
-
-                  //     styles [
-                  //       "property",
-                  //     ]
-                  //   }
-                  // }
 
                   $AdwPreferencesGroup {
 
@@ -210,48 +160,13 @@ template $AppWindow : $AdwApplicationWindow {
                     }
 
                     $AdwActionRow dpi_row {
-                      title: _("DPI");
+                      title: _("Pixel Density Per Inch");
                       $AdwBin {
                         Entry dpi_value {
-                          styles [
-                            'text-in-row'
-                          ]
+                          valign: center;
                         }
                       }
                     }
-
-                    // $AdwExpanderRow svg_size_row {
-                    //   title: _("Scale Preserving Ratio");
-                    //   show-enable-switch: true;
-                    //   $AdwComboRow svg_size_type {
-                    //     title: _("Dimension");
-                    //     model:
-                    //     StringList svg_size_axis_types {
-                    //       strings [_("Width"),_("Height")]
-                    //     }
-                    //     ;
-                    //   }
-                    //   $AdwActionRow svg_size_width_row {
-                    //     title: _("Width in Pixels");
-                    //     $AdwBin {
-                    //       Entry svg_size_width_value {
-                    //         styles [
-                    //           'text-in-row'
-                    //         ]
-                    //       }
-                    //     }
-                    //   }
-                    //   $AdwActionRow svg_size_height_row {
-                    //     title: _("Height in Pixels");
-                    //     $AdwBin {
-                    //       Entry svg_size_height_value {
-                    //         styles [
-                    //           'text-in-row'
-                    //         ]
-                    //       }
-                    //     }
-                    //   }
-                    // }
 
                     $AdwActionRow resize_amount_row {
                       title: _("Resize");
@@ -271,7 +186,7 @@ template $AppWindow : $AdwApplicationWindow {
                         spacing: 5;
                         Entry resize_width_value {
                           valign: center;
-                          placeholder-text: "Width";
+                          placeholder-text: _("Width");
                           tooltip-text: _("Width");
                           input-purpose: digits;
                           max-width-chars: 8;
@@ -279,7 +194,7 @@ template $AppWindow : $AdwApplicationWindow {
                         }
                         Entry resize_scale_width_value {
                           valign: center;
-                          placeholder-text: "Width";
+                          placeholder-text: _("Width");
                           input-purpose: digits;
                           tooltip-text: _("Width");
                           max-width-chars: 8;
@@ -294,7 +209,7 @@ template $AppWindow : $AdwApplicationWindow {
                         }
                         Entry resize_height_value {
                           valign: center;
-                          placeholder-text: "Height";
+                          placeholder-text: _("Height");
                           tooltip-text: _("Height");
                           input-purpose: digits;
                           max-width-chars: 8;
@@ -302,7 +217,7 @@ template $AppWindow : $AdwApplicationWindow {
                         }
                         Entry resize_scale_height_value {
                           valign: center;
-                          placeholder-text: "Width";
+                          placeholder-text: _("Width");
                           tooltip-text: _("Height");
                           input-purpose: digits;
                           max-width-chars: 8;
@@ -400,11 +315,6 @@ template $AppWindow : $AdwApplicationWindow {
 
 menu primary_menu {
   section {
-    // item {
-    //   label: _("New Window");
-    //   action: "app.new-window";
-    // }
-
     item {
       label: _("Open Files…");
       action: "app.open";
@@ -424,11 +334,6 @@ menu primary_menu {
   }
 
   section {
-    // item {
-    //   label: _("Preferences");
-    //   action: "app.preferences";
-    // }
-
     item {
       label: _("Keyboard Shortcuts");
       action: "win.show-help-overlay";

@@ -73,9 +73,6 @@ impl ResizeFilter {
 enum ResizeType {
     Percentage,
     ExactPixels,
-    // MinPixels,
-    // MaxPixels,
-    // Ratio,
 }
 
 impl ResizeType {
@@ -83,9 +80,6 @@ impl ResizeType {
         match index {
             0 => Some(ResizeType::Percentage),
             1 => Some(ResizeType::ExactPixels),
-            // 2 => Some(ResizeType::MinPixels),
-            // 3 => Some(ResizeType::MaxPixels),
-            // 4 => Some(ResizeType::Ratio),
             _ => None,
         }
     }
@@ -117,14 +111,10 @@ mod imp {
         pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub convert_button: TemplateChild<gtk::Button>,
-        // #[template_child]
-        // pub options_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub cancel_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub loading_spinner: TemplateChild<gtk::Spinner>,
-        // #[template_child]
-        // pub image: TemplateChild<gtk::Picture>,
         #[template_child]
         pub image_container: TemplateChild<gtk::FlowBox>,
         #[template_child]
@@ -134,10 +124,6 @@ mod imp {
         #[template_child]
         pub progress_bar: TemplateChild<gtk::ProgressBar>,
 
-        // #[template_child]
-        // pub image_type_label: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub image_size_label: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub output_filetype: TemplateChild<adw::ComboRow>,
         #[template_child]
@@ -161,24 +147,10 @@ mod imp {
         pub resize_height_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub link_axis: TemplateChild<gtk::ToggleButton>,
-        // #[template_child]
-        // pub resize_minmax_width_value: TemplateChild<gtk::Entry>,
-        // #[template_child]
-        // pub resize_minmax_height_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub resize_scale_width_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub resize_scale_height_value: TemplateChild<gtk::Entry>,
-        // #[template_child]
-        // pub svg_size_width_value: TemplateChild<gtk::Entry>,
-        // #[template_child]
-        // pub svg_size_height_value: TemplateChild<gtk::Entry>,
-        // #[template_child]
-        // pub svg_size_type: TemplateChild<adw::ComboRow>,
-        // #[template_child]
-        // pub ratio_width_value: TemplateChild<gtk::Entry>,
-        // #[template_child]
-        // pub ratio_height_value: TemplateChild<gtk::Entry>,
         #[template_child]
         pub dpi_value: TemplateChild<gtk::Entry>,
 
@@ -186,30 +158,6 @@ mod imp {
         pub quality_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub bgcolor_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub resize_row: TemplateChild<adw::ExpanderRow>,
-        // #[template_child]
-        // pub svg_size_row: TemplateChild<adw::ExpanderRow>,
-        // #[template_child]
-        // pub svg_size_width_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub svg_size_height_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub resize_width_row: TemplateChild<adw::ComboRow>,
-        // #[template_child]
-        // pub resize_height_row: TemplateChild<adw::ComboRow>,
-        // #[template_child]
-        // pub resize_minmax_width_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub resize_minmax_height_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub resize_scale_width_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub resize_scale_height_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub ratio_width_row: TemplateChild<adw::ActionRow>,
-        // #[template_child]
-        // pub ratio_height_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub dpi_row: TemplateChild<adw::ActionRow>,
 
@@ -246,13 +194,10 @@ mod imp {
                 convert_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
                 loading_spinner: TemplateChild::default(),
-                // image: TemplateChild::default(),
                 image_container: TemplateChild::default(),
                 supported_output_filetypes: TemplateChild::default(),
                 supported_compression_filetypes: TemplateChild::default(),
                 progress_bar: TemplateChild::default(),
-                // image_type_label: TemplateChild::default(),
-                // image_size_label: TemplateChild::default(),
                 output_filetype: TemplateChild::default(),
                 output_compression: TemplateChild::default(),
                 quality: TemplateChild::default(),
@@ -264,30 +209,11 @@ mod imp {
                 resize_width_value: TemplateChild::default(),
                 resize_height_value: TemplateChild::default(),
                 link_axis: TemplateChild::default(),
-                // resize_minmax_width_value: TemplateChild::default(),
-                // resize_minmax_height_value: TemplateChild::default(),
                 resize_scale_width_value: TemplateChild::default(),
                 resize_scale_height_value: TemplateChild::default(),
-                // svg_size_height_value: TemplateChild::default(),
-                // svg_size_width_value: TemplateChild::default(),
-                // svg_size_type: TemplateChild::default(),
-                // ratio_height_value: TemplateChild::default(),
-                // ratio_width_value: TemplateChild::default(),
                 dpi_value: TemplateChild::default(),
                 quality_row: TemplateChild::default(),
                 bgcolor_row: TemplateChild::default(),
-                // resize_row: TemplateChild::default(),
-                // svg_size_row: TemplateChild::default(),
-                // svg_size_width_row: TemplateChild::default(),
-                // svg_size_height_row: TemplateChild::default(),
-                // resize_width_row: TemplateChild::default(),
-                // resize_height_row: TemplateChild::default(),
-                // resize_minmax_width_row: TemplateChild::default(),
-                // resize_minmax_height_row: TemplateChild::default(),
-                // resize_scale_width_row: TemplateChild::default(),
-                // resize_scale_height_row: TemplateChild::default(),
-                // ratio_width_row: TemplateChild::default(),
-                // ratio_height_row: TemplateChild::default(),
                 dpi_row: TemplateChild::default(),
                 provider: gtk::CssProvider::new(),
                 input_file_store: gio::ListStore::new(InputFile::static_type()),
@@ -428,23 +354,6 @@ impl AppWindow {
                     }
                 }
             }));
-
-        // imp.resize_width_row
-        //     .connect_selected_notify(clone!(@weak self as this => move |_| {
-        //         this.update_resize();
-        //     }));
-        // imp.resize_height_row
-        //     .connect_selected_notify(clone!(@weak self as this => move |_| {
-        //         this.update_resize();
-        //     }));
-        // imp.svg_size_row
-        //     .connect_expanded_notify(clone!(@weak self as this => move |_| {
-        //         this.update_svg_size();
-        //     }));
-        // imp.svg_size_type
-        //     .connect_selected_notify(clone!(@weak self as this => move |_| {
-        //         this.update_svg_size();
-        //     }));
     }
 
     fn setup_provider(&self) {
@@ -789,26 +698,15 @@ impl AppWindow {
         self.load_options();
         imp.resize_scale_height_value.set_text("100");
         imp.resize_scale_width_value.set_text("100");
-        // imp.ratio_width_value.set_text("1");
-        // imp.ratio_height_value.set_text("1");
         if let (Some(image_width), Some(image_height)) =
             (imp.image_width.get(), imp.image_height.get())
         {
             imp.resize_width_value.set_text(&image_width.to_string());
             imp.resize_height_value.set_text(&image_height.to_string());
-            // imp.svg_size_width_value.set_text(&image_width.to_string());
-            // imp.svg_size_height_value
-            //     .set_text(&image_height.to_string());
         } else {
             imp.resize_width_value.set_text("");
             imp.resize_height_value.set_text("");
-            // imp.svg_size_width_value.set_text("");
-            // imp.svg_size_height_value.set_text("");
         }
-        // imp.resize_minmax_width_value
-        //     .set_text(&image_width.to_string());
-        // imp.resize_minmax_height_value
-        //     .set_text(&image_height.to_string());
         self.update_output_options();
         self.update_advanced_options();
 
@@ -900,27 +798,12 @@ impl AppWindow {
         let input_files: Vec<InputFile> =
             imp.input_file_store.iter::<InputFile>().flatten().collect();
         let input_filetypes: Vec<FileType> = input_files.iter().map(|inf| inf.kind()).collect();
-        // let text_filetypes: Vec<String> = input_filetypes
-        //     .iter()
-        //     .unique()
-        //     .map(|ft| {
-        //         format!(
-        //             "{} ({})",
-        //             ft.as_extension().to_ascii_uppercase(),
-        //             ft.as_mime()
-        //         )
-        //     })
-        //     .collect();
         let Some(output_filetype) = FileType::output_formats(self.imp().settings.boolean("show-less-popular")).nth(imp.output_filetype.selected() as usize) else {
             return;
         };
 
-        // imp.image_type_label
-        //     .set_subtitle(&text_filetypes.join(", "));
         imp.quality_row.set_visible(false);
         imp.bgcolor_row.set_visible(false);
-        // imp.svg_size_row.set_visible(false);
-        // imp.svg_size_row.set_enable_expansion(false);
         imp.dpi_row.set_visible(false);
 
         if output_filetype.is_lossy() {
@@ -934,13 +817,11 @@ impl AppWindow {
             imp.bgcolor_row.set_visible(true);
 
             if output_filetype.supports_alpha() {
-                // imp.bgcolor.dialog().unwrap().set_with_alpha(true);
                 imp.bgcolor.set_rgba(&gdk::RGBA::TRANSPARENT);
                 let color_dialog = ColorDialog::new();
                 color_dialog.set_with_alpha(true);
                 imp.bgcolor.set_dialog(&color_dialog);
             } else {
-                // imp.bgcolor.dialog().unwrap().set_wi th_alpha(false);
                 imp.bgcolor.set_rgba(&gdk::RGBA::WHITE);
                 let color_dialog = ColorDialog::new();
                 color_dialog.set_with_alpha(false);
@@ -970,7 +851,6 @@ impl AppWindow {
             if let (Some(image_width), Some(image_height)) =
                 (self.imp().image_width.get(), self.imp().image_height.get())
             {
-                // if self.imp().resize_height_value.is_focus() {
                 let old_value = self.imp().resize_width_value.text().as_str().to_owned();
                 let other_text = self.imp().resize_height_value.text().as_str().to_owned();
                 if other_text == "" {
@@ -998,7 +878,6 @@ impl AppWindow {
                 if old_value != new_value && new_value != "0" {
                     self.imp().resize_width_value.set_text(&new_value);
                 }
-                // }
             }
         }
     }
@@ -1016,7 +895,6 @@ impl AppWindow {
             if let (Some(image_width), Some(image_height)) =
                 (self.imp().image_width.get(), self.imp().image_height.get())
             {
-                // if self.imp().resize_width_value.is_focus() {
                 let old_value = self.imp().resize_height_value.text().as_str().to_owned();
                 let other_text = self.imp().resize_width_value.text().as_str().to_owned();
                 if other_text == "" {
@@ -1045,24 +923,18 @@ impl AppWindow {
                     self.imp().resize_height_value.set_text(&new_value);
                 }
             }
-            // }
         }
     }
 
     fn update_resize(&self) {
         let imp = self.imp();
 
-        // let resize_algorithm = ResizeFilter::from_index(imp.resize_filter.selected() as usize).unwrap();
         let resize_type = ResizeType::from_index(imp.resize_type.selected() as usize).unwrap();
         imp.resize_height_value.set_visible(false);
         imp.resize_width_value.set_visible(false);
         imp.resize_scale_height_value.set_visible(false);
         imp.resize_scale_width_value.set_visible(false);
         imp.link_axis.set_visible(false);
-        // imp.ratio_height_row.set_visible(false);
-        // imp.ratio_width_row.set_visible(false);
-        // imp.resize_minmax_height_row.set_visible(false);
-        // imp.resize_minmax_width_row.set_visible(false);
 
         match resize_type {
             ResizeType::Percentage => {
@@ -1076,32 +948,9 @@ impl AppWindow {
                 if imp.input_file_store.n_items() == 1 {
                     imp.link_axis.set_visible(true);
                 }
-            } // ResizeType::MaxPixels | ResizeType::MinPixels => {
-              //     imp.resize_minmax_height_row.set_visible(true);
-              //     imp.resize_minmax_width_row.set_visible(true);
-              // }
-              // ResizeType::Ratio => {
-              //     imp.ratio_height_row.set_visible(true);
-              //     imp.ratio_width_row.set_visible(true);
-              // }
+            }
         }
     }
-
-    // fn update_svg_size(&self) {
-    //     let imp = self.imp();
-    //     match imp.svg_size_type.selected() {
-    //         0 => {
-    //             imp.svg_size_width_row.set_visible(true);
-    //             imp.svg_size_height_row.set_visible(false);
-    //         }
-    //         1 => {
-    //             imp.svg_size_width_row.set_visible(false);
-    //             imp.svg_size_height_row.set_visible(true);
-    //         }
-    //         _ => unreachable!("Invalid SVG resize value"),
-    //     }
-    // }
-
     pub fn open_files(&self, files: Vec<Option<InputFile>>) {
         let files: Vec<InputFile> = files.into_iter().flatten().collect();
         if !files.is_empty() {
@@ -1242,38 +1091,6 @@ impl AppWindow {
                 width: imp.resize_width_value.text().to_string().parse().unwrap(),
                 height: imp.resize_height_value.text().to_string().parse().unwrap(),
             }),
-            // ResizeType::MaxPixels => Some(ResizeArgument::MaxPixels {
-            //     width: imp
-            //         .resize_minmax_width_value
-            //         .text()
-            //         .to_string()
-            //         .parse()
-            //         .unwrap(),
-            //     height: imp
-            //         .resize_minmax_height_value
-            //         .text()
-            //         .to_string()
-            //         .parse()
-            //         .unwrap(),
-            // }),
-            // ResizeType::MinPixels => Some(ResizeArgument::MinPixels {
-            //     width: imp
-            //         .resize_minmax_width_value
-            //         .text()
-            //         .to_string()
-            //         .parse()
-            //         .unwrap(),
-            //     height: imp
-            //         .resize_minmax_height_value
-            //         .text()
-            //         .to_string()
-            //         .parse()
-            //         .unwrap(),
-            // }),
-            // ResizeType::Ratio => Some(ResizeArgument::Ratio {
-            //     width: imp.ratio_width_value.text().to_string().parse().unwrap(),
-            //     height: imp.ratio_height_value.text().to_string().parse().unwrap(),
-            // }),
         }
     }
 
@@ -1856,8 +1673,6 @@ impl AppWindow {
     fn convert_clean(&self, temp_dir_path: String) {
         clean_dir(temp_dir_path);
         self.imp().convert_button.set_sensitive(true);
-        // self.imp().progress_bar.set_text(Some(&gettext("Loading…")));
-        // self.imp().progress_bar.set_fraction(0.0);
     }
 
     fn convert_cancel(&self) {
