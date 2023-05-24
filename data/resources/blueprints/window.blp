@@ -252,135 +252,70 @@ template $AppWindow : $AdwApplicationWindow {
                     //   }
                     // }
 
-                    $AdwExpanderRow resize_row {
+                    $AdwActionRow resize_amount_row {
                       title: _("Resize");
-                      show-enable-switch: true;
-                      $AdwActionRow resize_amount_row {
-                        [suffix]
+                      $AdwBin {
                         Box {
-                          Entry resize_width_value {
+                          DropDown resize_type {
                             valign: center;
-                            placeholder-text: "Width";
-                            tooltip-text: _("Width");
-                            input-purpose: digits;
-                            max-width-chars: 8;
-                            hexpand: false;
-                          }
-                          Entry resize_scale_width_value {
-                            valign: center;
-                            placeholder-text: "Width";
-                            input-purpose: digits;
-                            tooltip-text: _("Width");
-                            max-width-chars: 8;
-                            hexpand: false;
-                          }
-                          ToggleButton link_axis {
-                            active: true;
-                            valign: center;
-                            icon-name: 'chain-link-symbolic';
-                            tooltip-text: _("Preserve aspect ratio");
-                            styles ['raised']
-                          }
-                          Entry resize_height_value {
-                            valign: center;
-                            placeholder-text: "Height";
-                            tooltip-text: _("Height");
-                            input-purpose: digits;
-                            max-width-chars: 8;
-                            hexpand: false;
-                          }
-                          Entry resize_scale_height_value {
-                            valign: center;
-                            placeholder-text: "Width";
-                            tooltip-text: _("Height");
-                            input-purpose: digits;
-                            max-width-chars: 8;
-                            hexpand: false;
-                          }
-                          styles ["linked"]
-                        }
-                        [prefix]
-                        $AdwBin {
-                          Box {
-                            DropDown resize_type {
-                              valign: center;
-                              model:
-                              StringList resize_types {
-                                strings [_("Percentage"),_("Exact Pixels")]
-                              }
-                              ;
+                            model:
+                            StringList resize_types {
+                              strings [_("Percentage"),_("Exact Pixels")]
                             }
+                            ;
                           }
                         }
                       }
-                      $AdwComboRow resize_filter {
-                        title: _("Algorithm");
-                        model:
-                        StringList resize_filters {
-                          strings [_("Point"), _("Quadratic"), _("Cubic"), _("Mitchell"), _("Gaussian"), _("Lanczos")]
+                      Box {
+                        spacing: 5;
+                        Entry resize_width_value {
+                          valign: center;
+                          placeholder-text: "Width";
+                          tooltip-text: _("Width");
+                          input-purpose: digits;
+                          max-width-chars: 8;
+                          hexpand: false;
                         }
-                        ;
+                        Entry resize_scale_width_value {
+                          valign: center;
+                          placeholder-text: "Width";
+                          input-purpose: digits;
+                          tooltip-text: _("Width");
+                          max-width-chars: 8;
+                          hexpand: false;
+                        }
+                        ToggleButton link_axis {
+                          active: true;
+                          valign: center;
+                          icon-name: 'chain-link-symbolic';
+                          tooltip-text: _("Preserve aspect ratio");
+                          styles ['raised']
+                        }
+                        Entry resize_height_value {
+                          valign: center;
+                          placeholder-text: "Height";
+                          tooltip-text: _("Height");
+                          input-purpose: digits;
+                          max-width-chars: 8;
+                          hexpand: false;
+                        }
+                        Entry resize_scale_height_value {
+                          valign: center;
+                          placeholder-text: "Width";
+                          tooltip-text: _("Height");
+                          input-purpose: digits;
+                          max-width-chars: 8;
+                          hexpand: false;
+                        }
                       }
-                      // $AdwComboRow resize_height_row {
-                      //   title: _("Height");
-                      //   model: resize_axis_types;
-                      // }
-                      // $AdwActionRow resize_minmax_width_row {
-                      //   title: _("Width");
-                      //   $AdwBin {
-                      //     Entry resize_minmax_width_value {
-                      //       styles [
-                      //         'text-in-row'
-                      //       ]
-                      //     }
-                      //   }
-                      // }
-                      // $AdwActionRow resize_minmax_height_row {
-                      //   title: _("Height");
-                      //   $AdwBin {
-                      //     Entry resize_minmax_height_value {
-                      //       styles [
-                      //         'text-in-row'
-                      //       ]
-                      //     }
-                      //   }
-                      // }
-                      // $AdwActionRow resize_scale_width_row {
-                      //   title: _("Width Percentage Scale");
-                      //   $AdwBin {
-                      //     Entry resize_scale_width_value {
-                      //       valign: center;
-                      //     }
-                      //   }
-                      // }
-                      // $AdwActionRow resize_scale_height_row {
-                      //   title: _("Height Percentage Scale");
-                      //   $AdwBin {
-                      //     Entry resize_scale_height_value {
-                      //       valign: center;
-                      //     }
-                      //   }
-                      // }
-                      // $AdwActionRow ratio_width_row {
-                      //   title: _("Ratio Width");
-                      //   $AdwBin {
-                      //     Entry ratio_width_value {
-                      //       styles [
-                      //         'text-in-row'
-                      //       ]
-                      //     }
-                      //   }
-                      // }
-                      // $AdwActionRow ratio_height_row {
-                      //   title: _("Ratio Height");
-                      //   $AdwBin {
-                      //     Entry ratio_height_value {
-                      //       styles [
-                      //         'text-in-row'
-                      //       ]
-                      //     }
-                      //   }
-                      // }
+                    }
+                    $AdwComboRow resize_filter {
+                      title: _("Resize Algorithm");
+                      model:
+                      StringList resize_filters {
+                        strings [_("Point"), _("Quadratic"), _("Cubic"), _("Mitchell"), _("Gaussian"), _("Lanczos")]
+                      }
+                      ;
                     }
                     styles ["unfloating"]
                   }

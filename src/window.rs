@@ -186,8 +186,8 @@ mod imp {
         pub quality_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub bgcolor_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub resize_row: TemplateChild<adw::ExpanderRow>,
+        // #[template_child]
+        // pub resize_row: TemplateChild<adw::ExpanderRow>,
         // #[template_child]
         // pub svg_size_row: TemplateChild<adw::ExpanderRow>,
         // #[template_child]
@@ -276,7 +276,7 @@ mod imp {
                 dpi_value: TemplateChild::default(),
                 quality_row: TemplateChild::default(),
                 bgcolor_row: TemplateChild::default(),
-                resize_row: TemplateChild::default(),
+                // resize_row: TemplateChild::default(),
                 // svg_size_row: TemplateChild::default(),
                 // svg_size_width_row: TemplateChild::default(),
                 // svg_size_height_row: TemplateChild::default(),
@@ -378,9 +378,6 @@ impl AppWindow {
             .connect_selected_notify(clone!(@weak self as this => move |_| {
                 this.update_advanced_options();
                 this.update_compression_options();
-            }));
-        imp.resize_row
-            .connect_expanded_notify(clone!(@weak self as this => move |_| {
                 this.update_resize();
             }));
         imp.resize_type
@@ -915,8 +912,6 @@ impl AppWindow {
         //     .set_subtitle(&text_filetypes.join(", "));
         imp.quality_row.set_visible(false);
         imp.bgcolor_row.set_visible(false);
-        imp.resize_row.set_visible(false);
-        imp.resize_row.set_enable_expansion(false);
         // imp.svg_size_row.set_visible(false);
         // imp.svg_size_row.set_enable_expansion(false);
         imp.dpi_row.set_visible(false);
@@ -961,8 +956,6 @@ impl AppWindow {
         {
             imp.dpi_row.set_visible(true);
         }
-
-        imp.resize_row.set_visible(true);
     }
 
     fn update_width_from_height(&self) {
@@ -1211,10 +1204,7 @@ impl AppWindow {
     }
 
     fn get_filter_argument(&self) -> Option<ResizeFilter> {
-        match self.imp().resize_row.is_expanded() {
-            true => ResizeFilter::from_index(self.imp().resize_filter.selected() as usize),
-            false => None,
-        }
+        ResizeFilter::from_index(self.imp().resize_filter.selected() as usize)
     }
 
     fn get_svg_size_argument(&self) -> Option<ResizeArgument> {
@@ -1223,10 +1213,6 @@ impl AppWindow {
 
     fn get_resize_argument(&self) -> Option<ResizeArgument> {
         let imp = self.imp();
-
-        if !imp.resize_row.is_expanded() {
-            return None;
-        }
 
         let resize_type = ResizeType::from_index(imp.resize_type.selected() as usize).unwrap();
 
