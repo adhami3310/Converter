@@ -32,7 +32,7 @@ fn get_reduced(p: &Pixbuf) -> Pixbuf {
 //     let context = cairo::Context::new(&surface).unwrap();
 //     context.set_source_pixbuf(&p, ((p.width() - side) as f64) / -2.0, 0.0);
 //     context.paint().unwrap();
-//     gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
+//     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
 // }
 
 // fn crop_corners(p: &Pixbuf) -> Pixbuf {
