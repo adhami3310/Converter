@@ -43,3 +43,7 @@ dragoverlay {
   /* background-color: @thumbnail_bg_color; */
   margin: 5px;
 }
+
+value {
+  min-width: 2em;
+}
