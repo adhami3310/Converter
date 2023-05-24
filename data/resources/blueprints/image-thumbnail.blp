@@ -1,0 +1,49 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ImageThumbnail : FlowBoxChild {
+    
+    $AdwBin {
+        // hexpand: false;
+        // halign: center;
+        overflow: hidden;
+        Overlay {
+            hexpand: true;
+            vexpand: true;
+            
+            Box {
+                orientation: vertical;
+                hexpand: true;
+                vexpand: false;
+                Picture image {
+                    width-request: 150;
+                    height-request: 150;
+                    hexpand: true;
+                    vexpand: true;
+                    styles ["image-thumbnail"]
+                }
+
+                $AdwBin {
+                    hexpand: true;
+                    overflow: hidden;
+                    Box {
+                        halign: center;
+                        valign: center;
+                        Label content {}
+                    }
+                    styles ["image-caption", "caption"]
+                }
+
+            }
+
+            [overlay]
+            Button remove {
+                icon-name: "user-trash-symbolic";
+                styles ["circular", "image-remove"]
+                valign: start;
+                halign: end;
+            }
+        }
+        styles ["image-container", "card"]
+    }
+}

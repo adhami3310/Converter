@@ -1,4 +1,7 @@
+use std::cell::RefCell;
+use std::collections::HashSet;
 use std::path::Path;
+use std::rc::Rc;
 use std::sync::atomic::AtomicUsize;
 
 use crate::color::Color;
@@ -12,12 +15,13 @@ use crate::magick::{
     ResizeArgument,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
-use adw::{prelude::*, traits::ActionRowExt};
+use crate::widgets::image_thumbnail::ImageThumbnail;
+use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
 use glib::clone;
 use gtk::ColorDialog;
-use gtk::{gdk, gdk::gdk_pixbuf::Pixbuf, gio, glib, subclass::prelude::*};
+use gtk::{gdk, gio, glib, subclass::prelude::*};
 use itertools::Itertools;
 use shared_child::SharedChild;
 use std::sync::Arc;
@@ -110,6 +114,8 @@ mod imp {
         #[template_child]
         pub open_button: TemplateChild<gtk::Button>,
         #[template_child]
+        pub add_button: TemplateChild<gtk::Button>,
+        #[template_child]
         pub convert_button: TemplateChild<gtk::Button>,
         // #[template_child]
         // pub options_button: TemplateChild<gtk::Button>,
@@ -117,10 +123,10 @@ mod imp {
         pub cancel_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub loading_spinner: TemplateChild<gtk::Spinner>,
+        // #[template_child]
+        // pub image: TemplateChild<gtk::Picture>,
         #[template_child]
-        pub image: TemplateChild<gtk::Picture>,
-        #[template_child]
-        pub image_container: TemplateChild<adw::PreferencesGroup>,
+        pub image_container: TemplateChild<gtk::FlowBox>,
         #[template_child]
         pub supported_output_filetypes: TemplateChild<gtk::StringList>,
         #[template_child]
@@ -128,10 +134,10 @@ mod imp {
         #[template_child]
         pub progress_bar: TemplateChild<gtk::ProgressBar>,
 
-        #[template_child]
-        pub image_type_label: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub image_size_label: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub image_type_label: TemplateChild<adw::ActionRow>,
+        // #[template_child]
+        // pub image_size_label: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub output_filetype: TemplateChild<adw::ComboRow>,
         #[template_child]
@@ -236,16 +242,17 @@ mod imp {
                 drag_overlay: TemplateChild::default(),
                 stack: TemplateChild::default(),
                 open_button: TemplateChild::default(),
+                add_button: TemplateChild::default(),
                 convert_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
                 loading_spinner: TemplateChild::default(),
-                image: TemplateChild::default(),
+                // image: TemplateChild::default(),
                 image_container: TemplateChild::default(),
                 supported_output_filetypes: TemplateChild::default(),
                 supported_compression_filetypes: TemplateChild::default(),
                 progress_bar: TemplateChild::default(),
-                image_type_label: TemplateChild::default(),
-                image_size_label: TemplateChild::default(),
+                // image_type_label: TemplateChild::default(),
+                // image_size_label: TemplateChild::default(),
                 output_filetype: TemplateChild::default(),
                 output_compression: TemplateChild::default(),
                 quality: TemplateChild::default(),
@@ -355,6 +362,10 @@ impl AppWindow {
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.open_dialog();
             }));
+        imp.add_button
+            .connect_clicked(clone!(@weak self as this => move |_| {
+                this.add_dialog();
+            }));
         imp.convert_button
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.save_files();
@@ -420,6 +431,7 @@ impl AppWindow {
                     }
                 }
             }));
+
         // imp.resize_width_row
         //     .connect_selected_notify(clone!(@weak self as this => move |_| {
         //         this.update_resize();
@@ -619,6 +631,16 @@ impl AppWindow {
         );
     }
 
+    pub fn add_dialog(&self) {
+        FileChooser::open_files_wrapper(
+            self,
+            vec![],
+            AppWindow::open_load,
+            AppWindow::add_success_wrapper,
+            AppWindow::open_error,
+        );
+    }
+
     fn open_error(&self, error: Option<&str>) {
         match error {
             Some(_) => self
@@ -642,7 +664,13 @@ impl AppWindow {
 
     fn open_success_wrapper(&self, files: Vec<InputFile>) {
         glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.open_success(files).await;
+            this.open_success(files, true).await;
+        }));
+    }
+
+    fn add_success_wrapper(&self, files: Vec<InputFile>) {
+        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+            this.open_success(files, false).await;
         }));
     }
 
@@ -655,14 +683,16 @@ impl AppWindow {
                     let interim = JobFile::new(FileType::Png, Some(format!("{}.png",gettext("Pasted Image"))));
                     t.save_to_png(interim.as_filename()).ok();
                     let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
-                    this.open_success(vec![file]).await;
+                    this.open_success(vec![file], true).await;
                 }
             }));
         }
     }
 
-    async fn open_success(&self, files: Vec<InputFile>) {
-        self.imp().input_file_store.remove_all();
+    async fn open_success(&self, files: Vec<InputFile>, remove_old: bool) {
+        if remove_old {
+            self.imp().input_file_store.remove_all();
+        }
 
         self.imp().stack.set_visible_child_name("stack_loading");
 
@@ -675,7 +705,6 @@ impl AppWindow {
         let file_paths_pixbuf = files
             .iter()
             .filter(|f| f.kind().supports_pixbuff())
-            .take(5)
             .map(|f| f.generate_pixbuff());
 
         join_all(file_paths_pixbuf).await;
@@ -709,86 +738,49 @@ impl AppWindow {
         );
     }
 
+    fn remove_file(&self, i: u32, removed_elements: &HashSet<u32>) {
+        let removed_elements = removed_elements.clone();
+        self.imp().input_file_store.remove(i - (removed_elements.iter().filter(|x| **x < i).count() as u32));
+        self.imp()
+            .image_container
+            .set_filter_func(move |f| !removed_elements.contains(&(f.index() as u32)));
+    }
+
     fn load_pixbuff_finished(&self) {
         let imp = self.imp();
 
-        let mut loaded_pixbuffs = Vec::new();
+        let mut input_files = Vec::new();
         for input_file in self.imp().input_file_store.into_iter().flatten() {
             if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                if let Some(pixbuff) = input_file.pixbuf() {
-                    loaded_pixbuffs.push(pixbuff);
-                }
+                input_files.push((input_file.pixbuf(), input_file.kind()));
             }
         }
 
-        // let mut image_width = 1000;
-        // let mut image_height = 1000;
+        while let Some(child) = imp.image_container.first_child() {
+            imp.image_container.remove(&child);
+        }
 
-        match loaded_pixbuffs.len() {
-            0 => {
-                imp.image.set_pixbuf(None);
-                imp.image_size_label.set_visible(false);
-            }
-            1 => {
-                imp.image_width.set(Some(loaded_pixbuffs[0].width() as u32));
-                imp.image_height
-                    .set(Some(loaded_pixbuffs[0].height() as u32));
-                // image_width = loaded_pixbuffs[0].width();
-                // image_height = loaded_pixbuffs[0].height();
-                imp.image_size_label.set_subtitle(&format!(
-                    "({} × {})",
-                    loaded_pixbuffs[0].width(),
-                    loaded_pixbuffs[0].height()
-                ));
-                imp.image.set_pixbuf(Some(&loaded_pixbuffs[0]));
-                imp.image_size_label.set_visible(true);
-            }
-            _ => {
-                fn stack_images(pixbuffs: &Vec<Pixbuf>) -> Pixbuf {
-                    let side = pixbuffs
-                        .iter()
-                        .map(|p| std::cmp::min(p.width(), p.height()))
-                        .min()
-                        .unwrap();
-                    let larger_side =
-                        side + (((side as f64) * 0.2 * ((pixbuffs.len() - 1) as f64)) as i32);
-                    let canvas = Pixbuf::new(
-                        gdk::gdk_pixbuf::Colorspace::Rgb,
-                        true,
-                        8,
-                        larger_side,
-                        larger_side,
-                    )
-                    .unwrap();
-                    for (i, pix) in pixbuffs.iter().enumerate() {
-                        let offset = ((i as f64) * 0.2 * (side as f64)) as i32;
-                        let internal_width = (side as f64) / (pix.width() as f64);
-                        let internal_height = (side as f64) / (pix.height() as f64);
-                        let internal_offset = match internal_width > internal_height {
-                            true => internal_width,
-                            false => internal_height,
-                        };
-                        pix.scale(
-                            &canvas,
-                            offset,
-                            offset,
-                            side,
-                            side,
-                            offset as f64,
-                            offset as f64,
-                            internal_offset,
-                            internal_offset,
-                            gtk::gdk_pixbuf::InterpType::Bilinear,
-                        );
-                    }
-                    canvas
-                }
-                // image_width = loaded_pixbuffs[0].width();
-                // image_height = loaded_pixbuffs[0].height();
-                imp.image.set_pixbuf(Some(&stack_images(&loaded_pixbuffs)));
-                imp.image_size_label.set_visible(false);
-            }
-        };
+        let removed = Rc::new(RefCell::new(HashSet::new()));
+
+        for (i, (image, file_type)) in input_files.into_iter().enumerate() {
+            let caption = match &image {
+                Some(i) => format!(
+                    "{} · {}×{}",
+                    file_type.as_display_string(),
+                    i.width(),
+                    i.height(),
+                ),
+                None => file_type.as_display_string(),
+            };
+
+            let image_thumbnail = ImageThumbnail::new(image, &caption);
+            imp.image_container.append(&image_thumbnail);
+            let removed = removed.clone();
+            image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
+                removed.borrow_mut().insert(i as u32);
+                this.remove_file(i as u32, &removed.borrow());
+            }));
+        }
 
         self.load_options();
         imp.resize_scale_height_value.set_text("100");
@@ -904,23 +896,23 @@ impl AppWindow {
         let input_files: Vec<InputFile> =
             imp.input_file_store.iter::<InputFile>().flatten().collect();
         let input_filetypes: Vec<FileType> = input_files.iter().map(|inf| inf.kind()).collect();
-        let text_filetypes: Vec<String> = input_filetypes
-            .iter()
-            .unique()
-            .map(|ft| {
-                format!(
-                    "{} ({})",
-                    ft.as_extension().to_ascii_uppercase(),
-                    ft.as_mime()
-                )
-            })
-            .collect();
+        // let text_filetypes: Vec<String> = input_filetypes
+        //     .iter()
+        //     .unique()
+        //     .map(|ft| {
+        //         format!(
+        //             "{} ({})",
+        //             ft.as_extension().to_ascii_uppercase(),
+        //             ft.as_mime()
+        //         )
+        //     })
+        //     .collect();
         let Some(output_filetype) = FileType::output_formats(self.imp().settings.boolean("show-less-popular")).nth(imp.output_filetype.selected() as usize) else {
             return;
         };
 
-        imp.image_type_label
-            .set_subtitle(&text_filetypes.join(", "));
+        // imp.image_type_label
+        //     .set_subtitle(&text_filetypes.join(", "));
         imp.quality_row.set_visible(false);
         imp.bgcolor_row.set_visible(false);
         imp.resize_row.set_visible(false);

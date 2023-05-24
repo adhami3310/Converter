@@ -2,6 +2,7 @@
 <gresources>
     <gresource prefix="/io/gitlab/adhami3310/Converter/">
         <file compressed="true" preprocess="xml-stripblanks">blueprints/window.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">blueprints/image-thumbnail.ui</file>
         <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">blueprints/help-overlay.ui</file>
         <file compressed="true">style.css</file>
     </gresource>
