@@ -1,4 +1,3 @@
-subdir('icons')
 subdir('resources')
 
 # Desktop file

@@ -5,6 +5,15 @@
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-thumbnail.ui</file>
         <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">blueprints/help-overlay.ui</file>
         <file compressed="true">style.css</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.Devel.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/symbolic/apps/io.gitlab.adhami3310.Converter-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/actions/chain-link-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/actions/chain-link-loose-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/actions/im-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/actions/image-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/actions/plus-large-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/actions/user-trash-symbolic.svg</file>
     </gresource>
 
 </gresources>

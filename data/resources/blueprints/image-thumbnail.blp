@@ -12,12 +12,22 @@ template $ImageThumbnail : FlowBoxChild {
                 orientation: vertical;
                 hexpand: true;
                 vexpand: false;
-                Picture image {
-                    width-request: 150;
-                    height-request: 150;
-                    hexpand: true;
-                    vexpand: true;
-                    styles ["image-thumbnail"]
+                Box {
+                    Picture picture {
+                        width-request: 150;
+                        height-request: 150;
+                        hexpand: true;
+                        vexpand: true;
+                        styles ["image-thumbnail"]
+                    }
+                    Image image {
+                        width-request: 150;
+                        height-request: 150;
+                        hexpand: true;
+                        vexpand: true;
+                        icon-size: large;
+                        styles ["image-thumbnail"]
+                    }
                 }
 
                 $AdwBin {
