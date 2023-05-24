@@ -640,22 +640,16 @@ impl AppWindow {
 
     fn open_error(&self, error: Option<&str>) {
         match error {
-            Some(_) => self
-                .imp()
-                .stack
-                .set_visible_child_name("stack_invalid_image"),
+            Some(_) => self.switch_to_stack_invalid_image(),
             None if self.imp().input_file_store.n_items() > 0 => {
-                self.imp().stack.set_visible_child_name("stack_convert")
+                self.switch_to_stack_convert()
             }
-            None => self
-                .imp()
-                .stack
-                .set_visible_child_name("stack_welcome_page"),
+            None => self.switch_to_stack_welcome(),
         };
     }
 
     fn open_load(&self) {
-        self.imp().stack.set_visible_child_name("stack_loading");
+        self.switch_to_stack_loading();
         self.imp().loading_spinner.start();
     }
 
@@ -691,7 +685,7 @@ impl AppWindow {
             self.imp().input_file_store.remove_all();
         }
 
-        self.imp().stack.set_visible_child_name("stack_loading");
+        self.switch_to_stack_loading();
 
         for file in files.iter() {
             self.imp().input_file_store.append(file);
@@ -737,10 +731,20 @@ impl AppWindow {
 
     fn remove_file(&self, i: u32, removed_elements: &HashSet<u32>) {
         let removed_elements = removed_elements.clone();
-        self.imp().input_file_store.remove(i - (removed_elements.iter().filter(|x| **x < i).count() as u32));
+        self.imp()
+            .input_file_store
+            .remove(i - (removed_elements.iter().filter(|x| **x < i).count() as u32));
         self.imp()
             .image_container
             .set_filter_func(move |f| !removed_elements.contains(&(f.index() as u32)));
+        if self.imp().input_file_store.n_items() == 0 {
+            self.imp()
+                .stack
+                .set_visible_child_name("stack_welcome_page");
+            while let Some(widget) = self.imp().image_container.first_child() {
+                self.imp().image_container.remove(&widget);
+            }
+        }
     }
 
     fn load_pixbuff_finished(&self) {
@@ -771,6 +775,7 @@ impl AppWindow {
             };
 
             let image_thumbnail = ImageThumbnail::new(image, &caption);
+
             imp.image_container.append(&image_thumbnail);
             let removed = removed.clone();
             image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
@@ -778,6 +783,8 @@ impl AppWindow {
                 this.remove_file(i as u32, &removed.borrow());
             }));
         }
+
+        imp.image_container.unset_filter_func();
 
         self.load_options();
         imp.resize_scale_height_value.set_text("100");
@@ -805,7 +812,7 @@ impl AppWindow {
         self.update_output_options();
         self.update_advanced_options();
 
-        imp.stack.set_visible_child_name("stack_convert");
+        self.switch_to_stack_convert();
     }
 
     pub fn get_selected_output(&self) -> Option<FileType> {
@@ -1611,7 +1618,7 @@ impl AppWindow {
             }),
         );
 
-        self.imp().stack.set_visible_child_name("stack_converting");
+        self.switch_to_stack_converting();
     }
 
     fn move_output(
@@ -1819,7 +1826,7 @@ impl AppWindow {
         );
         dialog.present();
 
-        self.imp().stack.set_visible_child_name("stack_convert");
+        self.switch_to_stack_convert();
     }
 
     fn convert_success(&self, temp_dir_path: String, path: String, save_format: OutputType) {
@@ -1843,7 +1850,7 @@ impl AppWindow {
             }));
         }));
         self.imp().toast_overlay.add_toast(toast);
-        self.imp().stack.set_visible_child_name("stack_convert");
+        self.switch_to_stack_convert();
     }
 
     fn convert_clean(&self, temp_dir_path: String) {
@@ -1882,12 +1889,37 @@ impl AppWindow {
                         }
                     }
                     current_jobs.clear();
-                    this.imp().stack.set_visible_child_name("stack_convert");
+                    this.switch_to_stack_convert();
                     this.show_toast(&gettext("Converting Cancelled"));
                 }
             }),
         );
 
         stop_converting_dialog.present();
+    }
+
+    fn switch_to_stack_convert(&self) {
+        self.imp().add_button.set_visible(true);
+        self.imp().stack.set_visible_child_name("stack_convert");
+    }
+    
+    fn switch_to_stack_converting(&self) {
+        self.imp().add_button.set_visible(false);
+        self.imp().stack.set_visible_child_name("stack_converting");
+    }
+    
+    fn switch_to_stack_welcome(&self) {
+        self.imp().add_button.set_visible(false);
+        self.imp().stack.set_visible_child_name("stack_welcome_page");
+    }
+    
+    fn switch_to_stack_invalid_image(&self) {
+        self.imp().add_button.set_visible(false);
+        self.imp().stack.set_visible_child_name("stack_invalid_page");
+    }
+    
+    fn switch_to_stack_loading(&self) {
+        self.imp().add_button.set_visible(false);
+        self.imp().stack.set_visible_child_name("stack_loading");
     }
 }
