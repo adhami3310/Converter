@@ -57,6 +57,6 @@ value {
   font-size: 36pt;
 }
 
-.unit-drop .menu * {
+.unit-drop .menu contents {
   min-width: 0px;
 }
