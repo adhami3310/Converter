@@ -72,7 +72,10 @@ pub enum ResizeArgument {
 
 impl MagickArgument for ResizeFilter {
     fn get_argument(&self) -> Vec<String> {
-        vec!["-filter".to_string(), self.as_display_string().to_owned()]
+        match self.as_display_string() {
+            Some (x) => vec!["-filter".to_string(), x.to_owned()],
+            None => vec![],
+        }
     }
 }
 

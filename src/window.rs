@@ -31,12 +31,8 @@ use tokio::spawn;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ResizeFilter {
+    Default,
     Point,
-    Quadratic,
-    Cubic,
-    Mitchell,
-    Gaussian,
-    Lanczos,
 }
 
 enum ArcOrOptionError {
@@ -46,25 +42,17 @@ enum ArcOrOptionError {
 
 #[allow(dead_code)]
 impl ResizeFilter {
-    pub fn as_display_string(&self) -> &str {
+    pub fn as_display_string(&self) -> Option<&str> {
         match self {
-            ResizeFilter::Point => "Point",
-            ResizeFilter::Quadratic => "Quadratic",
-            ResizeFilter::Cubic => "Cubic",
-            ResizeFilter::Mitchell => "Mitchell",
-            ResizeFilter::Gaussian => "Gaussian",
-            ResizeFilter::Lanczos => "Lanczos",
+            ResizeFilter::Default => None,
+            ResizeFilter::Point => Some("Point"),
         }
     }
 
     pub fn from_index(index: usize) -> Option<Self> {
         match index {
-            0 => Some(ResizeFilter::Point),
-            1 => Some(ResizeFilter::Quadratic),
-            2 => Some(ResizeFilter::Cubic),
-            3 => Some(ResizeFilter::Mitchell),
-            4 => Some(ResizeFilter::Gaussian),
-            5 => Some(ResizeFilter::Lanczos),
+            0 => Some(ResizeFilter::Default),
+            1 => Some(ResizeFilter::Point),
             _ => None,
         }
     }
