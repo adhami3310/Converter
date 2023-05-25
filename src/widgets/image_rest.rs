@@ -1,3 +1,4 @@
+use gettextrs::gettext;
 use glib::SignalHandlerId;
 use gtk::{gio, glib, subclass::prelude::*, traits::ButtonExt};
 
@@ -55,7 +56,7 @@ impl ImageRest {
 
         bin.setup_callbacks();
 
-        bin.imp().content.set_label(&format!("+{count}"));
+        bin.imp().content.set_label(&gettext!("+{}", count));
 
         bin
     }
