@@ -47,3 +47,8 @@ dragoverlay {
 value {
   min-width: 2em;
 }
+
+.lock {
+  min-height: 30px;
+  min-width: 30px;
+}

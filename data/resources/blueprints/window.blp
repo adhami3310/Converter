@@ -177,18 +177,6 @@ template $AppWindow : $AdwApplicationWindow {
 
                     $AdwActionRow resize_amount_row {
                       title: _("Resize");
-                      $AdwBin {
-                        Box {
-                          DropDown resize_type {
-                            valign: center;
-                            model:
-                            StringList resize_types {
-                              strings [_("Percentage"),_("Exact Pixels")]
-                            }
-                            ;
-                          }
-                        }
-                      }
                       Box {
                         spacing: 5;
                         Entry resize_width_value {
@@ -212,7 +200,7 @@ template $AppWindow : $AdwApplicationWindow {
                           valign: center;
                           icon-name: 'chain-link-symbolic';
                           tooltip-text: _("Preserve aspect ratio");
-                          styles ['raised']
+                          styles ['raised', 'circular', 'lock']
                         }
                         Entry resize_height_value {
                           valign: center;
@@ -229,6 +217,19 @@ template $AppWindow : $AdwApplicationWindow {
                           input-purpose: digits;
                           max-width-chars: 8;
                           hexpand: false;
+                        }
+                      }
+                      $AdwBin {
+                        Box {
+                          DropDown resize_type {
+                            valign: center;
+                            model:
+                            StringList resize_types {
+                              strings [_("%"),_("px")]
+                            }
+                            ;
+                            styles ["flat"]
+                          }
                         }
                       }
                     }
