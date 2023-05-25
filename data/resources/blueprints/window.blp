@@ -234,13 +234,21 @@ template $AppWindow : $AdwApplicationWindow {
                         }
                       }
                     }
-                    $AdwComboRow resize_filter {
+                    $AdwActionRow resize_filter_row {
                       title: _("Resize Algorithm");
-                      model:
-                      StringList resize_filters {
-                        strings [_("Default"), _("Pixel Art")]
+                      
+                      Box {
+                        valign: center;
+                        ToggleButton resize_filter_default {
+                          active: true;
+                          label: _("Default");
+                        }
+                        ToggleButton resize_filter_pixel {
+                          active: false;
+                          label: _("Pixel Art");
+                        }
+                        styles ["linked"]
                       }
-                      ;
                     }
                     styles ["unfloating"]
                   }

@@ -3,7 +3,7 @@ use gtk::{
     gdk::gdk_pixbuf::{Colorspace, Pixbuf},
     gio, glib,
     prelude::*,
-    subclass::prelude::*,
+    subclass::prelude::*, cairo,
 };
 use once_cell::sync::Lazy;
 use std::cell::{Cell, RefCell};
@@ -138,6 +138,8 @@ impl InputFile {
 
         let pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
 
+        let pixbuf = get_square(&get_reduced(&pixbuf));
+
         self.set_property("pixbuff", pixbuf);
 
         Ok(())
@@ -175,4 +177,37 @@ impl InputFile {
     pub fn kind(&self) -> FileType {
         self.imp().kind.get()
     }
+}
+
+
+fn get_reduced(p: &Pixbuf) -> Pixbuf {
+    let max_side = 200.0;
+    let (width, height) = (p.width() as f64, p.height() as f64);
+    let max_original_side = std::cmp::min(width as usize, height as usize) as f64;
+    let (scaled_width, scaled_height) = (
+        width * max_side / max_original_side,
+        height * max_side / max_original_side,
+    );
+    let surface = cairo::ImageSurface::create(
+        cairo::Format::ARgb32,
+        scaled_width as i32,
+        scaled_height as i32,
+    )
+    .unwrap();
+    let context = cairo::Context::new(&surface).unwrap();
+    context.scale(scaled_width / width, scaled_height / height);
+    context.set_source_pixbuf(&p, 0.0, 0.0);
+    context.paint().unwrap();
+    context.scale(width / scaled_width, height / scaled_height);
+    gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, scaled_width as i32, scaled_height as i32)
+        .unwrap()
+}
+
+pub fn get_square(p: &Pixbuf) -> Pixbuf {
+    let side = std::cmp::min(p.width(), p.height());
+    let surface = cairo::ImageSurface::create(cairo::Format::ARgb32, side, side).unwrap();
+    let context = cairo::Context::new(&surface).unwrap();
+    context.set_source_pixbuf(&p, ((p.width() - side) as f64) / -2.0, ((p.height() - side) as f64) / -2.0);
+    context.paint().unwrap();
+    gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
 }

@@ -7,7 +7,7 @@ use crate::config::APP_ID;
 use crate::drag_overlay::DragOverlay;
 use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
-use crate::input_file::InputFile;
+use crate::input_file::{InputFile, get_square};
 use crate::magick::{
     count_frames, pixbuf_bytes, wait_for_child, ConvertJob, GhostScriptConvertJob, JobFile,
     MagickConvertJob, ResizeArgument,
@@ -127,9 +127,11 @@ mod imp {
         #[template_child]
         pub bgcolor: TemplateChild<gtk::ColorDialogButton>,
         #[template_child]
-        pub resize_filters: TemplateChild<gtk::StringList>,
+        pub resize_filter_default: TemplateChild<gtk::ToggleButton>,
         #[template_child]
-        pub resize_filter: TemplateChild<adw::ComboRow>,
+        pub resize_filter_pixel: TemplateChild<gtk::ToggleButton>,
+        #[template_child]
+        pub resize_filter_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub resize_amount_row: TemplateChild<adw::ActionRow>,
         #[template_child]
@@ -199,8 +201,9 @@ mod imp {
                 output_compression: TemplateChild::default(),
                 quality: TemplateChild::default(),
                 bgcolor: TemplateChild::default(),
-                resize_filters: TemplateChild::default(),
-                resize_filter: TemplateChild::default(),
+                resize_filter_default: TemplateChild::default(),
+                resize_filter_pixel: TemplateChild::default(),
+                resize_filter_row: TemplateChild::default(),
                 resize_amount_row: TemplateChild::default(),
                 resize_type: TemplateChild::default(),
                 resize_width_value: TemplateChild::default(),
@@ -356,6 +359,7 @@ impl AppWindow {
         imp.back_button
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.switch_to_stack_convert();
+                this.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
             }));
         imp.image_container.set_filter_func(clone!(@weak self as this => @default-return false, move |f| {
             return (f.index() as usize) >= this.imp().elements.get() || !this.imp().removed.borrow().contains(&(f.index() as u32));
@@ -365,6 +369,24 @@ impl AppWindow {
                 return !this.imp().removed.borrow().contains(&(f.index() as u32));
             }),
         );
+        imp.resize_filter_default
+            .connect_toggled(clone!(@weak self as this => move |f| {
+                match (f.is_active(), this.imp().resize_filter_pixel.is_active()) {
+                    (x, y) if x == y => {
+                        this.imp().resize_filter_pixel.set_active(!x);
+                    }
+                    _ => {}
+                }
+            }));
+        imp.resize_filter_pixel
+            .connect_toggled(clone!(@weak self as this => move |f| {
+                match (f.is_active(), this.imp().resize_filter_default.is_active()) {
+                    (x, y) if x == y => {
+                        this.imp().resize_filter_default.set_active(!x);
+                    }
+                    _ => {}
+                }
+            }));
         self.load_options();
     }
 
@@ -660,10 +682,10 @@ impl AppWindow {
         }
     }
 
-    fn collect_pixbuf_wrapper(&self, count: usize, remaining_visible: bool) {
+    fn collect_pixbuf_wrapper(&self, count: usize, other_count: usize, remaining_visible: bool) {
         glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.collect_pixbuf(count).await;
             this.build_from_count(count, remaining_visible);
+            this.collect_pixbuf(other_count).await;
         }));
     }
 
@@ -715,7 +737,7 @@ impl AppWindow {
             elements -= 1;
         }
 
-        self.collect_pixbuf_wrapper(elements, remaining_visible);
+        self.collect_pixbuf_wrapper(elements, remaining_elements, remaining_visible);
     }
 
     fn build_from_count(&self, count: usize, remaining_visible: bool) {
@@ -732,31 +754,41 @@ impl AppWindow {
             imp.image_container.remove(&child);
         }
 
+        let removed = self.imp().removed.borrow().clone();
+
         for (i, (image, file_type)) in input_files.into_iter().take(count).enumerate() {
-            let caption = match &image {
-                Some(i) => format!(
-                    "{} · {}×{}",
-                    file_type.as_display_string(),
-                    i.width(),
-                    i.height(),
-                ),
-                None => file_type.as_display_string(),
-            };
+            match removed.contains(&(i as u32)) {
+                false => {
+                    let caption = match &image {
+                        Some(i) => format!(
+                            "{} · {}×{}",
+                            file_type.as_display_string(),
+                            i.width(),
+                            i.height(),
+                        ),
+                        None => file_type.as_display_string(),
+                    };
+        
+                    let image_thumbnail = ImageThumbnail::new(image, &caption);
+        
+                    imp.image_container.append(&image_thumbnail);
+                    image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
+                        this.remove_file(i as u32);
+                        this.imp().image_container.invalidate_filter();
+                        this.imp().full_image_container.invalidate_filter();
+                    }));
+                }
+                true => {
+                    imp.image_container.append(&gtk::FlowBoxChild::new());
+                }
 
-            let image_thumbnail = ImageThumbnail::new(image, &caption);
-
-            imp.image_container.append(&image_thumbnail);
-            image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
-                this.remove_file(i as u32);
-                this.imp().image_container.invalidate_filter();
-                this.imp().full_image_container.invalidate_filter();
-            }));
+            }
         }
 
         imp.elements.replace(count);
 
         if remaining_visible {
-            let image_rest = ImageRest::new();
+            let image_rest = ImageRest::new(self.get_file_count() - 5);
             imp.image_container.append(&image_rest);
             image_rest.connect_clicked(clone!(@weak self as this => move |_| {
                 this.switch_to_stack_all_images_wrapper();
@@ -787,6 +819,7 @@ impl AppWindow {
         imp.full_image_container.invalidate_filter();
 
         self.update_options();
+        self.switch_to_stack_convert();
     }
 
     fn update_options(&self) {
@@ -804,8 +837,6 @@ impl AppWindow {
         }
         self.update_output_options();
         self.update_advanced_options();
-
-        self.switch_to_stack_convert();
     }
 
     pub fn get_selected_output(&self) -> Option<FileType> {
@@ -944,9 +975,9 @@ impl AppWindow {
             .iter()
             .all(|input_filetype| *input_filetype == FileType::Svg)
         {
-            imp.resize_filter.set_visible(false);
+            imp.resize_filter_row.set_visible(false);
         } else {
-            imp.resize_filter.set_visible(true);
+            imp.resize_filter_row.set_visible(true);
         }
 
         if input_filetypes
@@ -1182,7 +1213,10 @@ impl AppWindow {
     }
 
     fn get_filter_argument(&self) -> Option<ResizeFilter> {
-        ResizeFilter::from_index(self.imp().resize_filter.selected() as usize)
+        match self.imp().resize_filter_default.is_active() {
+            true => Some(ResizeFilter::Default),
+            false => Some(ResizeFilter::Point),
+        }
     }
 
     fn get_svg_size_argument(&self) -> Option<ResizeArgument> {
@@ -1847,14 +1881,16 @@ impl AppWindow {
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
     }
-
+    
     fn switch_to_stack_converting(&self) {
+        self.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_converting");
     }
 
     fn switch_to_stack_welcome(&self) {
+        self.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
@@ -1863,6 +1899,7 @@ impl AppWindow {
     }
 
     fn switch_to_stack_invalid_image(&self) {
+        self.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
@@ -1923,7 +1960,7 @@ impl AppWindow {
                 for (f, p) in files.iter().zip(pixpaths.iter()) {
                     if let Some(p) = p {
                         let stream = gio::MemoryInputStream::from_bytes(p);
-                        let pixbuf = Pixbuf::from_stream_at_scale(&stream, 150, 150, true, Cancellable::NONE).unwrap();
+                        let pixbuf = get_square(&Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE).unwrap());
                         f.set_pixbuf(pixbuf);
                     }
                 }
@@ -1973,6 +2010,7 @@ impl AppWindow {
             }));
         }
 
+        imp.stack.set_transition_type(gtk::StackTransitionType::OverLeftRight);
         imp.stack.set_visible_child_name("stack_all_images");
         imp.back_button.set_visible(true);
     }

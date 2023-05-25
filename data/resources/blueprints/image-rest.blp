@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ImageRest : FlowBoxChild {
+    halign: center;
     $AdwBin {
         overflow: hidden;
         Button image {
@@ -10,6 +11,19 @@ template $ImageRest : FlowBoxChild {
             vexpand: true;
             width-request: 150;
             height-request: 150;
+            Box {
+                orientation: vertical;
+                halign: center;
+                valign: center;
+                Label content {
+                    label: "+13";
+                    styles ["large_number"]
+                }
+                Label {
+                    label: "Show All";
+                }
+            }
+            styles ["flat"]
         }
         styles ["image-container", "card"]
     }

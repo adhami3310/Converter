@@ -2,32 +2,20 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ImageThumbnail : FlowBoxChild {
+    halign: center;
     $AdwBin {
         overflow: hidden;
-        Overlay {
-            
+        Overlay {            
             Box {
                 orientation: vertical;
-                hexpand: true;
-                vexpand: true;
-                Box {
-                    Picture picture {
-                        width-request: 150;
-                        height-request: 150;
-                        content-fit: cover;
-                        hexpand: true;
-                        vexpand: true;
-                        styles ["image-thumbnail"]
-                    }
-                    Image image {
-                        width-request: 150;
-                        height-request: 150;
-                        hexpand: true;
-                        vexpand: true;
-                        icon-size: large;
-                        styles ["image-thumbnail"]
-                    }
-                }
+                Image image {
+                    width-request: 150;
+                    height-request: 150;
+                    hexpand: true;
+                    vexpand: true;
+                    icon-size: large;
+                    styles ["image-thumbnail"]
+                }                
 
                 $AdwBin {
                     hexpand: true;

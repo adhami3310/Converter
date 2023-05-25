@@ -1,39 +1,7 @@
 use adw::prelude::*;
 use glib::{SignalHandlerId, Value};
-use gtk::{gdk::cairo, gdk::gdk_pixbuf::Pixbuf, gio, glib, subclass::prelude::*};
+use gtk::{gdk::gdk_pixbuf::Pixbuf, gio, glib, subclass::prelude::*};
 use once_cell::sync::Lazy;
-
-fn get_reduced(p: &Pixbuf) -> Pixbuf {
-    let max_side = 150.0;
-    let (width, height) = (p.width() as f64, p.height() as f64);
-    let max_original_side = std::cmp::max(width as usize, height as usize) as f64;
-    let (scaled_width, scaled_height) = (
-        width * max_side / max_original_side,
-        height * max_side / max_original_side,
-    );
-    let surface = cairo::ImageSurface::create(
-        cairo::Format::ARgb32,
-        scaled_width as i32,
-        scaled_height as i32,
-    )
-    .unwrap();
-    let context = cairo::Context::new(&surface).unwrap();
-    context.scale(scaled_width / width, scaled_height / height);
-    context.set_source_pixbuf(&p, 0.0, 0.0);
-    context.paint().unwrap();
-    context.scale(width / scaled_width, height / scaled_height);
-    gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, scaled_width as i32, scaled_height as i32)
-        .unwrap()
-}
-
-// fn get_square(p: &Pixbuf) -> Pixbuf {
-//     let side = std::cmp::min(p.width(), p.height());
-//     let surface = cairo::ImageSurface::create(cairo::Format::ARgb32, side, side).unwrap();
-//     let context = cairo::Context::new(&surface).unwrap();
-//     context.set_source_pixbuf(&p, ((p.width() - side) as f64) / -2.0, 0.0);
-//     context.paint().unwrap();
-//     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
-// }
 
 // fn crop_corners(p: &Pixbuf) -> Pixbuf {
 //     let thumbnail_dimension = 512;
@@ -97,8 +65,8 @@ mod imp {
     pub struct ImageThumbnail {
         #[template_child]
         pub image: TemplateChild<gtk::Image>,
-        #[template_child]
-        pub picture: TemplateChild<gtk::Picture>,
+        // #[template_child]
+        // pub picture: TemplateChild<gtk::Picture>,
         #[template_child]
         pub content: TemplateChild<gtk::Label>,
         #[template_child]
@@ -122,7 +90,7 @@ mod imp {
         fn new() -> Self {
             Self {
                 image: TemplateChild::default(),
-                picture: TemplateChild::default(),
+                // picture: TemplateChild::default(),
                 content: TemplateChild::default(),
                 remove: TemplateChild::default(),
             }
@@ -153,14 +121,15 @@ mod imp {
                         .expect("Value must be a Pixbuff");
                     match p {
                         Some(p) => {
-                            self.picture.set_pixbuf(Some(&get_reduced(&p)));
-                            self.image.set_visible(false);
-                            self.picture.set_visible(true);
+                            // self.image.set_from_pixbuf(Some(&get_reduced(&p)));
+                            self.image.set_from_pixbuf(Some(&p));
+                            // self.image.set_visible(true);
+                            // self.picture.set_visible(false);
                         }
                         None => {
                             self.image.set_icon_name(Some("image-symbolic"));
-                            self.image.set_visible(true);
-                            self.picture.set_visible(false);
+                            // self.image.set_visible(true);
+                            // self.picture.set_visible(false);
                         }
                     }
                 }

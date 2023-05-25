@@ -7,11 +7,13 @@ mod imp {
 
     use gtk::CompositeTemplate;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, CompositeTemplate, Default)]
     #[template(resource = "/io/gitlab/adhami3310/Converter/blueprints/image-rest.ui")]
     pub struct ImageRest {
         #[template_child]
         pub image: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub content: TemplateChild<gtk::Label>,
     }
 
     #[glib::object_subclass]
@@ -29,9 +31,7 @@ mod imp {
         }
 
         fn new() -> Self {
-            Self {
-                image: TemplateChild::default(),
-            }
+            Self::default()
         }
     }
 
@@ -50,10 +50,12 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl ImageRest {
-    pub fn new() -> Self {
+    pub fn new(count: usize) -> Self {
         let bin = glib::Object::builder::<ImageRest>().build();
 
         bin.setup_callbacks();
+
+        bin.imp().content.set_label(&format!("+{count}"));
 
         bin
     }
