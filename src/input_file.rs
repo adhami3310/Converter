@@ -128,6 +128,10 @@ impl InputFile {
     }
 
     pub async fn generate_pixbuff(&self) -> Result<(), Box<dyn std::error::Error>> {
+        if self.pixbuf().is_some() || !self.kind().supports_pixbuff() {
+            return Ok(());
+        }
+
         let stream = gio::File::for_path(self.path())
             .read_future(glib::PRIORITY_DEFAULT)
             .await?;
@@ -154,6 +158,10 @@ impl InputFile {
 
     pub fn set_frames(&self, f: usize) {
         self.imp().frames.replace(f);
+    }
+
+    pub fn set_pixbuf(&self, p: Pixbuf) {
+        self.imp().pixbuff.replace(p);
     }
 
     pub fn path(&self) -> String {

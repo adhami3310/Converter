@@ -13,9 +13,14 @@ template $AppWindow : $AdwApplicationWindow {
 
     $AdwHeaderBar headerbar {
       Button add_button {
-        name: "button_back";
         icon-name: 'plus-large-symbolic';
         tooltip-text: _('Add More Images');
+        visible: false;
+        styles ['flat']
+      }
+      Button back_button {
+        icon-name: 'go-previous-symbolic';
+        tooltip-text: _('Back');
         visible: false;
         styles ['flat']
       }
@@ -111,10 +116,12 @@ template $AppWindow : $AdwApplicationWindow {
                 $AdwPreferencesPage {
                   $AdwPreferencesGroup {
                     FlowBox image_container {
-                      row-spacing: 5;
-                      column-spacing: 5;
-                      selection-mode: none;
+                      homogeneous: true;
+                      hexpand: true;
                       vexpand: false;
+                      column-spacing: 12;
+                      row-spacing: 12;
+                      selection-mode: none;
                     }
                   }
 
@@ -262,10 +269,23 @@ template $AppWindow : $AdwApplicationWindow {
 
 
           StackPage {
-            name: "options_page";
+            name: "stack_all_images";
             child:
-            $AdwPreferencesPage {
-              
+            ScrolledWindow {
+              vexpand: true;
+              hexpand: true;
+              FlowBox full_image_container {
+                homogeneous: true;
+                halign: center;
+                valign: start;
+                column-spacing: 12;
+                row-spacing: 12;
+                margin-top: 16;
+                margin-bottom: 16;
+                margin-start: 16;
+                margin-end: 16;
+                selection-mode: none;
+              }
             }
 
             ;

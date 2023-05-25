@@ -1,0 +1,16 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ImageRest : FlowBoxChild {
+    $AdwBin {
+        overflow: hidden;
+        Button image {
+            icon-name: "view-more-horizontal-symbolic";
+            hexpand: true;
+            vexpand: true;
+            width-request: 150;
+            height-request: 150;
+        }
+        styles ["image-container", "card"]
+    }
+}

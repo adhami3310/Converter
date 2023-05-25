@@ -196,7 +196,7 @@ impl FileChooser {
         A: Fn(&AppWindow, OutputType, String) + 'static,
         B: Fn(&AppWindow, Option<&str>) + 'static,
     {
-        let dialog = gtk::FileDialog::builder().modal(true).build();
+        let dialog = gtk::FileDialog::builder().build();
 
         if let Some(default_folder) = default_folder {
             dialog.set_initial_folder(Some(&gio::File::for_path(default_folder)));

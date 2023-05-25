@@ -1,7 +1,5 @@
-use std::cell::RefCell;
 use std::collections::HashSet;
 use std::path::Path;
-use std::rc::Rc;
 use std::sync::atomic::AtomicUsize;
 
 use crate::color::Color;
@@ -11,15 +9,18 @@ use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
 use crate::input_file::InputFile;
 use crate::magick::{
-    count_frames, wait_for_child, ConvertJob, GhostScriptConvertJob, JobFile, MagickConvertJob,
-    ResizeArgument,
+    count_frames, pixbuf_bytes, wait_for_child, ConvertJob, GhostScriptConvertJob, JobFile,
+    MagickConvertJob, ResizeArgument,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
+use crate::widgets::image_rest::ImageRest;
 use crate::widgets::image_thumbnail::ImageThumbnail;
 use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
 use glib::clone;
+use gtk::gdk_pixbuf::Pixbuf;
+use gtk::gio::Cancellable;
 use gtk::ColorDialog;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
 use itertools::Itertools;
@@ -110,6 +111,8 @@ mod imp {
         #[template_child]
         pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
+        pub back_button: TemplateChild<gtk::Button>,
+        #[template_child]
         pub convert_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub cancel_button: TemplateChild<gtk::Button>,
@@ -117,6 +120,8 @@ mod imp {
         pub loading_spinner: TemplateChild<gtk::Spinner>,
         #[template_child]
         pub image_container: TemplateChild<gtk::FlowBox>,
+        #[template_child]
+        pub full_image_container: TemplateChild<gtk::FlowBox>,
         #[template_child]
         pub supported_output_filetypes: TemplateChild<gtk::StringList>,
         #[template_child]
@@ -168,6 +173,8 @@ mod imp {
         pub current_jobs: RefCell<Vec<Arc<SharedChild>>>,
         pub image_width: Cell<Option<u32>>,
         pub image_height: Cell<Option<u32>>,
+        pub removed: RefCell<HashSet<u32>>,
+        pub elements: Cell<usize>,
     }
 
     #[glib::object_subclass]
@@ -191,10 +198,12 @@ mod imp {
                 stack: TemplateChild::default(),
                 open_button: TemplateChild::default(),
                 add_button: TemplateChild::default(),
+                back_button: TemplateChild::default(),
                 convert_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
                 loading_spinner: TemplateChild::default(),
                 image_container: TemplateChild::default(),
+                full_image_container: TemplateChild::default(),
                 supported_output_filetypes: TemplateChild::default(),
                 supported_compression_filetypes: TemplateChild::default(),
                 progress_bar: TemplateChild::default(),
@@ -223,6 +232,8 @@ mod imp {
                 current_jobs: RefCell::new(Vec::new()),
                 image_height: Cell::new(None),
                 image_width: Cell::new(None),
+                removed: RefCell::new(HashSet::new()),
+                elements: Cell::new(0),
             }
         }
     }
@@ -354,6 +365,19 @@ impl AppWindow {
                     }
                 }
             }));
+        imp.back_button
+            .connect_clicked(clone!(@weak self as this => move |_| {
+                this.switch_to_stack_convert();
+            }));
+        imp.image_container.set_filter_func(clone!(@weak self as this => @default-return false, move |f| {
+            return (f.index() as usize) >= this.imp().elements.get() || !this.imp().removed.borrow().contains(&(f.index() as u32));
+        }));
+        imp.full_image_container.set_filter_func(
+            clone!(@weak self as this => @default-return false, move |f| {
+                return !this.imp().removed.borrow().contains(&(f.index() as u32));
+            }),
+        );
+        self.load_options();
     }
 
     fn setup_provider(&self) {
@@ -550,9 +574,7 @@ impl AppWindow {
     fn open_error(&self, error: Option<&str>) {
         match error {
             Some(_) => self.switch_to_stack_invalid_image(),
-            None if self.imp().input_file_store.n_items() > 0 => {
-                self.switch_to_stack_convert()
-            }
+            None if self.imp().input_file_store.n_items() > 0 => self.switch_to_stack_convert(),
             None => self.switch_to_stack_welcome(),
         };
     }
@@ -605,6 +627,7 @@ impl AppWindow {
         let file_paths_pixbuf = files
             .iter()
             .filter(|f| f.kind().supports_pixbuff())
+            .take(5)
             .map(|f| f.generate_pixbuff());
 
         join_all(file_paths_pixbuf).await;
@@ -638,25 +661,76 @@ impl AppWindow {
         );
     }
 
-    fn remove_file(&self, i: u32, removed_elements: &HashSet<u32>) {
-        let removed_elements = removed_elements.clone();
-        self.imp()
-            .input_file_store
-            .remove(i - (removed_elements.iter().filter(|x| **x < i).count() as u32));
-        self.imp()
-            .image_container
-            .set_filter_func(move |f| !removed_elements.contains(&(f.index() as u32)));
-        if self.imp().input_file_store.n_items() == 0 {
-            self.imp()
-                .stack
-                .set_visible_child_name("stack_welcome_page");
-            while let Some(widget) = self.imp().image_container.first_child() {
-                self.imp().image_container.remove(&widget);
-            }
+    fn remove_file(&self, i: u32) {
+        self.imp().removed.borrow_mut().insert(i);
+        if self.get_file_count() == 0 {
+            self.imp().input_file_store.remove_all();
+            self.switch_to_stack_welcome();
+        } else {
+            self.construct_short_thumbnail();
+            self.update_options();
         }
     }
 
-    fn load_pixbuff_finished(&self) {
+    fn collect_pixbuf_wrapper(&self, count: usize, remaining_visible: bool) {
+        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+            this.collect_pixbuf(count).await;
+            this.build_from_count(count, remaining_visible);
+        }));
+    }
+
+    async fn collect_pixbuf(&self, count: usize) {
+        let mut input_files = Vec::new();
+        for input_file in self.imp().input_file_store.into_iter().flatten() {
+            if let Ok(input_file) = input_file.downcast::<InputFile>() {
+                input_files.push(input_file);
+            }
+        }
+
+        let file_paths_pixbuf = input_files.iter().take(count).map(|f| f.generate_pixbuff());
+
+        join_all(file_paths_pixbuf).await;
+    }
+
+    fn construct_short_thumbnail(&self) {
+        let imp = self.imp();
+
+        let mut input_files = Vec::new();
+        for input_file in self.imp().input_file_store.into_iter().flatten() {
+            if let Ok(input_file) = input_file.downcast::<InputFile>() {
+                input_files.push((input_file.pixbuf(), input_file.kind()));
+            }
+        }
+
+        let mut elements = 0;
+        let mut visible = 0;
+
+        while visible < 6 && elements < input_files.len() {
+            if !imp.removed.borrow().contains(&(elements as u32)) {
+                visible += 1;
+            }
+            elements += 1;
+        }
+
+        let mut remaining_visible = false;
+
+        let mut remaining_elements = elements;
+
+        while !remaining_visible && remaining_elements < input_files.len() {
+            if !imp.removed.borrow().contains(&(remaining_elements as u32)) {
+                remaining_visible = true;
+            }
+            remaining_elements += 1;
+        }
+
+        if remaining_visible {
+            elements -= 1;
+        }
+
+        self.collect_pixbuf_wrapper(elements, remaining_visible);
+    }
+
+    fn build_from_count(&self, count: usize, remaining_visible: bool) {
         let imp = self.imp();
 
         let mut input_files = Vec::new();
@@ -670,9 +744,7 @@ impl AppWindow {
             imp.image_container.remove(&child);
         }
 
-        let removed = Rc::new(RefCell::new(HashSet::new()));
-
-        for (i, (image, file_type)) in input_files.into_iter().enumerate() {
+        for (i, (image, file_type)) in input_files.into_iter().take(count).enumerate() {
             let caption = match &image {
                 Some(i) => format!(
                     "{} · {}×{}",
@@ -686,16 +758,51 @@ impl AppWindow {
             let image_thumbnail = ImageThumbnail::new(image, &caption);
 
             imp.image_container.append(&image_thumbnail);
-            let removed = removed.clone();
             image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
-                removed.borrow_mut().insert(i as u32);
-                this.remove_file(i as u32, &removed.borrow());
+                this.remove_file(i as u32);
+                this.imp().image_container.invalidate_filter();
+                this.imp().full_image_container.invalidate_filter();
             }));
         }
 
-        imp.image_container.unset_filter_func();
+        imp.elements.replace(count);
 
-        self.load_options();
+        if remaining_visible {
+            let image_rest = ImageRest::new();
+            imp.image_container.append(&image_rest);
+            image_rest.connect_clicked(clone!(@weak self as this => move |_| {
+                this.switch_to_stack_all_images_wrapper();
+            }));
+        }
+
+        imp.image_container.invalidate_filter();
+    }
+
+    fn load_pixbuff_finished(&self) {
+        let imp = self.imp();
+
+        let mut input_files = Vec::new();
+        for input_file in self.imp().input_file_store.into_iter().flatten() {
+            if let Ok(input_file) = input_file.downcast::<InputFile>() {
+                input_files.push((input_file.pixbuf(), input_file.kind()));
+            }
+        }
+
+        imp.removed.replace(HashSet::new());
+
+        while let Some(child) = imp.full_image_container.first_child() {
+            imp.full_image_container.remove(&child);
+        }
+
+        self.construct_short_thumbnail();
+
+        imp.full_image_container.invalidate_filter();
+
+        self.update_options();
+    }
+
+    fn update_options(&self) {
+        let imp = self.imp();
         imp.resize_scale_height_value.set_text("100");
         imp.resize_scale_width_value.set_text("100");
         if let (Some(image_width), Some(image_height)) =
@@ -754,12 +861,18 @@ impl AppWindow {
     }
 
     pub fn update_compression_options(&self) {
+        let removed = self.imp().removed.borrow().clone();
         let files = self
             .imp()
             .input_file_store
             .into_iter()
             .flatten()
             .flat_map(|o| o.downcast::<InputFile>())
+            .enumerate()
+            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
+                true => None,
+                false => Some(f),
+            })
             .collect_vec();
         let multiple_files = files.len() > 1;
         let multiple_frames = multiple_files || files.iter().map(|i| i.frames()).sum::<usize>() > 1;
@@ -777,7 +890,7 @@ impl AppWindow {
                     .unwrap_or(self.load_selected_compression());
 
                 let new_options = gtk::StringList::new(&[]);
-                let sandboxed = files.iter().any(|f: &InputFile| f.is_behind_sandbox());
+                let sandboxed = false;
                 let new_list = CompressionType::possible_output(sandboxed).collect_vec();
                 for ct in new_list.iter() {
                     new_options.append(&ct.as_display_string());
@@ -795,8 +908,18 @@ impl AppWindow {
     pub fn update_advanced_options(&self) {
         let imp = self.imp();
 
-        let input_files: Vec<InputFile> =
-            imp.input_file_store.iter::<InputFile>().flatten().collect();
+        let removed = self.imp().removed.borrow().clone();
+
+        let input_files: Vec<InputFile> = imp
+            .input_file_store
+            .iter::<InputFile>()
+            .flatten()
+            .enumerate()
+            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
+                true => None,
+                false => Some(f),
+            })
+            .collect();
         let input_filetypes: Vec<FileType> = input_files.iter().map(|inf| inf.kind()).collect();
         let Some(output_filetype) = FileType::output_formats(self.imp().settings.boolean("show-less-popular")).nth(imp.output_filetype.selected() as usize) else {
             return;
@@ -945,12 +1068,17 @@ impl AppWindow {
             ResizeType::ExactPixels => {
                 imp.resize_width_value.set_visible(true);
                 imp.resize_height_value.set_visible(true);
-                if imp.input_file_store.n_items() == 1 {
+                if self.get_file_count() == 1 {
                     imp.link_axis.set_visible(true);
                 }
             }
         }
     }
+
+    fn get_file_count(&self) -> usize {
+        (self.imp().input_file_store.n_items() as usize) - self.imp().removed.borrow().len()
+    }
+
     pub fn open_files(&self, files: Vec<Option<InputFile>>) {
         let files: Vec<InputFile> = files.into_iter().flatten().collect();
         if !files.is_empty() {
@@ -969,12 +1097,18 @@ impl AppWindow {
     }
 
     pub fn save_files(&self) {
+        let removed = self.imp().removed.borrow().clone();
+
         let files = self
             .imp()
             .input_file_store
-            .into_iter()
+            .iter::<InputFile>()
             .flatten()
-            .flat_map(|o| o.downcast::<InputFile>())
+            .enumerate()
+            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
+                true => None,
+                false => Some(f),
+            })
             .collect_vec();
         let multiple_files = files.len() > 1;
         let multiple_frames = multiple_files || files.iter().map(|i| i.frames()).sum::<usize>() > 1;
@@ -1110,12 +1244,19 @@ impl AppWindow {
 
         let output_type = self.get_selected_output().unwrap();
 
+        let removed = self.imp().removed.borrow().clone();
+
         let files = self
             .imp()
             .input_file_store
             .into_iter()
             .flatten()
             .flat_map(|o| o.downcast::<InputFile>())
+            .enumerate()
+            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
+                true => None,
+                false => Some(f),
+            })
             .collect_vec();
 
         let dir = create_temporary_dir().await.unwrap();
@@ -1714,27 +1855,137 @@ impl AppWindow {
     }
 
     fn switch_to_stack_convert(&self) {
+        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
     }
-    
+
     fn switch_to_stack_converting(&self) {
+        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_converting");
     }
-    
+
     fn switch_to_stack_welcome(&self) {
+        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
-        self.imp().stack.set_visible_child_name("stack_welcome_page");
+        self.imp()
+            .stack
+            .set_visible_child_name("stack_welcome_page");
     }
-    
+
     fn switch_to_stack_invalid_image(&self) {
+        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
-        self.imp().stack.set_visible_child_name("stack_invalid_page");
+        self.imp()
+            .stack
+            .set_visible_child_name("stack_invalid_page");
     }
-    
+
     fn switch_to_stack_loading(&self) {
+        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_loading");
+    }
+
+    fn switch_to_stack_all_images_wrapper(&self) {
+        self.switch_to_stack_loading();
+        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+            this.switch_to_stack_all_images().await;
+        }));
+    }
+
+    async fn switch_to_stack_all_images(&self) {
+        let mut files = Vec::new();
+
+        for input_file in self.imp().input_file_store.into_iter().flatten() {
+            if let Ok(input_file) = input_file.downcast::<InputFile>() {
+                files.push(input_file);
+            }
+        }
+
+        let file_path_things = files
+            .iter()
+            .map(|f| (f.kind().supports_pixbuff() & f.pixbuf().is_none(), f.path()))
+            .collect_vec();
+
+        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
+        std::thread::spawn(move || {
+            let rt = tokio::runtime::Builder::new_multi_thread()
+                .enable_all()
+                .build()
+                .unwrap();
+            let file_paths_pixbuf = file_path_things
+                .into_iter()
+                .map(|(b, path)| async move {
+                    match b {
+                        true => Some(spawn(pixbuf_bytes(path)).await.unwrap()),
+                        false => None,
+                    }
+                })
+                .collect_vec();
+            sender
+                .send(rt.block_on(join_all(file_paths_pixbuf)))
+                .expect("concurrency failure");
+        });
+
+        receiver.attach(
+            None,
+            clone!(@weak self as this => @default-return Continue(false), move |pixpaths| {
+                for (f, p) in files.iter().zip(pixpaths.iter()) {
+                    if let Some(p) = p {
+                        let stream = gio::MemoryInputStream::from_bytes(p);
+                        let pixbuf = Pixbuf::from_stream_at_scale(&stream, 150, 150, true, Cancellable::NONE).unwrap();
+                        f.set_pixbuf(pixbuf);
+                    }
+                }
+
+                this.load_all_pixbuff_finished();
+                Continue(false)
+            }),
+        );
+    }
+
+    fn load_all_pixbuff_finished(&self) {
+        let imp = self.imp();
+
+        let mut input_files = Vec::new();
+        for input_file in self.imp().input_file_store.into_iter().flatten() {
+            if let Ok(input_file) = input_file.downcast::<InputFile>() {
+                input_files.push((input_file.pixbuf(), input_file.kind()));
+            }
+        }
+
+        let mut count = 0;
+
+        let mut current = imp.full_image_container.first_child();
+        while let Some(e) = current {
+            count += 1;
+            current = e.next_sibling();
+        }
+
+        for (i, (image, file_type)) in input_files.into_iter().enumerate().skip(count) {
+            let caption = match &image {
+                Some(i) => format!(
+                    "{} · {}×{}",
+                    file_type.as_display_string(),
+                    i.width(),
+                    i.height(),
+                ),
+                None => file_type.as_display_string(),
+            };
+
+            let image_thumbnail = ImageThumbnail::new(image, &caption);
+
+            imp.full_image_container.append(&image_thumbnail);
+            image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
+                this.remove_file(i as u32);
+                this.imp().image_container.invalidate_filter();
+                this.imp().full_image_container.invalidate_filter();
+            }));
+        }
+
+        imp.stack.set_visible_child_name("stack_all_images");
+        imp.back_button.set_visible(true);
     }
 }

@@ -1,5 +1,8 @@
 use crate::{color::Color, filetypes::FileType, window::ResizeFilter};
 use gettextrs::gettext;
+use glib::Bytes;
+use gtk::gio::Cancellable;
+use gtk::prelude::{FileExt, InputStreamExt};
 use shared_child::SharedChild;
 use std::io::Read;
 use std::process::{Command, Stdio};
@@ -19,6 +22,15 @@ pub async fn count_frames(path: String) -> Result<usize, ()> {
         },
         _ => Err(()),
     }
+}
+
+pub async fn pixbuf_bytes(path: String) -> Bytes {
+    let stream = gtk::gio::File::for_path(path)
+        .read(Cancellable::NONE)
+        .unwrap();
+
+
+    stream.read_bytes(8192129, Cancellable::NONE).unwrap()
 }
 
 pub trait MagickArgument {
@@ -220,7 +232,10 @@ impl MagickConvertJob {
 
         dbg!(&size_arg);
 
-        let resize_arg = match regex::Regex::new(r"svg\[.*\]$").unwrap().is_match(&self.input_file) {
+        let resize_arg = match regex::Regex::new(r"svg\[.*\]$")
+            .unwrap()
+            .is_match(&self.input_file)
+        {
             true => vec![],
             false => self.resize_arg.get_argument(),
         };

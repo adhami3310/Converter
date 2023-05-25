@@ -5,13 +5,11 @@ template $ImageThumbnail : FlowBoxChild {
     $AdwBin {
         overflow: hidden;
         Overlay {
-            hexpand: true;
-            vexpand: true;
             
             Box {
                 orientation: vertical;
                 hexpand: true;
-                vexpand: false;
+                vexpand: true;
                 Box {
                     Picture picture {
                         width-request: 150;
@@ -33,6 +31,7 @@ template $ImageThumbnail : FlowBoxChild {
 
                 $AdwBin {
                     hexpand: true;
+                    vexpand: false;
                     overflow: hidden;
                     Box {
                         halign: center;
