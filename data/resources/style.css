@@ -56,3 +56,7 @@ value {
 .large_number {
   font-size: 36pt;
 }
+
+.unit-drop .menu * {
+  min-width: 0px;
+}
