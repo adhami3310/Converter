@@ -7,7 +7,7 @@ use crate::config::APP_ID;
 use crate::drag_overlay::DragOverlay;
 use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
-use crate::input_file::{InputFile, get_square};
+use crate::input_file::{get_square, InputFile};
 use crate::magick::{
     count_frames, pixbuf_bytes, wait_for_child, ConvertJob, GhostScriptConvertJob, JobFile,
     MagickConvertJob, ResizeArgument,
@@ -546,10 +546,7 @@ impl AppWindow {
                         return false;
                     }
 
-                    let mut input_files: Vec<Option<InputFile>> = Vec::new();
-                    for f in file_list.files() {
-                        input_files.push(InputFile::new(&f));
-                    }
+                    let input_files = file_list.files().iter().map(|f| InputFile::new(f)).collect_vec();
                     win.open_files(input_files);
                     return true;
                 }
@@ -651,7 +648,7 @@ impl AppWindow {
                 .unwrap();
             let jobs = file_paths
                 .into_iter()
-                .map(|f| async move { count_frames(f).await.unwrap_or(1) })
+                .map(|f| async move { count_frames(f).await.unwrap_or((1, None)) })
                 .collect_vec();
             sender
                 .send(rt.block_on(join_all(jobs)))
@@ -660,9 +657,16 @@ impl AppWindow {
 
         receiver.attach(
             None,
-            clone!(@weak self as this => @default-return Continue(false), move |frames| {
-                for (f, frame) in files.iter().zip(frames.iter()) {
+            clone!(@weak self as this => @default-return Continue(false), move |image_info| {
+                for (f, (frame, dims)) in files.iter().zip(image_info.iter()) {
                     f.set_frames(*frame);
+                    match dims {
+                        Some((width, height)) => {
+                            f.set_width(*width);
+                            f.set_height(*height);
+                        }
+                        None => {}
+                    }
                 }
 
                 this.load_pixbuff_finished();
@@ -690,12 +694,7 @@ impl AppWindow {
     }
 
     async fn collect_pixbuf(&self, count: usize) {
-        let mut input_files = Vec::new();
-        for input_file in self.imp().input_file_store.into_iter().flatten() {
-            if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                input_files.push(input_file);
-            }
-        }
+        let input_files = self.get_files();
 
         let file_paths_pixbuf = input_files.iter().take(count).map(|f| f.generate_pixbuff());
 
@@ -705,12 +704,11 @@ impl AppWindow {
     fn construct_short_thumbnail(&self) {
         let imp = self.imp();
 
-        let mut input_files = Vec::new();
-        for input_file in self.imp().input_file_store.into_iter().flatten() {
-            if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                input_files.push((input_file.pixbuf(), input_file.kind()));
-            }
-        }
+        let input_files = self
+            .get_files()
+            .into_iter()
+            .map(|f| (f.pixbuf(), f.kind()))
+            .collect_vec();
 
         let mut elements = 0;
         let mut visible = 0;
@@ -743,12 +741,11 @@ impl AppWindow {
     fn build_from_count(&self, count: usize, remaining_visible: bool) {
         let imp = self.imp();
 
-        let mut input_files = Vec::new();
-        for input_file in self.imp().input_file_store.into_iter().flatten() {
-            if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                input_files.push((input_file.pixbuf(), input_file.kind()));
-            }
-        }
+        let input_files = self
+            .get_files()
+            .into_iter()
+            .map(|f| (f.pixbuf(), f.kind(), f.dimensions()))
+            .collect_vec();
 
         while let Some(child) = imp.image_container.first_child() {
             imp.image_container.remove(&child);
@@ -756,21 +753,18 @@ impl AppWindow {
 
         let removed = self.imp().removed.borrow().clone();
 
-        for (i, (image, file_type)) in input_files.into_iter().take(count).enumerate() {
+        for (i, (image, file_type, dims)) in input_files.into_iter().take(count).enumerate() {
             match removed.contains(&(i as u32)) {
                 false => {
-                    let caption = match &image {
-                        Some(i) => format!(
-                            "{} · {}×{}",
-                            file_type.as_display_string(),
-                            i.width(),
-                            i.height(),
-                        ),
-                        None => file_type.as_display_string(),
+                    let caption = match dims {
+                        Some((w, h)) => {
+                            format!("{} · {}×{}", file_type.as_display_string(), w, h,)
+                        }
+                        None => file_type.as_display_string().to_owned(),
                     };
-        
+
                     let image_thumbnail = ImageThumbnail::new(image, &caption);
-        
+
                     imp.image_container.append(&image_thumbnail);
                     image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
                         this.remove_file(i as u32);
@@ -781,7 +775,6 @@ impl AppWindow {
                 true => {
                     imp.image_container.append(&gtk::FlowBoxChild::new());
                 }
-
             }
         }
 
@@ -798,14 +791,37 @@ impl AppWindow {
         imp.image_container.invalidate_filter();
     }
 
+    fn get_files(&self) -> Vec<InputFile> {
+        let removed = self.imp().removed.borrow().clone();
+        self.imp()
+            .input_file_store
+            .iter::<InputFile>()
+            .flatten()
+            .enumerate()
+            .filter(|(i, _)| !removed.contains(&(*i as u32)))
+            .map(|(_, f)| f)
+            .collect_vec()
+    }
+
     fn load_pixbuff_finished(&self) {
         let imp = self.imp();
 
-        let mut input_files = Vec::new();
-        for input_file in self.imp().input_file_store.into_iter().flatten() {
-            if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                input_files.push((input_file.pixbuf(), input_file.kind()));
-            }
+        let files_dims = self
+            .get_files()
+            .into_iter()
+            .map(|f| f.dimensions())
+            .unique()
+            .collect_vec();
+
+        if let Some((w, h)) = match files_dims[..] {
+            [Some(d)] => Some(d),
+            _ => None,
+        } {
+            imp.image_width.set(Some(w as u32));
+            imp.image_height.set(Some(h as u32));
+        } else {
+            imp.image_width.set(None);
+            imp.image_height.set(None);
         }
 
         imp.removed.replace(HashSet::new());
@@ -880,19 +896,7 @@ impl AppWindow {
     }
 
     pub fn update_compression_options(&self) {
-        let removed = self.imp().removed.borrow().clone();
-        let files = self
-            .imp()
-            .input_file_store
-            .into_iter()
-            .flatten()
-            .flat_map(|o| o.downcast::<InputFile>())
-            .enumerate()
-            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
-                true => None,
-                false => Some(f),
-            })
-            .collect_vec();
+        let files = self.get_files();
         let multiple_files = files.len() > 1;
         let multiple_frames = multiple_files || files.iter().map(|i| i.frames()).sum::<usize>() > 1;
         let output_option = self.get_selected_output().unwrap();
@@ -927,18 +931,7 @@ impl AppWindow {
     pub fn update_advanced_options(&self) {
         let imp = self.imp();
 
-        let removed = self.imp().removed.borrow().clone();
-
-        let input_files: Vec<InputFile> = imp
-            .input_file_store
-            .iter::<InputFile>()
-            .flatten()
-            .enumerate()
-            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
-                true => None,
-                false => Some(f),
-            })
-            .collect();
+        let input_files = self.get_files();
         let input_filetypes: Vec<FileType> = input_files.iter().map(|inf| inf.kind()).collect();
         let Some(output_filetype) = FileType::output_formats(self.imp().settings.boolean("show-less-popular")).nth(imp.output_filetype.selected() as usize) else {
             return;
@@ -1087,7 +1080,9 @@ impl AppWindow {
             ResizeType::ExactPixels => {
                 imp.resize_width_value.set_visible(true);
                 imp.resize_height_value.set_visible(true);
-                if self.get_file_count() == 1 {
+                if self.imp().image_width.get().is_some()
+                    && self.imp().image_height.get().is_some()
+                {
                     imp.link_axis.set_visible(true);
                 }
             }
@@ -1099,7 +1094,7 @@ impl AppWindow {
     }
 
     pub fn open_files(&self, files: Vec<Option<InputFile>>) {
-        let files: Vec<InputFile> = files.into_iter().flatten().collect();
+        let files = files.into_iter().flatten().collect_vec();
         if !files.is_empty() {
             self.open_success_wrapper(files);
         } else {
@@ -1116,19 +1111,7 @@ impl AppWindow {
     }
 
     pub fn save_files(&self) {
-        let removed = self.imp().removed.borrow().clone();
-
-        let files = self
-            .imp()
-            .input_file_store
-            .iter::<InputFile>()
-            .flatten()
-            .enumerate()
-            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
-                true => None,
-                false => Some(f),
-            })
-            .collect_vec();
+        let files = self.get_files();
         let multiple_files = files.len() > 1;
         let multiple_frames = multiple_files || files.iter().map(|i| i.frames()).sum::<usize>() > 1;
         let output_option = self.get_selected_output().unwrap();
@@ -1161,7 +1144,7 @@ impl AppWindow {
             ),
         };
 
-        let sandboxed = files.iter().any(|f: &InputFile| f.is_behind_sandbox());
+        let sandboxed = files.iter().any(|f| f.is_behind_sandbox());
 
         let default_folder = match sandboxed {
             true => None,
@@ -1219,17 +1202,13 @@ impl AppWindow {
         }
     }
 
-    fn get_svg_size_argument(&self) -> Option<ResizeArgument> {
-        self.get_resize_argument()
-    }
-
-    fn get_resize_argument(&self) -> Option<ResizeArgument> {
+    fn get_resize_argument(&self) -> ResizeArgument {
         let imp = self.imp();
 
         let resize_type = ResizeType::from_index(imp.resize_type.selected() as usize).unwrap();
 
         match resize_type {
-            ResizeType::Percentage => Some(ResizeArgument::Percentage {
+            ResizeType::Percentage => ResizeArgument::Percentage {
                 width: imp
                     .resize_scale_width_value
                     .text()
@@ -1242,11 +1221,11 @@ impl AppWindow {
                     .to_string()
                     .parse()
                     .unwrap(),
-            }),
-            ResizeType::ExactPixels => Some(ResizeArgument::ExactPixels {
+            },
+            ResizeType::ExactPixels => ResizeArgument::ExactPixels {
                 width: imp.resize_width_value.text().to_string().parse().unwrap(),
                 height: imp.resize_height_value.text().to_string().parse().unwrap(),
-            }),
+            },
         }
     }
 
@@ -1266,20 +1245,7 @@ impl AppWindow {
 
         let output_type = self.get_selected_output().unwrap();
 
-        let removed = self.imp().removed.borrow().clone();
-
-        let files = self
-            .imp()
-            .input_file_store
-            .into_iter()
-            .flatten()
-            .flat_map(|o| o.downcast::<InputFile>())
-            .enumerate()
-            .filter_map(|(i, f)| match removed.contains(&(i as u32)) {
-                true => None,
-                false => Some(f),
-            })
-            .collect_vec();
+        let files = self.get_files();
 
         let dir = create_temporary_dir().await.unwrap();
 
@@ -1293,35 +1259,35 @@ impl AppWindow {
             default_arguments: (&MagickConvertJob, &GhostScriptConvertJob),
         ) -> Vec<ConvertJob> {
             match (input_type, output_type) {
-                (Svg, Heif | Heic) => {
-                    let interm = get_temp_file_path(dir, JobFile::new(FileType::Png, None))
-                        .to_str()
-                        .unwrap()
-                        .to_owned();
-                    generate_job(
-                        input_path,
-                        frame,
-                        input_type,
-                        &interm,
-                        &FileType::Png,
-                        dir,
-                        default_arguments,
-                    )
-                    .into_iter()
-                    .chain(
-                        generate_job(
-                            &interm,
-                            0,
-                            &FileType::Png,
-                            output_path,
-                            output_type,
-                            dir,
-                            default_arguments,
-                        )
-                        .into_iter(),
-                    )
-                    .collect()
-                }
+                // (Svg, Heif | Heic) => {
+                //     let interm = get_temp_file_path(dir, JobFile::new(FileType::Png, None))
+                //         .to_str()
+                //         .unwrap()
+                //         .to_owned();
+                //     generate_job(
+                //         input_path,
+                //         frame,
+                //         input_type,
+                //         &interm,
+                //         &FileType::Png,
+                //         dir,
+                //         default_arguments,
+                //     )
+                //     .into_iter()
+                //     .chain(
+                //         generate_job(
+                //             &interm,
+                //             0,
+                //             &FileType::Png,
+                //             output_path,
+                //             output_type,
+                //             dir,
+                //             default_arguments,
+                //         )
+                //         .into_iter(),
+                //     )
+                //     .collect()
+                // }
                 (Pdf, Png) => std::iter::once(ConvertJob::GhostScript(GhostScriptConvertJob {
                     input_file: input_path.to_owned(),
                     output_file: output_path.to_owned(),
@@ -1352,7 +1318,10 @@ impl AppWindow {
                             output_path,
                             output_type,
                             dir,
-                            default_arguments,
+                            (&MagickConvertJob {
+                                resize_arg: ResizeArgument::default(),
+                                ..default_arguments.0.to_owned()
+                            }, default_arguments.1),
                         )
                         .into_iter(),
                     )
@@ -1364,7 +1333,6 @@ impl AppWindow {
                         output_file: output_path.to_owned(),
                         first_frame: false,
                         coalesce: false,
-                        size_arg: None,
                         ..*default_arguments.0
                     }))
                     .collect()
@@ -1465,7 +1433,6 @@ impl AppWindow {
             background: self.get_bgcolor_argument(),
             quality: self.get_quality_argument(),
             filter: self.get_filter_argument(),
-            size_arg: self.get_svg_size_argument(),
             resize_arg: self.get_resize_argument(),
             coalesce: false,
             first_frame: false,
@@ -1881,16 +1848,20 @@ impl AppWindow {
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
     }
-    
+
     fn switch_to_stack_converting(&self) {
-        self.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
+        self.imp()
+            .stack
+            .set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_converting");
     }
 
     fn switch_to_stack_welcome(&self) {
-        self.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
+        self.imp()
+            .stack
+            .set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
@@ -1899,7 +1870,9 @@ impl AppWindow {
     }
 
     fn switch_to_stack_invalid_image(&self) {
-        self.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
+        self.imp()
+            .stack
+            .set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
@@ -1921,13 +1894,7 @@ impl AppWindow {
     }
 
     async fn switch_to_stack_all_images(&self) {
-        let mut files = Vec::new();
-
-        for input_file in self.imp().input_file_store.into_iter().flatten() {
-            if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                files.push(input_file);
-            }
-        }
+        let files = self.get_files();
 
         let file_path_things = files
             .iter()
@@ -1974,12 +1941,11 @@ impl AppWindow {
     fn load_all_pixbuff_finished(&self) {
         let imp = self.imp();
 
-        let mut input_files = Vec::new();
-        for input_file in self.imp().input_file_store.into_iter().flatten() {
-            if let Ok(input_file) = input_file.downcast::<InputFile>() {
-                input_files.push((input_file.pixbuf(), input_file.kind()));
-            }
-        }
+        let input_files = self
+            .get_files()
+            .into_iter()
+            .map(|f| (f.pixbuf(), f.kind(), f.dimensions()))
+            .collect_vec();
 
         let mut count = 0;
 
@@ -1989,15 +1955,12 @@ impl AppWindow {
             current = e.next_sibling();
         }
 
-        for (i, (image, file_type)) in input_files.into_iter().enumerate().skip(count) {
-            let caption = match &image {
-                Some(i) => format!(
-                    "{} · {}×{}",
-                    file_type.as_display_string(),
-                    i.width(),
-                    i.height(),
-                ),
-                None => file_type.as_display_string(),
+        for (i, (image, file_type, dims)) in input_files.into_iter().enumerate().skip(count) {
+            let caption = match dims {
+                Some((w, h)) => {
+                    format!("{} · {}×{}", file_type.as_display_string(), w, h,)
+                }
+                None => file_type.as_display_string().to_owned(),
             };
 
             let image_thumbnail = ImageThumbnail::new(image, &caption);
@@ -2010,7 +1973,8 @@ impl AppWindow {
             }));
         }
 
-        imp.stack.set_transition_type(gtk::StackTransitionType::OverLeftRight);
+        imp.stack
+            .set_transition_type(gtk::StackTransitionType::OverLeftRight);
         imp.stack.set_visible_child_name("stack_all_images");
         imp.back_button.set_visible(true);
     }

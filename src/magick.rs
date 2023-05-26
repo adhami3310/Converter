@@ -3,12 +3,13 @@ use gettextrs::gettext;
 use glib::Bytes;
 use gtk::gio::Cancellable;
 use gtk::prelude::{FileExt, InputStreamExt};
+use itertools::Itertools;
 use shared_child::SharedChild;
 use std::io::Read;
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicUsize, Ordering};
 
-pub async fn count_frames(path: String) -> Result<usize, ()> {
+pub async fn count_frames(path: String) -> Result<(usize, Option<(usize, usize)>), ()> {
     let command = tokio::process::Command::new("magick")
         .arg("identify")
         .arg(path)
@@ -17,7 +18,22 @@ pub async fn count_frames(path: String) -> Result<usize, ()> {
 
     match command {
         Ok(output) => match std::str::from_utf8(&output.stdout) {
-            Ok(output_string) => Ok(output_string.lines().count()),
+            Ok(output_string) => {
+                let lines = output_string.lines().collect_vec();
+                let count = lines.len();
+                let dims = lines.first().map(|line| {
+                    let dimension_match = regex::Regex::new(r" \d+x\d+ ").unwrap().find(line);
+                    
+                    dimension_match.map(|m| {
+                        let dims = m.as_str().trim().split('x').map(|n| n.parse::<usize>()).collect_vec();
+                        match dims[..] {
+                            [Ok(width), Ok(height)] => Some((width, height)),
+                            _ => None
+                        }
+                    })
+                }).flatten().flatten();
+                Ok((count, dims))
+            },
             _ => Err(()),
         },
         _ => Err(()),
@@ -29,7 +45,6 @@ pub async fn pixbuf_bytes(path: String) -> Bytes {
         .read(Cancellable::NONE)
         .unwrap();
 
-
     stream.read_bytes(8192129, Cancellable::NONE).unwrap()
 }
 
@@ -37,43 +52,22 @@ pub trait MagickArgument {
     fn get_argument(&self) -> Vec<String>;
 }
 
-// #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-// pub enum SizeArgument {
-//     Width(usize),
-//     Height(usize),
-// }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ResizeArgument {
     Percentage { width: usize, height: usize },
     ExactPixels { width: usize, height: usize },
-    // MinPixels {
-    //     width: usize,
-    //     height: usize,
-    // },
-    // MaxPixels {
-    //     width: usize,
-    //     height: usize,
-    // },
-    // Ratio {
-    //     width: usize,
-    //     height: usize,
-    // },
 }
 
-// impl MagickArgument for SizeArgument {
-//     fn get_argument(&self) -> Vec<String> {
-//         match self {
-//             SizeArgument::Width(w) => vec!["-size".to_owned(), w.to_string()],
-//             SizeArgument::Height(h) => vec!["-size".to_owned(), format!("x{h}")],
-//         }
-//     }
-// }
+impl Default for ResizeArgument {
+    fn default() -> Self {
+        Self::Percentage { width: 100, height: 100 }
+    }
+}
 
 impl MagickArgument for ResizeFilter {
     fn get_argument(&self) -> Vec<String> {
         match self.as_display_string() {
-            Some (x) => vec!["-filter".to_string(), x.to_owned()],
+            Some(x) => vec!["-filter".to_string(), x.to_owned()],
             None => vec![],
         }
     }
@@ -91,28 +85,6 @@ impl MagickArgument for ResizeArgument {
             } => {
                 vec!["-resize".to_owned(), format!("{width}x{height}!")]
             }
-            // ResizeArgument::ExactPixels {
-            //     width: Some(width),
-            //     height: None,
-            // } => {
-            //     vec!["-resize".to_owned(), format!("{width}")]
-            // }
-            // ResizeArgument::ExactPixels {
-            //     width: None,
-            //     height: Some(height),
-            // } => {
-            //     vec!["-resize".to_owned(), format!("x{height}")]
-            // }
-            // ResizeArgument::MinPixels { width, height } => {
-            //     vec!["-resize".to_owned(), format!("{width}x{height}")]
-            // }
-            // ResizeArgument::MaxPixels { width, height } => {
-            //     vec!["-resize".to_owned(), format!("{width}x{height}^")]
-            // }
-            // ResizeArgument::Ratio { width, height } => {
-            //     vec!["-resize".to_owned(), format!("{width}:{height}")]
-            // }
-            // _ => vec![],
         }
     }
 }
@@ -129,17 +101,16 @@ where
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct MagickConvertJob {
     pub input_file: String,
     pub output_file: String,
-    pub size_arg: Option<ResizeArgument>,
     pub background: Color,
     pub quality: usize,
     pub coalesce: bool,
     pub first_frame: bool,
     pub filter: Option<ResizeFilter>,
-    pub resize_arg: Option<ResizeArgument>,
+    pub resize_arg: ResizeArgument,
 }
 
 pub struct GhostScriptConvertJob {
@@ -219,29 +190,29 @@ impl MagickConvertJob {
 
         dbg!(self);
 
-        let size_arg = match self.size_arg {
-            None => vec![],
-            Some(ResizeArgument::ExactPixels { width, height }) => {
-                vec!["-size".to_owned(), format!("{width}x{height}")]
-            }
-            Some(ResizeArgument::Percentage { width, height: _ }) => {
-                let all_pixels = width as f64 / 100.0;
-                vec![
-                    "-density".to_owned(),
-                    ((all_pixels * 96.0) as usize).to_string(),
-                ]
-            }
+        let is_svg = self.input_file.ends_with(".svg[0]");
+
+        let (resize_arg, size_arg) = match is_svg {
+            true => (
+                vec![],
+                match self.resize_arg {
+                    ResizeArgument::ExactPixels { width, height } => {
+                        vec!["-size".to_owned(), format!("{width}x{height}")]
+                    }
+                    ResizeArgument::Percentage { width, height: _ } => {
+                        let all_pixels = width as f64 / 100.0;
+                        vec![
+                            "-density".to_owned(),
+                            ((all_pixels * 96.0) as usize).to_string(),
+                        ]
+                    }
+                },
+            ),
+            false => (self.resize_arg.get_argument(), vec![]),
         };
 
+        dbg!(&resize_arg);
         dbg!(&size_arg);
-
-        let resize_arg = match regex::Regex::new(r"svg\[.*\]$")
-            .unwrap()
-            .is_match(&self.input_file)
-        {
-            true => vec![],
-            false => self.resize_arg.get_argument(),
-        };
 
         if self.first_frame {
             command

@@ -22,6 +22,8 @@ mod imp {
         pub pixbuff: RefCell<Pixbuf>,
         pub frames: Cell<usize>,
         pub is_behind_sandbox: Cell<bool>,
+        pub width: Cell<Option<usize>>,
+        pub height: Cell<Option<usize>>,
     }
 
     #[glib::object_subclass]
@@ -36,6 +38,8 @@ mod imp {
                 pixbuff: RefCell::new(Pixbuf::new(Colorspace::Rgb, true, 8, 1, 1).unwrap()),
                 frames: Cell::new(1),
                 is_behind_sandbox: Cell::new(true),
+                width: Cell::new(None),
+                height: Cell::new(None),
             }
         }
     }
@@ -158,8 +162,31 @@ impl InputFile {
         self.imp().frames.get()
     }
 
+    pub fn width(&self) -> Option<usize> {
+        self.imp().width.get()
+    }
+
+    pub fn height(&self) -> Option<usize> {
+        self.imp().height.get()
+    }
+
+    pub fn dimensions(&self) -> Option<(usize, usize)> {
+        let (w, h) = (self.width(), self.height());
+        w.map(|w| {
+            h.map(|h| (w, h))
+        }).flatten()
+    }
+
     pub fn set_frames(&self, f: usize) {
         self.imp().frames.replace(f);
+    }
+    
+    pub fn set_width(&self, f: usize) {
+        self.imp().width.replace(Some(f));
+    }
+    
+    pub fn set_height(&self, f: usize) {
+        self.imp().height.replace(Some(f));
     }
 
     pub fn set_pixbuf(&self, p: Pixbuf) {
