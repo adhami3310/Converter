@@ -790,6 +790,25 @@ impl AppWindow {
             }));
         }
 
+        match self.get_file_count() {
+            1 => {
+                imp.image_container.set_hexpand(true);
+                imp.image_container.set_max_children_per_line(1);
+                imp.image_container.set_halign(gtk::Align::Fill);
+            }
+            2 => {
+                imp.image_container.set_hexpand(true);
+                imp.image_container.set_max_children_per_line(2);
+                imp.image_container.set_halign(gtk::Align::Fill);
+            }
+            _ => {
+                imp.image_container.set_hexpand(false);
+                imp.image_container.set_max_children_per_line(3);
+                imp.image_container.set_halign(gtk::Align::Baseline);
+
+            }
+        }
+
         imp.image_container.invalidate_filter();
     }
 
