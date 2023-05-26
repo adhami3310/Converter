@@ -192,8 +192,6 @@ impl FileType {
 #[derive(Clone, Copy, Debug, glib::Enum, PartialEq, Eq, Hash)]
 #[enum_type(name = "ConverterCompressionType")]
 pub enum CompressionType {
-    #[enum_value(name = "TAR")]
-    Tar,
     #[enum_value(name = "ZIP")]
     Zip,
     #[enum_value(name = "Directory")]
@@ -204,22 +202,22 @@ use CompressionType::*;
 
 impl CompressionType {
     pub fn is_compression(&self) -> bool {
-        matches!(self, Tar | Zip)
+        matches!(self, Zip)
     }
 
     pub fn iterator() -> Iter<'static, Self> {
-        static COMPRESSION_TYPES: [CompressionType; 3] = [Tar, Zip, Directory];
+        static COMPRESSION_TYPES: [CompressionType; 2] = [Zip, Directory];
         COMPRESSION_TYPES.iter()
     }
 
     pub fn compression_formats() -> Iter<'static, Self> {
-        static COMPRESSION_TYPES: [CompressionType; 2] = [Tar, Zip];
+        static COMPRESSION_TYPES: [CompressionType; 1] = [Zip];
         COMPRESSION_TYPES.iter()
     }
 
     pub fn possible_output(sandboxed: bool) -> Iter<'static, Self> {
-        static COMPRESSION_TYPES: [CompressionType; 2] = [Tar, Zip];
-        static ALL_TYPES: [CompressionType; 3] = [Tar, Zip, Directory];
+        static COMPRESSION_TYPES: [CompressionType; 1] = [Zip];
+        static ALL_TYPES: [CompressionType; 2] = [Zip, Directory];
         match sandboxed {
             true => COMPRESSION_TYPES.iter(),
             false => ALL_TYPES.iter(),
@@ -229,7 +227,6 @@ impl CompressionType {
     pub fn as_mime(&self) -> &'static str {
         match self {
             Zip => "application/zip",
-            Tar => "application/gzip",
             Directory => "inode/directory",
         }
     }
@@ -237,7 +234,6 @@ impl CompressionType {
     pub fn as_extension(&self) -> &str {
         match self {
             Zip => "zip",
-            Tar => "tar.gz",
             Directory => "directory",
         }
     }
@@ -252,7 +248,6 @@ impl CompressionType {
     pub fn from_string(extension: &str) -> Option<Self> {
         match extension {
             "zip" => Some(Zip),
-            "tar.gz" => Some(Tar),
             "directory" => Some(Directory),
             _ => None,
         }
@@ -276,7 +271,6 @@ impl OutputType {
     pub fn from_string(extension: &str) -> Option<Self> {
         match extension {
             "zip" => Some(OutputType::Compression(Zip)),
-            "gz" => Some(OutputType::Compression(Tar)),
             "directory" => Some(OutputType::Compression(Directory)),
             "png" => Some(OutputType::File(Png)),
             "jpg" => Some(OutputType::File(Jpg)),

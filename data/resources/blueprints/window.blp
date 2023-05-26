@@ -138,10 +138,13 @@ template $AppWindow : $AdwApplicationWindow {
                           model: StringList supported_output_filetypes {};
                         }
 
-                        $AdwComboRow output_compression {
-                          title: _("Save Method");
+                        $AdwActionRow output_compression {
+                          title: _("Save To Zip");
                           subtitle: _("Compress images or use a directory");
-                          model: StringList supported_compression_filetypes {};
+                          Switch output_compression_value {
+                            active: false;
+                            valign: center;
+                          }
                         }
 
                       }

@@ -117,14 +117,14 @@ mod imp {
         #[template_child]
         pub supported_output_filetypes: TemplateChild<gtk::StringList>,
         #[template_child]
-        pub supported_compression_filetypes: TemplateChild<gtk::StringList>,
-        #[template_child]
         pub progress_bar: TemplateChild<gtk::ProgressBar>,
 
         #[template_child]
         pub output_filetype: TemplateChild<adw::ComboRow>,
         #[template_child]
-        pub output_compression: TemplateChild<adw::ComboRow>,
+        pub output_compression: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub output_compression_value: TemplateChild<gtk::Switch>,
 
         #[template_child]
         pub quality: TemplateChild<gtk::Scale>,
@@ -203,10 +203,10 @@ mod imp {
                 image_container: TemplateChild::default(),
                 full_image_container: TemplateChild::default(),
                 supported_output_filetypes: TemplateChild::default(),
-                supported_compression_filetypes: TemplateChild::default(),
                 progress_bar: TemplateChild::default(),
                 output_filetype: TemplateChild::default(),
                 output_compression: TemplateChild::default(),
+                output_compression_value: TemplateChild::default(),
                 quality: TemplateChild::default(),
                 bgcolor: TemplateChild::default(),
                 resize_filter_default: TemplateChild::default(),
@@ -522,8 +522,10 @@ impl AppWindow {
     fn load_selected_compression(&self) -> CompressionType {
         let imp = self.imp();
 
-        *CompressionType::possible_output(false).collect_vec()
-            [imp.settings.enum_("compression-format") as usize]
+        **CompressionType::possible_output(false)
+            .collect_vec()
+            .get(imp.settings.enum_("compression-format") as usize)
+            .unwrap_or(&&CompressionType::Directory)
     }
 
     fn set_convert_progress(&self, done: usize, total: usize) {
@@ -915,14 +917,12 @@ impl AppWindow {
     }
 
     pub fn get_selected_compression(&self) -> Option<CompressionType> {
-        match self.imp().output_compression.selected_item() {
-            Some(o) => match o.downcast::<gtk::StringObject>() {
-                Ok(o) => {
-                    Some(CompressionType::from_string(&o.string().as_str().to_lowercase()).unwrap())
-                }
-                Err(_) => None,
+        match self.imp().output_compression.is_visible() {
+            true => match self.imp().output_compression_value.is_active() {
+                true => Some(CompressionType::Zip),
+                false => Some(CompressionType::Directory),
             },
-            None => None,
+            false => None,
         }
     }
 
@@ -961,17 +961,11 @@ impl AppWindow {
                     .get_selected_compression()
                     .unwrap_or(self.load_selected_compression());
 
-                let new_options = gtk::StringList::new(&[]);
-                let sandboxed = false;
-                let new_list = CompressionType::possible_output(sandboxed).collect_vec();
-                for ct in new_list.iter() {
-                    new_options.append(&ct.as_display_string());
-                }
-                self.imp().output_compression.set_model(Some(&new_options));
                 self.imp().output_compression.set_visible(true);
 
-                if let Some(index) = new_list.into_iter().position(|p| *p == previous_option) {
-                    self.imp().output_compression.set_selected(index as u32);
+                match previous_option {
+                    CompressionType::Zip => self.imp().output_compression_value.set_active(true),
+                    _ => self.imp().output_compression_value.set_active(false),
                 }
             }
         }
@@ -1940,7 +1934,9 @@ impl AppWindow {
             .map(|f| (f.kind().supports_pixbuff() & f.pixbuf().is_none(), f.path()))
             .collect_vec();
 
-        self.imp().all_images_stack.set_visible_child_name("stack_loading");
+        self.imp()
+            .all_images_stack
+            .set_visible_child_name("stack_loading");
         self.imp().loading_spinner.start();
 
         let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);

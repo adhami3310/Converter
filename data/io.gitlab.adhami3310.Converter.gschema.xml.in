@@ -16,9 +16,8 @@
 		<value nick="Dds" value="12"/>
 	</enum>
 	<enum id="io.gitlab.adhami3310.Converter.compression">
-		<value nick="Tar" value="0"/>
-		<value nick="Zip" value="1"/>
-		<value nick="Dir" value="2"/>
+		<value nick="Zip" value="0"/>
+		<value nick="Dir" value="1"/>
 	</enum>
 
 	<schema id="@app-id@" path="/io/gitlab/adhami3310/Converter/" gettext-domain="@gettext-package@">
