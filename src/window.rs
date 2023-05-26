@@ -95,6 +95,8 @@ mod imp {
         #[template_child]
         pub stack: TemplateChild<gtk::Stack>,
         #[template_child]
+        pub all_images_stack: TemplateChild<gtk::Stack>,
+        #[template_child]
         pub open_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub add_button: TemplateChild<gtk::Button>,
@@ -106,6 +108,8 @@ mod imp {
         pub cancel_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub loading_spinner: TemplateChild<gtk::Spinner>,
+        #[template_child]
+        pub loading_spinner_images: TemplateChild<gtk::Spinner>,
         #[template_child]
         pub image_container: TemplateChild<gtk::FlowBox>,
         #[template_child]
@@ -155,6 +159,8 @@ mod imp {
         pub bgcolor_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub dpi_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub leaf: TemplateChild<adw::Leaflet>,
 
         pub provider: gtk::CssProvider,
         pub input_file_store: gio::ListStore,
@@ -186,12 +192,14 @@ mod imp {
                 toast_overlay: TemplateChild::default(),
                 drag_overlay: TemplateChild::default(),
                 stack: TemplateChild::default(),
+                all_images_stack: TemplateChild::default(),
                 open_button: TemplateChild::default(),
                 add_button: TemplateChild::default(),
                 back_button: TemplateChild::default(),
                 convert_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
                 loading_spinner: TemplateChild::default(),
+                loading_spinner_images: TemplateChild::default(),
                 image_container: TemplateChild::default(),
                 full_image_container: TemplateChild::default(),
                 supported_output_filetypes: TemplateChild::default(),
@@ -215,6 +223,7 @@ mod imp {
                 quality_row: TemplateChild::default(),
                 bgcolor_row: TemplateChild::default(),
                 dpi_row: TemplateChild::default(),
+                leaf: TemplateChild::default(),
                 provider: gtk::CssProvider::new(),
                 input_file_store: gio::ListStore::new(InputFile::static_type()),
 
@@ -359,7 +368,6 @@ impl AppWindow {
         imp.back_button
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.switch_to_stack_convert();
-                this.imp().stack.set_transition_type(gtk::StackTransitionType::Crossfade);
             }));
         imp.image_container.set_filter_func(clone!(@weak self as this => @default-return false, move |f| {
             return (f.index() as usize) >= this.imp().elements.get() || !this.imp().removed.borrow().contains(&(f.index() as u32));
@@ -579,6 +587,7 @@ impl AppWindow {
     }
 
     fn open_error(&self, error: Option<&str>) {
+        self.imp().loading_spinner.stop();
         match error {
             Some(_) => self.switch_to_stack_invalid_image(),
             None if self.imp().input_file_store.n_items() > 0 => self.switch_to_stack_convert(),
@@ -592,12 +601,14 @@ impl AppWindow {
     }
 
     fn open_success_wrapper(&self, files: Vec<InputFile>) {
+        self.imp().loading_spinner.stop();
         glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.open_success(files, true).await;
         }));
     }
 
     fn add_success_wrapper(&self, files: Vec<InputFile>) {
+        self.imp().loading_spinner.stop();
         glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.open_success(files, false).await;
         }));
@@ -618,10 +629,13 @@ impl AppWindow {
         }
     }
 
-    async fn open_success(&self, files: Vec<InputFile>, remove_old: bool) {
-        if remove_old {
-            self.imp().input_file_store.remove_all();
+    async fn open_success(&self, mut files: Vec<InputFile>, remove_old: bool) {
+        if !remove_old {
+            let prev_files = self.get_files();
+            files = prev_files.into_iter().chain(files.into_iter()).collect();
         }
+
+        self.imp().input_file_store.remove_all();
 
         self.switch_to_stack_loading();
 
@@ -631,11 +645,13 @@ impl AppWindow {
 
         let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
+        let few_files = file_paths.len() <= 3;
+
         let file_paths_pixbuf = files
             .iter()
             .filter(|f| f.kind().supports_pixbuff())
             .take(5)
-            .map(|f| f.generate_pixbuff());
+            .map(|f| f.generate_pixbuff(few_files));
 
         join_all(file_paths_pixbuf).await;
 
@@ -696,7 +712,12 @@ impl AppWindow {
     async fn collect_pixbuf(&self, count: usize) {
         let input_files = self.get_all_files();
 
-        let file_paths_pixbuf = input_files.iter().take(count).map(|f| f.generate_pixbuff());
+        let few_files = self.get_file_count() <= 3;
+
+        let file_paths_pixbuf = input_files
+            .iter()
+            .take(count)
+            .map(|f| f.generate_pixbuff(few_files));
 
         join_all(file_paths_pixbuf).await;
     }
@@ -805,7 +826,6 @@ impl AppWindow {
                 imp.image_container.set_hexpand(false);
                 imp.image_container.set_max_children_per_line(3);
                 imp.image_container.set_halign(gtk::Align::Baseline);
-
             }
         }
 
@@ -1123,13 +1143,7 @@ impl AppWindow {
 
     pub fn open_files(&self, files: Vec<Option<InputFile>>) {
         let files = files.into_iter().flatten().collect_vec();
-        if !files.is_empty() {
-            self.open_success_wrapper(files);
-        } else {
-            self.imp()
-                .stack
-                .set_visible_child_name("stack_welcome_page");
-        }
+        self.add_success_wrapper(files);
     }
 
     fn save_error(&self, error: Option<&str>) {
@@ -1875,24 +1889,20 @@ impl AppWindow {
     }
 
     fn switch_to_stack_convert(&self) {
+        self.imp().leaf.set_visible_child_name("main");
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
     }
 
     fn switch_to_stack_converting(&self) {
-        self.imp()
-            .stack
-            .set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_converting");
     }
 
     fn switch_to_stack_welcome(&self) {
-        self.imp()
-            .stack
-            .set_transition_type(gtk::StackTransitionType::Crossfade);
+        self.imp().leaf.set_visible_child_name("main");
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
@@ -1901,9 +1911,6 @@ impl AppWindow {
     }
 
     fn switch_to_stack_invalid_image(&self) {
-        self.imp()
-            .stack
-            .set_transition_type(gtk::StackTransitionType::Crossfade);
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
@@ -1918,6 +1925,7 @@ impl AppWindow {
     }
 
     fn switch_to_stack_all_images_wrapper(&self) {
+        self.imp().leaf.set_visible_child_name("all_images");
         self.switch_to_stack_loading();
         glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.switch_to_stack_all_images().await;
@@ -1931,6 +1939,9 @@ impl AppWindow {
             .iter()
             .map(|f| (f.kind().supports_pixbuff() & f.pixbuf().is_none(), f.path()))
             .collect_vec();
+
+        self.imp().all_images_stack.set_visible_child_name("stack_loading");
+        self.imp().loading_spinner.start();
 
         let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
         std::thread::spawn(move || {
@@ -2006,9 +2017,8 @@ impl AppWindow {
             }));
         }
 
-        imp.stack
-            .set_transition_type(gtk::StackTransitionType::OverLeftRight);
-        imp.stack.set_visible_child_name("stack_all_images");
+        imp.all_images_stack.set_visible_child_name("all_images");
+        self.imp().loading_spinner.stop();
         imp.back_button.set_visible(true);
     }
 }

@@ -2,9 +2,9 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ImageThumbnail : Widget {
+    overflow: hidden;
     Box root {
         Box child {
-            overflow: hidden;
             Overlay {
                 Box {
                     orientation: vertical;
@@ -17,7 +17,6 @@ template $ImageThumbnail : Widget {
                             content-fit: cover;
                             hexpand: true;
                             vexpand: true;
-                            styles ["image-thumbnail"]
                         }
                         Image image {
                             width-request: 150;
@@ -25,7 +24,6 @@ template $ImageThumbnail : Widget {
                             hexpand: true;
                             vexpand: true;
                             icon-size: large;
-                            styles ["image-thumbnail"]
                         }
                     }
 
@@ -40,7 +38,6 @@ template $ImageThumbnail : Widget {
                         }
                         styles ["image-caption", "caption"]
                     }
-
                 }
 
                 [overlay]
@@ -52,7 +49,8 @@ template $ImageThumbnail : Widget {
                     halign: end;
                 }
             }
-            styles ["image-container", "card"]
+            styles ["image-container"]
         }
+        styles ["card-content"]
     }
 }

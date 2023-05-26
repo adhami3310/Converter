@@ -223,6 +223,9 @@ impl ImageThumbnail {
             .property("height", height)
             .build();
 
+        bin.add_css_class("card");
+        bin.add_css_class("image-thumbnail");
+
         bin
     }
 

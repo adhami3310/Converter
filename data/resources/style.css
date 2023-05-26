@@ -24,14 +24,14 @@ dragoverlay {
 .unfloating {
   margin-bottom: 55px;
 }
-/* 
-.image-container {
-  background-color: @thumbnail_bg_color;
-  color: @thumbnail_fg_color;
-  border: 1px solid @borders;
-  border-radius: 5px;
-  font-size: 12pt;
-} */
+
+.card-content {
+  border-radius: 60px;
+}
+
+flowboxchild:focus {
+  border-radius: 15px;
+}
 
 .image-caption {
   border-top: 1px solid @borders;

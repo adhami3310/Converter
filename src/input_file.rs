@@ -131,18 +131,23 @@ impl InputFile {
         glib::Object::new()
     }
 
-    pub async fn generate_pixbuff(&self) -> Result<(), Box<dyn std::error::Error>> {
-        if self.pixbuf().is_some() || !self.kind().supports_pixbuff() {
-            return Ok(());
+    pub async fn generate_pixbuff(&self, high_quality: bool) -> Result<(), Box<dyn std::error::Error>> {
+        if !self.kind().supports_pixbuff() || self.pixbuf().is_some() {
+            return Ok(())
         }
 
         let stream = gio::File::for_path(self.path())
             .read_future(glib::PRIORITY_DEFAULT)
             .await?;
 
-        let pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
+        let mut pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
 
-        let pixbuf = &get_reduced(&pixbuf);
+        if !high_quality {
+            pixbuf = get_reduced(&pixbuf, 400);
+        } else {
+            pixbuf = get_reduced(&pixbuf, 800);
+        
+        }
 
         self.set_property("pixbuff", pixbuf);
 
@@ -207,13 +212,16 @@ impl InputFile {
 }
 
 
-fn get_reduced(p: &Pixbuf) -> Pixbuf {
-    let max_side = 200.0;
+fn get_reduced(p: &Pixbuf, min_side: usize) -> Pixbuf {
+    let min_side = min_side as f64;
     let (width, height) = (p.width() as f64, p.height() as f64);
-    let max_original_side = std::cmp::min(width as usize, height as usize) as f64;
+    let min_original_side = std::cmp::min(width as usize, height as usize) as f64;
+    if min_original_side < min_side {
+        return p.to_owned();
+    }
     let (scaled_width, scaled_height) = (
-        width * max_side / max_original_side,
-        height * max_side / max_original_side,
+        width * min_side / min_original_side,
+        height * min_side / min_original_side,
     );
     let surface = cairo::ImageSurface::create(
         cairo::Format::ARgb32,

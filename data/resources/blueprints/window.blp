@@ -38,301 +38,326 @@ template $AppWindow : $AdwApplicationWindow {
       title: _("Drop Here to Open");
       child:
       $AdwToastOverlay toast_overlay {
-        Stack stack {
-          transition-type: crossfade;
+        $AdwLeaflet leaf {
+          can_unfold: false;
+          $AdwLeafletPage {
+            name: "main";
 
-          StackPage {
-            name: "stack_welcome_page";
             child:
-            $AdwStatusPage {
-              icon-name: "io.gitlab.adhami3310.Converter-symbolic";
-              title: _("Converter");
-              description: _("Click “Open Images…” or drag images here.");
-              hexpand: true;
-              vexpand: true;
-              child:
-              Box {
-                orientation: vertical;
-                spacing: 12;
+            Stack stack {
+              transition-type: crossfade;
 
-                Button open_button {
-                  valign: center;
-                  halign: center;
-                  label: _("_Open Images…");
-                  use-underline: true;
+              StackPage {
+                name: "stack_welcome_page";
+                child:
+                $AdwStatusPage {
+                  icon-name: "io.gitlab.adhami3310.Converter-symbolic";
+                  title: _("Converter");
+                  description: _("Click “Open Images…” or drag images here.");
+                  hexpand: true;
+                  vexpand: true;
+                  child:
+                  Box {
+                    orientation: vertical;
+                    spacing: 12;
 
-                  styles [
-                    "suggested-action",
-                    "pill",
-                  ]
-                }
-              }
+                    Button open_button {
+                      valign: center;
+                      halign: center;
+                      label: _("_Open Images…");
+                      use-underline: true;
 
-              ;
-            }
-
-            ;
-          }
-
-          StackPage {
-            name: "stack_loading";
-            child:
-            $AdwStatusPage {
-              Spinner loading_spinner {
-                valign: center;
-              }
-            }
-
-            ;
-          }
-
-          StackPage {
-            name: "stack_convert";
-            child:
-            Overlay {
-              [overlay]
-              $AdwPreferencesGroup {
-                valign: end;
-                halign: center;
-
-                Button convert_button {
-                  valign: center;
-                  halign: end;
-                  label: _("_Convert");
-                  use-underline: true;
-
-                  styles [
-                    "suggested-action",
-                    "pill",
-                  ]
-                }
-
-                styles [
-                  "floating"
-                ]
-              }
-
-              $AdwBin {
-                $AdwPreferencesPage {
-                  $AdwPreferencesGroup {
-                    FlowBox image_container {
-                      homogeneous: true;
-                      hexpand: true;
-                      vexpand: false;
-                      column-spacing: 12;
-                      row-spacing: 12;
-                      selection-mode: none;
+                      styles [
+                        "suggested-action",
+                        "pill",
+                      ]
                     }
                   }
 
+                  ;
+                }
+
+                ;
+              }
+
+              StackPage {
+                name: "stack_loading";
+                child:
+                $AdwStatusPage {
+                  Spinner loading_spinner {
+                    valign: center;
+                  }
+                }
+
+                ;
+              }
+
+              StackPage {
+                name: "stack_convert";
+                child:
+                Overlay {
+                  [overlay]
                   $AdwPreferencesGroup {
+                    valign: end;
+                    halign: center;
 
-                    $AdwComboRow output_filetype {
-                      title: _("Export Format");
-                      model: StringList supported_output_filetypes {};
+                    Button convert_button {
+                      valign: center;
+                      halign: end;
+                      label: _("_Convert");
+                      use-underline: true;
+
+                      styles [
+                        "suggested-action",
+                        "pill",
+                      ]
                     }
 
-                    $AdwComboRow output_compression {
-                      title: _("Save Method");
-                      subtitle: _("Compress images or use a directory");
-                      model: StringList supported_compression_filetypes {};
-                    }
-
+                    styles [
+                      "floating"
+                    ]
                   }
 
-                  $AdwPreferencesGroup {
-                    $AdwActionRow quality_row {
-                      title: _("Quality");
-
-                      Scale quality {
-                        adjustment: Adjustment percentage {
-                          lower: 1;
-                          upper: 100;
-                          step-increment: 1;
-                        };
-                        hexpand: true;
-                        vexpand: true;
-                        digits: 0;
-                        draw-value: true;
-                        value-pos: right;
-                      }
-                    }
-
-                    $AdwActionRow bgcolor_row {
-                      title: _("Background Color");
-                      subtitle: _("Replaces original transparency layer");
-
-                      ColorDialogButton bgcolor {
-                        valign: center;
-                      }
-                    }
-
-                    $AdwActionRow dpi_row {
-                      title: _("Pixel Density Per Inch");
-                      $AdwBin {
-                        Entry dpi_value {
-                          valign: center;
+                  $AdwBin {
+                    $AdwPreferencesPage {
+                      $AdwPreferencesGroup {
+                        FlowBox image_container {
+                          homogeneous: true;
+                          hexpand: true;
+                          vexpand: false;
+                          column-spacing: 12;
+                          row-spacing: 12;
+                          selection-mode: none;
                         }
                       }
-                    }
 
-                    $AdwActionRow resize_amount_row {
-                      title: _("Resize");
-                      Box {
-                        spacing: 5;
-                        Entry resize_width_value {
-                          valign: center;
-                          placeholder-text: _("Width");
-                          tooltip-text: _("Width");
-                          input-purpose: digits;
-                          max-width-chars: 8;
-                          hexpand: false;
+                      $AdwPreferencesGroup {
+
+                        $AdwComboRow output_filetype {
+                          title: _("Export Format");
+                          model: StringList supported_output_filetypes {};
                         }
-                        Entry resize_scale_width_value {
-                          valign: center;
-                          placeholder-text: _("Width");
-                          input-purpose: digits;
-                          tooltip-text: _("Width");
-                          max-width-chars: 8;
-                          hexpand: false;
+
+                        $AdwComboRow output_compression {
+                          title: _("Save Method");
+                          subtitle: _("Compress images or use a directory");
+                          model: StringList supported_compression_filetypes {};
                         }
-                        ToggleButton link_axis {
-                          active: true;
-                          valign: center;
-                          icon-name: 'chain-link-symbolic';
-                          tooltip-text: _("Preserve aspect ratio");
-                          styles ['raised', 'circular', 'lock']
-                        }
-                        Entry resize_height_value {
-                          valign: center;
-                          placeholder-text: _("Height");
-                          tooltip-text: _("Height");
-                          input-purpose: digits;
-                          max-width-chars: 8;
-                          hexpand: false;
-                        }
-                        Entry resize_scale_height_value {
-                          valign: center;
-                          placeholder-text: _("Width");
-                          tooltip-text: _("Height");
-                          input-purpose: digits;
-                          max-width-chars: 8;
-                          hexpand: false;
-                        }
+
                       }
-                      $AdwBin {
-                        Box {
-                          DropDown resize_type {
-                            valign: center;
-                            model:
-                            StringList resize_types {
-                              strings [_("%"),_("px")]
-                            }
-                            ;
-                            styles ["flat", "unit-drop"]
+
+                      $AdwPreferencesGroup {
+                        $AdwActionRow quality_row {
+                          title: _("Quality");
+
+                          Scale quality {
+                            adjustment: Adjustment percentage {
+                              lower: 1;
+                              upper: 100;
+                              step-increment: 1;
+                            };
+                            hexpand: true;
+                            vexpand: true;
+                            digits: 0;
+                            draw-value: true;
+                            value-pos: right;
                           }
                         }
-                      }
-                    }
-                    $AdwActionRow resize_filter_row {
-                      title: _("Resize Algorithm");
-                      
-                      Box {
-                        valign: center;
-                        ToggleButton resize_filter_default {
-                          active: true;
-                          label: _("Default");
+
+                        $AdwActionRow bgcolor_row {
+                          title: _("Background Color");
+                          subtitle: _("Replaces original transparency layer");
+
+                          ColorDialogButton bgcolor {
+                            valign: center;
+                          }
                         }
-                        ToggleButton resize_filter_pixel {
-                          active: false;
-                          label: _("Pixel Art");
+
+                        $AdwActionRow dpi_row {
+                          title: _("Pixel Density Per Inch");
+                          $AdwBin {
+                            Entry dpi_value {
+                              valign: center;
+                            }
+                          }
                         }
-                        styles ["linked"]
+
+                        $AdwActionRow resize_amount_row {
+                          title: _("Resize");
+                          Box {
+                            spacing: 5;
+                            Entry resize_width_value {
+                              valign: center;
+                              placeholder-text: _("Width");
+                              tooltip-text: _("Width");
+                              input-purpose: digits;
+                              max-width-chars: 8;
+                              hexpand: false;
+                            }
+                            Entry resize_scale_width_value {
+                              valign: center;
+                              placeholder-text: _("Width");
+                              input-purpose: digits;
+                              tooltip-text: _("Width");
+                              max-width-chars: 8;
+                              hexpand: false;
+                            }
+                            ToggleButton link_axis {
+                              active: true;
+                              valign: center;
+                              icon-name: 'chain-link-symbolic';
+                              tooltip-text: _("Preserve aspect ratio");
+                              styles ['raised', 'circular', 'lock']
+                            }
+                            Entry resize_height_value {
+                              valign: center;
+                              placeholder-text: _("Height");
+                              tooltip-text: _("Height");
+                              input-purpose: digits;
+                              max-width-chars: 8;
+                              hexpand: false;
+                            }
+                            Entry resize_scale_height_value {
+                              valign: center;
+                              placeholder-text: _("Width");
+                              tooltip-text: _("Height");
+                              input-purpose: digits;
+                              max-width-chars: 8;
+                              hexpand: false;
+                            }
+                          }
+                          $AdwBin {
+                            Box {
+                              DropDown resize_type {
+                                valign: center;
+                                model:
+                                StringList resize_types {
+                                  strings [_("%"),_("px")]
+                                }
+                                ;
+                                styles ["flat", "unit-drop"]
+                              }
+                            }
+                          }
+                        }
+                        $AdwActionRow resize_filter_row {
+                          title: _("Resize Algorithm");
+                          
+                          Box {
+                            valign: center;
+                            ToggleButton resize_filter_default {
+                              active: true;
+                              label: _("Default");
+                            }
+                            ToggleButton resize_filter_pixel {
+                              active: false;
+                              label: _("Pixel Art");
+                            }
+                            styles ["linked"]
+                          }
+                        }
+                        styles ["unfloating"]
                       }
+
                     }
-                    styles ["unfloating"]
+                    
                   }
 
+
                 }
-                
+
+                ;
               }
 
+              StackPage {
+                name: "stack_invalid_image";
+                child:
+                $AdwStatusPage invalid_image {
+                  icon-name: "im-symbolic";
+                  title: _("Could not Load Image");
+                  description: _("This image could be corrupted or may use an unsupported file format.");
+                  hexpand: true;
+                  vexpand: true;
+                }
 
+                ;
+              }
+
+              StackPage {
+                name: "stack_converting";
+                child:
+                $AdwStatusPage {
+                  title: _("Converting…");
+                  description: _("This could take a while.");
+
+                  Box {
+                    orientation: vertical;
+                    spacing: 36;
+
+                    ProgressBar progress_bar {
+                      valign: center;
+                      halign: center;
+                      show-text: true;
+                      text: _("Loading…");
+                    }
+
+                    Button cancel_button {
+                      valign: center;
+                      halign: center;
+                      label: _("_Cancel");
+                      use-underline: true;
+
+                      styles [
+                        "destructive-action",
+                        "pill",
+                      ]
+                    }
+                  }
+                }
+
+                ;
+              }
             }
-
             ;
           }
 
-          StackPage {
-            name: "stack_invalid_image";
+          $AdwLeafletPage {
+            name: "all_images";
             child:
-            $AdwStatusPage invalid_image {
-              icon-name: "im-symbolic";
-              title: _("Could not Load Image");
-              description: _("This image could be corrupted or may use an unsupported file format.");
-              hexpand: true;
-              vexpand: true;
-            }
-
-            ;
-          }
-
-
-          StackPage {
-            name: "stack_all_images";
-            child:
-            ScrolledWindow {
-              vexpand: true;
-              hexpand: true;
-              FlowBox full_image_container {
-                homogeneous: true;
-                halign: center;
-                valign: start;
-                column-spacing: 12;
-                row-spacing: 12;
-                margin-top: 16;
-                margin-bottom: 16;
-                margin-start: 16;
-                margin-end: 16;
-                selection-mode: none;
-              }
-            }
-
-            ;
-          }
-
-          StackPage {
-            name: "stack_converting";
-            child:
-            $AdwStatusPage {
-              title: _("Converting…");
-              description: _("This could take a while.");
-
-              Box {
-                orientation: vertical;
-                spacing: 36;
-
-                ProgressBar progress_bar {
-                  valign: center;
-                  halign: center;
-                  show-text: true;
-                  text: _("Loading…");
+            Stack all_images_stack {
+              StackPage {
+                name: "stack_loading";
+                child:
+                $AdwStatusPage {
+                  Spinner loading_spinner_images {
+                    valign: center;
+                  }
                 }
 
-                Button cancel_button {
-                  valign: center;
-                  halign: center;
-                  label: _("_Cancel");
-                  use-underline: true;
-
-                  styles [
-                    "destructive-action",
-                    "pill",
-                  ]
+                ;
+              }
+              StackPage {
+                name: "all_images";
+                child:
+                ScrolledWindow {
+                  vexpand: true;
+                  hexpand: true;
+                  FlowBox full_image_container {
+                    homogeneous: true;
+                    halign: center;
+                    valign: start;
+                    column-spacing: 12;
+                    row-spacing: 12;
+                    margin-top: 16;
+                    margin-bottom: 16;
+                    margin-start: 16;
+                    margin-end: 16;
+                    selection-mode: none;
+                  }
                 }
+                ;
               }
             }
-
             ;
           }
         }
