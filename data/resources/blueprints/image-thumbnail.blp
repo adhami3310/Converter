@@ -1,45 +1,58 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $ImageThumbnail : FlowBoxChild {
-    halign: center;
-    $AdwBin {
-        overflow: hidden;
-        Overlay {            
-            Box {
-                orientation: vertical;
-                Image image {
-                    width-request: 150;
-                    height-request: 150;
+template $ImageThumbnail : Widget {
+    Box root {
+        Box child {
+            overflow: hidden;
+            Overlay {
+                Box {
+                    orientation: vertical;
                     hexpand: true;
                     vexpand: true;
-                    icon-size: large;
-                    styles ["image-thumbnail"]
-                }                
-
-                $AdwBin {
-                    hexpand: true;
-                    vexpand: false;
-                    overflow: hidden;
                     Box {
-                        halign: center;
-                        valign: center;
-                        Label content {}
+                        Picture picture {
+                            width-request: 150;
+                            height-request: 150;
+                            content-fit: cover;
+                            hexpand: true;
+                            vexpand: true;
+                            styles ["image-thumbnail"]
+                        }
+                        Image image {
+                            width-request: 150;
+                            height-request: 150;
+                            hexpand: true;
+                            vexpand: true;
+                            icon-size: large;
+                            styles ["image-thumbnail"]
+                        }
                     }
-                    styles ["image-caption", "caption"]
+
+                    $AdwBin {
+                        hexpand: true;
+                        vexpand: false;
+                        overflow: hidden;
+                        Box {
+                            halign: center;
+                            valign: center;
+                            Label content {}
+                        }
+                        styles ["image-caption", "caption"]
+                    }
+
                 }
 
+                [overlay]
+                Button remove {
+                    icon-name: "user-trash-symbolic";
+                    tooltip-text: _("Remove image");
+                    styles ["circular", "image-remove", "osd"]
+                    valign: start;
+                    halign: end;
+                }
             }
-
-            [overlay]
-            Button remove {
-                icon-name: "user-trash-symbolic";
-                tooltip-text: _("Remove image");
-                styles ["circular", "image-remove", "osd"]
-                valign: start;
-                halign: end;
-            }
+            styles ["image-container", "card"]
         }
-        styles ["image-container", "card"]
     }
 }

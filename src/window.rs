@@ -7,7 +7,7 @@ use crate::config::APP_ID;
 use crate::drag_overlay::DragOverlay;
 use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
-use crate::input_file::{get_square, InputFile};
+use crate::input_file::InputFile;
 use crate::magick::{
     count_frames, pixbuf_bytes, wait_for_child, ConvertJob, GhostScriptConvertJob, JobFile,
     MagickConvertJob, ResizeArgument,
@@ -694,7 +694,7 @@ impl AppWindow {
     }
 
     async fn collect_pixbuf(&self, count: usize) {
-        let input_files = self.get_files();
+        let input_files = self.get_all_files();
 
         let file_paths_pixbuf = input_files.iter().take(count).map(|f| f.generate_pixbuff());
 
@@ -705,7 +705,7 @@ impl AppWindow {
         let imp = self.imp();
 
         let input_files = self
-            .get_files()
+            .get_all_files()
             .into_iter()
             .map(|f| (f.pixbuf(), f.kind()))
             .collect_vec();
@@ -742,7 +742,7 @@ impl AppWindow {
         let imp = self.imp();
 
         let input_files = self
-            .get_files()
+            .get_all_files()
             .into_iter()
             .map(|f| (f.pixbuf(), f.kind(), f.dimensions()))
             .collect_vec();
@@ -763,7 +763,9 @@ impl AppWindow {
                         None => file_type.as_display_string().to_owned(),
                     };
 
-                    let image_thumbnail = ImageThumbnail::new(image, &caption);
+                    let (w, h) = dims.unwrap_or((0, 0));
+
+                    let image_thumbnail = ImageThumbnail::new(image, &caption, w as u32, h as u32);
 
                     imp.image_container.append(&image_thumbnail);
                     image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
@@ -800,6 +802,14 @@ impl AppWindow {
             .enumerate()
             .filter(|(i, _)| !removed.contains(&(*i as u32)))
             .map(|(_, f)| f)
+            .collect_vec()
+    }
+
+    fn get_all_files(&self) -> Vec<InputFile> {
+        self.imp()
+            .input_file_store
+            .iter::<InputFile>()
+            .flatten()
             .collect_vec()
     }
 
@@ -1080,8 +1090,7 @@ impl AppWindow {
             ResizeType::ExactPixels => {
                 imp.resize_width_value.set_visible(true);
                 imp.resize_height_value.set_visible(true);
-                if self.imp().image_width.get().is_some()
-                    && self.imp().image_height.get().is_some()
+                if self.imp().image_width.get().is_some() && self.imp().image_height.get().is_some()
                 {
                     imp.link_axis.set_visible(true);
                 }
@@ -1318,10 +1327,13 @@ impl AppWindow {
                             output_path,
                             output_type,
                             dir,
-                            (&MagickConvertJob {
-                                resize_arg: ResizeArgument::default(),
-                                ..default_arguments.0.to_owned()
-                            }, default_arguments.1),
+                            (
+                                &MagickConvertJob {
+                                    resize_arg: ResizeArgument::default(),
+                                    ..default_arguments.0.to_owned()
+                                },
+                                default_arguments.1,
+                            ),
                         )
                         .into_iter(),
                     )
@@ -1927,7 +1939,7 @@ impl AppWindow {
                 for (f, p) in files.iter().zip(pixpaths.iter()) {
                     if let Some(p) = p {
                         let stream = gio::MemoryInputStream::from_bytes(p);
-                        let pixbuf = get_square(&Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE).unwrap());
+                        let pixbuf = Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE).unwrap();
                         f.set_pixbuf(pixbuf);
                     }
                 }
@@ -1963,7 +1975,9 @@ impl AppWindow {
                 None => file_type.as_display_string().to_owned(),
             };
 
-            let image_thumbnail = ImageThumbnail::new(image, &caption);
+            let (w, h) = dims.unwrap_or((0, 0));
+
+            let image_thumbnail = ImageThumbnail::new(image, &caption, w as u32, h as u32);
 
             imp.full_image_container.append(&image_thumbnail);
             image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {

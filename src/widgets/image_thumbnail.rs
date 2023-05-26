@@ -55,9 +55,11 @@ use once_cell::sync::Lazy;
 
 mod imp {
 
+    use std::cell::Cell;
+
     use super::*;
 
-    use glib::{ParamSpec, ParamSpecObject, ParamSpecString};
+    use glib::{ParamSpec, ParamSpecObject, ParamSpecString, ParamSpecUInt};
     use gtk::CompositeTemplate;
 
     #[derive(Debug, CompositeTemplate)]
@@ -65,19 +67,26 @@ mod imp {
     pub struct ImageThumbnail {
         #[template_child]
         pub image: TemplateChild<gtk::Image>,
-        // #[template_child]
-        // pub picture: TemplateChild<gtk::Picture>,
+        #[template_child]
+        pub picture: TemplateChild<gtk::Picture>,
         #[template_child]
         pub content: TemplateChild<gtk::Label>,
         #[template_child]
         pub remove: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub root: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub child: TemplateChild<gtk::Box>,
+        
+        pub width: Cell<u32>,
+        pub height: Cell<u32>
     }
 
     #[glib::object_subclass]
     impl ObjectSubclass for ImageThumbnail {
         const NAME: &'static str = "ImageThumbnail";
         type Type = super::ImageThumbnail;
-        type ParentType = gtk::FlowBoxChild;
+        type ParentType = gtk::Widget;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -90,9 +99,13 @@ mod imp {
         fn new() -> Self {
             Self {
                 image: TemplateChild::default(),
-                // picture: TemplateChild::default(),
+                picture: TemplateChild::default(),
                 content: TemplateChild::default(),
                 remove: TemplateChild::default(),
+                root: TemplateChild::default(),
+                child: TemplateChild::default(),
+                width: Cell::new(0),
+                height: Cell::new(0),
             }
         }
     }
@@ -108,6 +121,8 @@ mod imp {
                     ParamSpecObject::builder::<gtk::Button>("remove")
                         .read_only()
                         .build(),
+                    ParamSpecUInt::builder("width").write_only().build(),
+                    ParamSpecUInt::builder("height").write_only().build(),
                 ]
             });
             PROPERTIES.as_ref()
@@ -122,20 +137,28 @@ mod imp {
                     match p {
                         Some(p) => {
                             // self.image.set_from_pixbuf(Some(&get_reduced(&p)));
-                            self.image.set_from_pixbuf(Some(&p));
-                            // self.image.set_visible(true);
-                            // self.picture.set_visible(false);
+                            self.picture.set_pixbuf(Some(&p));
+                            self.picture.set_visible(true);
+                            self.image.set_visible(false);
                         }
                         None => {
                             self.image.set_icon_name(Some("image-symbolic"));
-                            // self.image.set_visible(true);
-                            // self.picture.set_visible(false);
+                            self.image.set_visible(true);
+                            self.picture.set_visible(false);
                         }
                     }
                 }
                 "content" => {
                     let p = value.get::<&str>().expect("Value must be a string");
                     self.content.set_text(p);
+                }
+                "width" => {
+                    let p = value.get::<u32>().expect("Value must be an usize");
+                    self.width.replace(p);
+                }
+                "height" => {
+                    let p = value.get::<u32>().expect("Value must be an usize");
+                    self.height.replace(p);
                 }
                 _ => unimplemented!(),
             }
@@ -147,35 +170,60 @@ mod imp {
                 _ => unimplemented!(),
             }
         }
+
+        fn dispose(&self) {
+            self.root.unparent();
+        }
     }
 
-    impl WidgetImpl for ImageThumbnail {}
+    impl WidgetImpl for ImageThumbnail {
+        fn measure(&self, orientation: gtk::Orientation, for_size: i32) -> (i32, i32, i32, i32) {
+            let m = self.root.measure(orientation, for_size);
+            let (w, h) = (self.width.get() as i32, self.height.get() as i32);
+            match orientation {
+                gtk::Orientation::Horizontal if h + w != 0 => {
+                    (150, 150, m.2, m.3)
+                }
+                _ => m
+            }
+        }
 
-    impl FlowBoxChildImpl for ImageThumbnail {}
+        fn size_allocate(&self, width: i32, height: i32, baseline: i32) {
+            self.root.allocate(width, height, baseline, None)
+        }
+
+        fn request_mode(&self) -> gtk::SizeRequestMode {
+            self.root.request_mode()
+        }
+
+        fn contains(&self, x: f64, y: f64) -> bool {
+            self.root.contains(x, y)
+        }
+
+        fn snapshot(&self, snapshot: &gtk::Snapshot) {
+            self.root
+                .snapshot_child(&self.child.clone().upcast::<gtk::Widget>(), snapshot);
+        }
+    }
 }
 
 glib::wrapper! {
     pub struct ImageThumbnail(ObjectSubclass<imp::ImageThumbnail>)
-        @extends gtk::FlowBoxChild, gtk::Widget,
-        @implements gio::ActionMap, gio::ActionGroup, gtk::Root;
+        @extends gtk::Widget,
+        @implements gtk::Buildable, gtk::Accessible, gtk::ConstraintTarget, gio::ActionMap, gio::ActionGroup, gtk::Root;
 }
 
 #[gtk::template_callbacks]
 impl ImageThumbnail {
-    pub fn new(image: Option<Pixbuf>, content: &str) -> Self {
+    pub fn new(image: Option<Pixbuf>, content: &str, width: u32, height: u32) -> Self {
         let bin = glib::Object::builder::<ImageThumbnail>()
             .property("image", image)
             .property("content", content)
+            .property("width", width)
+            .property("height", height)
             .build();
 
-        bin.setup_callbacks();
-
         bin
-    }
-
-    fn setup_callbacks(&self) {
-        //load imp
-        // let imp = self.imp();
     }
 
     pub fn connect_remove_clicked<F>(&self, func: F) -> SignalHandlerId

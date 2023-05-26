@@ -142,7 +142,7 @@ impl InputFile {
 
         let pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
 
-        let pixbuf = get_square(&get_reduced(&pixbuf));
+        let pixbuf = &get_reduced(&pixbuf);
 
         self.set_property("pixbuff", pixbuf);
 
@@ -230,11 +230,11 @@ fn get_reduced(p: &Pixbuf) -> Pixbuf {
         .unwrap()
 }
 
-pub fn get_square(p: &Pixbuf) -> Pixbuf {
-    let side = std::cmp::min(p.width(), p.height());
-    let surface = cairo::ImageSurface::create(cairo::Format::ARgb32, side, side).unwrap();
-    let context = cairo::Context::new(&surface).unwrap();
-    context.set_source_pixbuf(&p, ((p.width() - side) as f64) / -2.0, ((p.height() - side) as f64) / -2.0);
-    context.paint().unwrap();
-    gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
-}
+// pub fn get_square(p: &Pixbuf) -> Pixbuf {
+//     let side = std::cmp::min(p.width(), p.height());
+//     let surface = cairo::ImageSurface::create(cairo::Format::ARgb32, side, side).unwrap();
+//     let context = cairo::Context::new(&surface).unwrap();
+//     context.set_source_pixbuf(&p, ((p.width() - side) as f64) / -2.0, ((p.height() - side) as f64) / -2.0);
+//     context.paint().unwrap();
+//     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
+// }
