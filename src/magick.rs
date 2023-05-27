@@ -21,19 +21,27 @@ pub async fn count_frames(path: String) -> Result<(usize, Option<(usize, usize)>
             Ok(output_string) => {
                 let lines = output_string.lines().collect_vec();
                 let count = lines.len();
-                let dims = lines.first().map(|line| {
-                    let dimension_match = regex::Regex::new(r" \d+x\d+ ").unwrap().find(line);
-                    
-                    dimension_match.map(|m| {
-                        let dims = m.as_str().trim().split('x').map(|n| n.parse::<usize>()).collect_vec();
-                        match dims[..] {
-                            [Ok(width), Ok(height)] => Some((width, height)),
-                            _ => None
-                        }
+                let dims = lines
+                    .first()
+                    .and_then(|line| {
+                        let dimension_match = regex::Regex::new(r" \d+x\d+ ").unwrap().find(line);
+
+                        dimension_match.map(|m| {
+                            let dims = m
+                                .as_str()
+                                .trim()
+                                .split('x')
+                                .map(|n| n.parse::<usize>())
+                                .collect_vec();
+                            match dims[..] {
+                                [Ok(width), Ok(height)] => Some((width, height)),
+                                _ => None,
+                            }
+                        })
                     })
-                }).flatten().flatten();
+                    .flatten();
                 Ok((count, dims))
-            },
+            }
             _ => Err(()),
         },
         _ => Err(()),
@@ -60,7 +68,10 @@ pub enum ResizeArgument {
 
 impl Default for ResizeArgument {
     fn default() -> Self {
-        Self::Percentage { width: 100, height: 100 }
+        Self::Percentage {
+            width: 100,
+            height: 100,
+        }
     }
 }
 
@@ -79,10 +90,7 @@ impl MagickArgument for ResizeArgument {
             ResizeArgument::Percentage { width, height } => {
                 vec!["-resize".to_owned(), format!("{width}%x{height}%")]
             }
-            ResizeArgument::ExactPixels {
-                width,
-                height,
-            } => {
+            ResizeArgument::ExactPixels { width, height } => {
                 vec!["-resize".to_owned(), format!("{width}x{height}!")]
             }
         }

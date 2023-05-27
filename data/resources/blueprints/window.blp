@@ -173,6 +173,10 @@ template $AppWindow : $AdwApplicationWindow {
 
                           ColorDialogButton bgcolor {
                             valign: center;
+                            rgba: "#00000000";
+                            dialog: ColorDialog {
+                              with-alpha: true;
+                            };
                           }
                         }
 

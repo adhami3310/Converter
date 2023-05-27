@@ -21,7 +21,6 @@ use gettextrs::gettext;
 use glib::clone;
 use gtk::gdk_pixbuf::Pixbuf;
 use gtk::gio::Cancellable;
-use gtk::ColorDialog;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
 use itertools::Itertools;
 use shared_child::SharedChild;
@@ -335,7 +334,7 @@ impl AppWindow {
                     this.imp().link_axis.set_icon_name("chain-link-symbolic");
                     let old_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
                     let new_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
-                    if old_value != new_value && new_value != "" {
+                    if old_value != new_value && !new_value.is_empty() {
                         this.imp().resize_scale_width_value.set_text(&new_value);
                     }
                     this.update_width_from_height();
@@ -349,7 +348,7 @@ impl AppWindow {
                 if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
                     let old_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
                     let new_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
-                    if old_value != new_value && new_value != "" {
+                    if old_value != new_value && !new_value.is_empty() {
                         this.imp().resize_scale_width_value.set_text(&new_value);
                     }
                 }
@@ -360,7 +359,7 @@ impl AppWindow {
                 if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
                     let old_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
                     let new_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
-                    if old_value != new_value && new_value != "" {
+                    if old_value != new_value && !new_value.is_empty() {
                         this.imp().resize_scale_height_value.set_text(&new_value);
                     }
                 }
@@ -556,7 +555,7 @@ impl AppWindow {
                         return false;
                     }
 
-                    let input_files = file_list.files().iter().map(|f| InputFile::new(f)).collect_vec();
+                    let input_files = file_list.files().iter().map(InputFile::new).collect_vec();
                     win.open_files(input_files);
                     return true;
                 }
@@ -995,15 +994,20 @@ impl AppWindow {
             imp.bgcolor_row.set_visible(true);
 
             if output_filetype.supports_alpha() {
-                imp.bgcolor.set_rgba(&gdk::RGBA::TRANSPARENT);
-                let color_dialog = ColorDialog::new();
+                imp.bgcolor.set_rgba(
+                    &gdk::RGBA::builder()
+                        .red(0.00)
+                        .green(0.0)
+                        .blue(0.0)
+                        .alpha(0.0000001)
+                        .build(),
+                );
+                let color_dialog = imp.bgcolor.dialog().unwrap();
                 color_dialog.set_with_alpha(true);
-                imp.bgcolor.set_dialog(&color_dialog);
             } else {
                 imp.bgcolor.set_rgba(&gdk::RGBA::WHITE);
-                let color_dialog = ColorDialog::new();
+                let color_dialog = imp.bgcolor.dialog().unwrap();
                 color_dialog.set_with_alpha(false);
-                imp.bgcolor.set_dialog(&color_dialog);
             }
         }
 
@@ -1031,7 +1035,7 @@ impl AppWindow {
             {
                 let old_value = self.imp().resize_width_value.text().as_str().to_owned();
                 let other_text = self.imp().resize_height_value.text().as_str().to_owned();
-                if other_text == "" {
+                if other_text.is_empty() {
                     return;
                 }
 
@@ -1075,7 +1079,7 @@ impl AppWindow {
             {
                 let old_value = self.imp().resize_height_value.text().as_str().to_owned();
                 let other_text = self.imp().resize_width_value.text().as_str().to_owned();
-                if other_text == "" {
+                if other_text.is_empty() {
                     return;
                 }
 

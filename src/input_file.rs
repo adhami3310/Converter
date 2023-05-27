@@ -1,9 +1,10 @@
 use glib::{ParamSpec, ParamSpecEnum, ParamSpecString, Value};
 use gtk::{
+    cairo,
     gdk::gdk_pixbuf::{Colorspace, Pixbuf},
     gio, glib,
     prelude::*,
-    subclass::prelude::*, cairo,
+    subclass::prelude::*,
 };
 use once_cell::sync::Lazy;
 use std::cell::{Cell, RefCell};
@@ -131,9 +132,12 @@ impl InputFile {
         glib::Object::new()
     }
 
-    pub async fn generate_pixbuff(&self, high_quality: bool) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn generate_pixbuff(
+        &self,
+        high_quality: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         if !self.kind().supports_pixbuff() || self.pixbuf().is_some() {
-            return Ok(())
+            return Ok(());
         }
 
         let stream = gio::File::for_path(self.path())
@@ -146,7 +150,6 @@ impl InputFile {
             pixbuf = get_reduced(&pixbuf, 400);
         } else {
             pixbuf = get_reduced(&pixbuf, 800);
-        
         }
 
         self.set_property("pixbuff", pixbuf);
@@ -177,19 +180,17 @@ impl InputFile {
 
     pub fn dimensions(&self) -> Option<(usize, usize)> {
         let (w, h) = (self.width(), self.height());
-        w.map(|w| {
-            h.map(|h| (w, h))
-        }).flatten()
+        w.and_then(|w| h.map(|h| (w, h)))
     }
 
     pub fn set_frames(&self, f: usize) {
         self.imp().frames.replace(f);
     }
-    
+
     pub fn set_width(&self, f: usize) {
         self.imp().width.replace(Some(f));
     }
-    
+
     pub fn set_height(&self, f: usize) {
         self.imp().height.replace(Some(f));
     }
@@ -211,7 +212,6 @@ impl InputFile {
     }
 }
 
-
 fn get_reduced(p: &Pixbuf, min_side: usize) -> Pixbuf {
     let min_side = min_side as f64;
     let (width, height) = (p.width() as f64, p.height() as f64);
@@ -231,7 +231,7 @@ fn get_reduced(p: &Pixbuf, min_side: usize) -> Pixbuf {
     .unwrap();
     let context = cairo::Context::new(&surface).unwrap();
     context.scale(scaled_width / width, scaled_height / height);
-    context.set_source_pixbuf(&p, 0.0, 0.0);
+    context.set_source_pixbuf(p, 0.0, 0.0);
     context.paint().unwrap();
     context.scale(width / scaled_width, height / scaled_height);
     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, scaled_width as i32, scaled_height as i32)

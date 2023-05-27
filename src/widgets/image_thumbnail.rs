@@ -77,9 +77,9 @@ mod imp {
         pub root: TemplateChild<gtk::Box>,
         #[template_child]
         pub child: TemplateChild<gtk::Box>,
-        
+
         pub width: Cell<u32>,
-        pub height: Cell<u32>
+        pub height: Cell<u32>,
     }
 
     #[glib::object_subclass]
@@ -181,10 +181,8 @@ mod imp {
             let m = self.root.measure(orientation, for_size);
             let (w, h) = (self.width.get() as i32, self.height.get() as i32);
             match orientation {
-                gtk::Orientation::Horizontal if h + w != 0 => {
-                    (150, 150, m.2, m.3)
-                }
-                _ => m
+                gtk::Orientation::Horizontal if h + w != 0 => (150, 150, m.2, m.3),
+                _ => m,
             }
         }
 
