@@ -666,8 +666,17 @@ impl AppWindow {
         let file_paths_pixbuf = files
             .iter()
             .filter(|f| f.kind().supports_pixbuff())
-            .take(5)
-            .map(|f| f.generate_pixbuff(few_files));
+            .enumerate()
+            .map(|(i, f)| {
+                let x = match i {
+                    0..=5 => f.generate_pixbuff(few_files),
+                    _ => f.generate_pixbuff(false),
+                };
+                async move {
+                    x.await.ok();
+                    glib::MainContext::default().iteration(true);
+                }
+            });
 
         join_all(file_paths_pixbuf).await;
 
@@ -724,24 +733,11 @@ impl AppWindow {
         }
     }
 
-    fn collect_pixbuf_wrapper(&self, count: usize, other_count: usize, remaining_visible: bool) {
+    fn collect_pixbuf_wrapper(&self, count: usize, remaining_visible: bool) {
         MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.build_from_count(count, remaining_visible);
-            this.collect_pixbuf(other_count).await;
+            this.load_all_images().await;
         }));
-    }
-
-    async fn collect_pixbuf(&self, count: usize) {
-        let input_files = self.get_all_files();
-
-        let few_files = self.get_file_count() <= 3;
-
-        let file_paths_pixbuf = input_files
-            .iter()
-            .take(count)
-            .map(|f| f.generate_pixbuff(few_files));
-
-        join_all(file_paths_pixbuf).await;
     }
 
     fn construct_short_thumbnail(&self) {
@@ -778,7 +774,7 @@ impl AppWindow {
             elements -= 1;
         }
 
-        self.collect_pixbuf_wrapper(elements, remaining_elements, remaining_visible);
+        self.collect_pixbuf_wrapper(elements, remaining_visible);
     }
 
     fn build_from_count(&self, count: usize, remaining_visible: bool) {
@@ -834,7 +830,7 @@ impl AppWindow {
             let image_rest = ImageRest::new(self.get_file_count() - 5);
             imp.image_container.append(&image_rest);
             image_rest.connect_clicked(clone!(@weak self as this => move |_| {
-                this.switch_to_stack_all_images_wrapper();
+                this.imp().leaf.navigate(adw::NavigationDirection::Forward);
             }));
         }
 
@@ -915,7 +911,9 @@ impl AppWindow {
         if self.imp().leaf.visible_child_name().unwrap() == "main" {
             self.switch_to_stack_convert();
         } else {
-            self.switch_to_stack_all_images_wrapper();
+            self.imp()
+                .all_images_stack
+                .set_visible_child_name("all_images");
         }
     }
 
@@ -1942,10 +1940,10 @@ impl AppWindow {
         self.imp().leaf.set_visible_child_name("main");
     }
 
-    fn switch_to_all_images_leaf(&self) {
-        self.set_title(Some(&gettext("All Images")));
-        self.imp().leaf.set_visible_child_name("all_images");
-    }
+    // fn switch_to_all_images_leaf(&self) {
+    //     self.set_title(Some(&gettext("All Images")));
+    //     self.imp().leaf.set_visible_child_name("all_images");
+    // }
 
     fn switch_to_stack_invalid_image(&self) {
         self.imp().back_button.set_visible(false);
@@ -1967,6 +1965,7 @@ impl AppWindow {
         self.imp().loading_spinner.stop();
         self.imp().loading_spinner_images.stop();
         self.imp().other_add_button.set_visible(true);
+        self.imp().back_button.set_visible(true);
     }
 
     fn switch_to_stack_loading_generally(&self) {
@@ -1981,18 +1980,18 @@ impl AppWindow {
         }
     }
 
-    fn switch_to_stack_all_images_wrapper(&self) {
-        self.switch_to_all_images_leaf();
-        self.imp()
-            .all_images_stack
-            .set_visible_child_name("stack_loading");
-        self.imp().loading_spinner_images.start();
-        MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.switch_to_stack_all_images().await;
-        }));
-    }
+    // fn switch_to_stack_all_images_wrapper(&self) {
+    //     self.switch_to_all_images_leaf();
+    //     self.imp()
+    //         .all_images_stack
+    //         .set_visible_child_name("stack_loading");
+    //     self.imp().loading_spinner_images.start();
+    //     MainContext::default().spawn_local(clone!(@weak self as this => async move {
+    //         this.load_all_images().await;
+    //     }));
+    // }
 
-    async fn switch_to_stack_all_images(&self) {
+    async fn load_all_images(&self) {
         let files = self.get_files();
 
         let file_path_things = files
@@ -2000,7 +1999,7 @@ impl AppWindow {
             .map(|f| (f.kind().supports_pixbuff() & f.pixbuf().is_none(), f.path()))
             .collect_vec();
 
-        let (sender, receiver) = MainContext::channel(glib::PRIORITY_LOW);
+        let (sender, receiver) = std::sync::mpsc::channel();
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -2020,25 +2019,23 @@ impl AppWindow {
                 .expect("concurrency failure");
         });
 
-        receiver.attach(
-            None,
-            clone!(@weak self as this => @default-return Continue(false), move |pixpaths| {
-                for (f, p) in files.iter().zip(pixpaths.iter()) {
-                    if let Some(p) = p {
-                        let stream = gio::MemoryInputStream::from_bytes(p);
-                        let pixbuf = Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE).unwrap();
-                        idle_add_local_once(clone!(@weak f as ff => move || {
-                            ff.set_pixbuf(pixbuf);
-                        }));
-                        MainContext::default().iteration(true);
-                    }
-                }
-                idle_add_local_once(clone!(@weak this as that => move || {
-                    that.load_all_pixbuff_finished();
+        let pixpaths = receiver.recv().unwrap();
+
+        for (f, p) in files.iter().zip(pixpaths.iter()) {
+            if let Some(p) = p {
+                let stream = gio::MemoryInputStream::from_bytes(p);
+                let pixbuf =
+                    Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE)
+                        .unwrap();
+                idle_add_local_once(clone!(@weak f as ff => move || {
+                    ff.set_pixbuf(pixbuf);
                 }));
-                Continue(false)
-            }),
-        );
+                MainContext::default().iteration(true);
+            }
+        }
+        idle_add_local_once(clone!(@weak self as that => move || {
+            that.load_all_pixbuff_finished();
+        }));
     }
 
     fn load_all_pixbuff_finished(&self) {
@@ -2082,11 +2079,5 @@ impl AppWindow {
                 this.imp().full_image_container.invalidate_filter();
             }));
         }
-
-        idle_add_local_once(clone!(@weak self as this => move || {
-            this.imp().all_images_stack.set_visible_child_name("all_images");
-            this.imp().loading_spinner_images.stop();
-            this.imp().back_button.set_visible(true);
-        }));
     }
 }
