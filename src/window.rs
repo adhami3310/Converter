@@ -100,6 +100,8 @@ mod imp {
         #[template_child]
         pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
+        pub other_add_button: TemplateChild<gtk::Button>,
+        #[template_child]
         pub back_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub convert_button: TemplateChild<gtk::Button>,
@@ -194,6 +196,7 @@ mod imp {
                 all_images_stack: TemplateChild::default(),
                 open_button: TemplateChild::default(),
                 add_button: TemplateChild::default(),
+                other_add_button: TemplateChild::default(),
                 back_button: TemplateChild::default(),
                 convert_button: TemplateChild::default(),
                 cancel_button: TemplateChild::default(),
@@ -299,6 +302,10 @@ impl AppWindow {
                 this.open_dialog();
             }));
         imp.add_button
+            .connect_clicked(clone!(@weak self as this => move |_| {
+                this.add_dialog();
+            }));
+        imp.other_add_button
             .connect_clicked(clone!(@weak self as this => move |_| {
                 this.add_dialog();
             }));
@@ -588,16 +595,14 @@ impl AppWindow {
     }
 
     fn open_error(&self, error: Option<&str>) {
-        self.imp().loading_spinner.stop();
         match error {
             Some(_) => self.switch_to_stack_invalid_image(),
-            None if self.imp().input_file_store.n_items() > 0 => self.switch_to_stack_convert(),
-            None => self.switch_to_stack_welcome(),
+            _ => {}
         };
     }
 
     fn open_load(&self) {
-        self.switch_to_stack_loading();
+        self.switch_to_stack_loading_generally();
         self.imp().loading_spinner.start();
     }
 
@@ -636,7 +641,8 @@ impl AppWindow {
 
         self.imp().input_file_store.remove_all();
 
-        self.switch_to_stack_loading();
+        self.switch_to_stack_loading_generally();
+        // self.switch_to_stack_loading();
 
         for file in files.iter() {
             self.imp().input_file_store.append(file);
@@ -886,8 +892,12 @@ impl AppWindow {
         imp.full_image_container.invalidate_filter();
 
         self.update_options();
-        self.switch_to_stack_convert();
-        imp.loading_spinner.stop();
+        self.switch_back_from_loading();
+        if self.imp().leaf.visible_child_name().unwrap() == "main" {
+            self.switch_to_stack_convert();
+        } else {
+            self.switch_to_stack_all_images_wrapper();
+        }
     }
 
     fn update_options(&self) {
@@ -1889,7 +1899,7 @@ impl AppWindow {
     }
 
     fn switch_to_stack_convert(&self) {
-        self.imp().leaf.set_visible_child_name("main");
+        self.switch_to_main_leaf();
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
@@ -1902,12 +1912,22 @@ impl AppWindow {
     }
 
     fn switch_to_stack_welcome(&self) {
-        self.imp().leaf.set_visible_child_name("main");
+        self.switch_to_main_leaf();
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
-            .stack
+        .stack
             .set_visible_child_name("stack_welcome_page");
+    }
+
+    fn switch_to_main_leaf(&self) {
+        self.set_title(Some(&gettext("Converter")));
+        self.imp().leaf.set_visible_child_name("main");
+    }
+    
+    fn switch_to_all_images_leaf(&self) {
+        self.set_title(Some(&gettext("All Images")));
+        self.imp().leaf.set_visible_child_name("all_images");
     }
 
     fn switch_to_stack_invalid_image(&self) {
@@ -1919,15 +1939,31 @@ impl AppWindow {
     }
 
     fn switch_to_stack_loading(&self) {
-        self.imp().leaf.set_visible_child_name("main");
+        self.switch_to_main_leaf();
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_loading");
         self.imp().loading_spinner.start();
     }
+    
+    fn switch_back_from_loading(&self) {
+        self.imp().loading_spinner.stop();
+        self.imp().loading_spinner_images.stop();
+        self.imp().other_add_button.set_visible(true);
+    }
+
+    fn switch_to_stack_loading_generally(&self) {
+        if self.imp().leaf.visible_child_name().unwrap() == "main" {
+            self.switch_to_stack_loading();
+        } else {
+            self.imp().other_add_button.set_visible(false);
+            self.imp().all_images_stack.set_visible_child_name("stack_loading");
+            self.imp().loading_spinner_images.start();
+        }
+    }
 
     fn switch_to_stack_all_images_wrapper(&self) {
-        self.imp().leaf.set_visible_child_name("all_images");
+        self.switch_to_all_images_leaf();
         self.imp()
             .all_images_stack
             .set_visible_child_name("stack_loading");
