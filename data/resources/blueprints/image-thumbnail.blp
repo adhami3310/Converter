@@ -41,12 +41,13 @@ template $ImageThumbnail : Widget {
                 }
 
                 [overlay]
-                Button remove {
+                Button remove_image {
+                    name: "remove_image";
                     icon-name: "user-trash-symbolic";
                     tooltip-text: _("Remove image");
-                    styles ["circular", "image-remove", "osd"]
                     valign: start;
                     halign: end;
+                    styles ["circular", "image-remove", "osd"]
                 }
             }
             styles ["image-container"]

@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ImageRest : FlowBoxChild {
+    focusable: false;
     $AdwBin {
-        overflow: hidden;
         Button image {
             icon-name: "view-more-horizontal-symbolic";
             hexpand: true;
@@ -21,8 +21,7 @@ template $ImageRest : FlowBoxChild {
                     label: _("Show All");
                 }
             }
-            styles ["flat"]
+            styles ["flat", "image-container", "card"]
         }
-        styles ["image-container", "card"]
     }
 }

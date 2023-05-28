@@ -72,7 +72,7 @@ mod imp {
         #[template_child]
         pub content: TemplateChild<gtk::Label>,
         #[template_child]
-        pub remove: TemplateChild<gtk::Button>,
+        pub remove_image: TemplateChild<gtk::Button>,
         #[template_child]
         pub root: TemplateChild<gtk::Box>,
         #[template_child]
@@ -101,7 +101,7 @@ mod imp {
                 image: TemplateChild::default(),
                 picture: TemplateChild::default(),
                 content: TemplateChild::default(),
-                remove: TemplateChild::default(),
+                remove_image: TemplateChild::default(),
                 root: TemplateChild::default(),
                 child: TemplateChild::default(),
                 width: Cell::new(0),
@@ -166,7 +166,7 @@ mod imp {
 
         fn property(&self, _id: usize, pspec: &ParamSpec) -> Value {
             match pspec.name() {
-                "remove" => self.remove.to_value(),
+                "remove_image" => self.remove_image.to_value(),
                 _ => unimplemented!(),
             }
         }
@@ -174,6 +174,10 @@ mod imp {
         fn dispose(&self) {
             self.root.unparent();
         }
+
+        // // fn constructed(&self) {
+        // //     self.parent_constructed();
+        // // }
     }
 
     impl WidgetImpl for ImageThumbnail {
@@ -190,18 +194,25 @@ mod imp {
             self.root.allocate(width, height, baseline, None)
         }
 
-        fn request_mode(&self) -> gtk::SizeRequestMode {
-            self.root.request_mode()
-        }
+        // fn request_mode(&self) -> gtk::SizeRequestMode {
+        //     self.root.request_mode()
+        // }
 
-        fn contains(&self, x: f64, y: f64) -> bool {
-            self.root.contains(x, y)
-        }
+        // fn contains(&self, x: f64, y: f64) -> bool {
+        //     self.root.contains(x, y)
+        // }
 
-        fn snapshot(&self, snapshot: &gtk::Snapshot) {
-            self.root
-                .snapshot_child(&self.child.clone().upcast::<gtk::Widget>(), snapshot);
-        }
+        // fn snapshot(&self, snapshot: &gtk::Snapshot) {
+        //     self.root
+        //         .snapshot_child(&self.child.clone().upcast::<gtk::Widget>(), snapshot);
+        // }
+
+        // fn state_flags_changed(&self, state_flags: &gtk::StateFlags) {
+        //     self.root.set_state_flags(*state_flags, true);
+        //     self.remove_image
+        //         .set_state_flags(gtk::StateFlags::FOCUSED, true);
+        //     self.root.queue_resize();
+        // }
     }
 }
 
@@ -231,6 +242,6 @@ impl ImageThumbnail {
     where
         F: Fn(&gtk::Button) + 'static,
     {
-        self.imp().remove.connect_clicked(func)
+        self.imp().remove_image.connect_clicked(func)
     }
 }

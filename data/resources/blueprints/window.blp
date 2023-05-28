@@ -82,6 +82,9 @@ template $AppWindow : $AdwApplicationWindow {
                   $AdwStatusPage {
                     Spinner loading_spinner {
                       valign: center;
+                      halign: center;
+                      height-request: 32;
+                      width-request: 32;
                     }
                   }
 
@@ -344,12 +347,16 @@ template $AppWindow : $AdwApplicationWindow {
 
               }
               Stack all_images_stack {
+                transition-type: crossfade;
                 StackPage {
                   name: "stack_loading";
                   child:
                   $AdwStatusPage {
                     Spinner loading_spinner_images {
                       valign: center;
+                      halign: center;
+                      height-request: 32;
+                      width-request: 32;
                     }
                   }
 
@@ -391,12 +398,17 @@ template $AppWindow : $AdwApplicationWindow {
 menu primary_menu {
   section {
     item {
-      label: _("Open Files…");
+      label: _("Open New Files…");
       action: "app.open";
     }
 
     item {
-      label: _("Paste Image…");
+      label: _("Add Files…");
+      action: "app.add";
+    }
+
+    item {
+      label: _("Paste From Clipboard");
       action: "app.paste";
     }
   }

@@ -18,7 +18,7 @@ use crate::widgets::image_thumbnail::ImageThumbnail;
 use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
-use glib::{clone, idle_add_local_once};
+use glib::{clone, idle_add_local_once, MainContext};
 use gtk::gdk_pixbuf::Pixbuf;
 use gtk::gio::Cancellable;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
@@ -595,10 +595,9 @@ impl AppWindow {
     }
 
     fn open_error(&self, error: Option<&str>) {
-        match error {
-            Some(_) => self.switch_to_stack_invalid_image(),
-            _ => {}
-        };
+        if error.is_some() {
+            self.switch_to_stack_invalid_image();
+        }
     }
 
     fn open_load(&self) {
@@ -607,21 +606,22 @@ impl AppWindow {
     }
 
     fn open_success_wrapper(&self, files: Vec<InputFile>) {
-        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+        MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.open_success(files, true).await;
         }));
     }
 
     fn add_success_wrapper(&self, files: Vec<InputFile>) {
-        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+        MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.open_success(files, false).await;
         }));
     }
 
     pub fn load_clipboard(&self) {
         let clipboard = self.clipboard();
+        dbg!(clipboard.formats().mime_types());
         if clipboard.formats().contain_mime_type("image/png") {
-            glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+            MainContext::default().spawn_local(clone!(@weak self as this => async move {
                 let t = clipboard.read_texture_future().await;
                 if let Ok(Some(t)) = t {
                     let interim = JobFile::new(FileType::Png, Some(format!("{}.png",gettext("Pasted Image"))));
@@ -629,6 +629,15 @@ impl AppWindow {
                     let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
                     this.open_success(vec![file], true).await;
                 }
+            }));
+        } else if clipboard
+            .formats()
+            .contain_mime_type("application/vnd.portal.files")
+        {
+            MainContext::default().spawn_local(clone!(@weak self as this => async move {
+                let t = clipboard.read_text_future().await.unwrap().unwrap();
+                let files = t.lines().map(|p| InputFile::new(&gio::File::for_path(p))).collect();
+                this.open_files(files);
             }));
         }
     }
@@ -652,6 +661,8 @@ impl AppWindow {
 
         let few_files = file_paths.len() <= 3;
 
+        fdlimit::raise_fd_limit();
+
         let file_paths_pixbuf = files
             .iter()
             .filter(|f| f.kind().supports_pixbuff())
@@ -660,7 +671,7 @@ impl AppWindow {
 
         join_all(file_paths_pixbuf).await;
 
-        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
+        let (sender, receiver) = MainContext::channel(glib::PRIORITY_LOW);
 
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
@@ -671,28 +682,31 @@ impl AppWindow {
                 .into_iter()
                 .map(|f| async move { count_frames(f).await.unwrap_or((1, None)) })
                 .collect_vec();
-            sender
-                .send(rt.block_on(join_all(jobs)))
-                .expect("concurrency failure");
+
+            let res = rt.block_on(join_all(jobs));
+
+            sender.send(res).expect("concurrency failure");
         });
 
         receiver.attach(
             None,
             clone!(@weak self as this => @default-return Continue(false), move |image_info| {
                 let real_files = files.clone();
-                idle_add_local_once(clone!(@weak this as these => move || {
-                    for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
-                        f.set_frames(*frame);
-                        match dims {
-                            Some((width, height)) => {
-                                f.set_width(*width);
-                                f.set_height(*height);
-                            }
-                            None => {}
+                for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
+                    f.set_frames(*frame);
+                    let dims = *dims;
+                    idle_add_local_once(clone!(@weak f as ff => move || {
+                        if let Some((width, height)) = dims {
+                            ff.set_width(width);
+                            ff.set_height(height);
                         }
-                    }
+                    }));
+                    glib::MainContext::default().iteration(true);
+                }
+                idle_add_local_once(clone!(@weak this as these => move || {
                     these.load_pixbuff_finished();
                 }));
+
 
                 Continue(false)
             }),
@@ -711,7 +725,7 @@ impl AppWindow {
     }
 
     fn collect_pixbuf_wrapper(&self, count: usize, other_count: usize, remaining_visible: bool) {
-        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+        MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.build_from_count(count, remaining_visible);
             this.collect_pixbuf(other_count).await;
         }));
@@ -796,7 +810,12 @@ impl AppWindow {
 
                     let image_thumbnail = ImageThumbnail::new(image, &caption, w as u32, h as u32);
 
-                    imp.image_container.append(&image_thumbnail);
+                    let image_flow_box_child = gtk::FlowBoxChild::new();
+                    image_flow_box_child.set_child(Some(&image_thumbnail));
+
+                    image_flow_box_child.set_focusable(false);
+
+                    imp.image_container.append(&image_flow_box_child);
                     image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
                         this.remove_file(i as u32);
                         this.imp().image_container.invalidate_filter();
@@ -1230,7 +1249,7 @@ impl AppWindow {
     }
 
     fn save_success_wrapper(&self, save_format: OutputType, path: String) {
-        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+        MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.save_success(save_format, path).await;
         }));
     }
@@ -1517,7 +1536,7 @@ impl AppWindow {
             })
             .collect_vec();
 
-        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+        let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
 
         let count = magick_jobs.iter().map(|mjs| mjs.len()).sum();
 
@@ -1533,8 +1552,6 @@ impl AppWindow {
                 .unwrap();
 
             let stop_flag = stop_flag_s.clone();
-
-            fdlimit::raise_fd_limit();
 
             let jobs = magick_jobs
                 .into_iter()
@@ -1642,7 +1659,7 @@ impl AppWindow {
             OutputType::File(_) => {
                 let file = output_files.first().unwrap().to_owned();
 
-                let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+                let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1672,7 +1689,7 @@ impl AppWindow {
                 receiver
             }
             OutputType::Compression(CompressionType::Directory) => {
-                let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+                let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1705,7 +1722,7 @@ impl AppWindow {
                 receiver
             }
             _ => {
-                let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+                let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1840,7 +1857,7 @@ impl AppWindow {
         toast.set_button_label(Some(&gettext("Open")));
         toast.connect_button_clicked(clone!(@weak self as this => move |_| {
             let p = path.clone();
-            glib::MainContext::default().spawn_local(clone!(@weak this as other_this => async move {
+            MainContext::default().spawn_local(clone!(@weak this as other_this => async move {
                 match save_format {
                     OutputType::Compression(CompressionType::Directory) => {
                         ashpd::desktop::open_uri::OpenDirectoryRequest::default().send(&std::fs::File::open(&p).unwrap()).await.ok();
@@ -1916,7 +1933,7 @@ impl AppWindow {
         self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
-        .stack
+            .stack
             .set_visible_child_name("stack_welcome_page");
     }
 
@@ -1924,7 +1941,7 @@ impl AppWindow {
         self.set_title(Some(&gettext("Converter")));
         self.imp().leaf.set_visible_child_name("main");
     }
-    
+
     fn switch_to_all_images_leaf(&self) {
         self.set_title(Some(&gettext("All Images")));
         self.imp().leaf.set_visible_child_name("all_images");
@@ -1935,7 +1952,7 @@ impl AppWindow {
         self.imp().add_button.set_visible(false);
         self.imp()
             .stack
-            .set_visible_child_name("stack_invalid_page");
+            .set_visible_child_name("stack_invalid_image");
     }
 
     fn switch_to_stack_loading(&self) {
@@ -1945,7 +1962,7 @@ impl AppWindow {
         self.imp().stack.set_visible_child_name("stack_loading");
         self.imp().loading_spinner.start();
     }
-    
+
     fn switch_back_from_loading(&self) {
         self.imp().loading_spinner.stop();
         self.imp().loading_spinner_images.stop();
@@ -1957,7 +1974,9 @@ impl AppWindow {
             self.switch_to_stack_loading();
         } else {
             self.imp().other_add_button.set_visible(false);
-            self.imp().all_images_stack.set_visible_child_name("stack_loading");
+            self.imp()
+                .all_images_stack
+                .set_visible_child_name("stack_loading");
             self.imp().loading_spinner_images.start();
         }
     }
@@ -1968,7 +1987,7 @@ impl AppWindow {
             .all_images_stack
             .set_visible_child_name("stack_loading");
         self.imp().loading_spinner_images.start();
-        glib::MainContext::default().spawn_local(clone!(@weak self as this => async move {
+        MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.switch_to_stack_all_images().await;
         }));
     }
@@ -1981,7 +2000,7 @@ impl AppWindow {
             .map(|f| (f.kind().supports_pixbuff() & f.pixbuf().is_none(), f.path()))
             .collect_vec();
 
-        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
+        let (sender, receiver) = MainContext::channel(glib::PRIORITY_LOW);
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -2000,20 +2019,22 @@ impl AppWindow {
                 .send(rt.block_on(join_all(file_paths_pixbuf)))
                 .expect("concurrency failure");
         });
-        
+
         receiver.attach(
             None,
             clone!(@weak self as this => @default-return Continue(false), move |pixpaths| {
-                let real_files = files.clone();
-                idle_add_local_once(clone!(@weak this as these => move || {
-                    for (f, p) in real_files.iter().zip(pixpaths.iter()) {
-                        if let Some(p) = p {
-                            let stream = gio::MemoryInputStream::from_bytes(p);
-                            let pixbuf = Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE).unwrap();
-                            f.set_pixbuf(pixbuf);
-                        }
+                for (f, p) in files.iter().zip(pixpaths.iter()) {
+                    if let Some(p) = p {
+                        let stream = gio::MemoryInputStream::from_bytes(p);
+                        let pixbuf = Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE).unwrap();
+                        idle_add_local_once(clone!(@weak f as ff => move || {
+                            ff.set_pixbuf(pixbuf);
+                        }));
+                        MainContext::default().iteration(true);
                     }
-                    these.load_all_pixbuff_finished();
+                }
+                idle_add_local_once(clone!(@weak this as that => move || {
+                    that.load_all_pixbuff_finished();
                 }));
                 Continue(false)
             }),
@@ -2049,7 +2070,12 @@ impl AppWindow {
 
             let image_thumbnail = ImageThumbnail::new(image, &caption, w as u32, h as u32);
 
-            imp.full_image_container.append(&image_thumbnail);
+            let image_flow_box_child = gtk::FlowBoxChild::new();
+            image_flow_box_child.set_child(Some(&image_thumbnail));
+
+            image_flow_box_child.set_focusable(false);
+
+            imp.full_image_container.append(&image_flow_box_child);
             image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
                 this.remove_file(i as u32);
                 this.imp().image_container.invalidate_filter();
@@ -2057,8 +2083,10 @@ impl AppWindow {
             }));
         }
 
-        imp.all_images_stack.set_visible_child_name("all_images");
-        self.imp().loading_spinner_images.stop();
-        imp.back_button.set_visible(true);
+        idle_add_local_once(clone!(@weak self as this => move || {
+            this.imp().all_images_stack.set_visible_child_name("all_images");
+            this.imp().loading_spinner_images.stop();
+            this.imp().back_button.set_visible(true);
+        }));
     }
 }

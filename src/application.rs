@@ -132,6 +132,13 @@ impl App {
                     }
                 }))
                 .build(),
+            gio::ActionEntry::builder("add")
+                .activate(clone!(@weak self as app => move |_, _, _| {
+                    if let Some(window) = app.active_window() {
+                        window.downcast_ref::<AppWindow>().unwrap().add_dialog();
+                    }
+                }))
+                .build(),
             gio::ActionEntry::builder("paste")
                 .activate(clone!(@weak self as app => move |_, _, _| {
                     if let Some(window) = app.active_window() {
@@ -162,6 +169,7 @@ impl App {
     fn setup_accels(&self) {
         self.set_accels_for_action("app.popular", &["<Control>h"]);
         self.set_accels_for_action("app.open", &["<Control>o"]);
+        self.set_accels_for_action("app.add", &["<Control>n"]);
         self.set_accels_for_action("app.quit", &["<Control>w", "<Control>q"]);
         self.set_accels_for_action("app.paste", &["<Control>v"]);
     }
