@@ -17,14 +17,6 @@ dragoverlay {
   color: @accent_fg_color;
 }
 
-.floating {
-  margin: 20px 0;
-}
-
-.unfloating {
-  margin-bottom: 55px;
-}
-
 .card-content {
   border-radius: 60px;
 }
@@ -63,4 +55,9 @@ value {
 
 .unit-drop .menu contents {
   min-width: 0px;
+}
+
+.long {
+  padding-right: 100px;
+  padding-left: 100px;
 }

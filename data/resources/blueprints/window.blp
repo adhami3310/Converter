@@ -94,28 +94,8 @@ template $AppWindow : $AdwApplicationWindow {
                 StackPage {
                   name: "stack_convert";
                   child:
-                  Overlay {
-                    [overlay]
-                    $AdwPreferencesGroup {
-                      valign: end;
-                      halign: center;
-
-                      Button convert_button {
-                        valign: center;
-                        halign: end;
-                        label: _("_Convert");
-                        use-underline: true;
-
-                        styles [
-                          "suggested-action",
-                          "pill",
-                        ]
-                      }
-
-                      styles [
-                        "floating"
-                      ]
-                    }
+                  $AdwBin {
+                    
 
                     $AdwBin {
                       $AdwPreferencesPage {
@@ -261,9 +241,26 @@ template $AppWindow : $AdwApplicationWindow {
                               styles ["linked"]
                             }
                           }
-                          styles ["unfloating"]
                         }
 
+                        $AdwPreferencesGroup {
+                          valign: end;
+                          halign: center;
+
+                          Button convert_button {
+                            valign: center;
+                            halign: end;
+                            label: _("_Convert");
+                            use-underline: true;
+
+                            styles [
+                              "suggested-action",
+                              "pill",
+                              "long"
+                            ]
+                          }
+
+                        }
                       }
                       
                     }
