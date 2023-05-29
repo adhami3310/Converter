@@ -619,7 +619,6 @@ impl AppWindow {
 
     pub fn load_clipboard(&self) {
         let clipboard = self.clipboard();
-        dbg!(clipboard.formats().mime_types());
         if clipboard.formats().contain_mime_type("image/png") {
             MainContext::default().spawn_local(clone!(@weak self as this => async move {
                 let t = clipboard.read_texture_future().await;
@@ -649,6 +648,7 @@ impl AppWindow {
         }
 
         self.imp().input_file_store.remove_all();
+        self.imp().removed.replace(HashSet::new());
 
         self.switch_to_stack_loading_generally();
         // self.switch_to_stack_loading();
@@ -659,26 +659,9 @@ impl AppWindow {
 
         let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
-        let few_files = file_paths.len() <= 3;
-
         fdlimit::raise_fd_limit();
 
-        let file_paths_pixbuf = files
-            .iter()
-            .filter(|f| f.kind().supports_pixbuff())
-            .enumerate()
-            .map(|(i, f)| {
-                let x = match i {
-                    0..=5 => f.generate_pixbuff(few_files),
-                    _ => f.generate_pixbuff(false),
-                };
-                async move {
-                    x.await.ok();
-                    glib::MainContext::default().iteration(true);
-                }
-            });
-
-        join_all(file_paths_pixbuf).await;
+        self.load_all_images().await;
 
         let (sender, receiver) = MainContext::channel(glib::PRIORITY_LOW);
 
@@ -736,7 +719,6 @@ impl AppWindow {
     fn collect_pixbuf_wrapper(&self, count: usize, remaining_visible: bool) {
         MainContext::default().spawn_local(clone!(@weak self as this => async move {
             this.build_from_count(count, remaining_visible);
-            this.load_all_images().await;
         }));
     }
 
@@ -896,24 +878,19 @@ impl AppWindow {
             imp.image_height.set(None);
         }
 
-        imp.removed.replace(HashSet::new());
-
-        while let Some(child) = imp.full_image_container.first_child() {
-            imp.full_image_container.remove(&child);
-        }
-
         self.construct_short_thumbnail();
 
-        imp.full_image_container.invalidate_filter();
+        idle_add_local_once(clone!(@weak self as that => move || {
+            that.load_all_pixbuff_finished();
+        }));
 
         self.update_options();
         self.switch_back_from_loading();
+        self.imp()
+            .all_images_stack
+            .set_visible_child_name("all_images");
         if self.imp().leaf.visible_child_name().unwrap() == "main" {
             self.switch_to_stack_convert();
-        } else {
-            self.imp()
-                .all_images_stack
-                .set_visible_child_name("all_images");
         }
     }
 
@@ -2022,7 +1999,7 @@ impl AppWindow {
             if let Some(p) = p {
                 let stream = gio::MemoryInputStream::from_bytes(p);
                 let pixbuf =
-                    Pixbuf::from_stream_at_scale(&stream, 500, 500, true, Cancellable::NONE)
+                    Pixbuf::from_stream_at_scale(&stream, 500, -1, true, Cancellable::NONE)
                         .unwrap();
                 idle_add_local_once(clone!(@weak f as ff => move || {
                     ff.set_pixbuf(pixbuf);
@@ -2030,9 +2007,6 @@ impl AppWindow {
                 MainContext::default().iteration(true);
             }
         }
-        idle_add_local_once(clone!(@weak self as that => move || {
-            that.load_all_pixbuff_finished();
-        }));
     }
 
     fn load_all_pixbuff_finished(&self) {
@@ -2044,15 +2018,11 @@ impl AppWindow {
             .map(|f| (f.pixbuf(), f.kind(), f.dimensions()))
             .collect_vec();
 
-        let mut count = 0;
-
-        let mut current = imp.full_image_container.first_child();
-        while let Some(e) = current {
-            count += 1;
-            current = e.next_sibling();
+        while let Some(child) = imp.full_image_container.first_child() {
+            imp.full_image_container.remove(&child);
         }
 
-        for (i, (image, file_type, dims)) in input_files.into_iter().enumerate().skip(count) {
+        for (i, (image, file_type, dims)) in input_files.into_iter().enumerate() {
             let caption = match dims {
                 Some((w, h)) => {
                     format!("{} · {}×{}", file_type.as_display_string(), w, h,)

@@ -147,7 +147,7 @@ impl InputFile {
         let mut pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
 
         if !high_quality {
-            pixbuf = get_reduced(&pixbuf, 400);
+            pixbuf = get_reduced(&pixbuf, 300);
         } else {
             pixbuf = get_reduced(&pixbuf, 800);
         }
