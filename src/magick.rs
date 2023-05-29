@@ -55,7 +55,7 @@ pub async fn pixbuf_bytes(path: String) -> Bytes {
         .read(Cancellable::NONE)
         .unwrap();
 
-    stream.read_bytes(8192129, Cancellable::NONE).unwrap()
+    stream.read_bytes(1073741824, Cancellable::NONE).unwrap()
 }
 
 pub trait MagickArgument {

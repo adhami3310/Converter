@@ -34,10 +34,8 @@ template $AppWindow : $AdwApplicationWindow {
                 }
                 ;
                 Button add_button {
-                  $AdwButtonContent {
-                    icon-name: 'plus-large-symbolic';
-                    tooltip-text: _('Add Images (Ctrl+O)');
-                  }
+                  icon-name: 'plus-large-symbolic';
+                  tooltip-text: _('Add Images (Ctrl+O)');
                   visible: false;
                   styles ['flat']
                 }
@@ -162,6 +160,9 @@ template $AppWindow : $AdwApplicationWindow {
                             ColorDialogButton bgcolor {
                               valign: center;
                               rgba: "#00000000";
+                              accessibility {
+                                label: _("New transparency layer color: Transparent");
+                              }
                               dialog: ColorDialog {
                                 with-alpha: true;
                               };
@@ -225,6 +226,9 @@ template $AppWindow : $AdwApplicationWindow {
                               Box {
                                 DropDown resize_type {
                                   valign: center;
+                                  accessibility {
+                                    label: _("Choose between resizing with percentages or using exact pixels");
+                                  }
                                   model:
                                   StringList resize_types {
                                     strings [_("%"),_("px")]
@@ -351,10 +355,8 @@ template $AppWindow : $AdwApplicationWindow {
                   styles ['flat']
                 }
                 Button other_add_button {
-                  $AdwButtonContent {
-                    icon-name: 'plus-large-symbolic';
-                    tooltip-text: _('Add Images (Ctrl+O)');
-                  }
+                  icon-name: 'plus-large-symbolic';
+                  tooltip-text: _('Add Images (Ctrl+O)');
                   styles ['flat']
                 }
 
@@ -377,6 +379,7 @@ template $AppWindow : $AdwApplicationWindow {
                       margin-bottom: 16;
                       margin-start: 16;
                       margin-end: 16;
+                      max-children-per-line: 4;
                       selection-mode: none;
                     }
                   }

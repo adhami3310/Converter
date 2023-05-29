@@ -36,8 +36,8 @@ flowboxchild:focus {
   margin: 5px;
 }
 
-.image-remove:focus {
-  outline-width: 4px;
+.image-rest-button:focus {
+  outline-offset: 2px;
 }
 
 value {

@@ -1,6 +1,10 @@
 use gettextrs::gettext;
 use glib::SignalHandlerId;
-use gtk::{gio, glib, subclass::prelude::*, traits::ButtonExt};
+use gtk::{
+    gio, glib,
+    subclass::prelude::*,
+    traits::{ButtonExt, WidgetExt},
+};
 
 mod imp {
 
@@ -57,6 +61,9 @@ impl ImageRest {
         bin.setup_callbacks();
 
         bin.imp().content.set_label(&gettext!("+{}", count));
+        bin.imp()
+            .image
+            .set_tooltip_text(Some(&gettext!("Show {} more images", count)));
 
         bin
     }

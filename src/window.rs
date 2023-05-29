@@ -20,6 +20,7 @@ use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
 use glib::{clone, idle_add_local_once, MainContext};
+use gtk::accessible::Property;
 use gtk::gdk_pixbuf::Pixbuf;
 use gtk::gio::Cancellable;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
@@ -431,6 +432,10 @@ impl AppWindow {
                     _ => {}
                 }
             }));
+        imp.bgcolor
+            .connect_rgba_notify(clone!(@weak self as this => move |x| {
+                x.update_property(&[Property::Label(&gettext!("New transparency layer color: {}", x.rgba()))]);
+            }));
         self.load_options();
     }
 
@@ -744,7 +749,7 @@ impl AppWindow {
                 .into_iter()
                 .map(|(b, path)| async move {
                     match b {
-                        true => Some(spawn(pixbuf_bytes(path)).await.unwrap()),
+                        true => Some(pixbuf_bytes(path).await),
                         false => None,
                     }
                 })
@@ -762,9 +767,7 @@ impl AppWindow {
                 let pixbuf =
                     Pixbuf::from_stream_at_scale(&stream, 500, -1, true, Cancellable::NONE)
                         .unwrap();
-                idle_add_local_once(clone!(@weak f as ff => move || {
-                    ff.set_pixbuf(pixbuf);
-                }));
+                f.set_pixbuf(pixbuf);
                 MainContext::default().iteration(true);
             }
         }
@@ -1650,7 +1653,7 @@ impl WindowUI for AppWindow {
             let image_flow_box_child = gtk::FlowBoxChild::new();
             image_flow_box_child.set_child(Some(&image_thumbnail));
 
-            image_flow_box_child.set_tooltip_text(Some(&caption));
+            image_flow_box_child.update_property(&[Property::Label(&caption)]);
 
             imp.full_image_container.append(&image_flow_box_child);
             image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
@@ -1693,7 +1696,7 @@ impl WindowUI for AppWindow {
                     let image_flow_box_child = gtk::FlowBoxChild::new();
                     image_flow_box_child.set_child(Some(&image_thumbnail));
 
-                    image_flow_box_child.set_tooltip_text(Some(&caption));
+                    image_flow_box_child.update_property(&[Property::Label(&caption)]);
 
                     imp.image_container.append(&image_flow_box_child);
                     image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
@@ -1712,7 +1715,10 @@ impl WindowUI for AppWindow {
 
         if remaining_visible {
             let image_rest = ImageRest::new(self.files_count() - 5);
-            imp.image_container.append(&image_rest);
+            let image_flow_box_child = gtk::FlowBoxChild::new();
+            image_flow_box_child.set_child(Some(&image_rest));
+            image_flow_box_child.set_focusable(false);
+            imp.image_container.append(&image_flow_box_child);
             image_rest.connect_clicked(clone!(@weak self as this => move |_| {
                 this.imp().leaf.navigate(adw::NavigationDirection::Forward);
             }));
