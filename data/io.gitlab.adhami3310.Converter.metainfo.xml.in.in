@@ -47,6 +47,10 @@
             <image>https://gitlab.com/adhami3310/Converter/-/raw/main/data/resources/screenshots/0.png</image>
             <caption>Converting sample image from PNG to WEBP</caption>
         </screenshot>
+        <screenshot>
+            <image>https://gitlab.com/adhami3310/Converter/-/raw/main/data/resources/screenshots/1.png</image>
+            <caption>Converting multiple sample images from SVG to HEIF</caption>
+        </screenshot>
     </screenshots>
 
     <launchable type="desktop-id">@app-id@.desktop</launchable>
