@@ -1,9 +1,9 @@
 use crate::temp::get_temp_file_path;
 use crate::{color::Color, filetypes::FileType, window::ResizeFilter};
 use gettextrs::gettext;
-use glib::Bytes;
-use gtk::gio::Cancellable;
-use gtk::prelude::{FileExt, InputStreamExt};
+// use glib::Bytes;
+// use gtk::gio::Cancellable;
+// use gtk::prelude::{FileExt, InputStreamExt};
 use itertools::Itertools;
 use shared_child::SharedChild;
 use std::io::Read;
@@ -50,13 +50,13 @@ pub async fn count_frames(path: String) -> Result<(usize, Option<(usize, usize)>
     }
 }
 
-pub async fn pixbuf_bytes(path: String) -> Bytes {
-    let stream = gtk::gio::File::for_path(path)
-        .read(Cancellable::NONE)
-        .unwrap();
+// pub async fn pixbuf_bytes(path: String) -> Bytes {
+//     let stream = gtk::gio::File::for_path(path)
+//         .read(Cancellable::NONE)
+//         .unwrap();
 
-    stream.read_bytes(1073741824, Cancellable::NONE).unwrap()
-}
+//     stream.read_bytes(1073741824, Cancellable::NONE).unwrap()
+// }
 
 pub trait MagickArgument {
     fn get_argument(&self) -> Vec<String>;

@@ -1,26 +1,27 @@
 use glib::{ParamSpec, ParamSpecEnum, ParamSpecString, Value};
 use gtk::{
-    cairo,
-    gdk::gdk_pixbuf::{Colorspace, Pixbuf},
-    gio, glib,
+    // cairo,
+    gdk::{gdk_pixbuf::Pixbuf, Texture},
+    gio,
+    glib,
     prelude::*,
     subclass::prelude::*,
 };
 use once_cell::sync::Lazy;
-use std::cell::{Cell, RefCell};
+use std::cell::{Cell, Ref, RefCell};
 
 use crate::filetypes::FileType;
 
 mod imp {
+
     use glib::{ParamSpecBoolean, ParamSpecObject};
 
     use super::*;
 
-    #[derive(Debug)]
     pub struct InputFile {
         pub path: RefCell<String>,
         pub kind: Cell<FileType>,
-        pub pixbuf: RefCell<Pixbuf>,
+        pub pixbuf: RefCell<Option<Texture>>,
         pub frames: Cell<usize>,
         pub is_behind_sandbox: Cell<bool>,
         pub width: Cell<Option<usize>>,
@@ -36,7 +37,7 @@ mod imp {
             Self {
                 path: RefCell::new("/invalid-path".to_string()),
                 kind: Cell::new(FileType::Unknown),
-                pixbuf: RefCell::new(Pixbuf::new(Colorspace::Rgb, true, 8, 1, 1).unwrap()),
+                pixbuf: RefCell::new(None),
                 frames: Cell::new(1),
                 is_behind_sandbox: Cell::new(true),
                 width: Cell::new(None),
@@ -54,7 +55,7 @@ mod imp {
                         .readwrite()
                         .build(),
                     ParamSpecObject::builder::<Pixbuf>("pixbuf")
-                        .readwrite()
+                        .write_only()
                         .build(),
                     ParamSpecBoolean::builder("is-behind-sandbox")
                         .readwrite()
@@ -75,8 +76,8 @@ mod imp {
                     self.kind.set(p);
                 }
                 "pixbuf" => {
-                    let p = value.get::<Pixbuf>().expect("Value must be a Pixbuf");
-                    self.pixbuf.replace(p);
+                    let p = value.get::<Texture>().expect("Value must be a Pixbuf");
+                    self.pixbuf.replace(Some(p));
                 }
                 "is-behind-sandbox" => {
                     let p = value.get::<bool>().expect("Value must be a boolean");
@@ -89,7 +90,6 @@ mod imp {
         fn property(&self, _id: usize, pspec: &ParamSpec) -> Value {
             match pspec.name() {
                 "path" => self.path.borrow().to_value(),
-                "pixbuf" => self.pixbuf.borrow().to_value(),
                 "kind" => self.kind.get().to_value(),
                 "is-behind-sandbox" => self.is_behind_sandbox.get().to_value(),
                 _ => unimplemented!(),
@@ -132,38 +132,33 @@ impl InputFile {
         glib::Object::new()
     }
 
-    pub async fn generate_pixbuf(
-        &self,
-        high_quality: bool,
-    ) -> Result<(), Box<dyn std::error::Error>> {
-        if !self.kind().supports_pixbuf() || self.pixbuf().is_some() {
-            return Ok(());
-        }
+    // pub async fn generate_pixbuf(
+    //     &self,
+    //     high_quality: bool,
+    // ) -> Result<(), Box<dyn std::error::Error>> {
+    //     if !self.kind().supports_pixbuf() || self.pixbuf().is_some() {
+    //         return Ok(());
+    //     }
 
-        let stream = gio::File::for_path(self.path())
-            .read_future(glib::PRIORITY_DEFAULT)
-            .await?;
+    //     let stream = gio::File::for_path(self.path())
+    //         .read_future(glib::PRIORITY_DEFAULT)
+    //         .await?;
 
-        let mut pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
+    //     let mut pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
 
-        if !high_quality {
-            pixbuf = get_reduced(&pixbuf, 300);
-        } else {
-            pixbuf = get_reduced(&pixbuf, 800);
-        }
+    //     if !high_quality {
+    //         pixbuf = get_reduced(&pixbuf, 300);
+    //     } else {
+    //         pixbuf = get_reduced(&pixbuf, 800);
+    //     }
 
-        self.set_property("pixbuf", pixbuf);
+    //     self.set_property("pixbuf", pixbuf);
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 
-    pub fn pixbuf(&self) -> Option<Pixbuf> {
-        let pixbuf = self.imp().pixbuf.borrow().clone();
-        if pixbuf.width() > 1 && pixbuf.height() > 1 {
-            Some(pixbuf)
-        } else {
-            None
-        }
+    pub fn pixbuf(&self) -> Ref<Option<Texture>> {
+        self.imp().pixbuf.borrow()
     }
 
     pub fn frames(&self) -> usize {
@@ -195,8 +190,8 @@ impl InputFile {
         self.imp().height.replace(Some(f));
     }
 
-    pub fn set_pixbuf(&self, p: Pixbuf) {
-        self.imp().pixbuf.replace(p);
+    pub fn set_pixbuf(&self, p: Texture) {
+        self.imp().pixbuf.replace(Some(p));
     }
 
     pub fn path(&self) -> String {
@@ -212,31 +207,31 @@ impl InputFile {
     }
 }
 
-fn get_reduced(p: &Pixbuf, min_side: usize) -> Pixbuf {
-    let min_side = min_side as f64;
-    let (width, height) = (p.width() as f64, p.height() as f64);
-    let min_original_side = std::cmp::min(width as usize, height as usize) as f64;
-    if min_original_side < min_side {
-        return p.to_owned();
-    }
-    let (scaled_width, scaled_height) = (
-        width * min_side / min_original_side,
-        height * min_side / min_original_side,
-    );
-    let surface = cairo::ImageSurface::create(
-        cairo::Format::ARgb32,
-        scaled_width as i32,
-        scaled_height as i32,
-    )
-    .unwrap();
-    let context = cairo::Context::new(&surface).unwrap();
-    context.scale(scaled_width / width, scaled_height / height);
-    context.set_source_pixbuf(p, 0.0, 0.0);
-    context.paint().unwrap();
-    context.scale(width / scaled_width, height / scaled_height);
-    gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, scaled_width as i32, scaled_height as i32)
-        .unwrap()
-}
+// fn get_reduced(p: &Pixbuf, min_side: usize) -> Pixbuf {
+//     let min_side = min_side as f64;
+//     let (width, height) = (p.width() as f64, p.height() as f64);
+//     let min_original_side = std::cmp::min(width as usize, height as usize) as f64;
+//     if min_original_side < min_side {
+//         return p.to_owned();
+//     }
+//     let (scaled_width, scaled_height) = (
+//         width * min_side / min_original_side,
+//         height * min_side / min_original_side,
+//     );
+//     let surface = cairo::ImageSurface::create(
+//         cairo::Format::ARgb32,
+//         scaled_width as i32,
+//         scaled_height as i32,
+//     )
+//     .unwrap();
+//     let context = cairo::Context::new(&surface).unwrap();
+//     context.scale(scaled_width / width, scaled_height / height);
+//     context.set_source_pixbuf(p, 0.0, 0.0);
+//     context.paint().unwrap();
+//     context.scale(width / scaled_width, height / scaled_height);
+//     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, scaled_width as i32, scaled_height as i32)
+//         .unwrap()
+// }
 
 // pub fn get_square(p: &Pixbuf) -> Pixbuf {
 //     let side = std::cmp::min(p.width(), p.height());

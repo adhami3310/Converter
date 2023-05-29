@@ -9,8 +9,8 @@ use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
 use crate::input_file::InputFile;
 use crate::magick::{
-    count_frames, generate_job, pixbuf_bytes, wait_for_child, GhostScriptConvertJob, JobFile,
-    MagickConvertJob, ResizeArgument,
+    count_frames, generate_job, wait_for_child, GhostScriptConvertJob, JobFile, MagickConvertJob,
+    ResizeArgument,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use crate::widgets::about_window::ConverterAbout;
@@ -21,8 +21,8 @@ use futures::future::join_all;
 use gettextrs::gettext;
 use glib::{clone, idle_add_local_once, MainContext};
 use gtk::accessible::Property;
+use gtk::gdk::Texture;
 use gtk::gdk_pixbuf::Pixbuf;
-use gtk::gio::Cancellable;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
 use itertools::Itertools;
 use shared_child::SharedChild;
@@ -616,6 +616,7 @@ impl AppWindow {
 
     pub fn clear(&self) {
         self.imp().input_file_store.remove_all();
+
         self.switch_to_stack_welcome();
     }
 
@@ -736,7 +737,7 @@ impl AppWindow {
 
         let file_path_things = files
             .iter()
-            .map(|f| (f.kind().supports_pixbuf() & f.pixbuf().is_none(), f.path()))
+            .map(|f| (f.kind().supports_pixbuf(), f.path()))
             .collect_vec();
 
         let (sender, receiver) = std::sync::mpsc::channel();
@@ -749,7 +750,9 @@ impl AppWindow {
                 .into_iter()
                 .map(|(b, path)| async move {
                     match b {
-                        true => Some(pixbuf_bytes(path).await),
+                        true => Some(Texture::for_pixbuf(
+                            &Pixbuf::from_file_at_scale(&path, 500, -1, true).unwrap(),
+                        )),
                         false => None,
                     }
                 })
@@ -761,13 +764,9 @@ impl AppWindow {
 
         let pixpaths = receiver.recv().unwrap();
 
-        for (f, p) in files.iter().zip(pixpaths.iter()) {
+        for (f, p) in files.iter().zip(pixpaths.into_iter()) {
             if let Some(p) = p {
-                let stream = gio::MemoryInputStream::from_bytes(p);
-                let pixbuf =
-                    Pixbuf::from_stream_at_scale(&stream, 500, -1, true, Cancellable::NONE)
-                        .unwrap();
-                f.set_pixbuf(pixbuf);
+                f.set_pixbuf(p);
                 MainContext::default().iteration(true);
             }
         }
@@ -1631,14 +1630,17 @@ impl WindowUI for AppWindow {
         let input_files = self
             .active_files()
             .into_iter()
-            .map(|f| (f.pixbuf(), f.kind(), f.dimensions()))
+            .map(|f| {
+                let (k, d) = (f.kind(), f.dimensions());
+                (f, k, d)
+            })
             .collect_vec();
 
         while let Some(child) = imp.full_image_container.first_child() {
             imp.full_image_container.remove(&child);
         }
 
-        for (i, (image, file_type, dims)) in input_files.into_iter().enumerate() {
+        for (i, (f, file_type, dims)) in input_files.into_iter().enumerate() {
             let caption = match dims {
                 Some((w, h)) => {
                     format!("{} · {}×{}", file_type.as_display_string(), w, h,)
@@ -1648,7 +1650,8 @@ impl WindowUI for AppWindow {
 
             let (w, h) = dims.unwrap_or((0, 0));
 
-            let image_thumbnail = ImageThumbnail::new(image, &caption, w as u32, h as u32);
+            let image_thumbnail =
+                ImageThumbnail::new(f.pixbuf().as_ref(), &caption, w as u32, h as u32);
 
             let image_flow_box_child = gtk::FlowBoxChild::new();
             image_flow_box_child.set_child(Some(&image_thumbnail));
@@ -1668,9 +1671,12 @@ impl WindowUI for AppWindow {
         let imp = self.imp();
 
         let input_files = self
-            .files()
+            .active_files()
             .into_iter()
-            .map(|f| (f.pixbuf(), f.kind(), f.dimensions()))
+            .map(|f| {
+                let (k, d) = (f.kind(), f.dimensions());
+                (f, k, d)
+            })
             .collect_vec();
 
         while let Some(child) = imp.image_container.first_child() {
@@ -1679,7 +1685,7 @@ impl WindowUI for AppWindow {
 
         let removed = self.imp().removed.borrow().clone();
 
-        for (i, (image, file_type, dims)) in input_files.into_iter().take(count).enumerate() {
+        for (i, (f, file_type, dims)) in input_files.into_iter().take(count).enumerate() {
             match removed.contains(&(i as u32)) {
                 false => {
                     let caption = match dims {
@@ -1691,7 +1697,8 @@ impl WindowUI for AppWindow {
 
                     let (w, h) = dims.unwrap_or((0, 0));
 
-                    let image_thumbnail = ImageThumbnail::new(image, &caption, w as u32, h as u32);
+                    let image_thumbnail =
+                        ImageThumbnail::new(f.pixbuf().as_ref(), &caption, w as u32, h as u32);
 
                     let image_flow_box_child = gtk::FlowBoxChild::new();
                     image_flow_box_child.set_child(Some(&image_thumbnail));

@@ -80,7 +80,7 @@ impl FileType {
     }
 
     pub fn supports_pixbuf(&self) -> bool {
-        !matches!(self, Pdf | Dds)
+        !matches!(self, Pdf | Dds | Ico)
     }
 
     pub fn is_output(&self) -> bool {

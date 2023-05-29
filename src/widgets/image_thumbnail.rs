@@ -1,6 +1,6 @@
 use adw::prelude::*;
 use glib::{SignalHandlerId, Value};
-use gtk::{gdk::gdk_pixbuf::Pixbuf, gio, glib, subclass::prelude::*};
+use gtk::{gdk::Texture, gio, glib, subclass::prelude::*};
 use once_cell::sync::Lazy;
 
 mod imp {
@@ -64,7 +64,7 @@ mod imp {
         fn properties() -> &'static [ParamSpec] {
             static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
                 vec![
-                    ParamSpecObject::builder::<Pixbuf>("image")
+                    ParamSpecObject::builder::<Texture>("image")
                         .write_only()
                         .build(),
                     ParamSpecString::builder("content").write_only().build(),
@@ -82,12 +82,12 @@ mod imp {
             match pspec.name() {
                 "image" => {
                     let p = value
-                        .get::<Option<Pixbuf>>()
+                        .get::<Option<&Texture>>()
                         .expect("Value must be a Pixbuf");
                     match p {
                         Some(p) => {
                             // self.image.set_from_pixbuf(Some(&get_reduced(&p)));
-                            self.picture.set_pixbuf(Some(&p));
+                            self.picture.set_paintable(Some(p));
                             self.picture.set_visible(true);
                             self.image.set_visible(false);
                         }
@@ -154,7 +154,7 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl ImageThumbnail {
-    pub fn new(image: Option<Pixbuf>, content: &str, width: u32, height: u32) -> Self {
+    pub fn new(image: Option<&Texture>, content: &str, width: u32, height: u32) -> Self {
         let bin = glib::Object::builder::<ImageThumbnail>()
             .property("image", image)
             .property("content", content)
