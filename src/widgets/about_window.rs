@@ -3,7 +3,7 @@ use adw::prelude::*;
 use adw::AboutWindow;
 use gettextrs::gettext;
 use glib::object::IsA;
-use gtk::{Application, License, Window};
+use gtk::{License, Window};
 
 //code 'inspired' by https://gitlab.com/news-flash/news_flash_gtk/-/blob/master/src/about_dialog.rs
 
@@ -16,12 +16,8 @@ pub const DEVELOPERS: &[&str] = &["Khaleel Al-Adhami <khaleel.aladhami@gmail.com
 pub struct ConverterAbout;
 
 impl ConverterAbout {
-    pub fn show<A: IsA<Application> + AdwApplicationExt, W: IsA<Window> + GtkWindowExt>(
-        app: &A,
-        window: &W,
-    ) {
+    pub fn show<W: IsA<Window> + GtkWindowExt>(window: &W) {
         let about_window = AboutWindow::builder()
-            .application(app)
             .transient_for(window)
             .modal(true)
             .application_icon(APP_ID)

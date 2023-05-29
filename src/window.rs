@@ -13,6 +13,7 @@ use crate::magick::{
     MagickConvertJob, ResizeArgument,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
+use crate::widgets::about_window::ConverterAbout;
 use crate::widgets::image_rest::ImageRest;
 use crate::widgets::image_thumbnail::ImageThumbnail;
 use adw::prelude::*;
@@ -245,6 +246,7 @@ mod imp {
             self.parent_constructed();
             let obj = self.obj();
             obj.load_window_size();
+            obj.setup_gactions();
         }
     }
 
@@ -294,12 +296,42 @@ impl AppWindow {
         self.imp().toast_overlay.add_toast(adw::Toast::new(text));
     }
 
+    fn setup_gactions(&self) {
+        self.add_action_entries([
+            gio::ActionEntry::builder("close")
+                .activate(clone!(@weak self as window => move |_,_, _| {
+                    window.destroy();
+                }))
+                .build(),
+            gio::ActionEntry::builder("add")
+                .activate(clone!(@weak self as window => move |_, _, _| {
+                    window.add_dialog();
+                }))
+                .build(),
+            gio::ActionEntry::builder("clear")
+                .activate(clone!(@weak self as window => move |_, _, _| {
+                    window.clear();
+                }))
+                .build(),
+            gio::ActionEntry::builder("about")
+                .activate(clone!(@weak self as window => move |_, _, _| {
+                    window.show_about();
+                }))
+                .build(),
+            gio::ActionEntry::builder("paste")
+                .activate(clone!(@weak self as window => move |_, _, _| {
+                    window.load_clipboard();
+                }))
+                .build(),
+        ]);
+    }
+
     fn setup_callbacks(&self) {
         //load imp
         let imp = self.imp();
         imp.open_button
             .connect_clicked(clone!(@weak self as this => move |_| {
-                this.open_dialog();
+                this.add_dialog();
             }));
         imp.add_button
             .connect_clicked(clone!(@weak self as this => move |_| {
@@ -409,6 +441,10 @@ impl AppWindow {
         // if let Some(display) = gtk::gdk::Display::default() {
         //     gtk::StyleContext::add_provider_for_display(&display, &imp.provider, 400);
         // }
+    }
+
+    fn show_about(&self) {
+        ConverterAbout::show(self);
     }
 
     fn close_dialog(&self) {
@@ -574,16 +610,6 @@ impl AppWindow {
         self.imp().drag_overlay.set_drop_target(&drop_target);
     }
 
-    pub fn open_dialog(&self) {
-        FileChooser::open_files_wrapper(
-            self,
-            vec![],
-            AppWindow::open_load,
-            AppWindow::open_success_wrapper,
-            AppWindow::open_error,
-        );
-    }
-
     pub fn add_dialog(&self) {
         FileChooser::open_files_wrapper(
             self,
@@ -605,15 +631,9 @@ impl AppWindow {
         self.imp().loading_spinner.start();
     }
 
-    fn open_success_wrapper(&self, files: Vec<InputFile>) {
-        MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.open_success(files, true).await;
-        }));
-    }
-
     fn add_success_wrapper(&self, files: Vec<InputFile>) {
         MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.open_success(files, false).await;
+            this.open_success(files).await;
         }));
     }
 
@@ -626,7 +646,7 @@ impl AppWindow {
                     let interim = JobFile::new(FileType::Png, Some(format!("{}.png",gettext("Pasted Image"))));
                     t.save_to_png(interim.as_filename()).ok();
                     let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
-                    this.open_success(vec![file], true).await;
+                    this.open_success(vec![file]).await;
                 }
             }));
         } else if clipboard
@@ -635,17 +655,15 @@ impl AppWindow {
         {
             MainContext::default().spawn_local(clone!(@weak self as this => async move {
                 let t = clipboard.read_text_future().await.unwrap().unwrap();
-                let files = t.lines().map(|p| InputFile::new(&gio::File::for_path(p))).collect();
-                this.open_files(files);
+                let files = t.lines().flat_map(|p| InputFile::new(&gio::File::for_path(p))).collect();
+                this.open_success(files).await;
             }));
         }
     }
 
-    async fn open_success(&self, mut files: Vec<InputFile>, remove_old: bool) {
-        if !remove_old {
-            let prev_files = self.get_files();
-            files = prev_files.into_iter().chain(files.into_iter()).collect();
-        }
+    async fn open_success(&self, mut files: Vec<InputFile>) {
+        let prev_files = self.get_files();
+        files = files.into_iter().chain(prev_files.into_iter()).collect();
 
         self.imp().input_file_store.remove_all();
         self.imp().removed.replace(HashSet::new());
@@ -708,12 +726,16 @@ impl AppWindow {
     fn remove_file(&self, i: u32) {
         self.imp().removed.borrow_mut().insert(i);
         if self.get_file_count() == 0 {
-            self.imp().input_file_store.remove_all();
-            self.switch_to_stack_welcome();
+            self.clear();
         } else {
             self.construct_short_thumbnail();
             self.update_options();
         }
+    }
+
+    pub fn clear(&self) {
+        self.imp().input_file_store.remove_all();
+        self.switch_to_stack_welcome();
     }
 
     fn collect_pixbuf_wrapper(&self, count: usize, remaining_visible: bool) {

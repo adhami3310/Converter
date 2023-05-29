@@ -5,7 +5,6 @@ use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
 use crate::config::{APP_ID, PKGDATADIR, PROFILE, VERSION};
 use crate::input_file::InputFile;
-use crate::widgets::about_window::ConverterAbout;
 use crate::window::AppWindow;
 
 mod imp {
@@ -120,30 +119,9 @@ impl App {
                     app.quit();
                 }))
                 .build(),
-            gio::ActionEntry::builder("about")
+            gio::ActionEntry::builder("new-window")
                 .activate(clone!(@weak self as app => move |_, _, _| {
-                    app.show_about();
-                }))
-                .build(),
-            gio::ActionEntry::builder("open")
-                .activate(clone!(@weak self as app => move |_, _, _| {
-                    if let Some(window) = app.active_window() {
-                        window.downcast_ref::<AppWindow>().unwrap().open_dialog();
-                    }
-                }))
-                .build(),
-            gio::ActionEntry::builder("add")
-                .activate(clone!(@weak self as app => move |_, _, _| {
-                    if let Some(window) = app.active_window() {
-                        window.downcast_ref::<AppWindow>().unwrap().add_dialog();
-                    }
-                }))
-                .build(),
-            gio::ActionEntry::builder("paste")
-                .activate(clone!(@weak self as app => move |_, _, _| {
-                    if let Some(window) = app.active_window() {
-                        window.downcast_ref::<AppWindow>().unwrap().load_clipboard();
-                    }
+                    app.present_main_window();
                 }))
                 .build(),
         ]);
@@ -167,27 +145,19 @@ impl App {
 
     // Sets up keyboard shortcuts
     fn setup_accels(&self) {
+        self.set_accels_for_action("app.new-window", &["<Control>n"]);
         self.set_accels_for_action("app.popular", &["<Control>h"]);
-        self.set_accels_for_action("app.open", &["<Control>o"]);
-        self.set_accels_for_action("app.add", &["<Control>n"]);
-        self.set_accels_for_action("app.quit", &["<Control>w", "<Control>q"]);
-        self.set_accels_for_action("app.paste", &["<Control>v"]);
+        self.set_accels_for_action("app.quit", &["<Control>q"]);
+        self.set_accels_for_action("win.clear", &["<Control>r"]);
+        self.set_accels_for_action("win.add", &["<Control>o"]);
+        self.set_accels_for_action("win.close", &["<Control>w"]);
+        self.set_accels_for_action("win.paste", &["<Control>v"]);
     }
 
     fn present_main_window(&self) {
-        let window = if let Some(window) = self.active_window() {
-            window
-        } else {
-            let window = AppWindow::new(self);
-            window.upcast()
-        };
-
+        let window = AppWindow::new(self);
+        let window: gtk::Window = window.upcast();
         window.present();
-    }
-
-    fn show_about(&self) {
-        let window = self.active_window().unwrap();
-        ConverterAbout::show(self, &window);
     }
 
     pub fn run(&self) -> ExitCode {

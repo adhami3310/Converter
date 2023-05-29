@@ -34,8 +34,10 @@ template $AppWindow : $AdwApplicationWindow {
                 }
                 ;
                 Button add_button {
-                  icon-name: 'plus-large-symbolic';
-                  tooltip-text: _('Add More Images');
+                  $AdwButtonContent {
+                    icon-name: 'plus-large-symbolic';
+                    tooltip-text: _('Add Images (Ctrl+O)');
+                  }
                   visible: false;
                   styles ['flat']
                 }
@@ -349,8 +351,10 @@ template $AppWindow : $AdwApplicationWindow {
                   styles ['flat']
                 }
                 Button other_add_button {
-                  icon-name: 'plus-large-symbolic';
-                  tooltip-text: _('Add More Images');
+                  $AdwButtonContent {
+                    icon-name: 'plus-large-symbolic';
+                    tooltip-text: _('Add Images (Ctrl+O)');
+                  }
                   styles ['flat']
                 }
 
@@ -408,18 +412,18 @@ template $AppWindow : $AdwApplicationWindow {
 menu primary_menu {
   section {
     item {
-      label: _("Open New Files…");
-      action: "app.open";
-    }
-
-    item {
-      label: _("Add Files…");
-      action: "app.add";
-    }
-
-    item {
       label: _("Paste From Clipboard");
-      action: "app.paste";
+      action: "win.paste";
+    }
+
+    item {
+      label: _("New Window");
+      action: "app.new-window";
+    }
+
+    item {
+      label: _("Clear Window");
+      action: "win.clear";
     }
   }
 
@@ -438,7 +442,7 @@ menu primary_menu {
 
     item {
       label: _("About Converter");
-      action: "app.about";
+      action: "win.about";
     }
   }
 }
