@@ -151,7 +151,12 @@ impl JobFile {
 
     pub fn as_filename(&self) -> String {
         match &self.desired_name {
-            Some(desired_name) => desired_name.to_string(),
+            Some(desired_name) => format!(
+                "{}_{}.{}",
+                desired_name,
+                self.id,
+                self.file_extension.as_extension()
+            ),
             None => format!(
                 "TEMPORARY_CONVERTER_{}.{}",
                 self.id,

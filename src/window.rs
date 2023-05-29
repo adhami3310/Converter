@@ -524,7 +524,7 @@ impl AppWindow {
             MainContext::default().spawn_local(clone!(@weak self as this => async move {
                 let t = clipboard.read_texture_future().await;
                 if let Ok(Some(t)) = t {
-                    let interim = JobFile::new(FileType::Png, Some(format!("{}.png",gettext("Pasted Image"))));
+                    let interim = JobFile::new(FileType::Png, Some("Pasted Image".to_string()));
                     t.save_to_png(interim.as_filename()).ok();
                     let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
                     this.open_success(vec![file]).await;
