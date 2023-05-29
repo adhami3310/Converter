@@ -5,9 +5,11 @@ use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
 use crate::config::{APP_ID, PKGDATADIR, PROFILE, VERSION};
 use crate::input_file::InputFile;
-use crate::window::AppWindow;
+use crate::window::{AppWindow, WindowUI};
 
 mod imp {
+
+    use crate::window::FileOperations;
 
     use super::*;
     use adw::subclass::prelude::AdwApplicationImpl;

@@ -1,3 +1,4 @@
+use crate::temp::get_temp_file_path;
 use crate::{color::Color, filetypes::FileType, window::ResizeFilter};
 use gettextrs::gettext;
 use glib::Bytes;
@@ -8,6 +9,7 @@ use shared_child::SharedChild;
 use std::io::Read;
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicUsize, Ordering};
+use tempfile::TempDir;
 
 pub async fn count_frames(path: String) -> Result<(usize, Option<(usize, usize)>), ()> {
     let command = tokio::process::Command::new("magick")
@@ -251,6 +253,78 @@ impl MagickConvertJob {
         command.stdout(Stdio::piped()).stderr(Stdio::piped());
 
         command
+    }
+}
+
+pub fn generate_job(
+    input_path: &str,
+    frame: usize,
+    input_type: &FileType,
+    output_path: &str,
+    output_type: &FileType,
+    dir: &TempDir,
+    default_arguments: (&MagickConvertJob, &GhostScriptConvertJob),
+) -> Vec<ConvertJob> {
+    use FileType::*;
+    match (input_type, output_type) {
+        (Pdf, Png) => std::iter::once(ConvertJob::GhostScript(GhostScriptConvertJob {
+            input_file: input_path.to_owned(),
+            output_file: output_path.to_owned(),
+            page: frame,
+            ..*default_arguments.1
+        }))
+        .collect(),
+        (Pdf, _) => {
+            let interm = get_temp_file_path(dir, JobFile::new(FileType::Png, None))
+                .to_str()
+                .unwrap()
+                .to_owned();
+            generate_job(
+                input_path,
+                frame,
+                input_type,
+                &interm,
+                &FileType::Png,
+                dir,
+                default_arguments,
+            )
+            .into_iter()
+            .chain(
+                generate_job(
+                    &interm,
+                    0,
+                    &FileType::Png,
+                    output_path,
+                    output_type,
+                    dir,
+                    (
+                        &MagickConvertJob {
+                            resize_arg: ResizeArgument::default(),
+                            ..default_arguments.0.to_owned()
+                        },
+                        default_arguments.1,
+                    ),
+                )
+                .into_iter(),
+            )
+            .collect()
+        }
+        (Gif, Webp) | (Webp, Gif) => std::iter::once(ConvertJob::Magick(MagickConvertJob {
+            input_file: input_path.to_owned(),
+            output_file: output_path.to_owned(),
+            first_frame: false,
+            coalesce: false,
+            ..*default_arguments.0
+        }))
+        .collect(),
+        _ => std::iter::once(ConvertJob::Magick(MagickConvertJob {
+            input_file: input_path.to_owned(),
+            output_file: output_path.to_owned(),
+            first_frame: true,
+            coalesce: false,
+            ..*default_arguments.0
+        }))
+        .collect(),
     }
 }
 

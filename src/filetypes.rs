@@ -79,7 +79,7 @@ impl FileType {
         )
     }
 
-    pub fn supports_pixbuff(&self) -> bool {
+    pub fn supports_pixbuf(&self) -> bool {
         !matches!(self, Pdf | Dds)
     }
 

@@ -3,56 +3,6 @@ use glib::{SignalHandlerId, Value};
 use gtk::{gdk::gdk_pixbuf::Pixbuf, gio, glib, subclass::prelude::*};
 use once_cell::sync::Lazy;
 
-// fn crop_corners(p: &Pixbuf) -> Pixbuf {
-//     let thumbnail_dimension = 512;
-//     let radius = 25.0;
-//     let thumbnail_dimension_f = thumbnail_dimension as f64;
-//     let (width, height) = (p.width() as f64, p.height() as f64);
-//     let surface = cairo::ImageSurface::create(
-//         cairo::Format::ARgb32,
-//         thumbnail_dimension,
-//         thumbnail_dimension,
-//     )
-//     .unwrap();
-//     let context = cairo::Context::new(&surface).unwrap();
-//     let (fake_width, fake_height) = (1000.0, 1000.0);
-//     context.new_path();
-//     context.scale(
-//         thumbnail_dimension_f / fake_width,
-//         thumbnail_dimension_f / fake_height,
-//     );
-//     context.arc(radius, radius, radius, PI, PI * 1.5);
-//     context.line_to(fake_width - radius, 0.0);
-//     context.arc(fake_width - radius, radius, radius, PI * 1.5, PI * 2.0);
-//     context.line_to(fake_width, fake_height - radius);
-//     context.arc(
-//         fake_width - radius,
-//         fake_height - radius,
-//         radius,
-//         PI * 2.0,
-//         PI * 2.5,
-//     );
-//     context.line_to(radius, fake_height);
-//     context.arc(radius, fake_height - radius, radius, PI * 2.5, PI * 3.0);
-//     context.line_to(0.0, radius);
-//     context.clip();
-//     context.scale(
-//         fake_width / thumbnail_dimension_f,
-//         fake_height / thumbnail_dimension_f,
-//     );
-//     context.scale(
-//         thumbnail_dimension_f / width,
-//         thumbnail_dimension_f / height,
-//     );
-//     context.set_source_pixbuf(&p, 0.0, 0.0);
-//     context.paint().unwrap();
-//     context.scale(
-//         width / thumbnail_dimension_f,
-//         height / thumbnail_dimension_f,
-//     );
-//     gdk::pixbuf_get_from_surface(&surface, 0, 0, 512, 512).unwrap()
-// }
-
 mod imp {
 
     use std::cell::Cell;
@@ -133,7 +83,7 @@ mod imp {
                 "image" => {
                     let p = value
                         .get::<Option<Pixbuf>>()
-                        .expect("Value must be a Pixbuff");
+                        .expect("Value must be a Pixbuf");
                     match p {
                         Some(p) => {
                             // self.image.set_from_pixbuf(Some(&get_reduced(&p)));
@@ -193,26 +143,6 @@ mod imp {
         fn size_allocate(&self, width: i32, height: i32, baseline: i32) {
             self.root.allocate(width, height, baseline, None)
         }
-
-        // fn request_mode(&self) -> gtk::SizeRequestMode {
-        //     self.root.request_mode()
-        // }
-
-        // fn contains(&self, x: f64, y: f64) -> bool {
-        //     self.root.contains(x, y)
-        // }
-
-        // fn snapshot(&self, snapshot: &gtk::Snapshot) {
-        //     self.root
-        //         .snapshot_child(&self.child.clone().upcast::<gtk::Widget>(), snapshot);
-        // }
-
-        // fn state_flags_changed(&self, state_flags: &gtk::StateFlags) {
-        //     self.root.set_state_flags(*state_flags, true);
-        //     self.remove_image
-        //         .set_state_flags(gtk::StateFlags::FOCUSED, true);
-        //     self.root.queue_resize();
-        // }
     }
 }
 

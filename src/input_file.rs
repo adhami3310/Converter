@@ -20,7 +20,7 @@ mod imp {
     pub struct InputFile {
         pub path: RefCell<String>,
         pub kind: Cell<FileType>,
-        pub pixbuff: RefCell<Pixbuf>,
+        pub pixbuf: RefCell<Pixbuf>,
         pub frames: Cell<usize>,
         pub is_behind_sandbox: Cell<bool>,
         pub width: Cell<Option<usize>>,
@@ -36,7 +36,7 @@ mod imp {
             Self {
                 path: RefCell::new("/invalid-path".to_string()),
                 kind: Cell::new(FileType::Unknown),
-                pixbuff: RefCell::new(Pixbuf::new(Colorspace::Rgb, true, 8, 1, 1).unwrap()),
+                pixbuf: RefCell::new(Pixbuf::new(Colorspace::Rgb, true, 8, 1, 1).unwrap()),
                 frames: Cell::new(1),
                 is_behind_sandbox: Cell::new(true),
                 width: Cell::new(None),
@@ -53,7 +53,7 @@ mod imp {
                     ParamSpecEnum::builder::<FileType>("kind")
                         .readwrite()
                         .build(),
-                    ParamSpecObject::builder::<Pixbuf>("pixbuff")
+                    ParamSpecObject::builder::<Pixbuf>("pixbuf")
                         .readwrite()
                         .build(),
                     ParamSpecBoolean::builder("is-behind-sandbox")
@@ -74,9 +74,9 @@ mod imp {
                     let p = value.get::<FileType>().expect("Value must be a filetype");
                     self.kind.set(p);
                 }
-                "pixbuff" => {
-                    let p = value.get::<Pixbuf>().expect("Value must be a Pixbuff");
-                    self.pixbuff.replace(p);
+                "pixbuf" => {
+                    let p = value.get::<Pixbuf>().expect("Value must be a Pixbuf");
+                    self.pixbuf.replace(p);
                 }
                 "is-behind-sandbox" => {
                     let p = value.get::<bool>().expect("Value must be a boolean");
@@ -89,7 +89,7 @@ mod imp {
         fn property(&self, _id: usize, pspec: &ParamSpec) -> Value {
             match pspec.name() {
                 "path" => self.path.borrow().to_value(),
-                "pixbuff" => self.pixbuff.borrow().to_value(),
+                "pixbuf" => self.pixbuf.borrow().to_value(),
                 "kind" => self.kind.get().to_value(),
                 "is-behind-sandbox" => self.is_behind_sandbox.get().to_value(),
                 _ => unimplemented!(),
@@ -132,11 +132,11 @@ impl InputFile {
         glib::Object::new()
     }
 
-    pub async fn generate_pixbuff(
+    pub async fn generate_pixbuf(
         &self,
         high_quality: bool,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        if !self.kind().supports_pixbuff() || self.pixbuf().is_some() {
+        if !self.kind().supports_pixbuf() || self.pixbuf().is_some() {
             return Ok(());
         }
 
@@ -152,13 +152,13 @@ impl InputFile {
             pixbuf = get_reduced(&pixbuf, 800);
         }
 
-        self.set_property("pixbuff", pixbuf);
+        self.set_property("pixbuf", pixbuf);
 
         Ok(())
     }
 
     pub fn pixbuf(&self) -> Option<Pixbuf> {
-        let pixbuf = self.imp().pixbuff.borrow().clone();
+        let pixbuf = self.imp().pixbuf.borrow().clone();
         if pixbuf.width() > 1 && pixbuf.height() > 1 {
             Some(pixbuf)
         } else {
@@ -196,7 +196,7 @@ impl InputFile {
     }
 
     pub fn set_pixbuf(&self, p: Pixbuf) {
-        self.imp().pixbuff.replace(p);
+        self.imp().pixbuf.replace(p);
     }
 
     pub fn path(&self) -> String {
