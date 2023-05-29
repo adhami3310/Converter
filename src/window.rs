@@ -556,11 +556,14 @@ impl AppWindow {
             self.imp().input_file_store.append(file);
         }
 
-        let file_paths = files.iter().map(|f| f.path()).collect_vec();
-
         fdlimit::raise_fd_limit();
 
-        self.load_pixbuf().await;
+        self.load_pixbuf();
+    }
+
+    fn load_frames(&self) {
+        let files = self.files();
+        let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
         let (sender, receiver) = MainContext::channel(glib::PRIORITY_LOW);
 
@@ -732,7 +735,7 @@ impl AppWindow {
         (self.imp().input_file_store.n_items() as usize) - self.imp().removed.borrow().len()
     }
 
-    async fn load_pixbuf(&self) {
+    fn load_pixbuf(&self) {
         let files = self.active_files();
 
         let file_path_things = files
@@ -740,7 +743,7 @@ impl AppWindow {
             .map(|f| (f.kind().supports_pixbuf(), f.path()))
             .collect_vec();
 
-        let (sender, receiver) = std::sync::mpsc::channel();
+        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -748,28 +751,52 @@ impl AppWindow {
                 .unwrap();
             let file_paths_pixbuf = file_path_things
                 .into_iter()
-                .map(|(b, path)| async move {
-                    match b {
-                        true => Some(Texture::for_pixbuf(
-                            &Pixbuf::from_file_at_scale(&path, 500, -1, true).unwrap(),
-                        )),
-                        false => None,
+                .enumerate()
+                .map(|(i, (b, path))| {
+                    let sender = sender.clone();
+                    async move {
+                        spawn(async move {
+                            sender
+                                .send((
+                                    i,
+                                    match b {
+                                        true => Some(Texture::for_pixbuf(
+                                            &Pixbuf::from_file_at_scale(&path, 500, -1, true)
+                                                .unwrap(),
+                                        )),
+                                        false => None,
+                                    },
+                                ))
+                                .expect("Concurrency issues");
+                        })
+                        .await
                     }
                 })
                 .collect_vec();
-            sender
-                .send(rt.block_on(join_all(file_paths_pixbuf)))
-                .expect("concurrency failure");
+
+            rt.block_on(join_all(file_paths_pixbuf));
         });
 
-        let pixpaths = receiver.recv().unwrap();
+        let completed = std::sync::Arc::new(AtomicUsize::new(0));
+        let total = self.files_count();
 
-        for (f, p) in files.iter().zip(pixpaths.into_iter()) {
-            if let Some(p) = p {
-                f.set_pixbuf(p);
-                MainContext::default().iteration(true);
-            }
-        }
+        receiver.attach(
+            None,
+            clone!(@weak self as this => @default-return Continue(false), move |(i, p)| {
+                if let Some(p) = p {
+                    this.imp().input_file_store.item(i as u32).and_downcast::<InputFile>().unwrap().set_pixbuf(p);
+                }
+                glib::MainContext::default().iteration(true);
+                let c = completed.clone();
+                let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                if x + 1 == total {
+                    this.load_frames();
+                    Continue(false)
+                } else {
+                    Continue(true)
+                }
+            }),
+        );
     }
 
     async fn convert_start(&self, save_format: OutputType, path: String) {
