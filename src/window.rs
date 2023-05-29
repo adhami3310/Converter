@@ -1655,7 +1655,7 @@ impl WindowUI for AppWindow {
         let imp = self.imp();
 
         let input_files = self
-            .active_files()
+            .files()
             .into_iter()
             .map(|f| {
                 let (k, d) = (f.kind(), f.dimensions());
@@ -1698,7 +1698,7 @@ impl WindowUI for AppWindow {
         let imp = self.imp();
 
         let input_files = self
-            .active_files()
+            .files()
             .into_iter()
             .map(|f| {
                 let (k, d) = (f.kind(), f.dimensions());
