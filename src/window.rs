@@ -809,7 +809,7 @@ impl AppWindow {
                     let image_flow_box_child = gtk::FlowBoxChild::new();
                     image_flow_box_child.set_child(Some(&image_thumbnail));
 
-                    image_flow_box_child.set_focusable(false);
+                    image_flow_box_child.set_tooltip_text(Some(&caption));
 
                     imp.image_container.append(&image_flow_box_child);
                     image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
@@ -1915,20 +1915,17 @@ impl AppWindow {
 
     fn switch_to_stack_convert(&self) {
         self.switch_to_main_leaf();
-        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
     }
 
     fn switch_to_stack_converting(&self) {
-        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_converting");
     }
 
     fn switch_to_stack_welcome(&self) {
         self.switch_to_main_leaf();
-        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp()
             .stack
@@ -1946,7 +1943,7 @@ impl AppWindow {
     // }
 
     fn switch_to_stack_invalid_image(&self) {
-        self.imp().back_button.set_visible(false);
+        self.switch_to_main_leaf();
         self.imp().add_button.set_visible(false);
         self.imp()
             .stack
@@ -1955,7 +1952,6 @@ impl AppWindow {
 
     fn switch_to_stack_loading(&self) {
         self.switch_to_main_leaf();
-        self.imp().back_button.set_visible(false);
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_loading");
         self.imp().loading_spinner.start();
@@ -1973,6 +1969,7 @@ impl AppWindow {
             self.switch_to_stack_loading();
         } else {
             self.imp().other_add_button.set_visible(false);
+            self.imp().back_button.set_visible(false);
             self.imp()
                 .all_images_stack
                 .set_visible_child_name("stack_loading");
@@ -2070,7 +2067,7 @@ impl AppWindow {
             let image_flow_box_child = gtk::FlowBoxChild::new();
             image_flow_box_child.set_child(Some(&image_thumbnail));
 
-            image_flow_box_child.set_focusable(false);
+            image_flow_box_child.set_tooltip_text(Some(&caption));
 
             imp.full_image_container.append(&image_flow_box_child);
             image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {

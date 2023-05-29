@@ -28,6 +28,11 @@ template $AppWindow : $AdwApplicationWindow {
             Box {
               orientation: vertical;
               $AdwHeaderBar headerbar {
+                title-widget: Label {
+                  label: _("Converter");
+                  styles ["title"]
+                }
+                ;
                 Button add_button {
                   icon-name: 'plus-large-symbolic';
                   tooltip-text: _('Add More Images');
@@ -333,10 +338,14 @@ template $AppWindow : $AdwApplicationWindow {
             Box {
               orientation: vertical;
               $AdwHeaderBar other_headerbar {
+                title-widget: Label {
+                  label: _("All Images");
+                  styles ["title"]
+                }
+                ;
                 Button back_button {
                   icon-name: 'go-previous-symbolic';
                   tooltip-text: _('Back');
-                  visible: false;
                   styles ['flat']
                 }
                 Button other_add_button {
