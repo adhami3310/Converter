@@ -36,6 +36,10 @@ flowboxchild:focus {
   margin: 5px;
 }
 
+.image-remove:focus {
+  outline-color: @theme_selected_bg_color;
+}
+
 .image-rest-button:focus {
   outline-offset: 2px;
 }
