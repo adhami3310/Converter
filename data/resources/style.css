@@ -37,7 +37,7 @@ flowboxchild:focus {
 }
 
 .image-remove:focus {
-  outline-color: @theme_selected_bg_color;
+  outline-color: alpha(@accent_color, 0.5);
 }
 
 .image-rest-button:focus {
