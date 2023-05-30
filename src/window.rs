@@ -434,7 +434,8 @@ impl AppWindow {
             }));
         imp.bgcolor
             .connect_rgba_notify(clone!(@weak self as this => move |x| {
-                x.update_property(&[Property::Label(&gettext!("New transparency layer color: {}", x.rgba()))]);
+                let y = Color::from(x.rgba()).as_hex_string();
+                x.first_child().unwrap().update_property(&[Property::Label(&gettext!("New transparency layer color: {}", y))]);
             }));
         self.load_options();
     }
