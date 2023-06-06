@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-23 18:27-0400\n"
 "PO-Revision-Date: 2022-11-28 23:15+0100\n"
-"Last-Translator: Irénée Thirion <irenee.thirion@e.email>\n"
+"Last-Translator: Adrien Jouffrey aka Enderteck <jouffrey.adrien@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -42,11 +42,11 @@ msgstr "image;convertir;conversion;traitement;manipuler;"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:27
 msgid "Shows less popular datatypes in the menu"
-msgstr ""
+msgstr "Affiche les types de données moins populaires dans le menu"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:31
 msgid "Window width"
-msgstr ""
+msgstr "Largueur de la fenêtre"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:35
 #, fuzzy
@@ -55,23 +55,23 @@ msgstr "Taille de l’image"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:39
 msgid "Image density per inch"
-msgstr ""
+msgstr "Densité de l'image par pouce"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:43
 msgid "Window height"
-msgstr ""
+msgstr "Taille de la fenêtre"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:47
 msgid "Window maximized state"
-msgstr ""
+msgstr "État de la fenêtre maximizée"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:51
 msgid "Output format"
-msgstr ""
+msgstr "Format de sortie"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:55
 msgid "Compression format"
-msgstr ""
+msgstr "Format de compression"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -79,7 +79,7 @@ msgstr "Khaleel Al-Adhami"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
-msgstr ""
+msgstr "Convertissez entre différents types de fichiers image et redimensionnez-les facilement."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
 msgid "image"
@@ -99,15 +99,15 @@ msgstr "traitement"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
 msgid "Converting sample image from PNG to WEBP"
-msgstr ""
+msgstr "Conversion de de l'image d'exemple de PNG à WEBP"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:68
 msgid "Fix variety of bugs and rework UI."
-msgstr ""
+msgstr "Correction d'une variété de bogues et retravailler l'interface utilisateur."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
 msgid "Rust rewrite."
-msgstr ""
+msgstr "Réecriture en Rust"
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -131,11 +131,11 @@ msgstr "Ouvrir une image"
 
 #: data/resources/blueprints/window.blp:33
 msgid "Drop Here to Open"
-msgstr ""
+msgstr "Faitent glisser une image ici pour ouvrir"
 
 #: data/resources/blueprints/window.blp:45
 msgid "Click “Open Images…” or drag images here."
-msgstr ""
+msgstr "Cliquez sur « Ouvrir une image… » ou faites glisser les images ici."
 
 #: data/resources/blueprints/window.blp:56
 #, fuzzy
@@ -161,15 +161,15 @@ msgstr "Taille de l’image"
 
 #: data/resources/blueprints/window.blp:169
 msgid "Export Format"
-msgstr ""
+msgstr "Format d'exportation"
 
 #: data/resources/blueprints/window.blp:174
 msgid "Save Method"
-msgstr ""
+msgstr "Méthode de sauvearde"
 
 #: data/resources/blueprints/window.blp:175
 msgid "Compress images or use a directory"
-msgstr ""
+msgstr "Compresse les images ou utilise un dossier"
 
 #: data/resources/blueprints/window.blp:183
 msgid "Quality"
@@ -181,33 +181,33 @@ msgstr "Couleur d’arrière-plan"
 
 #: data/resources/blueprints/window.blp:208
 msgid "DPI"
-msgstr ""
+msgstr "PPP"
 
 #: data/resources/blueprints/window.blp:252
 msgid "Resize"
-msgstr ""
+msgstr "Redimentionner"
 
 #: data/resources/blueprints/window.blp:260
 #: data/resources/blueprints/window.blp:269
 msgid "Width"
-msgstr ""
+msgstr "Largeur"
 
 #: data/resources/blueprints/window.blp:277
 msgid "Preserve aspect ratio"
-msgstr ""
+msgstr "Préserver le ratio largeur/hauteur"
 
 #: data/resources/blueprints/window.blp:283
 #: data/resources/blueprints/window.blp:291
 msgid "Height"
-msgstr ""
+msgstr "Hauteur"
 
 #: data/resources/blueprints/window.blp:305
 msgid "Percentage"
-msgstr ""
+msgstr "Pourcentage"
 
 #: data/resources/blueprints/window.blp:305
 msgid "Exact Pixels"
-msgstr ""
+msgstr "Pixels Exacts"
 
 #: data/resources/blueprints/window.blp:313
 #, fuzzy
@@ -216,27 +216,27 @@ msgstr "Algorithmes par"
 
 #: data/resources/blueprints/window.blp:316
 msgid "Point"
-msgstr ""
+msgstr "Point"
 
 #: data/resources/blueprints/window.blp:316
 msgid "Quadratic"
-msgstr ""
+msgstr "Quadratique"
 
 #: data/resources/blueprints/window.blp:316
 msgid "Cubic"
-msgstr ""
+msgstr "Cubique"
 
 #: data/resources/blueprints/window.blp:316
 msgid "Mitchell"
-msgstr ""
+msgstr "Mitchell"
 
 #: data/resources/blueprints/window.blp:316
 msgid "Gaussian"
-msgstr ""
+msgstr "Gaussien"
 
 #: data/resources/blueprints/window.blp:316
 msgid "Lanczos"
-msgstr ""
+msgstr "Lanczos"
 
 #: data/resources/blueprints/window.blp:396
 msgid "Could not Load Image"
@@ -263,21 +263,21 @@ msgstr "Chargement…"
 #: data/resources/blueprints/window.blp:437 src/window.rs:455
 #: src/window.rs:1886
 msgid "_Cancel"
-msgstr ""
+msgstr "_Anuller"
 
 #: data/resources/blueprints/window.blp:466
 #, fuzzy
 msgid "Open Files…"
-msgstr "Ouvrir un fichier…"
+msgstr "Ouvrir des fichiers…"
 
 #: data/resources/blueprints/window.blp:471
 #, fuzzy
 msgid "Paste Image…"
-msgstr "_Ouvrir une image…"
+msgstr "Coller une image…"
 
 #: data/resources/blueprints/window.blp:478
 msgid "Show Less Popular Datatypes"
-msgstr ""
+msgstr "Afficher les types de données les moins populaires"
 
 #: data/resources/blueprints/window.blp:490
 msgid "Keyboard Shortcuts"
@@ -289,7 +289,7 @@ msgstr "À propos de Convertisseur"
 
 #: src/magick.rs:287
 msgid "Unknown IO error happened"
-msgstr ""
+msgstr "Une erreur d'entrée-sortie inconnue s'est produite"
 
 #: src/widgets/about_window.rs:38
 msgid "Code and Design Borrowed from"
@@ -302,45 +302,45 @@ msgstr "Image échantillon par"
 #: src/window.rs:451 src/window.rs:1881
 #, fuzzy
 msgid "Stop converting?"
-msgstr "conversion"
+msgstr "Arrêter la conversion?"
 
 #: src/window.rs:452 src/window.rs:1882
 msgid "You will lose all progress."
-msgstr ""
+msgstr "Vous perdrez toute la progression"
 
 #: src/window.rs:456 src/window.rs:1886
 msgid "_Stop"
-msgstr ""
+msgstr "_Arrêter"
 
 #: src/window.rs:578
 msgid "Collecting files"
-msgstr ""
+msgstr "Récupération des fichiers"
 
 #: src/window.rs:593
 msgid "Unable to access dropped files"
-msgstr ""
+msgstr "Impossible d'accéder au fichiers déposés"
 
 #: src/window.rs:655
 #, fuzzy
 msgid "Pasted Image"
-msgstr "Ouvrir une image"
+msgstr "Image Collée"
 
 #: src/window.rs:1807
 #, fuzzy
 msgid "Error while processing"
-msgstr "traitement"
+msgstr "Erreure lors du traitement"
 
 #: src/window.rs:1828
 msgid "_Copy to clipboard"
-msgstr ""
+msgstr "_Copier dans le presse-papier"
 
 #: src/window.rs:1829
 msgid "_Dismiss"
-msgstr ""
+msgstr "_Ignorer"
 
 #: src/window.rs:1837
 msgid "Error copied to clipboard"
-msgstr ""
+msgstr "Erreure copié dans le presse-papier"
 
 #: src/window.rs:1852
 msgid "Image converted"
@@ -367,7 +367,7 @@ msgstr "Conversion…"
 
 #, fuzzy
 #~ msgid "Convert to"
-#~ msgstr "Convertir"
+#~ msgstr "Convertir vers"
 
 #~ msgid "More Options"
 #~ msgstr "Plus d’options"
@@ -380,7 +380,7 @@ msgstr "Conversion…"
 
 #, fuzzy, python-brace-format
 #~ msgid "’{input_ext}’ is not supported"
-#~ msgstr "’{}’ n’est pas un format pris en charge"
+#~ msgstr "’{}’ n’est pas pris en charge"
 
 #~ msgid "Select an image"
 #~ msgstr "Sélectionner une image"
