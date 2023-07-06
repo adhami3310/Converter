@@ -133,6 +133,7 @@ msgid "Quit"
 msgstr "Выйти"
 
 #: data/resources/blueprints/help-overlay.blp:24
+#, fuzzy
 msgctxt "shortcut window"
 msgid "Open New Images"
 msgstr "Открыть новые изображения"

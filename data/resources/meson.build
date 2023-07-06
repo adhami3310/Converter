@@ -15,11 +15,9 @@ install_data(
   install_dir: join_paths(get_option('datadir'), scalable_dir)
 )
 
-message(join_paths(pkgdatadir, 'icons', scalable_dir))
-
 symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
 install_data(
-  join_paths(symbolic_dir, ('@0@-symbolic.svg').format('io.gitlab.adhami3310.Converter')),
+  join_paths(symbolic_dir, ('@0@-symbolic.svg').format('io.gitlab.adhami3310.Switcheroo')),
   install_dir: join_paths(get_option('datadir'), symbolic_dir)
 )
 

@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Converter
+Name=Switcheroo
 GenericName=Image Converter
 Comment=Convert and manipulate images
-Exec=converter %U
+Exec=switcheroo %U
 Icon=@icon@
 Terminal=false
 Type=Application

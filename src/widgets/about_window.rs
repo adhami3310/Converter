@@ -8,23 +8,24 @@ use gtk::{License, Window};
 //code 'inspired' by https://gitlab.com/news-flash/news_flash_gtk/-/blob/master/src/about_dialog.rs
 
 //this is non-translatable information, so it can be const
-pub const WEBSITE: &str = "https://gitlab.com/adhami3310/Converter";
-pub const ISSUE_TRACKER: &str = "https://gitlab.com/adhami3310/Converter/-/issues";
+pub const WEBSITE: &str = "https://gitlab.com/adhami3310/Switcheroo";
+pub const ISSUE_TRACKER: &str = "https://gitlab.com/adhami3310/Switcheroo/-/issues";
 pub const DEVELOPERS: &[&str] = &["Khaleel Al-Adhami <khaleel.aladhami@gmail.com>"];
 
 #[derive(Clone, Debug)]
-pub struct ConverterAbout;
+pub struct SwitcherooAbout;
 
-impl ConverterAbout {
+impl SwitcherooAbout {
     pub fn show<W: IsA<Window> + GtkWindowExt>(window: &W) {
         let about_window = AboutWindow::builder()
             .transient_for(window)
             .modal(true)
             .application_icon(APP_ID)
-            .application_name(gettext("Converter"))
+            .application_name(gettext("Switcheroo"))
             .developer_name("Khaleel Al-Adhami")
             .developers(DEVELOPERS)
-            .translator_credits("Jürgen Benvenuti <gastornis@posteo.org>\nIrénée Thirion <irenee.thirion@e.email>\nMattia Borda <mattiagiovanni.borda@icloud.com>\nHeimen Stoffels\nSergio <sergiovg01@outlook.com>\nÅke Engelbrektson <eson@svenskasprakfiler.se>\nSabri Ünal <libreajans@gmail.com>\nAzat Zinnetullin")
+            // Translators: Replace "translator-credits" with your names, one name per line
+            .translator_credits(gettext("translator-credits"))
             .license_type(License::Gpl30)
             .version(VERSION)
             .website(WEBSITE)

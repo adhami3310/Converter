@@ -1,12 +1,12 @@
 {
-    "app-id" : "io.gitlab.adhami3310.Converter",
+    "app-id" : "io.gitlab.adhami3310.Switcheroo",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "44",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable"
     ],
-    "command" : "converter",
+    "command" : "switcheroo",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -343,7 +343,7 @@
             ]
         },
         {
-            "name" : "converter",
+            "name" : "switcheroo",
             "builddir" : true,
             "buildsystem" : "meson",
             "config-opts" : [

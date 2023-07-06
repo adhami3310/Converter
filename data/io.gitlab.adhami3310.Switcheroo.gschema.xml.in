@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="converter">
-	<enum id="io.gitlab.adhami3310.Converter.output">
+<schemalist gettext-domain="switcheroo">
+	<enum id="io.gitlab.adhami3310.Switcheroo.output">
 		<value nick="Png" value="0"/>
 		<value nick="Jpg" value="1"/>
 		<value nick="Webp" value="2"/>
@@ -15,18 +15,18 @@
 		<value nick="Ico" value="11"/>
 		<value nick="Dds" value="12"/>
 	</enum>
-	<enum id="io.gitlab.adhami3310.Converter.compression">
+	<enum id="io.gitlab.adhami3310.Switcheroo.compression">
 		<value nick="Zip" value="0"/>
 		<value nick="Dir" value="1"/>
 	</enum>
 
-	<schema id="@app-id@" path="/io/gitlab/adhami3310/Converter/" gettext-domain="@gettext-package@">
+	<schema id="@app-id@" path="/io/gitlab/adhami3310/Switcheroo/" gettext-domain="@gettext-package@">
 		<key type="b" name="show-less-popular">
 			<default>false</default>
 			<summary>Shows less popular datatypes in the menu</summary>
 		</key>
 		<key name="window-width" type="i">
-			<default>600</default>
+			<default>750</default>
 			<summary>Window width</summary>
 		</key>
 		<key name="quality" type="i">
@@ -38,18 +38,18 @@
 			<summary>Image density per inch</summary>
 		</key>
 		<key name="window-height" type="i">
-			<default>400</default>
+			<default>750</default>
 			<summary>Window height</summary>
 		</key>
 			<key name="is-maximized" type="b">
 			<default>false</default>
 			<summary>Window maximized state</summary>
 		</key>
-		<key name="output-format" enum="io.gitlab.adhami3310.Converter.output">
+		<key name="output-format" enum="io.gitlab.adhami3310.Switcheroo.output">
 			<default>'Jpg'</default>
 			<summary>Output format</summary>
 		</key>
-		<key name="compression-format" enum="io.gitlab.adhami3310.Converter.compression">
+		<key name="compression-format" enum="io.gitlab.adhami3310.Switcheroo.compression">
 			<default>'Dir'</default>
 			<summary>Compression format</summary>
 		</key>

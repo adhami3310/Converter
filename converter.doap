@@ -4,12 +4,12 @@
 		xmlns:foaf="http://xmlns.com/foaf/0.1/"
 		xmlns:gnome="http://api.gnome.org/doap-extensions#">
 
-	<name xml:lang="en">Converter</name>
+	<name xml:lang="en">Switcheroo</name>
 	<shortdesc xml:lang="en">Convert and manipulate images</shortdesc>
 
-	<homepage rdf:resource="https://gitlab.com/adhami3310/Converter"/>
-	<download-page rdf:resource="https://flathub.org/apps/details/io.gitlab.adhami3310.Converter"/>
-	<bug-database rdf:resource="https://gitlab.com/adhami3310/Converter/-/issues"/>
+	<homepage rdf:resource="https://gitlab.com/adhami3310/Switcheroo"/>
+	<download-page rdf:resource="https://flathub.org/apps/details/io.gitlab.adhami3310.Switcheroo"/>
+	<bug-database rdf:resource="https://gitlab.com/adhami3310/Switcheroo/-/issues"/>
 
 	<programming-language>Rust</programming-language>
 	<platform>GTK 4</platform>
@@ -17,8 +17,8 @@
 
 	<repository>
 		<GitRepository>
-			<location rdf:resource="https://gitlab.com/adhami3310/Converter.git"/>
-			<browse rdf:resource="https://gitlab.com/adhami3310/Converter"/>
+			<location rdf:resource="https://gitlab.com/adhami3310/Switcheroo.git"/>
+			<browse rdf:resource="https://gitlab.com/adhami3310/Switcheroo"/>
 		</GitRepository>
 	</repository>
 

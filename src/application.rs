@@ -21,7 +21,7 @@ mod imp {
 
     #[glib::object_subclass]
     impl ObjectSubclass for App {
-        const NAME: &'static str = "ConverterApp";
+        const NAME: &'static str = "SwitcherooApp";
         type Type = super::App;
         type ParentType = adw::Application;
 
@@ -93,7 +93,7 @@ impl Default for App {
         glib::Object::builder::<Self>()
             .property("application-id", Some(APP_ID))
             .property("flags", gio::ApplicationFlags::HANDLES_OPEN)
-            .property("resource-base-path", "/io/gitlab/adhami3310/Converter/")
+            .property("resource-base-path", "/io/gitlab/adhami3310/Switcheroo/")
             .build()
     }
 }
@@ -163,7 +163,7 @@ impl App {
     }
 
     pub fn run(&self) -> ExitCode {
-        info!("Converter ({})", APP_ID);
+        info!("Switcheroo ({})", APP_ID);
         info!("Version: {} ({})", VERSION, PROFILE);
         info!("Datadir: {}", PKGDATADIR);
 

@@ -1,7 +1,7 @@
 use std::slice::Iter;
 
 #[derive(Clone, Copy, Debug, glib::Enum, PartialEq, Default, Eq, Hash)]
-#[enum_type(name = "ConverterFiletype")]
+#[enum_type(name = "SwitcherooFiletype")]
 pub enum FileType {
     #[enum_value(name = "PNG")]
     Png,
@@ -138,6 +138,27 @@ impl FileType {
         }
     }
 
+    pub fn from_mimetype(mimetype: &str) -> Option<Self> {
+        match mimetype {
+            "image/png" => Some(Png),
+            "image/jpeg" => Some(Jpg),
+            "image/jpg" => Some(Jpg),
+            "image/webp" => Some(Webp),
+            "image/svg+xml" => Some(Svg),
+            "image/heif" => Some(Heif),
+            "image/heic" => Some(Heic),
+            "image/bmp" => Some(Bmp),
+            "image/avif" => Some(Avif),
+            "image/jxl" => Some(Jxl),
+            "image/tiff" => Some(Tiff),
+            "application/pdf" => Some(Pdf),
+            "image/gif" => Some(Gif),
+            "image/x-icon" => Some(Ico),
+            "image/vnd-ms.dds" => Some(Dds),
+            _ => None,
+        }
+    }
+
     pub fn as_extension(&self) -> &str {
         match self {
             Png => "png",
@@ -190,7 +211,7 @@ impl FileType {
 }
 
 #[derive(Clone, Copy, Debug, glib::Enum, PartialEq, Eq, Hash)]
-#[enum_type(name = "ConverterCompressionType")]
+#[enum_type(name = "SwitcherooCompressionType")]
 pub enum CompressionType {
     #[enum_value(name = "ZIP")]
     Zip,

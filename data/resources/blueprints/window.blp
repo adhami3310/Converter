@@ -6,7 +6,7 @@ template $AppWindow : $AdwApplicationWindow {
   default-height: "750";
   width-request: "300";
   height-request: "300";
-  title: _("Converter");
+  title: _("Switcheroo");
 
   Box {
     orientation: vertical;
@@ -29,7 +29,7 @@ template $AppWindow : $AdwApplicationWindow {
               orientation: vertical;
               $AdwHeaderBar headerbar {
                 title-widget: Label {
-                  label: _("Converter");
+                  label: _("Switcheroo");
                   styles ["title"]
                 }
                 ;
@@ -55,8 +55,8 @@ template $AppWindow : $AdwApplicationWindow {
                   name: "stack_welcome_page";
                   child:
                   $AdwStatusPage {
-                    icon-name: "io.gitlab.adhami3310.Converter-symbolic";
-                    title: _("Converter");
+                    icon-name: "io.gitlab.adhami3310.Switcheroo";
+                    title: _("Switcheroo");
                     description: _("Click “Open Images…” or drag images here.");
                     hexpand: true;
                     vexpand: true;
@@ -125,8 +125,10 @@ template $AppWindow : $AdwApplicationWindow {
                             model: StringList supported_output_filetypes {};
                           }
 
-                          $AdwActionRow output_compression {
+                          Adw.ActionRow output_compression {
                             title: _("Save To ZIP");
+                            activatable-widget: output_compression_value;
+                            
                             Switch output_compression_value {
                               active: false;
                               valign: center;
@@ -157,6 +159,8 @@ template $AppWindow : $AdwApplicationWindow {
                             title: _("Background Color");
                             subtitle: _("Replaces original transparency layer");
 
+                            activatable-widget: bgcolor;
+
                             ColorDialogButton bgcolor {
                               valign: center;
                               rgba: "#00000000";
@@ -168,6 +172,9 @@ template $AppWindow : $AdwApplicationWindow {
 
                           $AdwActionRow dpi_row {
                             title: _("Pixel Density Per Inch");
+                            
+                            activatable-widget: dpi_value;
+
                             $AdwBin {
                               Entry dpi_value {
                                 valign: center;
@@ -441,7 +448,7 @@ menu primary_menu {
     }
 
     item {
-      label: _("About Converter");
+      label: _("About Switcheroo");
       action: "win.about";
     }
   }
