@@ -17,11 +17,6 @@ Convert and manipulate images
 
 It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory. It will then also allow you to save files directly instead of compressing them when doing batch processing.
 
-### Third Party Packages
-You may also be able to obtain Switcheroo from your distribution's package manager. Note these packages are maintained independently and thus may differ from the official version on Flathub. Please report any issues experienced to the package maintainer.
-
-[![Packaging status](https://repology.org/badge/vertical-allrepos/switcheroo.svg)](https://repology.org/project/switcheroo/versions)
-
 ## About
 
 Switcheroo is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Switcheroo from various writers, content creators, etc.
