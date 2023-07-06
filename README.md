@@ -3,7 +3,7 @@
 
 Convert and manipulate images
 
-<img src="data/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Switcheroo.svg" width="128" height="128" alt="Switcheroo icon">
+<img src="data/resources/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Switcheroo.svg" width="128" height="128" alt="Switcheroo icon">
 
 [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
 [![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Switcheroo?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Switcheroo/-/tags)
