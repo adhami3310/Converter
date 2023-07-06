@@ -155,7 +155,7 @@ impl FileType {
             "image/gif" => Some(Gif),
             "image/x-icon" => Some(Ico),
             "image/vnd-ms.dds" => Some(Dds),
-            _ => None
+            _ => None,
         }
     }
 

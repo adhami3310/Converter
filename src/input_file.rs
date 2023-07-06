@@ -113,12 +113,18 @@ impl InputFile {
         let path = file.path().unwrap();
         let is_behind_sandbox = !path.starts_with("/home");
 
-        let file_info = file.query_info(gio::FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE, gio::FileQueryInfoFlags::NONE, gio::Cancellable::NONE).unwrap();
+        let file_info = file
+            .query_info(
+                gio::FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                gio::FileQueryInfoFlags::NONE,
+                gio::Cancellable::NONE,
+            )
+            .unwrap();
 
         let mimetype = file_info.content_type().unwrap().as_str().to_owned();
 
         let extension = FileType::from_mimetype(&mimetype);
-        
+
         extension.map(|extension| {
             glib::Object::builder::<Self>()
                 .property("path", path.to_str().unwrap())

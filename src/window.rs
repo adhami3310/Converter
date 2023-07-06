@@ -22,7 +22,6 @@ use gettextrs::gettext;
 use glib::{clone, idle_add_local_once, MainContext};
 use gtk::accessible::Property;
 use gtk::gdk::Texture;
-use gtk::gdk_pixbuf::Pixbuf;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
 use itertools::Itertools;
 use shared_child::SharedChild;
@@ -761,10 +760,7 @@ impl AppWindow {
                                 .send((
                                     i,
                                     match b {
-                                        true => Some(Texture::for_pixbuf(
-                                            &Pixbuf::from_file_at_scale(&path, 500, -1, true)
-                                                .unwrap(),
-                                        )),
+                                        true => Some(Texture::from_filename(&path).unwrap()),
                                         false => None,
                                     },
                                 ))
