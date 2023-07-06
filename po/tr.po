@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 18:27-0400\n"
+"POT-Creation-Date: 2023-07-05 20:29-0400\n"
 "PO-Revision-Date: 2023-02-04 17:50+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -19,99 +19,108 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
+#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
-#: data/resources/blueprints/window.blp:44 src/main.rs:30
-#: src/widgets/about_window.rs:28
-msgid "Converter"
-msgstr "Dönüştürücü"
+#: data/resources/blueprints/window.blp:32
+#: data/resources/blueprints/window.blp:59 src/main.rs:30
+#: src/widgets/about_window.rs:24 src/window.rs:1809
+msgid "Switcheroo"
+msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
 #, fuzzy
 msgid "Image Converter"
 msgstr "Resim dönüştürüldü"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:7
+#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
 msgid "Convert and manipulate images"
 msgstr "Resimleri dönüştür ve düzenle"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
+#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:11
 msgid "image;convert;converting;processing"
 msgstr ""
 "image;convert;converting;processing;resim;görüntü;resim;dönüştür;dönüştürme;"
 "işleme;"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:27
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
 msgstr "Daha az gözde veri türlerini menüde göster"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:31
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
 #, fuzzy
 msgid "Window width"
 msgstr "En/Boy Oranı Genişliği"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:35
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
 #, fuzzy
 msgid "Image quality"
 msgstr "Resim Türü"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:39
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
 msgid "Image density per inch"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:43
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
 #, fuzzy
 msgid "Window height"
 msgstr "En/Boy Oranı Yüksekliği"
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:47
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
 msgid "Window maximized state"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:51
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
 msgid "Output format"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:55
+#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
 #, fuzzy
 msgid "Compression format"
 msgstr "Sıkıştır"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
 msgstr "Khaleel Al-Adhami"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:29
 msgid "image"
 msgstr "resim"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:30
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:30
 msgid "convert"
 msgstr "dönüştür"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:31
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:31
 msgid "converting"
 msgstr "dönüştürülüyor"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:32
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:32
 msgid "processing"
 msgstr "işleniyor"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
-msgid "Converting sample image from PNG to WEBP"
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:48
+msgid "Converting sample image from PNG to HEIF"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:68
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
+msgid "Converting multiple sample images from SVG to HEIF"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:72
+msgid "Converter has been renamed to Switcheroo!"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:77
 msgid "Fix variety of bugs and rework UI."
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:82
 msgid "Rust rewrite."
 msgstr ""
 
@@ -131,232 +140,303 @@ msgid "Quit"
 msgstr "Çık"
 
 #: data/resources/blueprints/help-overlay.blp:24
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Open Image"
+msgid "Open New Images"
 msgstr "Resim Aç"
 
-#: data/resources/blueprints/window.blp:33
+#: data/resources/blueprints/help-overlay.blp:29
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Add Images"
+msgstr "Resim Aç"
+
+#: data/resources/blueprints/image-rest.blp:21
+msgid "Show All"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:16
 msgid "Drop Here to Open"
 msgstr "Açmak İçin Buraya Bırakın"
 
-#: data/resources/blueprints/window.blp:45
+#: data/resources/blueprints/window.blp:46
+msgid "Primary Menu"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:60
 #, fuzzy
 msgid "Click “Open Images…” or drag images here."
 msgstr "“Resim Aç…” düğmesine tıklayın ya da resmi buraya sürükleyip bırakın."
 
-#: data/resources/blueprints/window.blp:56
+#: data/resources/blueprints/window.blp:71
 #, fuzzy
 msgid "_Open Images…"
 msgstr "Resim _Aç…"
 
-#: data/resources/blueprints/window.blp:126
-msgid "_Convert"
-msgstr "D_önüştür"
-
-#: data/resources/blueprints/window.blp:148
-msgid "Properties"
-msgstr "Özellikler"
-
-#: data/resources/blueprints/window.blp:151
-msgid "Image Type"
-msgstr "Resim Türü"
-
-#: data/resources/blueprints/window.blp:158
-msgid "Image Size"
-msgstr "Resim Boyutu"
-
-#: data/resources/blueprints/window.blp:169
+#: data/resources/blueprints/window.blp:124
 msgid "Export Format"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:174
-msgid "Save Method"
+#: data/resources/blueprints/window.blp:129
+msgid "Save To ZIP"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:175
-msgid "Compress images or use a directory"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:183
+#: data/resources/blueprints/window.blp:142
 msgid "Quality"
 msgstr "Kalite"
 
-#: data/resources/blueprints/window.blp:200
+#: data/resources/blueprints/window.blp:159
 msgid "Background Color"
 msgstr "Arka Plan Rengi"
 
-#: data/resources/blueprints/window.blp:208
-msgid "DPI"
-msgstr "DPI"
+#: data/resources/blueprints/window.blp:160
+msgid "Replaces original transparency layer"
+msgstr ""
 
-#: data/resources/blueprints/window.blp:252
+#: data/resources/blueprints/window.blp:174
+msgid "Pixel Density Per Inch"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:186
 msgid "Resize"
 msgstr "Yeniden Boyutlandır"
 
-#: data/resources/blueprints/window.blp:260
-#: data/resources/blueprints/window.blp:269
+#: data/resources/blueprints/window.blp:191
+#: data/resources/blueprints/window.blp:192
+#: data/resources/blueprints/window.blp:199
+#: data/resources/blueprints/window.blp:201
+#: data/resources/blueprints/window.blp:222
 msgid "Width"
 msgstr "Genişlik"
 
-#: data/resources/blueprints/window.blp:277
+#: data/resources/blueprints/window.blp:209
 #, fuzzy
 msgid "Preserve aspect ratio"
 msgstr "En/Boy Oranını Koru"
 
-#: data/resources/blueprints/window.blp:283
-#: data/resources/blueprints/window.blp:291
+#: data/resources/blueprints/window.blp:214
+#: data/resources/blueprints/window.blp:215
+#: data/resources/blueprints/window.blp:223
 msgid "Height"
 msgstr "Yükseklik"
 
-#: data/resources/blueprints/window.blp:305
-msgid "Percentage"
-msgstr "Yüzde"
-
-#: data/resources/blueprints/window.blp:305
-msgid "Exact Pixels"
-msgstr "Tam Pikseller"
-
-#: data/resources/blueprints/window.blp:313
-msgid "Algorithm"
+#: data/resources/blueprints/window.blp:234
+msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:316
-msgid "Point"
+#: data/resources/blueprints/window.blp:238
+msgid "%"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:316
-msgid "Quadratic"
+#: data/resources/blueprints/window.blp:238
+msgid "px"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:316
-msgid "Cubic"
+#: data/resources/blueprints/window.blp:247
+msgid "Resize Algorithm"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:316
-msgid "Mitchell"
+#: data/resources/blueprints/window.blp:253
+msgid "Default"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:316
-msgid "Gaussian"
-msgstr ""
+#: data/resources/blueprints/window.blp:257
+#, fuzzy
+msgid "Pixel Art"
+msgstr "Piksel"
 
-#: data/resources/blueprints/window.blp:316
-msgid "Lanczos"
-msgstr ""
+#: data/resources/blueprints/window.blp:271
+msgid "_Convert"
+msgstr "D_önüştür"
 
-#: data/resources/blueprints/window.blp:396
+#: data/resources/blueprints/window.blp:297
 msgid "Could not Load Image"
 msgstr "Resim Yüklenemedi"
 
-#: data/resources/blueprints/window.blp:397
+#: data/resources/blueprints/window.blp:298
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Bu resim bozuk olabilir veya desteklenmeyen bir dosya biçimi kullanıyor "
 "olabilir."
 
-#: data/resources/blueprints/window.blp:420
+#: data/resources/blueprints/window.blp:310
 msgid "Converting…"
 msgstr "Dönüştürülüyor…"
 
-#: data/resources/blueprints/window.blp:421
+#: data/resources/blueprints/window.blp:311
 msgid "This could take a while."
 msgstr "Biraz uzun sürebilir."
 
-#: data/resources/blueprints/window.blp:431 src/window.rs:1299
+#: data/resources/blueprints/window.blp:321 src/window.rs:807
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
-#: data/resources/blueprints/window.blp:437 src/window.rs:455
-#: src/window.rs:1886
+#: data/resources/blueprints/window.blp:327 src/window.rs:481
+#: src/window.rs:1364
 msgid "_Cancel"
 msgstr "_İptal Et"
 
-#: data/resources/blueprints/window.blp:466
-#, fuzzy
-msgid "Open Files…"
-msgstr "Dosya Aç…"
+#: data/resources/blueprints/window.blp:352
+msgid "All Images"
+msgstr ""
 
-#: data/resources/blueprints/window.blp:471
-#, fuzzy
-msgid "Paste Image…"
-msgstr "Resim _Aç…"
+#: data/resources/blueprints/window.blp:422
+msgid "Paste From Clipboard"
+msgstr ""
 
-#: data/resources/blueprints/window.blp:478
+#: data/resources/blueprints/window.blp:427
+msgid "New Window"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:432
+msgid "Clear Window"
+msgstr ""
+
+#: data/resources/blueprints/window.blp:439
 msgid "Show Less Popular Datatypes"
 msgstr "Daha Az Gözde Veri Türlerini Göster"
 
-#: data/resources/blueprints/window.blp:490
+#: data/resources/blueprints/window.blp:446
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: data/resources/blueprints/window.blp:495
-msgid "About Converter"
-msgstr "Dönüştürücü Hakkında"
-
-#: src/magick.rs:287
-msgid "Unknown IO error happened"
+#: data/resources/blueprints/window.blp:451
+msgid "About Switcheroo"
 msgstr ""
 
-#: src/widgets/about_window.rs:38
-msgid "Code and Design Borrowed from"
-msgstr "Kod ve Tasarımın Ödünç Alındığı Kaynak"
+#: src/file_chooser.rs:39
+#, fuzzy
+msgid "Unsupported filetype"
+msgstr "Desteklenen resim dosyaları"
 
-#: src/widgets/about_window.rs:50
-msgid "Sample Image from"
-msgstr "Örnek Resim kaynağı"
+#: src/file_chooser.rs:77
+#, fuzzy
+msgid "Images"
+msgstr "Resim Aç"
 
-#: src/window.rs:451 src/window.rs:1881
-msgid "Stop converting?"
-msgstr "Dönüştürme durdurulsun mu?"
+#: src/file_chooser.rs:80
+#, fuzzy
+msgid "_Select Images"
+msgstr "Resim seç"
 
-#: src/window.rs:452 src/window.rs:1882
-msgid "You will lose all progress."
-msgstr "Tüm ilerleme kaybolacak."
-
-#: src/window.rs:456 src/window.rs:1886
-msgid "_Stop"
-msgstr "_Durdur"
-
-#: src/window.rs:578
-msgid "Collecting files"
+#: src/file_chooser.rs:159
+msgid "Unspecified filetype"
 msgstr ""
 
-#: src/window.rs:593
-msgid "Unable to access dropped files"
+#: src/file_chooser.rs:164
+msgid "Unknown filetype"
 msgstr ""
 
-#: src/window.rs:655
+#: src/file_chooser.rs:169
+msgid "Used the wrong filetype"
+msgstr ""
+
+#: src/magick.rs:156
 #, fuzzy
 msgid "Pasted Image"
 msgstr "Resim Aç"
 
-#: src/window.rs:1807
-msgid "Error while processing"
+#: src/magick.rs:367
+msgid "Unknown IO error happened"
+msgstr ""
+
+#. Translators: Replace "translator-credits" with your names, one name per line
+#: src/widgets/about_window.rs:28
+msgid "translator-credits"
+msgstr ""
+
+#: src/widgets/about_window.rs:35
+msgid "Code and Design Borrowed from"
+msgstr "Kod ve Tasarımın Ödünç Alındığı Kaynak"
+
+#: src/widgets/about_window.rs:47
+msgid "Sample Image from"
+msgstr "Örnek Resim kaynağı"
+
+#: src/window.rs:454
+msgid "Unable to access dropped files"
+msgstr ""
+
+#: src/window.rs:477 src/window.rs:1359
+msgid "Stop converting?"
+msgstr "Dönüştürme durdurulsun mu?"
+
+#: src/window.rs:478 src/window.rs:1360
+msgid "You will lose all progress."
+msgstr "Tüm ilerleme kaybolacak."
+
+#: src/window.rs:482 src/window.rs:1364
+msgid "_Stop"
+msgstr "_Durdur"
+
+#: src/window.rs:518
+msgid "Collecting files"
+msgstr ""
+
+#: src/window.rs:1287
+#, fuzzy
+msgid "Error While Processing"
 msgstr "İşleme sırasında hata oluştu"
 
-#: src/window.rs:1828
-msgid "_Copy to clipboard"
+#: src/window.rs:1308
+#, fuzzy
+msgid "_Copy to Clipboard"
 msgstr "Panoya _kopyala"
 
-#: src/window.rs:1829
-msgid "_Dismiss"
-msgstr "_Vazgeç"
+#: src/window.rs:1309
+msgid "_Close"
+msgstr ""
 
-#: src/window.rs:1837
+#: src/window.rs:1317
 msgid "Error copied to clipboard"
 msgstr "Hata panoya kopyalandı"
 
-#: src/window.rs:1852
+#: src/window.rs:1332
 msgid "Image converted"
 msgstr "Resim dönüştürüldü"
 
-#: src/window.rs:1853
+#: src/window.rs:1333
 msgid "Open"
 msgstr "Aç"
 
-#: src/window.rs:1908
+#: src/window.rs:1386
 msgid "Converting Cancelled"
 msgstr "Dönüştürme İptal Edildi"
+
+#~ msgid "_Dismiss"
+#~ msgstr "_Vazgeç"
+
+#~ msgid "Converter"
+#~ msgstr "Dönüştürücü"
+
+#~ msgid "Properties"
+#~ msgstr "Özellikler"
+
+#~ msgid "Image Type"
+#~ msgstr "Resim Türü"
+
+#~ msgid "Image Size"
+#~ msgstr "Resim Boyutu"
+
+#~ msgid "DPI"
+#~ msgstr "DPI"
+
+#~ msgid "Percentage"
+#~ msgstr "Yüzde"
+
+#~ msgid "Exact Pixels"
+#~ msgstr "Tam Pikseller"
+
+#, fuzzy
+#~ msgid "Open Files…"
+#~ msgstr "Dosya Aç…"
+
+#, fuzzy
+#~ msgid "Paste Image…"
+#~ msgstr "Resim _Aç…"
+
+#~ msgid "About Converter"
+#~ msgstr "Dönüştürücü Hakkında"
 
 #~ msgid "Overview"
 #~ msgstr "Genel Görünüm"
@@ -401,9 +481,6 @@ msgstr "Dönüştürme İptal Edildi"
 #~ msgid "Ratio"
 #~ msgstr "En/Boy Oranı"
 
-#~ msgid "Pixels"
-#~ msgstr "Piksel"
-
 #~ msgid "Width Percentage Scale"
 #~ msgstr "Genişlik Yüzde Ölçeği"
 
@@ -429,12 +506,6 @@ msgstr "Dönüştürme İptal Edildi"
 #, python-brace-format
 #~ msgid "’{input_ext}’ is not supported"
 #~ msgstr "’{input_ext}’ desteklenmiyor"
-
-#~ msgid "Select an image"
-#~ msgstr "Resim seç"
-
-#~ msgid "Supported image files"
-#~ msgstr "Desteklenen resim dosyaları"
 
 #~ msgid "No file extension was specified"
 #~ msgstr "Dosya uzantısı belirtilmedi"

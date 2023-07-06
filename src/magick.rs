@@ -141,24 +141,28 @@ static FILE_COUNT: AtomicUsize = AtomicUsize::new(0);
 
 impl JobFile {
     pub fn new(file_extension: FileType, desired_name: Option<String>) -> Self {
-        FILE_COUNT.fetch_add(1, Ordering::SeqCst);
+        let id = FILE_COUNT.fetch_add(1, Ordering::SeqCst) + 1;
         Self {
-            id: FILE_COUNT.load(Ordering::SeqCst),
+            id,
             desired_name,
             file_extension,
         }
     }
 
+    pub fn from_clipboard() -> Self {
+        let id = FILE_COUNT.fetch_add(1, Ordering::SeqCst) + 1;
+        Self {
+            id,
+            desired_name: Some(format!("{}.png", gettext("Pasted Image"))),
+            file_extension: FileType::Png,
+        }
+    }
+
     pub fn as_filename(&self) -> String {
         match &self.desired_name {
-            Some(desired_name) => format!(
-                "{}_{}.{}",
-                desired_name,
-                self.id,
-                self.file_extension.as_extension()
-            ),
+            Some(desired_name) => desired_name.to_owned(),
             None => format!(
-                "TEMPORARY_CONVERTER_{}.{}",
+                "TEMPORARY_SWITCHEROO_{}.{}",
                 self.id,
                 self.file_extension.as_extension()
             ),

@@ -1,6 +1,6 @@
-project('converter',
+project('switcheroo',
   'rust',
-  version: '1.6.1',
+  version: '2.0',
   meson_version: '>= 0.59.0',
   license: 'GPLv3',
 )
@@ -8,7 +8,7 @@ project('converter',
 i18n = import('i18n')
 gnome = import('gnome')
 
-base_id = 'io.gitlab.adhami3310.Converter'
+base_id = 'io.gitlab.adhami3310.Switcheroo'
 
 dependency('gtk4', version: '>= 4.6.0')
 dependency('libadwaita-1')
@@ -39,8 +39,8 @@ if get_option('profile') == 'development'
   else
     version_suffix = '-@0@'.format(vcs_tag)
   endif
-  application_id = '@0@.@1@'.format(base_id, profile)
-  else
+  application_id = base_id + '.Devel'
+else
   profile = ''
   version_suffix = ''
   application_id = base_id

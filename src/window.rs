@@ -13,7 +13,7 @@ use crate::magick::{
     ResizeArgument,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
-use crate::widgets::about_window::ConverterAbout;
+use crate::widgets::about_window::SwitcherooAbout;
 use crate::widgets::image_rest::ImageRest;
 use crate::widgets::image_thumbnail::ImageThumbnail;
 use adw::prelude::*;
@@ -86,7 +86,7 @@ mod imp {
     use gtk::CompositeTemplate;
 
     #[derive(Debug, CompositeTemplate)]
-    #[template(resource = "/io/gitlab/adhami3310/Converter/blueprints/window.ui")]
+    #[template(resource = "/io/gitlab/adhami3310/Switcheroo/blueprints/window.ui")]
     pub struct AppWindow {
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
@@ -468,7 +468,7 @@ impl AppWindow {
     }
 
     fn show_about(&self) {
-        ConverterAbout::show(self);
+        SwitcherooAbout::show(self);
     }
 
     fn close_dialog(&self) {
@@ -525,7 +525,7 @@ impl AppWindow {
             MainContext::default().spawn_local(clone!(@weak self as this => async move {
                 let t = clipboard.read_texture_future().await;
                 if let Ok(Some(t)) = t {
-                    let interim = JobFile::new(FileType::Png, Some("Pasted Image".to_string()));
+                    let interim = JobFile::from_clipboard();
                     t.save_to_png(interim.as_filename()).ok();
                     let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
                     this.open_success(vec![file]).await;
@@ -826,11 +826,11 @@ impl AppWindow {
                 let path = f.path();
                 let path = Path::new(&path);
                 let stem = path.file_stem().unwrap().to_str().unwrap().to_owned();
-                let re = regex::Regex::new(r"_\d\d*$").unwrap();
+                let re = regex::Regex::new(r"(_\d+)*$").unwrap();
                 let stripped_stem = re.replace(&stem, "").to_string();
                 (f, stripped_stem)
             })
-            .sorted_by(|(_, s1), (_, s2)| std::cmp::Ord::cmp(s1, s2))
+            .sorted_by_key(|(_, s)| s.to_owned())
             .group_by(|(_, s)| s.to_owned())
             .into_iter()
             .flat_map(|(_, fs)| {
@@ -889,6 +889,8 @@ impl AppWindow {
             })
             .collect_vec();
 
+        dbg!(&job_input);
+
         let output_files = job_input
             .iter()
             .map(|(_, _, o, _)| {
@@ -898,6 +900,8 @@ impl AppWindow {
                     .to_owned()
             })
             .collect_vec();
+
+        dbg!(&output_files);
 
         let magick_arguments = MagickConvertJob {
             input_file: "".to_string(),
@@ -1280,7 +1284,7 @@ impl ConvertOperations for AppWindow {
         current_jobs.clear();
 
         let dialog =
-            adw::MessageDialog::new(Some(self), Some(&gettext("Error while processing")), None);
+            adw::MessageDialog::new(Some(self), Some(&gettext("Error While Processing")), None);
 
         let sw = gtk::ScrolledWindow::new();
         sw.set_min_content_height(200);
@@ -1301,8 +1305,8 @@ impl ConvertOperations for AppWindow {
         dialog.set_extra_child(Some(&sw));
 
         dialog.add_responses(&[
-            ("copy", &gettext("_Copy to clipboard")),
-            ("ok", &gettext("_Dismiss")),
+            ("copy", &gettext("_Copy to Clipboard")),
+            ("ok", &gettext("_Close")),
         ]);
         dialog.set_response_appearance("copy", adw::ResponseAppearance::Suggested);
         dialog.connect_response(
@@ -1802,7 +1806,7 @@ impl StackNavigation for AppWindow {
     }
 
     fn switch_to_main_leaf(&self) {
-        self.set_title(Some(&gettext("Converter")));
+        self.set_title(Some(&gettext("Switcheroo")));
         self.imp().leaf.set_visible_child_name("main");
     }
 

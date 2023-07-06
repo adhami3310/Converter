@@ -30,7 +30,7 @@ mod imp {
 
     #[glib::object_subclass]
     impl ObjectSubclass for InputFile {
-        const NAME: &'static str = "ConverterInputFile";
+        const NAME: &'static str = "SwitcherooInputFile";
         type Type = crate::input_file::InputFile;
 
         fn new() -> Self {
@@ -112,13 +112,13 @@ impl InputFile {
     pub fn new(file: &gio::File) -> Option<Self> {
         let path = file.path().unwrap();
         let is_behind_sandbox = !path.starts_with("/home");
-        let extension = match path.extension() {
-            Some(extension) => match extension.to_str() {
-                Some(extension) => FileType::from_string(extension),
-                None => None,
-            },
-            None => None,
-        };
+
+        let file_info = file.query_info(gio::FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE, gio::FileQueryInfoFlags::NONE, gio::Cancellable::NONE).unwrap();
+
+        let mimetype = file_info.content_type().unwrap().as_str().to_owned();
+
+        let extension = FileType::from_mimetype(&mimetype);
+        
         extension.map(|extension| {
             glib::Object::builder::<Self>()
                 .property("path", path.to_str().unwrap())
