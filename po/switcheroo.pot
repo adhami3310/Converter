@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-05 20:29-0400\n"
+"POT-Creation-Date: 2023-09-30 23:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:32
 #: data/resources/blueprints/window.blp:59 src/main.rs:30
-#: src/widgets/about_window.rs:24 src/window.rs:1809
+#: src/widgets/about_window.rs:24 src/window.rs:1805
 msgid "Switcheroo"
 msgstr ""
 
@@ -103,18 +103,6 @@ msgstr ""
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:72
-msgid "Converter has been renamed to Switcheroo!"
-msgstr ""
-
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:77
-msgid "Fix variety of bugs and rework UI."
-msgstr ""
-
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:82
-msgid "Rust rewrite."
-msgstr ""
-
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
 msgid "General"
@@ -172,118 +160,118 @@ msgstr ""
 msgid "Quality"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:159
+#: data/resources/blueprints/window.blp:162
 msgid "Background Color"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:160
+#: data/resources/blueprints/window.blp:163
 msgid "Replaces original transparency layer"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:174
+#: data/resources/blueprints/window.blp:177
 msgid "Pixel Density Per Inch"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:186
+#: data/resources/blueprints/window.blp:189
 msgid "Resize"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:191
-#: data/resources/blueprints/window.blp:192
-#: data/resources/blueprints/window.blp:199
-#: data/resources/blueprints/window.blp:201
-#: data/resources/blueprints/window.blp:222
+#: data/resources/blueprints/window.blp:194
+#: data/resources/blueprints/window.blp:195
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:204
+#: data/resources/blueprints/window.blp:225
 msgid "Width"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:209
+#: data/resources/blueprints/window.blp:212
 msgid "Preserve aspect ratio"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:214
-#: data/resources/blueprints/window.blp:215
-#: data/resources/blueprints/window.blp:223
+#: data/resources/blueprints/window.blp:217
+#: data/resources/blueprints/window.blp:218
+#: data/resources/blueprints/window.blp:226
 msgid "Height"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:234
+#: data/resources/blueprints/window.blp:237
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:238
+#: data/resources/blueprints/window.blp:241
 msgid "%"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:238
+#: data/resources/blueprints/window.blp:241
 msgid "px"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:247
+#: data/resources/blueprints/window.blp:250
 msgid "Resize Algorithm"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:253
+#: data/resources/blueprints/window.blp:256
 msgid "Default"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:257
+#: data/resources/blueprints/window.blp:260
 msgid "Pixel Art"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:271
+#: data/resources/blueprints/window.blp:274
 msgid "_Convert"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:297
+#: data/resources/blueprints/window.blp:300
 msgid "Could not Load Image"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:298
+#: data/resources/blueprints/window.blp:301
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 
-#: data/resources/blueprints/window.blp:310
+#: data/resources/blueprints/window.blp:313
 msgid "Converting…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:311
+#: data/resources/blueprints/window.blp:314
 msgid "This could take a while."
 msgstr ""
 
-#: data/resources/blueprints/window.blp:321 src/window.rs:807
+#: data/resources/blueprints/window.blp:324 src/window.rs:803
 msgid "Loading…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:327 src/window.rs:481
-#: src/window.rs:1364
+#: data/resources/blueprints/window.blp:330 src/window.rs:480
+#: src/window.rs:1360
 msgid "_Cancel"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:352
+#: data/resources/blueprints/window.blp:355
 msgid "All Images"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:422
+#: data/resources/blueprints/window.blp:425
 msgid "Paste From Clipboard"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:427
+#: data/resources/blueprints/window.blp:430
 msgid "New Window"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:432
+#: data/resources/blueprints/window.blp:435
 msgid "Clear Window"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:439
+#: data/resources/blueprints/window.blp:442
 msgid "Show Less Popular Datatypes"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:446
+#: data/resources/blueprints/window.blp:449
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:451
+#: data/resources/blueprints/window.blp:454
 msgid "About Switcheroo"
 msgstr ""
 
@@ -332,50 +320,50 @@ msgstr ""
 msgid "Sample Image from"
 msgstr ""
 
-#: src/window.rs:454
+#: src/window.rs:453
 msgid "Unable to access dropped files"
 msgstr ""
 
-#: src/window.rs:477 src/window.rs:1359
+#: src/window.rs:476 src/window.rs:1355
 msgid "Stop converting?"
 msgstr ""
 
-#: src/window.rs:478 src/window.rs:1360
+#: src/window.rs:477 src/window.rs:1356
 msgid "You will lose all progress."
 msgstr ""
 
-#: src/window.rs:482 src/window.rs:1364
+#: src/window.rs:481 src/window.rs:1360
 msgid "_Stop"
 msgstr ""
 
-#: src/window.rs:518
+#: src/window.rs:517
 msgid "Collecting files"
 msgstr ""
 
-#: src/window.rs:1287
+#: src/window.rs:1283
 msgid "Error While Processing"
 msgstr ""
 
-#: src/window.rs:1308
+#: src/window.rs:1304
 msgid "_Copy to Clipboard"
 msgstr ""
 
-#: src/window.rs:1309
+#: src/window.rs:1305
 msgid "_Close"
 msgstr ""
 
-#: src/window.rs:1317
+#: src/window.rs:1313
 msgid "Error copied to clipboard"
 msgstr ""
 
-#: src/window.rs:1332
+#: src/window.rs:1328
 msgid "Image converted"
 msgstr ""
 
-#: src/window.rs:1333
+#: src/window.rs:1329
 msgid "Open"
 msgstr ""
 
-#: src/window.rs:1386
+#: src/window.rs:1382
 msgid "Converting Cancelled"
 msgstr ""
