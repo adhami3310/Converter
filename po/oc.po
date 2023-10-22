@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-05 20:29-0400\n"
-"PO-Revision-Date: 2022-12-04 18:40+0100\n"
+"PO-Revision-Date: 2023-08-25 18:28+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
 "Language: oc\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
@@ -25,12 +25,11 @@ msgstr ""
 #: data/resources/blueprints/window.blp:59 src/main.rs:30
 #: src/widgets/about_window.rs:24 src/window.rs:1809
 msgid "Switcheroo"
-msgstr ""
+msgstr "Switcheroo"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
-#, fuzzy
 msgid "Image Converter"
-msgstr "Imatge convertit"
+msgstr "Convertidor d'imatges"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
@@ -43,38 +42,35 @@ msgstr "imatge;convertir;conversion;tractament"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
-msgstr ""
+msgstr "Afichar los tipes de donadas mens populars al menú"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
-#, fuzzy
 msgid "Window width"
-msgstr "Racio largor"
+msgstr "Largor de la fenèstra"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
-#, fuzzy
 msgid "Image quality"
-msgstr "Tipe d'imatge"
+msgstr "Qualitat d'imatge"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
 msgid "Image density per inch"
-msgstr ""
+msgstr "Densitat d’imatge per poce"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
-#, fuzzy
 msgid "Window height"
-msgstr "Racio nautor"
+msgstr "Nautor de la fenèstra"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
 msgid "Window maximized state"
-msgstr ""
+msgstr "Estat maximizat de la fenèstra"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
 msgid "Output format"
-msgstr ""
+msgstr "Format de sortida"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
 msgid "Compression format"
-msgstr ""
+msgstr "Format de compression"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -136,45 +132,42 @@ msgid "Quit"
 msgstr "Sortir"
 
 #: data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open New Images"
-msgstr "Dobrir un imatge"
+msgstr "Dobrir un imatge novèl"
 
 #: data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
-msgstr "Dobrir un imatge"
+msgstr "Apondre d’imatges"
 
 #: data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
-msgstr ""
+msgstr "Afichar tot"
 
 #: data/resources/blueprints/window.blp:16
 msgid "Drop Here to Open"
-msgstr ""
+msgstr "Depausatz aicí per dobrir"
 
 #: data/resources/blueprints/window.blp:46
 msgid "Primary Menu"
-msgstr ""
+msgstr "Menú principal"
 
 #: data/resources/blueprints/window.blp:60
 msgid "Click “Open Images…” or drag images here."
 msgstr ""
 
 #: data/resources/blueprints/window.blp:71
-#, fuzzy
 msgid "_Open Images…"
 msgstr "_Dobrir un imatge…"
 
 #: data/resources/blueprints/window.blp:124
 msgid "Export Format"
-msgstr ""
+msgstr "Format d'expòrt"
 
 #: data/resources/blueprints/window.blp:129
 msgid "Save To ZIP"
-msgstr ""
+msgstr "Enregistrar en ZIP"
 
 #: data/resources/blueprints/window.blp:142
 msgid "Quality"
@@ -186,11 +179,11 @@ msgstr "Color del rèireplan"
 
 #: data/resources/blueprints/window.blp:160
 msgid "Replaces original transparency layer"
-msgstr ""
+msgstr "Remplaçar lo jaç de transparéncia d’origina"
 
 #: data/resources/blueprints/window.blp:174
 msgid "Pixel Density Per Inch"
-msgstr ""
+msgstr "Densitat de pixèl per poce"
 
 #: data/resources/blueprints/window.blp:186
 msgid "Resize"
@@ -205,7 +198,6 @@ msgid "Width"
 msgstr "Largor"
 
 #: data/resources/blueprints/window.blp:209
-#, fuzzy
 msgid "Preserve aspect ratio"
 msgstr "Servar lo racio"
 
@@ -221,25 +213,23 @@ msgstr ""
 
 #: data/resources/blueprints/window.blp:238
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: data/resources/blueprints/window.blp:238
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #: data/resources/blueprints/window.blp:247
-#, fuzzy
 msgid "Resize Algorithm"
-msgstr "Algoritmes per"
+msgstr "Algoritmes per redimensionar"
 
 #: data/resources/blueprints/window.blp:253
 msgid "Default"
-msgstr ""
+msgstr "Per defaut"
 
 #: data/resources/blueprints/window.blp:257
-#, fuzzy
 msgid "Pixel Art"
-msgstr "Pixèls"
+msgstr "Pxiel Art"
 
 #: data/resources/blueprints/window.blp:271
 msgid "_Convert"
@@ -270,27 +260,27 @@ msgstr "Cargament…"
 #: data/resources/blueprints/window.blp:327 src/window.rs:481
 #: src/window.rs:1364
 msgid "_Cancel"
-msgstr ""
+msgstr "_Anullar"
 
 #: data/resources/blueprints/window.blp:352
 msgid "All Images"
-msgstr ""
+msgstr "Totes los imatges"
 
 #: data/resources/blueprints/window.blp:422
 msgid "Paste From Clipboard"
-msgstr ""
+msgstr "Pegar a partir del quichapapièrs"
 
 #: data/resources/blueprints/window.blp:427
 msgid "New Window"
-msgstr ""
+msgstr "Fenèstra novèla"
 
 #: data/resources/blueprints/window.blp:432
 msgid "Clear Window"
-msgstr ""
+msgstr "Voidar la fenèstra"
 
 #: data/resources/blueprints/window.blp:439
 msgid "Show Less Popular Datatypes"
-msgstr ""
+msgstr "Afichar los tipes de donadas mens populars"
 
 #: data/resources/blueprints/window.blp:446
 msgid "Keyboard Shortcuts"
@@ -298,48 +288,44 @@ msgstr "Acorchis clavièr"
 
 #: data/resources/blueprints/window.blp:451
 msgid "About Switcheroo"
-msgstr ""
+msgstr "A prepaus de Switcheroo"
 
 #: src/file_chooser.rs:39
-#, fuzzy
 msgid "Unsupported filetype"
-msgstr "Fichièrs imatge preses en carga"
+msgstr "Fichièr imatge pas pres en carga"
 
 #: src/file_chooser.rs:77
-#, fuzzy
 msgid "Images"
-msgstr "Dobrir un imatge"
+msgstr "Imatges"
 
 #: src/file_chooser.rs:80
-#, fuzzy
 msgid "_Select Images"
-msgstr "Seleccionar un imatge"
+msgstr "Seleccionar los imatges"
 
 #: src/file_chooser.rs:159
 msgid "Unspecified filetype"
-msgstr ""
+msgstr "Tipe de fichièr pas especificat"
 
 #: src/file_chooser.rs:164
 msgid "Unknown filetype"
-msgstr ""
+msgstr "Tipe de fichièr desconegut"
 
 #: src/file_chooser.rs:169
 msgid "Used the wrong filetype"
-msgstr ""
+msgstr "Utilizacion del marrit tipe de fichièr"
 
 #: src/magick.rs:156
-#, fuzzy
 msgid "Pasted Image"
-msgstr "Dobrir un imatge"
+msgstr "Imatge pegat"
 
 #: src/magick.rs:367
 msgid "Unknown IO error happened"
-msgstr ""
+msgstr "Error de lectura o escritura desconeguda"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
 #: src/widgets/about_window.rs:28
 msgid "translator-credits"
-msgstr ""
+msgstr "Quentin PAGÈS"
 
 #: src/widgets/about_window.rs:35
 msgid "Code and Design Borrowed from"
@@ -351,41 +337,39 @@ msgstr "Imatge d’exemple de"
 
 #: src/window.rs:454
 msgid "Unable to access dropped files"
-msgstr ""
+msgstr "Impossible d'accedir als fichièrs depausats"
 
 #: src/window.rs:477 src/window.rs:1359
-#, fuzzy
 msgid "Stop converting?"
-msgstr "conversion"
+msgstr "Arrestar la conversion ?"
 
 #: src/window.rs:478 src/window.rs:1360
 msgid "You will lose all progress."
-msgstr ""
+msgstr "Perdretz totes vòstres progrèsses."
 
 #: src/window.rs:482 src/window.rs:1364
 msgid "_Stop"
-msgstr ""
+msgstr "_Arrestar"
 
 #: src/window.rs:518
 msgid "Collecting files"
-msgstr ""
+msgstr "Recuperacion dels fichièrs"
 
 #: src/window.rs:1287
-#, fuzzy
 msgid "Error While Processing"
-msgstr "tractament"
+msgstr "Error pendent lo tractament"
 
 #: src/window.rs:1308
 msgid "_Copy to Clipboard"
-msgstr ""
+msgstr "_Copiar cap al quichapapièr"
 
 #: src/window.rs:1309
 msgid "_Close"
-msgstr ""
+msgstr "_Tampar"
 
 #: src/window.rs:1317
 msgid "Error copied to clipboard"
-msgstr ""
+msgstr "Error copiada al quichapapièrs"
 
 #: src/window.rs:1332
 msgid "Image converted"
@@ -396,9 +380,8 @@ msgid "Open"
 msgstr "Dobrir"
 
 #: src/window.rs:1386
-#, fuzzy
 msgid "Converting Cancelled"
-msgstr "Conversion…"
+msgstr "Conversion anullada"
 
 #~ msgid "Converter"
 #~ msgstr "Convertidor"
@@ -488,14 +471,14 @@ msgstr "Conversion…"
 #~ msgid "Convert and Manipulate images"
 #~ msgstr "Convertir e manipular d’imatges"
 
-#, fuzzy, python-brace-format
+#, fuzzy
 #~ msgid "’{input_ext}’ is not supported"
 #~ msgstr "« {} » es pas un format pres en carga"
 
 #~ msgid "No file extension was specified"
 #~ msgstr "Cap d’extension de fichièr pas especificat"
 
-#, fuzzy, python-brace-format
+#, fuzzy
 #~ msgid "’{file_ext}’ is of the wrong format"
 #~ msgstr "« {} » es un marrit format"
 
