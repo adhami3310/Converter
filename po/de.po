@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-05 20:29-0400\n"
-"PO-Revision-Date: 2023-01-05 16:02+0100\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2023-10-05 20:14+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
@@ -25,12 +25,11 @@ msgstr ""
 #: data/resources/blueprints/window.blp:59 src/main.rs:30
 #: src/widgets/about_window.rs:24 src/window.rs:1809
 msgid "Switcheroo"
-msgstr ""
+msgstr "Switcheroo"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
-#, fuzzy
 msgid "Image Converter"
-msgstr "Bild wurde umgewandelt"
+msgstr "Bildumwandler"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
@@ -41,43 +40,39 @@ msgstr "Bilder umwandeln und bearbeiten"
 msgid "image;convert;converting;processing"
 msgstr ""
 "image;convert;converting;processing;Bild;umwandeln;Umwandlung;konvertieren;"
-"verarbeiten;"
+"verarbeiten"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
 msgstr "Weniger gängige Datentypen im Menü anzeigen"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
-#, fuzzy
 msgid "Window width"
-msgstr "Seitenverhältnis Breite"
+msgstr "Fensterbreite"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
-#, fuzzy
 msgid "Image quality"
-msgstr "Bildtyp"
+msgstr "Bildqualität"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
 msgid "Image density per inch"
-msgstr ""
+msgstr "Bilddichte pro Zoll"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
-#, fuzzy
 msgid "Window height"
-msgstr "Seitenverhältnis Höhe"
+msgstr "Fensterhöhe"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
 msgid "Window maximized state"
-msgstr ""
+msgstr "Maximierungszustand des Fensters"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
 msgid "Output format"
-msgstr ""
+msgstr "Ausgabeformat"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
-#, fuzzy
 msgid "Compression format"
-msgstr "Komprimieren als"
+msgstr "Kompressionsformat"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -86,6 +81,8 @@ msgstr "Khaleel Al-Adhami"
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
+"Zwischen verschiedenen Bilddateitypen umwandeln und auf einfache Weise die "
+"Größe ändern."
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:29
 msgid "image"
@@ -105,23 +102,27 @@ msgstr "Verarbeitung läuft"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:48
 msgid "Converting sample image from PNG to HEIF"
-msgstr ""
+msgstr "Beispielbild wird von PNG nach HEIF umgewandelt"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
+msgid "Made UI adjustments."
+msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
-msgstr ""
+msgstr "Mehrere Beispieldateien werden von SVG nach HEIF umgewandelt"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:72
 msgid "Converter has been renamed to Switcheroo!"
-msgstr ""
+msgstr "Converter wurde in Switcheroo umbenannt!"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:77
 msgid "Fix variety of bugs and rework UI."
-msgstr ""
+msgstr "Zahlreiche Fehlerkorrekturen und neu gestaltete Oberfläche."
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:82
 msgid "Rust rewrite."
-msgstr ""
+msgstr "Neu geschrieben in Rust."
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -139,20 +140,18 @@ msgid "Quit"
 msgstr "Beenden"
 
 #: data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open New Images"
-msgstr "Bild öffnen"
+msgstr "Neue Bilder öffnen"
 
 #: data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
-msgstr "Bild öffnen"
+msgstr "Bilder hinzufügen"
 
 #: data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
-msgstr ""
+msgstr "Alle anzeigen"
 
 #: data/resources/blueprints/window.blp:16
 msgid "Drop Here to Open"
@@ -160,25 +159,23 @@ msgstr "Hier ablegen zum Öffnen"
 
 #: data/resources/blueprints/window.blp:46
 msgid "Primary Menu"
-msgstr ""
+msgstr "Primäres Menü"
 
 #: data/resources/blueprints/window.blp:60
-#, fuzzy
 msgid "Click “Open Images…” or drag images here."
-msgstr "Klicken Sie auf »Bild öffnen …« oder ziehen Sie ein Bild hierher."
+msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
 
 #: data/resources/blueprints/window.blp:71
-#, fuzzy
 msgid "_Open Images…"
-msgstr "Bild ö_ffnen …"
+msgstr "Bilder ö_ffnen …"
 
 #: data/resources/blueprints/window.blp:124
 msgid "Export Format"
-msgstr ""
+msgstr "Exportformat"
 
 #: data/resources/blueprints/window.blp:129
 msgid "Save To ZIP"
-msgstr ""
+msgstr "Als Zip speichern"
 
 #: data/resources/blueprints/window.blp:142
 msgid "Quality"
@@ -190,11 +187,11 @@ msgstr "Hintergrundfarbe"
 
 #: data/resources/blueprints/window.blp:160
 msgid "Replaces original transparency layer"
-msgstr ""
+msgstr "Ersetzt die originale Transparenzebene"
 
 #: data/resources/blueprints/window.blp:174
 msgid "Pixel Density Per Inch"
-msgstr ""
+msgstr "Pixeldichte pro Zoll"
 
 #: data/resources/blueprints/window.blp:186
 msgid "Resize"
@@ -209,7 +206,6 @@ msgid "Width"
 msgstr "Breite"
 
 #: data/resources/blueprints/window.blp:209
-#, fuzzy
 msgid "Preserve aspect ratio"
 msgstr "Seitenverhältnis beibehalten"
 
@@ -222,27 +218,27 @@ msgstr "Höhe"
 #: data/resources/blueprints/window.blp:234
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
+"Wählen zwischen Prozentpunkten oder genauer Pixelanzahl beim Größenändern"
 
 #: data/resources/blueprints/window.blp:238
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: data/resources/blueprints/window.blp:238
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #: data/resources/blueprints/window.blp:247
 msgid "Resize Algorithm"
-msgstr ""
+msgstr "Größenänderungsalgorithmus"
 
 #: data/resources/blueprints/window.blp:253
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #: data/resources/blueprints/window.blp:257
-#, fuzzy
 msgid "Pixel Art"
-msgstr "Pixel"
+msgstr "Pixelkunst"
 
 #: data/resources/blueprints/window.blp:271
 msgid "_Convert"
@@ -277,19 +273,19 @@ msgstr "A_bbrechen"
 
 #: data/resources/blueprints/window.blp:352
 msgid "All Images"
-msgstr ""
+msgstr "Alle Bilder"
 
 #: data/resources/blueprints/window.blp:422
 msgid "Paste From Clipboard"
-msgstr ""
+msgstr "Aus der Zwischenablage einfügen"
 
 #: data/resources/blueprints/window.blp:427
 msgid "New Window"
-msgstr ""
+msgstr "Neues Fenster"
 
 #: data/resources/blueprints/window.blp:432
 msgid "Clear Window"
-msgstr ""
+msgstr "Fenster leeren"
 
 #: data/resources/blueprints/window.blp:439
 msgid "Show Less Popular Datatypes"
@@ -301,48 +297,44 @@ msgstr "Tastenkürzel"
 
 #: data/resources/blueprints/window.blp:451
 msgid "About Switcheroo"
-msgstr ""
+msgstr "Info zu Switcheroo"
 
 #: src/file_chooser.rs:39
-#, fuzzy
 msgid "Unsupported filetype"
-msgstr "Unterstützte Bilddateien"
+msgstr "Nicht-unterstützter Dateityp"
 
 #: src/file_chooser.rs:77
-#, fuzzy
 msgid "Images"
-msgstr "Bild öffnen"
+msgstr "Bilder"
 
 #: src/file_chooser.rs:80
-#, fuzzy
 msgid "_Select Images"
-msgstr "Ein Bild auswählen"
+msgstr "Bilder _auswählen"
 
 #: src/file_chooser.rs:159
 msgid "Unspecified filetype"
-msgstr ""
+msgstr "Unbestimmter Dateityp"
 
 #: src/file_chooser.rs:164
 msgid "Unknown filetype"
-msgstr ""
+msgstr "Unbekannter Dateityp"
 
 #: src/file_chooser.rs:169
 msgid "Used the wrong filetype"
-msgstr ""
+msgstr "Der falsche Dateityp wurde verwendet"
 
 #: src/magick.rs:156
-#, fuzzy
 msgid "Pasted Image"
-msgstr "Bild öffnen"
+msgstr "Eingefügtes Bild"
 
 #: src/magick.rs:367
 msgid "Unknown IO error happened"
-msgstr ""
+msgstr "Ein unbekannter E/A-Fehler ist aufgetreten"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
 #: src/widgets/about_window.rs:28
 msgid "translator-credits"
-msgstr ""
+msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2022, 2023"
 
 #: src/widgets/about_window.rs:35
 msgid "Code and Design Borrowed from"
@@ -354,7 +346,7 @@ msgstr "Beispielbild von"
 
 #: src/window.rs:454
 msgid "Unable to access dropped files"
-msgstr ""
+msgstr "Auf abgelegte Dateien konnte nicht zugegriffen werden"
 
 #: src/window.rs:477 src/window.rs:1359
 msgid "Stop converting?"
@@ -370,21 +362,19 @@ msgstr "_Stopp"
 
 #: src/window.rs:518
 msgid "Collecting files"
-msgstr ""
+msgstr "Dateien werden gesammelt"
 
 #: src/window.rs:1287
-#, fuzzy
 msgid "Error While Processing"
 msgstr "Fehler bei der Verarbeitung"
 
 #: src/window.rs:1308
-#, fuzzy
 msgid "_Copy to Clipboard"
 msgstr "In die Zwischenablage _kopieren"
 
 #: src/window.rs:1309
 msgid "_Close"
-msgstr ""
+msgstr "_Schließen"
 
 #: src/window.rs:1317
 msgid "Error copied to clipboard"
@@ -498,9 +488,6 @@ msgstr "Umwandlung abgebrochen"
 #~ msgstr ""
 #~ "Eine einfache und leicht zu bedienende Flatpak-Anwendung zum Umwandeln "
 #~ "und Bearbeiten von Bildern, erstellt mit Libadwaita."
-
-#~ msgid "Made UI adjustments."
-#~ msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
 
 #, python-brace-format
 #~ msgid "’{input_ext}’ is not supported"
