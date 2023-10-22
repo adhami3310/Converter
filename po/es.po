@@ -2,21 +2,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Sergio <sergiovg01@outlook.com>, 2022.
+# Sergio Varela <sergiovg01@outlook.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-05 20:29-0400\n"
-"PO-Revision-Date: 2022-12-07 20:38+0100\n"
-"Last-Translator: Sergio <sergiovg01@outlook.com>\n"
+"PO-Revision-Date: 2023-09-22 20:23+0200\n"
+"Last-Translator: Sergio Varela <sergiovg01@outlook.com>\n"
 "Language-Team: Spanish - Spain <sergiovg01@outlook.com>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 45.1\n"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
@@ -25,17 +26,16 @@ msgstr ""
 #: data/resources/blueprints/window.blp:59 src/main.rs:30
 #: src/widgets/about_window.rs:24 src/window.rs:1809
 msgid "Switcheroo"
-msgstr ""
+msgstr "Switcheroo"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
-#, fuzzy
 msgid "Image Converter"
-msgstr "Imagen convertida"
+msgstr "Convertidor de imágenes"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
 msgid "Convert and manipulate images"
-msgstr "Convertir y manipular imágenes"
+msgstr "Convierte y manipula imágenes"
 
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:11
 msgid "image;convert;converting;processing"
@@ -46,35 +46,32 @@ msgid "Shows less popular datatypes in the menu"
 msgstr "Mostrar los tipos de datos menos populares en el menú"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
-#, fuzzy
 msgid "Window width"
-msgstr "Relación de anchura"
+msgstr "Anchura de ventana"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
-#, fuzzy
 msgid "Image quality"
-msgstr "Tipo de imagen"
+msgstr "Calidad de la imagen"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
 msgid "Image density per inch"
-msgstr ""
+msgstr "Densidad de imagen por pulgada"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
-#, fuzzy
 msgid "Window height"
-msgstr "Relación de altura"
+msgstr "Altura de la ventana"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
 msgid "Window maximized state"
-msgstr ""
+msgstr "Ventana maximizada"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
 msgid "Output format"
-msgstr ""
+msgstr "Formato de salida"
 
 #: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
 msgid "Compression format"
-msgstr ""
+msgstr "Formato de compresión"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
@@ -83,6 +80,8 @@ msgstr "Khaleel Al-Adhami"
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
+"Convierte entre distintos tipos de archivos de imagen y redimensiónalos "
+"fácilmente."
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:29
 msgid "image"
@@ -102,23 +101,24 @@ msgstr "procesando"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:48
 msgid "Converting sample image from PNG to HEIF"
-msgstr ""
+msgstr "Conversión de una imagen de muestra de PNG a HEIF"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
-msgstr ""
+msgstr "Conversión de varias imágenes de muestra de SVG a HEIF"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:72
 msgid "Converter has been renamed to Switcheroo!"
-msgstr ""
+msgstr "¡Converter ha pasado a llamarse Switcheroo!"
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:77
 msgid "Fix variety of bugs and rework UI."
 msgstr ""
+"Se han corregido varios errores y se ha rediseñado la interfaz de usuario."
 
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:82
 msgid "Rust rewrite."
-msgstr ""
+msgstr "Reescrito en Rust"
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -136,45 +136,42 @@ msgid "Quit"
 msgstr "Salir"
 
 #: data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open New Images"
-msgstr "Abrir imagen"
+msgstr "Abrir nuevas imágenes"
 
 #: data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
-msgstr "Abrir imagen"
+msgstr "Añadir imágenes"
 
 #: data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
-msgstr ""
+msgstr "Mostrar todo"
 
 #: data/resources/blueprints/window.blp:16
 msgid "Drop Here to Open"
-msgstr ""
+msgstr "Arrastrar aquí para abrir"
 
 #: data/resources/blueprints/window.blp:46
 msgid "Primary Menu"
-msgstr ""
+msgstr "Menú principal"
 
 #: data/resources/blueprints/window.blp:60
 msgid "Click “Open Images…” or drag images here."
-msgstr ""
+msgstr "Haga clic en «Abrir imágenes…» o arrastre las imágenes hasta aquí."
 
 #: data/resources/blueprints/window.blp:71
-#, fuzzy
 msgid "_Open Images…"
-msgstr "_Abrir imagen…"
+msgstr "_Abrir imágenes…"
 
 #: data/resources/blueprints/window.blp:124
 msgid "Export Format"
-msgstr ""
+msgstr "Exportar formato"
 
 #: data/resources/blueprints/window.blp:129
 msgid "Save To ZIP"
-msgstr ""
+msgstr "Guardar como ZIP"
 
 #: data/resources/blueprints/window.blp:142
 msgid "Quality"
@@ -186,11 +183,11 @@ msgstr "Color de fondo"
 
 #: data/resources/blueprints/window.blp:160
 msgid "Replaces original transparency layer"
-msgstr ""
+msgstr "Sustituye la capa de transparencia original"
 
 #: data/resources/blueprints/window.blp:174
 msgid "Pixel Density Per Inch"
-msgstr ""
+msgstr "Densidad de píxeles por pulgada"
 
 #: data/resources/blueprints/window.blp:186
 msgid "Resize"
@@ -205,9 +202,8 @@ msgid "Width"
 msgstr "Anchura"
 
 #: data/resources/blueprints/window.blp:209
-#, fuzzy
 msgid "Preserve aspect ratio"
-msgstr "Preservar relación de aspecto"
+msgstr "Conservar la relación de aspecto"
 
 #: data/resources/blueprints/window.blp:214
 #: data/resources/blueprints/window.blp:215
@@ -217,29 +213,27 @@ msgstr "Altura"
 
 #: data/resources/blueprints/window.blp:234
 msgid "Choose between resizing with percentages or using exact pixels"
-msgstr ""
+msgstr "Elija entre cambiar el tamaño con porcentajes o con píxeles exactos"
 
 #: data/resources/blueprints/window.blp:238
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: data/resources/blueprints/window.blp:238
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #: data/resources/blueprints/window.blp:247
-#, fuzzy
 msgid "Resize Algorithm"
-msgstr "Algoritmos por"
+msgstr "Algoritmo de redimensionamiento"
 
 #: data/resources/blueprints/window.blp:253
 msgid "Default"
-msgstr ""
+msgstr "Predeterminado"
 
 #: data/resources/blueprints/window.blp:257
-#, fuzzy
 msgid "Pixel Art"
-msgstr "Píxeles"
+msgstr "Pixel Art"
 
 #: data/resources/blueprints/window.blp:271
 msgid "_Convert"
@@ -252,7 +246,7 @@ msgstr "No se pudo cargar la imagen"
 #: data/resources/blueprints/window.blp:298
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
-"Esta imagen podría estar dañada o utilizar un formato de archivo no "
+"Esta imagen podría estar dañada o puede que utilice un formato de archivo no "
 "compatible."
 
 #: data/resources/blueprints/window.blp:310
@@ -270,23 +264,23 @@ msgstr "Cargando…"
 #: data/resources/blueprints/window.blp:327 src/window.rs:481
 #: src/window.rs:1364
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #: data/resources/blueprints/window.blp:352
 msgid "All Images"
-msgstr ""
+msgstr "Todas las imágenes"
 
 #: data/resources/blueprints/window.blp:422
 msgid "Paste From Clipboard"
-msgstr ""
+msgstr "Pegar desde el portapapeles"
 
 #: data/resources/blueprints/window.blp:427
 msgid "New Window"
-msgstr ""
+msgstr "Nueva ventana"
 
 #: data/resources/blueprints/window.blp:432
 msgid "Clear Window"
-msgstr ""
+msgstr "Limpiar ventana"
 
 #: data/resources/blueprints/window.blp:439
 msgid "Show Less Popular Datatypes"
@@ -298,48 +292,44 @@ msgstr "Atajos de teclado"
 
 #: data/resources/blueprints/window.blp:451
 msgid "About Switcheroo"
-msgstr ""
+msgstr "Acerca de Switcheroo"
 
 #: src/file_chooser.rs:39
-#, fuzzy
 msgid "Unsupported filetype"
-msgstr "Archivos de imagen compatibles"
+msgstr "Tipo de archivo no compatible"
 
 #: src/file_chooser.rs:77
-#, fuzzy
 msgid "Images"
-msgstr "Abrir imagen"
+msgstr "Imágenes"
 
 #: src/file_chooser.rs:80
-#, fuzzy
 msgid "_Select Images"
-msgstr "Seleccione una imagen"
+msgstr "_Seleccionar imágenes"
 
 #: src/file_chooser.rs:159
 msgid "Unspecified filetype"
-msgstr ""
+msgstr "Tipo de archivo no especificado"
 
 #: src/file_chooser.rs:164
 msgid "Unknown filetype"
-msgstr ""
+msgstr "Tipo de archivo desconocido"
 
 #: src/file_chooser.rs:169
 msgid "Used the wrong filetype"
-msgstr ""
+msgstr "Se ha utilizado un tipo de archivo incorrecto"
 
 #: src/magick.rs:156
-#, fuzzy
 msgid "Pasted Image"
-msgstr "Abrir imagen"
+msgstr "Imagen pegada"
 
 #: src/magick.rs:367
 msgid "Unknown IO error happened"
-msgstr ""
+msgstr "Se ha producido un error de E/S desconocido"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
 #: src/widgets/about_window.rs:28
 msgid "translator-credits"
-msgstr ""
+msgstr "Sergio Varela"
 
 #: src/widgets/about_window.rs:35
 msgid "Code and Design Borrowed from"
@@ -351,41 +341,39 @@ msgstr "Imagen de muestra de"
 
 #: src/window.rs:454
 msgid "Unable to access dropped files"
-msgstr ""
+msgstr "No se puede acceder a los archivos arrastrados"
 
 #: src/window.rs:477 src/window.rs:1359
-#, fuzzy
 msgid "Stop converting?"
-msgstr "convirtiendo"
+msgstr "¿Dejar de convertir?"
 
 #: src/window.rs:478 src/window.rs:1360
 msgid "You will lose all progress."
-msgstr ""
+msgstr "Se perderá todo el progreso."
 
 #: src/window.rs:482 src/window.rs:1364
 msgid "_Stop"
-msgstr ""
+msgstr "_Parar"
 
 #: src/window.rs:518
 msgid "Collecting files"
-msgstr ""
+msgstr "Recolectando archivos"
 
 #: src/window.rs:1287
-#, fuzzy
 msgid "Error While Processing"
-msgstr "procesando"
+msgstr "Error durante el procesamiento"
 
 #: src/window.rs:1308
 msgid "_Copy to Clipboard"
-msgstr ""
+msgstr "_Copiar al portapapeles"
 
 #: src/window.rs:1309
 msgid "_Close"
-msgstr ""
+msgstr "_Cerrar"
 
 #: src/window.rs:1317
 msgid "Error copied to clipboard"
-msgstr ""
+msgstr "Error copiado al portapapeles"
 
 #: src/window.rs:1332
 msgid "Image converted"
@@ -396,9 +384,8 @@ msgid "Open"
 msgstr "Abrir"
 
 #: src/window.rs:1386
-#, fuzzy
 msgid "Converting Cancelled"
-msgstr "Convirtiendo…"
+msgstr "Conversión cancelada"
 
 #~ msgid "Converter"
 #~ msgstr "Convertidor de imágenes"
