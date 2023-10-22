@@ -298,24 +298,21 @@ pub fn generate_job(
                 default_arguments,
             )
             .into_iter()
-            .chain(
-                generate_job(
-                    &interm,
-                    0,
-                    &FileType::Png,
-                    output_path,
-                    output_type,
-                    dir,
-                    (
-                        &MagickConvertJob {
-                            resize_arg: ResizeArgument::default(),
-                            ..default_arguments.0.to_owned()
-                        },
-                        default_arguments.1,
-                    ),
-                )
-                .into_iter(),
-            )
+            .chain(generate_job(
+                &interm,
+                0,
+                &FileType::Png,
+                output_path,
+                output_type,
+                dir,
+                (
+                    &MagickConvertJob {
+                        resize_arg: ResizeArgument::default(),
+                        ..default_arguments.0.to_owned()
+                    },
+                    default_arguments.1,
+                ),
+            ))
             .collect()
         }
         (Gif, Webp) | (Webp, Gif) => std::iter::once(ConvertJob::Magick(MagickConvertJob {

@@ -962,9 +962,15 @@ impl AppWindow {
                                 if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
                                     return;
                                 }
-                                let std::io::Result::Ok(shared_child) = SharedChild::spawn(&mut mj_command) else {
+                                let std::io::Result::Ok(shared_child) =
+                                    SharedChild::spawn(&mut mj_command)
+                                else {
                                     dbg!("panic");
-                                    sender.send(ArcOrOptionError::OptionError(Some("cannot generate command".to_string()))).expect("Concurrency Issue");
+                                    sender
+                                        .send(ArcOrOptionError::OptionError(Some(
+                                            "cannot generate command".to_string(),
+                                        )))
+                                        .expect("Concurrency Issue");
                                     return;
                                 };
                                 if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
@@ -987,7 +993,8 @@ impl AppWindow {
                                     .expect("Concurrency Issue");
                             }
                         })
-                        .await.ok();
+                        .await
+                        .ok();
                     }
                 })
                 .collect_vec();
@@ -1301,8 +1308,8 @@ impl ConvertOperations for AppWindow {
         dialog.set_extra_child(Some(&sw));
 
         dialog.add_responses(&[
-            ("copy", &gettext("_Copy to Clipboard")),
             ("ok", &gettext("_Close")),
+            ("copy", &gettext("_Copy to Clipboard")),
         ]);
         dialog.set_response_appearance("copy", adw::ResponseAppearance::Suggested);
         dialog.connect_response(
@@ -1504,7 +1511,10 @@ impl WindowUI for AppWindow {
 
         let input_files = self.active_files();
         let input_filetypes: Vec<FileType> = input_files.iter().map(|inf| inf.kind()).collect();
-        let Some(output_filetype) = FileType::output_formats(self.imp().settings.boolean("show-less-popular")).nth(imp.output_filetype.selected() as usize) else {
+        let Some(output_filetype) =
+            FileType::output_formats(self.imp().settings.boolean("show-less-popular"))
+                .nth(imp.output_filetype.selected() as usize)
+        else {
             return;
         };
 
