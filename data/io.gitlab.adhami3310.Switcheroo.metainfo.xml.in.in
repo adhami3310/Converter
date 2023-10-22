@@ -68,17 +68,17 @@
 
     <releases>
         <release version="2.0" date="2023-07-XX">
-            <description>
+            <description translatable="no">
                 <p>Converter has been renamed to Switcheroo!</p>
             </description>
         </release>
         <release version="1.6.1" date="2023-05-23">
-            <description>
+            <description translatable="no">
                 <p>Fix variety of bugs and rework UI.</p>
             </description>
         </release>
         <release version="1.6.0" date="2023-05-21">
-            <description>
+            <description translatable="no">
                 <p>Rust rewrite.</p>
             </description>
         </release>
