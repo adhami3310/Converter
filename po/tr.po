@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-30 23:06+0300\n"
+"POT-Creation-Date: 2023-10-27 21:09-0400\n"
 "PO-Revision-Date: 2023-09-30 23:18+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -22,9 +22,10 @@ msgstr ""
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
-#: data/resources/blueprints/window.blp:32
-#: data/resources/blueprints/window.blp:59 src/main.rs:30
-#: src/widgets/about_window.rs:24 src/window.rs:1805
+#: data/resources/blueprints/window.blp:21
+#: data/resources/blueprints/window.blp:28
+#: data/resources/blueprints/window.blp:57 src/main.rs:30
+#: src/widgets/about_window.rs:24
 msgid "Switcheroo"
 msgstr "Switcheroo"
 
@@ -137,151 +138,153 @@ msgstr "Resim Ekle"
 msgid "Show All"
 msgstr "Tümünü Göster"
 
-#: data/resources/blueprints/window.blp:16
+#: data/resources/blueprints/window.blp:15
 msgid "Drop Here to Open"
 msgstr "Açmak İçin Buraya Bırakın"
 
-#: data/resources/blueprints/window.blp:46
+#: data/resources/blueprints/window.blp:42
 msgid "Primary Menu"
 msgstr "Birincil Menü"
 
-#: data/resources/blueprints/window.blp:60
+#: data/resources/blueprints/window.blp:58
 msgid "Click “Open Images…” or drag images here."
 msgstr ""
 "“Resim Aç…” düğmesine tıklayın ya da resimleri buraya sürükleyip bırakın."
 
-#: data/resources/blueprints/window.blp:71
+#: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
 msgstr "Resim _Aç…"
 
-#: data/resources/blueprints/window.blp:124
+#: data/resources/blueprints/window.blp:120
 msgid "Export Format"
 msgstr "Dışa Aktarma Biçimi"
 
-#: data/resources/blueprints/window.blp:129
+#: data/resources/blueprints/window.blp:125
 msgid "Save To ZIP"
 msgstr "ZIP Olarak Kaydet"
 
-#: data/resources/blueprints/window.blp:142
+#: data/resources/blueprints/window.blp:138
 msgid "Quality"
 msgstr "Kalite"
 
-#: data/resources/blueprints/window.blp:162
+#: data/resources/blueprints/window.blp:158
 msgid "Background Color"
 msgstr "Arka Plan Rengi"
 
-#: data/resources/blueprints/window.blp:163
+#: data/resources/blueprints/window.blp:159
 msgid "Replaces original transparency layer"
 msgstr "Orijinal saydamlık katmanını değiştirir"
 
-#: data/resources/blueprints/window.blp:177
+#: data/resources/blueprints/window.blp:173
 msgid "Pixel Density Per Inch"
 msgstr "İnç Başına Piksel Yoğunluğu"
 
-#: data/resources/blueprints/window.blp:189
+#: data/resources/blueprints/window.blp:185
 msgid "Resize"
 msgstr "Yeniden Boyutlandır"
 
-#: data/resources/blueprints/window.blp:194
-#: data/resources/blueprints/window.blp:195
-#: data/resources/blueprints/window.blp:202
-#: data/resources/blueprints/window.blp:204
-#: data/resources/blueprints/window.blp:225
+#: data/resources/blueprints/window.blp:190
+#: data/resources/blueprints/window.blp:191
+#: data/resources/blueprints/window.blp:198
+#: data/resources/blueprints/window.blp:200
+#: data/resources/blueprints/window.blp:221
 msgid "Width"
 msgstr "Genişlik"
 
-#: data/resources/blueprints/window.blp:212
+#: data/resources/blueprints/window.blp:208
 msgid "Preserve aspect ratio"
 msgstr "En/Boy oranını koru"
 
-#: data/resources/blueprints/window.blp:217
-#: data/resources/blueprints/window.blp:218
-#: data/resources/blueprints/window.blp:226
+#: data/resources/blueprints/window.blp:213
+#: data/resources/blueprints/window.blp:214
+#: data/resources/blueprints/window.blp:222
 msgid "Height"
 msgstr "Yükseklik"
 
-#: data/resources/blueprints/window.blp:237
+#: data/resources/blueprints/window.blp:233
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 "Yüzdelerle yeniden boyutlandırma veya tam piksel kullanma arasında seçim "
 "yapın"
 
-#: data/resources/blueprints/window.blp:241
+#: data/resources/blueprints/window.blp:237
 msgid "%"
 msgstr "%"
 
-#: data/resources/blueprints/window.blp:241
+#: data/resources/blueprints/window.blp:237
 msgid "px"
 msgstr "px"
 
-#: data/resources/blueprints/window.blp:250
+#: data/resources/blueprints/window.blp:246
 msgid "Resize Algorithm"
 msgstr "Yeniden Boyutlandırma Algoritması"
 
-#: data/resources/blueprints/window.blp:256
+#: data/resources/blueprints/window.blp:252
 msgid "Default"
 msgstr "Öntanımlı"
 
-#: data/resources/blueprints/window.blp:260
+#: data/resources/blueprints/window.blp:256
 msgid "Pixel Art"
 msgstr "Piksel Sanatı"
 
-#: data/resources/blueprints/window.blp:274
+#: data/resources/blueprints/window.blp:270
 msgid "_Convert"
 msgstr "D_önüştür"
 
-#: data/resources/blueprints/window.blp:300
+#: data/resources/blueprints/window.blp:296
 msgid "Could not Load Image"
 msgstr "Resim Yüklenemedi"
 
-#: data/resources/blueprints/window.blp:301
+#: data/resources/blueprints/window.blp:297
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Bu resim bozuk olabilir veya desteklenmeyen bir dosya biçimi kullanıyor "
 "olabilir."
 
-#: data/resources/blueprints/window.blp:313
-msgid "Converting…"
-msgstr "Dönüştürülüyor…"
+#: data/resources/blueprints/window.blp:309
+#, fuzzy
+msgid "Converting"
+msgstr "dönüştürülüyor"
 
-#: data/resources/blueprints/window.blp:314
-msgid "This could take a while."
+#: data/resources/blueprints/window.blp:310
+#, fuzzy
+msgid "This could take a while"
 msgstr "Biraz uzun sürebilir."
 
-#: data/resources/blueprints/window.blp:324 src/window.rs:803
+#: data/resources/blueprints/window.blp:320 src/window.rs:760
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
-#: data/resources/blueprints/window.blp:330 src/window.rs:480
-#: src/window.rs:1360
+#: data/resources/blueprints/window.blp:326 src/window.rs:432
+#: src/window.rs:1323
 msgid "_Cancel"
 msgstr "_İptal Et"
 
-#: data/resources/blueprints/window.blp:355
+#: data/resources/blueprints/window.blp:349
 msgid "All Images"
 msgstr "Tüm resimler"
 
-#: data/resources/blueprints/window.blp:425
+#: data/resources/blueprints/window.blp:420
 msgid "Paste From Clipboard"
 msgstr "Panodan yapıştır"
 
-#: data/resources/blueprints/window.blp:430
+#: data/resources/blueprints/window.blp:425
 msgid "New Window"
 msgstr "Yeni Pencere"
 
-#: data/resources/blueprints/window.blp:435
+#: data/resources/blueprints/window.blp:430
 msgid "Clear Window"
 msgstr "Pencereyi Temizle"
 
-#: data/resources/blueprints/window.blp:442
+#: data/resources/blueprints/window.blp:437
 msgid "Show Less Popular Datatypes"
 msgstr "Daha Az Gözde Veri Türlerini Göster"
 
-#: data/resources/blueprints/window.blp:449
+#: data/resources/blueprints/window.blp:444
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: data/resources/blueprints/window.blp:454
+#: data/resources/blueprints/window.blp:449
 msgid "About Switcheroo"
 msgstr "Switcheroo Hakkında"
 
@@ -313,7 +316,7 @@ msgstr "Yanlış dosya türü kullanıldı"
 msgid "Pasted Image"
 msgstr "Yapıştırılan Resim"
 
-#: src/magick.rs:367
+#: src/magick.rs:364
 msgid "Unknown IO error happened"
 msgstr "Bilinmeyen IO hatası oluştu"
 
@@ -330,50 +333,53 @@ msgstr "Kod ve Tasarımın Ödünç Alındığı Kaynak"
 msgid "Sample Image from"
 msgstr "Örnek Resim kaynağı"
 
-#: src/window.rs:453
+#: src/window.rs:405
 msgid "Unable to access dropped files"
 msgstr "Bırakılan dosyalara erişilemiyor"
 
-#: src/window.rs:476 src/window.rs:1355
+#: src/window.rs:428 src/window.rs:1318
 msgid "Stop converting?"
 msgstr "Dönüştürme durdurulsun mu?"
 
-#: src/window.rs:477 src/window.rs:1356
+#: src/window.rs:429 src/window.rs:1319
 msgid "You will lose all progress."
 msgstr "Tüm ilerleme kaybolacak."
 
-#: src/window.rs:481 src/window.rs:1360
+#: src/window.rs:433 src/window.rs:1323
 msgid "_Stop"
 msgstr "_Durdur"
 
-#: src/window.rs:517
+#: src/window.rs:469
 msgid "Collecting files"
 msgstr "Dosyalar toplanıyor"
 
-#: src/window.rs:1283
+#: src/window.rs:1246
 msgid "Error While Processing"
 msgstr "İşlenirken Hata Oluştur"
 
-#: src/window.rs:1304
-msgid "_Copy to Clipboard"
-msgstr "Panoya _Kopyala"
-
-#: src/window.rs:1305
+#: src/window.rs:1267
 msgid "_Close"
 msgstr "_Kapat"
 
-#: src/window.rs:1313
+#: src/window.rs:1268
+msgid "_Copy to Clipboard"
+msgstr "Panoya _Kopyala"
+
+#: src/window.rs:1276
 msgid "Error copied to clipboard"
 msgstr "Hata panoya kopyalandı"
 
-#: src/window.rs:1328
+#: src/window.rs:1291
 msgid "Image converted"
 msgstr "Resim dönüştürüldü"
 
-#: src/window.rs:1329
+#: src/window.rs:1292
 msgid "Open"
 msgstr "Aç"
 
-#: src/window.rs:1382
+#: src/window.rs:1345
 msgid "Converting Cancelled"
 msgstr "Dönüştürme İptal Edildi"
+
+#~ msgid "Converting…"
+#~ msgstr "Dönüştürülüyor…"

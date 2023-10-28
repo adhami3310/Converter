@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2023-10-27 21:09-0400\n"
 "PO-Revision-Date: 2023-10-05 20:14+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -21,9 +21,10 @@ msgstr ""
 #: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
-#: data/resources/blueprints/window.blp:32
-#: data/resources/blueprints/window.blp:59 src/main.rs:30
-#: src/widgets/about_window.rs:24 src/window.rs:1809
+#: data/resources/blueprints/window.blp:21
+#: data/resources/blueprints/window.blp:28
+#: data/resources/blueprints/window.blp:57 src/main.rs:30
+#: src/widgets/about_window.rs:24
 msgid "Switcheroo"
 msgstr "Switcheroo"
 
@@ -104,25 +105,9 @@ msgstr "Verarbeitung läuft"
 msgid "Converting sample image from PNG to HEIF"
 msgstr "Beispielbild wird von PNG nach HEIF umgewandelt"
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in:65
-msgid "Made UI adjustments."
-msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
-
 #: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr "Mehrere Beispieldateien werden von SVG nach HEIF umgewandelt"
-
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:72
-msgid "Converter has been renamed to Switcheroo!"
-msgstr "Converter wurde in Switcheroo umbenannt!"
-
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:77
-msgid "Fix variety of bugs and rework UI."
-msgstr "Zahlreiche Fehlerkorrekturen und neu gestaltete Oberfläche."
-
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:82
-msgid "Rust rewrite."
-msgstr "Neu geschrieben in Rust."
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -153,149 +138,151 @@ msgstr "Bilder hinzufügen"
 msgid "Show All"
 msgstr "Alle anzeigen"
 
-#: data/resources/blueprints/window.blp:16
+#: data/resources/blueprints/window.blp:15
 msgid "Drop Here to Open"
 msgstr "Hier ablegen zum Öffnen"
 
-#: data/resources/blueprints/window.blp:46
+#: data/resources/blueprints/window.blp:42
 msgid "Primary Menu"
 msgstr "Primäres Menü"
 
-#: data/resources/blueprints/window.blp:60
+#: data/resources/blueprints/window.blp:58
 msgid "Click “Open Images…” or drag images here."
 msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
 
-#: data/resources/blueprints/window.blp:71
+#: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
 msgstr "Bilder ö_ffnen …"
 
-#: data/resources/blueprints/window.blp:124
+#: data/resources/blueprints/window.blp:120
 msgid "Export Format"
 msgstr "Exportformat"
 
-#: data/resources/blueprints/window.blp:129
+#: data/resources/blueprints/window.blp:125
 msgid "Save To ZIP"
 msgstr "Als Zip speichern"
 
-#: data/resources/blueprints/window.blp:142
+#: data/resources/blueprints/window.blp:138
 msgid "Quality"
 msgstr "Qualität"
 
-#: data/resources/blueprints/window.blp:159
+#: data/resources/blueprints/window.blp:158
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: data/resources/blueprints/window.blp:160
+#: data/resources/blueprints/window.blp:159
 msgid "Replaces original transparency layer"
 msgstr "Ersetzt die originale Transparenzebene"
 
-#: data/resources/blueprints/window.blp:174
+#: data/resources/blueprints/window.blp:173
 msgid "Pixel Density Per Inch"
 msgstr "Pixeldichte pro Zoll"
 
-#: data/resources/blueprints/window.blp:186
+#: data/resources/blueprints/window.blp:185
 msgid "Resize"
 msgstr "Größe ändern"
 
+#: data/resources/blueprints/window.blp:190
 #: data/resources/blueprints/window.blp:191
-#: data/resources/blueprints/window.blp:192
-#: data/resources/blueprints/window.blp:199
-#: data/resources/blueprints/window.blp:201
-#: data/resources/blueprints/window.blp:222
+#: data/resources/blueprints/window.blp:198
+#: data/resources/blueprints/window.blp:200
+#: data/resources/blueprints/window.blp:221
 msgid "Width"
 msgstr "Breite"
 
-#: data/resources/blueprints/window.blp:209
+#: data/resources/blueprints/window.blp:208
 msgid "Preserve aspect ratio"
 msgstr "Seitenverhältnis beibehalten"
 
+#: data/resources/blueprints/window.blp:213
 #: data/resources/blueprints/window.blp:214
-#: data/resources/blueprints/window.blp:215
-#: data/resources/blueprints/window.blp:223
+#: data/resources/blueprints/window.blp:222
 msgid "Height"
 msgstr "Höhe"
 
-#: data/resources/blueprints/window.blp:234
+#: data/resources/blueprints/window.blp:233
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 "Wählen zwischen Prozentpunkten oder genauer Pixelanzahl beim Größenändern"
 
-#: data/resources/blueprints/window.blp:238
+#: data/resources/blueprints/window.blp:237
 msgid "%"
 msgstr "%"
 
-#: data/resources/blueprints/window.blp:238
+#: data/resources/blueprints/window.blp:237
 msgid "px"
 msgstr "px"
 
-#: data/resources/blueprints/window.blp:247
+#: data/resources/blueprints/window.blp:246
 msgid "Resize Algorithm"
 msgstr "Größenänderungsalgorithmus"
 
-#: data/resources/blueprints/window.blp:253
+#: data/resources/blueprints/window.blp:252
 msgid "Default"
 msgstr "Standard"
 
-#: data/resources/blueprints/window.blp:257
+#: data/resources/blueprints/window.blp:256
 msgid "Pixel Art"
 msgstr "Pixelkunst"
 
-#: data/resources/blueprints/window.blp:271
+#: data/resources/blueprints/window.blp:270
 msgid "_Convert"
 msgstr "_Umwandeln"
 
-#: data/resources/blueprints/window.blp:297
+#: data/resources/blueprints/window.blp:296
 msgid "Could not Load Image"
 msgstr "Bild konnte nicht geladen werden"
 
-#: data/resources/blueprints/window.blp:298
+#: data/resources/blueprints/window.blp:297
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Dieses Bild könnte beschädigt sein oder ein nicht unterstütztes Dateiformat "
 "verwenden."
 
-#: data/resources/blueprints/window.blp:310
-msgid "Converting…"
-msgstr "Umwandlung läuft …"
+#: data/resources/blueprints/window.blp:309
+#, fuzzy
+msgid "Converting"
+msgstr "Umwandlung läuft"
 
-#: data/resources/blueprints/window.blp:311
-msgid "This could take a while."
+#: data/resources/blueprints/window.blp:310
+#, fuzzy
+msgid "This could take a while"
 msgstr "Das kann eine Weile dauern."
 
-#: data/resources/blueprints/window.blp:321 src/window.rs:807
+#: data/resources/blueprints/window.blp:320 src/window.rs:760
 msgid "Loading…"
 msgstr "Ladevorgang …"
 
-#: data/resources/blueprints/window.blp:327 src/window.rs:481
-#: src/window.rs:1364
+#: data/resources/blueprints/window.blp:326 src/window.rs:432
+#: src/window.rs:1323
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
-#: data/resources/blueprints/window.blp:352
+#: data/resources/blueprints/window.blp:349
 msgid "All Images"
 msgstr "Alle Bilder"
 
-#: data/resources/blueprints/window.blp:422
+#: data/resources/blueprints/window.blp:420
 msgid "Paste From Clipboard"
 msgstr "Aus der Zwischenablage einfügen"
 
-#: data/resources/blueprints/window.blp:427
+#: data/resources/blueprints/window.blp:425
 msgid "New Window"
 msgstr "Neues Fenster"
 
-#: data/resources/blueprints/window.blp:432
+#: data/resources/blueprints/window.blp:430
 msgid "Clear Window"
 msgstr "Fenster leeren"
 
-#: data/resources/blueprints/window.blp:439
+#: data/resources/blueprints/window.blp:437
 msgid "Show Less Popular Datatypes"
 msgstr "Weniger gängige Datentypen anzeigen"
 
-#: data/resources/blueprints/window.blp:446
+#: data/resources/blueprints/window.blp:444
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkürzel"
 
-#: data/resources/blueprints/window.blp:451
+#: data/resources/blueprints/window.blp:449
 msgid "About Switcheroo"
 msgstr "Info zu Switcheroo"
 
@@ -327,7 +314,7 @@ msgstr "Der falsche Dateityp wurde verwendet"
 msgid "Pasted Image"
 msgstr "Eingefügtes Bild"
 
-#: src/magick.rs:367
+#: src/magick.rs:364
 msgid "Unknown IO error happened"
 msgstr "Ein unbekannter E/A-Fehler ist aufgetreten"
 
@@ -344,53 +331,68 @@ msgstr "Code und Design entlehnt von"
 msgid "Sample Image from"
 msgstr "Beispielbild von"
 
-#: src/window.rs:454
+#: src/window.rs:405
 msgid "Unable to access dropped files"
 msgstr "Auf abgelegte Dateien konnte nicht zugegriffen werden"
 
-#: src/window.rs:477 src/window.rs:1359
+#: src/window.rs:428 src/window.rs:1318
 msgid "Stop converting?"
 msgstr "Umwandlung stoppen?"
 
-#: src/window.rs:478 src/window.rs:1360
+#: src/window.rs:429 src/window.rs:1319
 msgid "You will lose all progress."
 msgstr "Sie werden den gesamten Fortschritt verlieren."
 
-#: src/window.rs:482 src/window.rs:1364
+#: src/window.rs:433 src/window.rs:1323
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: src/window.rs:518
+#: src/window.rs:469
 msgid "Collecting files"
 msgstr "Dateien werden gesammelt"
 
-#: src/window.rs:1287
+#: src/window.rs:1246
 msgid "Error While Processing"
 msgstr "Fehler bei der Verarbeitung"
 
-#: src/window.rs:1308
-msgid "_Copy to Clipboard"
-msgstr "In die Zwischenablage _kopieren"
-
-#: src/window.rs:1309
+#: src/window.rs:1267
 msgid "_Close"
 msgstr "_Schließen"
 
-#: src/window.rs:1317
+#: src/window.rs:1268
+msgid "_Copy to Clipboard"
+msgstr "In die Zwischenablage _kopieren"
+
+#: src/window.rs:1276
 msgid "Error copied to clipboard"
 msgstr "Fehler in die Zwischenablage kopiert"
 
-#: src/window.rs:1332
+#: src/window.rs:1291
 msgid "Image converted"
 msgstr "Bild wurde umgewandelt"
 
-#: src/window.rs:1333
+#: src/window.rs:1292
 msgid "Open"
 msgstr "Öffnen"
 
-#: src/window.rs:1386
+#: src/window.rs:1345
 msgid "Converting Cancelled"
 msgstr "Umwandlung abgebrochen"
+
+#~ msgid "Made UI adjustments."
+#~ msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
+
+#~ msgid "Converter has been renamed to Switcheroo!"
+#~ msgstr "Converter wurde in Switcheroo umbenannt!"
+
+#~ msgid "Fix variety of bugs and rework UI."
+#~ msgstr "Zahlreiche Fehlerkorrekturen und neu gestaltete Oberfläche."
+
+#~ msgid "Rust rewrite."
+#~ msgstr "Neu geschrieben in Rust."
+
+#~ msgid "Converting…"
+#~ msgstr "Umwandlung läuft …"
 
 #~ msgid "_Dismiss"
 #~ msgstr "_Verwerfen"
