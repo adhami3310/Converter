@@ -135,7 +135,7 @@ impl App {
                 let state = action.state().unwrap();
                 let action_state: bool = state.get().unwrap();
                 let show_hidden = !action_state;
-                action.set_state(show_hidden.to_variant());
+                action.set_state(&show_hidden.to_variant());
 
                 this.imp()
                     .settings

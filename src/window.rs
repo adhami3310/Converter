@@ -82,9 +82,11 @@ mod imp {
     use super::*;
 
     use adw::subclass::prelude::AdwApplicationWindowImpl;
+    use derivative::Derivative;
     use gtk::CompositeTemplate;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, CompositeTemplate, Derivative)]
+    #[derivative(Default)]
     #[template(resource = "/io/gitlab/adhami3310/Switcheroo/blueprints/window.ui")]
     pub struct AppWindow {
         #[template_child]
@@ -101,8 +103,6 @@ mod imp {
         pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub other_add_button: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub back_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub convert_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -161,11 +161,14 @@ mod imp {
         #[template_child]
         pub dpi_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub leaf: TemplateChild<adw::Leaflet>,
+        pub navigation: TemplateChild<adw::NavigationView>,
 
         pub provider: gtk::CssProvider,
+        #[derivative(Default(value = "gio::ListStore::new::<InputFile>()"))]
         pub input_file_store: gio::ListStore,
+        #[derivative(Default(value = "gio::Settings::new(APP_ID)"))]
         pub settings: gio::Settings,
+        #[derivative(Default(value = "std::sync::Arc::new(AtomicBool::new(true))"))]
         pub is_canceled: std::sync::Arc<AtomicBool>,
         pub current_jobs: RefCell<Vec<Arc<SharedChild>>>,
         pub image_width: Cell<Option<u32>>,
@@ -189,54 +192,7 @@ mod imp {
         }
 
         fn new() -> Self {
-            Self {
-                toast_overlay: TemplateChild::default(),
-                drag_overlay: TemplateChild::default(),
-                stack: TemplateChild::default(),
-                all_images_stack: TemplateChild::default(),
-                open_button: TemplateChild::default(),
-                add_button: TemplateChild::default(),
-                other_add_button: TemplateChild::default(),
-                back_button: TemplateChild::default(),
-                convert_button: TemplateChild::default(),
-                cancel_button: TemplateChild::default(),
-                loading_spinner: TemplateChild::default(),
-                loading_spinner_images: TemplateChild::default(),
-                image_container: TemplateChild::default(),
-                full_image_container: TemplateChild::default(),
-                supported_output_filetypes: TemplateChild::default(),
-                progress_bar: TemplateChild::default(),
-                output_filetype: TemplateChild::default(),
-                output_compression: TemplateChild::default(),
-                output_compression_value: TemplateChild::default(),
-                quality: TemplateChild::default(),
-                bgcolor: TemplateChild::default(),
-                resize_filter_default: TemplateChild::default(),
-                resize_filter_pixel: TemplateChild::default(),
-                resize_filter_row: TemplateChild::default(),
-                resize_amount_row: TemplateChild::default(),
-                resize_type: TemplateChild::default(),
-                resize_width_value: TemplateChild::default(),
-                resize_height_value: TemplateChild::default(),
-                link_axis: TemplateChild::default(),
-                resize_scale_width_value: TemplateChild::default(),
-                resize_scale_height_value: TemplateChild::default(),
-                dpi_value: TemplateChild::default(),
-                quality_row: TemplateChild::default(),
-                bgcolor_row: TemplateChild::default(),
-                dpi_row: TemplateChild::default(),
-                leaf: TemplateChild::default(),
-                provider: gtk::CssProvider::new(),
-                input_file_store: gio::ListStore::new(InputFile::static_type()),
-
-                settings: gio::Settings::new(APP_ID),
-                is_canceled: std::sync::Arc::new(AtomicBool::new(true)),
-                current_jobs: RefCell::new(Vec::new()),
-                image_height: Cell::new(None),
-                image_width: Cell::new(None),
-                removed: RefCell::new(HashSet::new()),
-                elements: Cell::new(0),
-            }
+            Self::default()
         }
     }
 
@@ -251,14 +207,14 @@ mod imp {
 
     impl WidgetImpl for AppWindow {}
     impl WindowImpl for AppWindow {
-        fn close_request(&self) -> gtk::Inhibit {
+        fn close_request(&self) -> glib::Propagation {
             if let Err(err) = self.obj().save_window_size() {
                 dbg!("Failed to save window state, {}", &err);
             }
 
             if !self.is_canceled.load(std::sync::atomic::Ordering::SeqCst) {
                 self.obj().close_dialog();
-                glib::signal::Inhibit(true)
+                glib::Propagation::Stop
             } else {
                 // Pass close request on to the parent
                 self.parent_close_request()
@@ -400,10 +356,6 @@ impl AppWindow {
                         this.imp().resize_scale_height_value.set_text(&new_value);
                     }
                 }
-            }));
-        imp.back_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
-                this.switch_to_stack_convert();
             }));
         imp.image_container.set_filter_func(clone!(@weak self as this => @default-return false, move |f| {
             return (f.index() as usize) >= this.imp().elements.get() || !this.imp().removed.borrow().contains(&(f.index() as u32));
@@ -565,7 +517,7 @@ impl AppWindow {
         let files = self.files();
         let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
-        let (sender, receiver) = MainContext::channel(glib::PRIORITY_LOW);
+        let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
 
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
@@ -584,7 +536,7 @@ impl AppWindow {
 
         receiver.attach(
             None,
-            clone!(@weak self as this => @default-return Continue(false), move |image_info| {
+            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |image_info| {
                 let real_files = files.clone();
                 for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
                     f.set_frames(*frame);
@@ -602,7 +554,7 @@ impl AppWindow {
                 }));
 
 
-                Continue(false)
+                glib::ControlFlow::Break
             }),
         );
     }
@@ -706,7 +658,12 @@ impl AppWindow {
         self.imp()
             .all_images_stack
             .set_visible_child_name("all_images");
-        if self.imp().leaf.visible_child_name().unwrap() == "main" {
+        println!(
+            "{:?}",
+            self.imp().navigation.visible_page().and_then(|x| x.tag())
+        );
+        if matches!(self.imp().navigation.visible_page().and_then(|x| x.tag()), Some(x) if x == "main")
+        {
             self.switch_to_stack_convert();
         }
     }
@@ -743,7 +700,7 @@ impl AppWindow {
             .map(|f| (f.kind().supports_pixbuf(), f.path()))
             .collect_vec();
 
-        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+        let (sender, receiver) = glib::MainContext::channel(glib::Priority::DEFAULT);
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -779,7 +736,7 @@ impl AppWindow {
 
         receiver.attach(
             None,
-            clone!(@weak self as this => @default-return Continue(false), move |(i, p)| {
+            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |(i, p)| {
                 if let Some(p) = p {
                     this.imp().input_file_store.item(i as u32).and_downcast::<InputFile>().unwrap().set_pixbuf(p);
                 }
@@ -788,9 +745,9 @@ impl AppWindow {
                 let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
                 if x + 1 == total {
                     this.load_frames();
-                    Continue(false)
+                    glib::ControlFlow::Break
                 } else {
-                    Continue(true)
+                    glib::ControlFlow::Continue
                 }
             }),
         );
@@ -934,7 +891,7 @@ impl AppWindow {
             })
             .collect_vec();
 
-        let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
+        let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
 
         let count = magick_jobs.iter().map(|mjs| mjs.len()).sum();
 
@@ -1010,7 +967,7 @@ impl AppWindow {
 
         receiver.attach(
             None,
-            clone!(@weak self as this => @default-return Continue(false), move |e| {
+            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |e| {
                 match e {
                     ArcOrOptionError::Child(c) => {
                         if stop_flag_r.load(std::sync::atomic::Ordering::SeqCst) {
@@ -1021,21 +978,21 @@ impl AppWindow {
                         } else {
                             this.imp().current_jobs.borrow_mut().push(c);
                         }
-                        Continue(true)
+                        glib::ControlFlow::Continue
                     }
                     ArcOrOptionError::OptionError(e) => {
                         if let Some(e) = e {
                             this.convert_failed(e, dir_path.clone());
-                            return Continue(false);
+                            return glib::ControlFlow::Break;
                         }
                         let c = completed.clone();
                         let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
                         this.set_convert_progress(x + 1, count);
                         if x + 1 == count {
                             this.move_output(save_format, path.clone(), output_files.clone(), dir_path.clone());
-                            Continue(false)
+                            glib::ControlFlow::Break
                         } else {
-                            Continue(true)
+                            glib::ControlFlow::Continue
                         }
                     }
                 }
@@ -1060,7 +1017,6 @@ trait StackNavigation {
     fn switch_to_stack_convert(&self);
     fn switch_to_stack_converting(&self);
     fn switch_to_stack_welcome(&self);
-    fn switch_to_main_leaf(&self);
     fn switch_to_stack_invalid_image(&self);
     fn switch_to_stack_loading(&self);
     fn switch_back_from_loading(&self);
@@ -1138,7 +1094,7 @@ impl ConvertOperations for AppWindow {
             OutputType::File(_) => {
                 let file = output_files.first().unwrap().to_owned();
 
-                let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
+                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1168,7 +1124,7 @@ impl ConvertOperations for AppWindow {
                 receiver
             }
             OutputType::Compression(CompressionType::Directory) => {
-                let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
+                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1201,7 +1157,7 @@ impl ConvertOperations for AppWindow {
                 receiver
             }
             _ => {
-                let (sender, receiver) = MainContext::channel(glib::PRIORITY_DEFAULT);
+                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1238,7 +1194,7 @@ impl ConvertOperations for AppWindow {
 
         receiver.attach(
             None,
-            clone!(@weak self as this => @default-return Continue(false), move |x| {
+            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |x| {
                 match x {
                     ArcOrOptionError::Child(c) => {
                         if this.imp().is_canceled.load(std::sync::atomic::Ordering::SeqCst) {
@@ -1249,14 +1205,14 @@ impl ConvertOperations for AppWindow {
                         } else {
                             this.imp().current_jobs.borrow_mut().push(c);
                         }
-                        Continue(true)
+                        glib::ControlFlow::Continue
                     }
                     ArcOrOptionError::OptionError(x) => {
                         match x {
                             Some(e) => this.convert_failed(e, dir_path.clone()),
                             None => this.convert_success(dir_path.clone(), path_r.clone(), save_format)
                         }
-                        Continue(false)
+                        glib::ControlFlow::Break
                     }
                 }
             }),
@@ -1765,7 +1721,7 @@ impl WindowUI for AppWindow {
             image_flow_box_child.set_focusable(false);
             imp.image_container.append(&image_flow_box_child);
             image_rest.connect_clicked(clone!(@weak self as this => move |_| {
-                this.imp().leaf.navigate(adw::NavigationDirection::Forward);
+                this.imp().navigation.push_by_tag("all_images");
             }));
         }
 
@@ -1793,7 +1749,6 @@ impl WindowUI for AppWindow {
 
 impl StackNavigation for AppWindow {
     fn switch_to_stack_convert(&self) {
-        self.switch_to_main_leaf();
         self.imp().add_button.set_visible(true);
         self.imp().stack.set_visible_child_name("stack_convert");
     }
@@ -1804,20 +1759,13 @@ impl StackNavigation for AppWindow {
     }
 
     fn switch_to_stack_welcome(&self) {
-        self.switch_to_main_leaf();
         self.imp().add_button.set_visible(false);
         self.imp()
             .stack
             .set_visible_child_name("stack_welcome_page");
     }
 
-    fn switch_to_main_leaf(&self) {
-        self.set_title(Some(&gettext("Switcheroo")));
-        self.imp().leaf.set_visible_child_name("main");
-    }
-
     fn switch_to_stack_invalid_image(&self) {
-        self.switch_to_main_leaf();
         self.imp().add_button.set_visible(false);
         self.imp()
             .stack
@@ -1825,7 +1773,6 @@ impl StackNavigation for AppWindow {
     }
 
     fn switch_to_stack_loading(&self) {
-        self.switch_to_main_leaf();
         self.imp().add_button.set_visible(false);
         self.imp().stack.set_visible_child_name("stack_loading");
         self.imp().loading_spinner.start();
@@ -1835,15 +1782,14 @@ impl StackNavigation for AppWindow {
         self.imp().loading_spinner.stop();
         self.imp().loading_spinner_images.stop();
         self.imp().other_add_button.set_visible(true);
-        self.imp().back_button.set_visible(true);
     }
 
     fn switch_to_stack_loading_generally(&self) {
-        if self.imp().leaf.visible_child_name().unwrap() == "main" {
+        if matches!(self.imp().navigation.visible_page().and_then(|x| x.tag()), Some(x) if x == "main")
+        {
             self.switch_to_stack_loading();
         } else {
             self.imp().other_add_button.set_visible(false);
-            self.imp().back_button.set_visible(false);
             self.imp()
                 .all_images_stack
                 .set_visible_child_name("stack_loading");

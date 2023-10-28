@@ -1,33 +1,29 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $AppWindow : $AdwApplicationWindow {
-  default-width: "750";
-  default-height: "750";
-  width-request: "300";
-  height-request: "300";
+template $AppWindow : Adw.ApplicationWindow {
+  default-width: 750;
+  default-height: 750;
+  width-request: 300;
+  height-request: 300;
   title: _("Switcheroo");
 
   Box {
     orientation: vertical;
 
-
     $DragOverlay drag_overlay {
       title: _("Drop Here to Open");
       child:
-      $AdwToastOverlay toast_overlay {
-        $AdwLeaflet leaf {
-          can_unfold: false;
-          can_navigate_back: true;
-          can_navigate_forward: true;
-
-          $AdwLeafletPage {
-            name: "main";
+      Adw.ToastOverlay toast_overlay {
+        Adw.NavigationView navigation {
+          Adw.NavigationPage {
+            tag: "main";
+            title: _("Switcheroo");
 
             child:
-            Box {
-              orientation: vertical;
-              $AdwHeaderBar headerbar {
+            Adw.ToolbarView {
+              [top]
+              Adw.HeaderBar headerbar {
                 title-widget: Label {
                   label: _("Switcheroo");
                   styles ["title"]
@@ -48,13 +44,15 @@ template $AppWindow : $AdwApplicationWindow {
                 }
 
               }
+
+              content:
               Stack stack {
                 transition-type: crossfade;
 
                 StackPage {
                   name: "stack_welcome_page";
                   child:
-                  $AdwStatusPage {
+                  Adw.StatusPage {
                     icon-name: "io.gitlab.adhami3310.Switcheroo";
                     title: _("Switcheroo");
                     description: _("Click “Open Images…” or drag images here.");
@@ -87,7 +85,7 @@ template $AppWindow : $AdwApplicationWindow {
                 StackPage {
                   name: "stack_loading";
                   child:
-                  $AdwStatusPage {
+                  Adw.StatusPage {
                     Spinner loading_spinner {
                       valign: center;
                       halign: center;
@@ -102,12 +100,10 @@ template $AppWindow : $AdwApplicationWindow {
                 StackPage {
                   name: "stack_convert";
                   child:
-                  $AdwBin {
-                    
-
-                    $AdwBin {
-                      $AdwPreferencesPage {
-                        $AdwPreferencesGroup {
+                  Adw.Bin {
+                    Adw.Bin {
+                      Adw.PreferencesPage {
+                        Adw.PreferencesGroup {
                           FlowBox image_container {
                             homogeneous: true;
                             hexpand: true;
@@ -118,9 +114,9 @@ template $AppWindow : $AdwApplicationWindow {
                           }
                         }
 
-                        $AdwPreferencesGroup {
+                        Adw.PreferencesGroup {
 
-                          $AdwComboRow output_filetype {
+                          Adw.ComboRow output_filetype {
                             title: _("Export Format");
                             model: StringList supported_output_filetypes {};
                           }
@@ -137,8 +133,8 @@ template $AppWindow : $AdwApplicationWindow {
 
                         }
 
-                        $AdwPreferencesGroup {
-                          $AdwActionRow quality_row {
+                        Adw.PreferencesGroup {
+                          Adw.ActionRow quality_row {
                             title: _("Quality");
 
                             Scale quality {
@@ -158,7 +154,7 @@ template $AppWindow : $AdwApplicationWindow {
                             }
                           }
 
-                          $AdwActionRow bgcolor_row {
+                          Adw.ActionRow bgcolor_row {
                             title: _("Background Color");
                             subtitle: _("Replaces original transparency layer");
 
@@ -173,19 +169,19 @@ template $AppWindow : $AdwApplicationWindow {
                             }
                           }
 
-                          $AdwActionRow dpi_row {
+                          Adw.ActionRow dpi_row {
                             title: _("Pixel Density Per Inch");
                             
                             activatable-widget: dpi_value;
 
-                            $AdwBin {
+                            Adw.Bin {
                               Entry dpi_value {
                                 valign: center;
                               }
                             }
                           }
 
-                          $AdwActionRow resize_amount_row {
+                          Adw.ActionRow resize_amount_row {
                             title: _("Resize");
                             Box {
                               spacing: 5;
@@ -229,7 +225,7 @@ template $AppWindow : $AdwApplicationWindow {
                                 hexpand: false;
                               }
                             }
-                            $AdwBin {
+                            Adw.Bin {
                               Box {
                                 DropDown resize_type {
                                   valign: center;
@@ -246,7 +242,7 @@ template $AppWindow : $AdwApplicationWindow {
                               }
                             }
                           }
-                          $AdwActionRow resize_filter_row {
+                          Adw.ActionRow resize_filter_row {
                             title: _("Resize Algorithm");
                             
                             Box {
@@ -264,7 +260,7 @@ template $AppWindow : $AdwApplicationWindow {
                           }
                         }
 
-                        $AdwPreferencesGroup {
+                        Adw.PreferencesGroup {
                           valign: end;
                           halign: center;
 
@@ -295,7 +291,7 @@ template $AppWindow : $AdwApplicationWindow {
                 StackPage {
                   name: "stack_invalid_image";
                   child:
-                  $AdwStatusPage invalid_image {
+                  Adw.StatusPage invalid_image {
                     icon-name: "im-symbolic";
                     title: _("Could not Load Image");
                     description: _("This image could be corrupted or may use an unsupported file format.");
@@ -309,7 +305,7 @@ template $AppWindow : $AdwApplicationWindow {
                 StackPage {
                   name: "stack_converting";
                   child:
-                  $AdwStatusPage {
+                  Adw.StatusPage {
                     title: _("Converting…");
                     description: _("This could take a while.");
 
@@ -341,33 +337,29 @@ template $AppWindow : $AdwApplicationWindow {
                   ;
                 }
               }
+
+              ;
             }
+
             ;
           }
 
-          $AdwLeafletPage {
-            name: "all_images";
+          Adw.NavigationPage {
+            tag: "all_images";
+            title: _("All Images");
+
             child:
-            Box {
-              orientation: vertical;
-              $AdwHeaderBar other_headerbar {
-                title-widget: Label {
-                  label: _("All Images");
-                  styles ["title"]
-                }
-                ;
-                Button back_button {
-                  icon-name: 'go-previous-symbolic';
-                  tooltip-text: _('Back');
-                  styles ['flat']
-                }
+            Adw.ToolbarView {
+              [top]
+              Adw.HeaderBar {
                 Button other_add_button {
                   icon-name: 'plus-large-symbolic';
                   tooltip-text: _('Add Images (Ctrl+O)');
                   styles ['flat']
                 }
-
               }
+
+              content:
               Stack all_images_stack {
                 transition-type: crossfade;
                 StackPage {
@@ -396,7 +388,7 @@ template $AppWindow : $AdwApplicationWindow {
                 StackPage {
                   name: "stack_loading";
                   child:
-                  $AdwStatusPage {
+                  Adw.StatusPage {
                     Spinner loading_spinner_images {
                       valign: center;
                       halign: center;
@@ -408,7 +400,10 @@ template $AppWindow : $AdwApplicationWindow {
                   ;
                 }
               }
+
+              ;
             }
+
             ;
           }
         }

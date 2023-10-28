@@ -12,7 +12,7 @@ mod imp {
     use glib::{ParamSpec, ParamSpecObject, ParamSpecString, ParamSpecUInt};
     use gtk::CompositeTemplate;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, CompositeTemplate, Default)]
     #[template(resource = "/io/gitlab/adhami3310/Switcheroo/blueprints/image-thumbnail.ui")]
     pub struct ImageThumbnail {
         #[template_child]
@@ -47,16 +47,7 @@ mod imp {
         }
 
         fn new() -> Self {
-            Self {
-                image: TemplateChild::default(),
-                picture: TemplateChild::default(),
-                content: TemplateChild::default(),
-                remove_image: TemplateChild::default(),
-                root: TemplateChild::default(),
-                child: TemplateChild::default(),
-                width: Cell::new(0),
-                height: Cell::new(0),
-            }
+            Self::default()
         }
     }
 
