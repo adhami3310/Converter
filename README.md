@@ -3,7 +3,7 @@
 
 Convert and manipulate images
 
-<img src="data/resources/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Switcheroo.svg" width="128" height="128" alt="Switcheroo icon">
+<img src="data/resources/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg" width="128" height="128" alt="Switcheroo icon">
 
 [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
 [![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Switcheroo?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Switcheroo/-/tags)
@@ -70,7 +70,7 @@ You can install Switcheroo from the latest commit:
 
 1. Install [`org.flatpak.Builder`](https://github.com/flathub/org.flatpak.Builder) from Flathub
 1. Clone `https://gitlab.com/adhami3310/Switcheroo.git` (or your fork)
-1. Run `flatpak run org.flatpak.Builder --install --user --force-clean build-dir io.gitlab.adhami3310.Switcheroo.json` in the terminal from the root of the repository.
+1. Run `flatpak run org.flatpak.Builder --install --user --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository.
 
 ### Meson
 You can build and install on your host system by directly using the Meson buildsystem:

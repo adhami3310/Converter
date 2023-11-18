@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 21:09-0400\n"
+"POT-Creation-Date: 2023-11-18 16:08-0500\n"
 "PO-Revision-Date: 2023-09-30 23:18+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
 #: data/resources/blueprints/window.blp:28
@@ -29,83 +29,83 @@ msgstr ""
 msgid "Switcheroo"
 msgstr "Switcheroo"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
 msgid "Image Converter"
 msgstr "Resim Dönüştürücü"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:7
 msgid "Convert and manipulate images"
 msgstr "Resimleri dönüştür ve düzenle"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
 msgid "image;convert;converting;processing"
 msgstr ""
 "image;convert;converting;processing;resim;görüntü;resim;dönüştür;dönüştürme;"
 "işleme;"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:26
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
 msgstr "Daha az gözde veri türlerini menüde göster"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
 msgid "Window width"
 msgstr "Pencere genişliği"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
 msgid "Image quality"
 msgstr "Resim kalitesi"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
 msgid "Image density per inch"
 msgstr "İnç başına resim yoğunluğu"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
 msgid "Window height"
 msgstr "Pencere yüksekliği"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
 msgid "Window maximized state"
 msgstr "Pencerenin ekranı kaplama durumu"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
 msgid "Output format"
 msgstr "Çıktı biçimi"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:54
 msgid "Compression format"
 msgstr "Sıkıştırma biçimi"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
 msgstr "Khaleel Al-Adhami"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:13
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
 "Farklı resim türlerini dünüştürün ve bunları kolayca yeniden boyutlandırın."
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:29
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
 msgid "image"
 msgstr "resim"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:30
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:30
 msgid "convert"
 msgstr "dönüştür"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:31
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:31
 msgid "converting"
 msgstr "dönüştürülüyor"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:32
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:32
 msgid "processing"
 msgstr "işleniyor"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:48
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
 msgid "Converting sample image from PNG to HEIF"
 msgstr "Örnek görüntüyü PNG'den HEIF'e dönüştürme"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr "Birden fazla örnek görüntüyü SVG'den HEIF'e dönüştürme"
 
@@ -251,12 +251,12 @@ msgstr "dönüştürülüyor"
 msgid "This could take a while"
 msgstr "Biraz uzun sürebilir."
 
-#: data/resources/blueprints/window.blp:320 src/window.rs:760
+#: data/resources/blueprints/window.blp:320 src/window.rs:756
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
 #: data/resources/blueprints/window.blp:326 src/window.rs:432
-#: src/window.rs:1323
+#: src/window.rs:1319
 msgid "_Cancel"
 msgstr "_İptal Et"
 
@@ -337,15 +337,15 @@ msgstr "Örnek Resim kaynağı"
 msgid "Unable to access dropped files"
 msgstr "Bırakılan dosyalara erişilemiyor"
 
-#: src/window.rs:428 src/window.rs:1318
+#: src/window.rs:428 src/window.rs:1314
 msgid "Stop converting?"
 msgstr "Dönüştürme durdurulsun mu?"
 
-#: src/window.rs:429 src/window.rs:1319
+#: src/window.rs:429 src/window.rs:1315
 msgid "You will lose all progress."
 msgstr "Tüm ilerleme kaybolacak."
 
-#: src/window.rs:433 src/window.rs:1323
+#: src/window.rs:433 src/window.rs:1319
 msgid "_Stop"
 msgstr "_Durdur"
 
@@ -353,31 +353,31 @@ msgstr "_Durdur"
 msgid "Collecting files"
 msgstr "Dosyalar toplanıyor"
 
-#: src/window.rs:1246
+#: src/window.rs:1242
 msgid "Error While Processing"
 msgstr "İşlenirken Hata Oluştur"
 
-#: src/window.rs:1267
+#: src/window.rs:1263
 msgid "_Close"
 msgstr "_Kapat"
 
-#: src/window.rs:1268
+#: src/window.rs:1264
 msgid "_Copy to Clipboard"
 msgstr "Panoya _Kopyala"
 
-#: src/window.rs:1276
+#: src/window.rs:1272
 msgid "Error copied to clipboard"
 msgstr "Hata panoya kopyalandı"
 
-#: src/window.rs:1291
+#: src/window.rs:1287
 msgid "Image converted"
 msgstr "Resim dönüştürüldü"
 
-#: src/window.rs:1292
+#: src/window.rs:1288
 msgid "Open"
 msgstr "Aç"
 
-#: src/window.rs:1345
+#: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Dönüştürme İptal Edildi"
 

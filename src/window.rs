@@ -87,7 +87,7 @@ mod imp {
 
     #[derive(Debug, CompositeTemplate, Derivative)]
     #[derivative(Default)]
-    #[template(resource = "/io/gitlab/adhami3310/Switcheroo/blueprints/window.ui")]
+    #[template(resource = "/io/gitlab/adhami3310/Converter/blueprints/window.ui")]
     pub struct AppWindow {
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,

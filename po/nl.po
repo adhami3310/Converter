@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 21:09-0400\n"
+"POT-Creation-Date: 2023-11-18 16:08-0500\n"
 "PO-Revision-Date: 2023-05-22 09:53+0200\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
 #: data/resources/blueprints/window.blp:28
@@ -27,85 +27,85 @@ msgstr ""
 msgid "Switcheroo"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
 msgid "Image Converter"
 msgstr "Afbeeldingsconverter"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:7
 msgid "Convert and manipulate images"
 msgstr "Converteer en bewerk afbeeldingen"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
 msgid "image;convert;converting;processing"
 msgstr ""
 "image;convert;converting;processing;afbeelding;converteren;conversie;"
 "verwerking;bewerken;"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:26
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
 msgstr "Minder gebruikte formaten tonen in menu"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
 msgid "Window width"
 msgstr "Vensterbreedte"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
 msgid "Image quality"
 msgstr "Afbeeldingskwaliteit"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
 msgid "Image density per inch"
 msgstr "Pixeldichtheid per inch"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
 msgid "Window height"
 msgstr "Vensterhoogte"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
 msgid "Window maximized state"
 msgstr "Maximalisatiestaat van venster"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
 msgid "Output format"
 msgstr "Uitvoerformaat"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:54
 msgid "Compression format"
 msgstr "Compressieformaat"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
 msgstr "Khaleel Al-Adhami"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:13
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
 "Converteer tussen verschillende afbeeldingsformaten en verander eenvoudig de "
 "grootte"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:29
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
 msgid "image"
 msgstr "Afbeelding"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:30
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:30
 msgid "convert"
 msgstr "Converteren"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:31
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:31
 msgid "converting"
 msgstr "Bezig met converteren…"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:32
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:32
 msgid "processing"
 msgstr "Bezig met verwerken…"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:48
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
 #, fuzzy
 msgid "Converting sample image from PNG to HEIF"
 msgstr "Voorbeeldafbeelding converteren van PNG naar WebP"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
 #, fuzzy
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr "Voorbeeldafbeelding converteren van PNG naar WebP"
@@ -254,12 +254,12 @@ msgstr "Bezig met converteren…"
 msgid "This could take a while"
 msgstr "Dit kan even duren"
 
-#: data/resources/blueprints/window.blp:320 src/window.rs:760
+#: data/resources/blueprints/window.blp:320 src/window.rs:756
 msgid "Loading…"
 msgstr "Bezig met laden…"
 
 #: data/resources/blueprints/window.blp:326 src/window.rs:432
-#: src/window.rs:1323
+#: src/window.rs:1319
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -343,15 +343,15 @@ msgstr "Voorbeeldfoto afkomstig van"
 msgid "Unable to access dropped files"
 msgstr "Geen toegang tot hierheen gesleepte bestanden"
 
-#: src/window.rs:428 src/window.rs:1318
+#: src/window.rs:428 src/window.rs:1314
 msgid "Stop converting?"
 msgstr "Stoppen met conversie?"
 
-#: src/window.rs:429 src/window.rs:1319
+#: src/window.rs:429 src/window.rs:1315
 msgid "You will lose all progress."
 msgstr "Alle voortgang zal verloren gaan"
 
-#: src/window.rs:433 src/window.rs:1323
+#: src/window.rs:433 src/window.rs:1319
 msgid "_Stop"
 msgstr "_Stoppen"
 
@@ -359,33 +359,33 @@ msgstr "_Stoppen"
 msgid "Collecting files"
 msgstr "Bestanden verzamelen"
 
-#: src/window.rs:1246
+#: src/window.rs:1242
 #, fuzzy
 msgid "Error While Processing"
 msgstr "Fout bij verwerken"
 
-#: src/window.rs:1267
+#: src/window.rs:1263
 msgid "_Close"
 msgstr ""
 
-#: src/window.rs:1268
+#: src/window.rs:1264
 #, fuzzy
 msgid "_Copy to Clipboard"
 msgstr "_Kopiëren naar klembord"
 
-#: src/window.rs:1276
+#: src/window.rs:1272
 msgid "Error copied to clipboard"
 msgstr "Fout gekopieerd naar klembord"
 
-#: src/window.rs:1291
+#: src/window.rs:1287
 msgid "Image converted"
 msgstr "De afbeelding is geconverteerd"
 
-#: src/window.rs:1292
+#: src/window.rs:1288
 msgid "Open"
 msgstr "Openen"
 
-#: src/window.rs:1345
+#: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Conversie geannuleerd"
 

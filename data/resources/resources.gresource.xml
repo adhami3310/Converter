@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-    <gresource prefix="/io/gitlab/adhami3310/Switcheroo/">
+    <gresource prefix="/io/gitlab/adhami3310/Converter/">
         <file compressed="true" preprocess="xml-stripblanks">blueprints/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-thumbnail.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-rest.ui</file>

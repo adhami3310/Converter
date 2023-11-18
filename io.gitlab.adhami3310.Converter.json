@@ -1,5 +1,5 @@
 {
-    "app-id": "io.gitlab.adhami3310.Switcheroo",
+    "app-id": "io.gitlab.adhami3310.Converter",
     "runtime": "org.gnome.Platform",
     "runtime-version": "45",
     "sdk": "org.gnome.Sdk",

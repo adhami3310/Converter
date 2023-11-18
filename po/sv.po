@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 21:09-0400\n"
+"POT-Creation-Date: 2023-11-18 16:08-0500\n"
 "PO-Revision-Date: 2022-12-10 12:10+0100\n"
 "Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
 "Language-Team: Svenska Språkfiler <contactform@svenskasprakfiler.se>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:3
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:5
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
 #: data/resources/blueprints/window.blp:28
@@ -28,84 +28,84 @@ msgstr ""
 msgid "Switcheroo"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
 #, fuzzy
 msgid "Image Converter"
 msgstr "Bild konverterad"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:5
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:7
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:7
 msgid "Convert and manipulate images"
 msgstr "Konvertera och manipulera bilder"
 
-#: data/io.gitlab.adhami3310.Switcheroo.desktop.in.in:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
 msgid "image;convert;converting;processing"
 msgstr "bild;konvertera;konvertering;behandling"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:26
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
 msgstr "Visa mindre populära datatyper i menyn"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:30
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
 #, fuzzy
 msgid "Window width"
 msgstr "Breddförhållande"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:34
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
 #, fuzzy
 msgid "Image quality"
 msgstr "Bildtyp"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:38
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
 msgid "Image density per inch"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:42
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
 #, fuzzy
 msgid "Window height"
 msgstr "Höjdförhållande"
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:46
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
 msgid "Window maximized state"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:50
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
 msgid "Output format"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.gschema.xml.in:54
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:54
 msgid "Compression format"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:6
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:6
 msgid "Khaleel Al-Adhami"
 msgstr "Khaleel Al-Adhami"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:13
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:29
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
 msgid "image"
 msgstr "bild"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:30
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:30
 msgid "convert"
 msgstr "konvertera"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:31
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:31
 msgid "converting"
 msgstr "konverterar"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:32
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:32
 msgid "processing"
 msgstr "bearbetar"
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:48
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
 msgid "Converting sample image from PNG to HEIF"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Switcheroo.metainfo.xml.in.in:52
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr ""
 
@@ -252,12 +252,12 @@ msgstr "konverterar"
 msgid "This could take a while"
 msgstr "Detta kan ta en stund."
 
-#: data/resources/blueprints/window.blp:320 src/window.rs:760
+#: data/resources/blueprints/window.blp:320 src/window.rs:756
 msgid "Loading…"
 msgstr "Läser in…"
 
 #: data/resources/blueprints/window.blp:326 src/window.rs:432
-#: src/window.rs:1323
+#: src/window.rs:1319
 msgid "_Cancel"
 msgstr ""
 
@@ -342,16 +342,16 @@ msgstr "Exempelbild från"
 msgid "Unable to access dropped files"
 msgstr ""
 
-#: src/window.rs:428 src/window.rs:1318
+#: src/window.rs:428 src/window.rs:1314
 #, fuzzy
 msgid "Stop converting?"
 msgstr "konverterar"
 
-#: src/window.rs:429 src/window.rs:1319
+#: src/window.rs:429 src/window.rs:1315
 msgid "You will lose all progress."
 msgstr ""
 
-#: src/window.rs:433 src/window.rs:1323
+#: src/window.rs:433 src/window.rs:1319
 msgid "_Stop"
 msgstr ""
 
@@ -359,32 +359,32 @@ msgstr ""
 msgid "Collecting files"
 msgstr ""
 
-#: src/window.rs:1246
+#: src/window.rs:1242
 #, fuzzy
 msgid "Error While Processing"
 msgstr "bearbetar"
 
-#: src/window.rs:1267
+#: src/window.rs:1263
 msgid "_Close"
 msgstr ""
 
-#: src/window.rs:1268
+#: src/window.rs:1264
 msgid "_Copy to Clipboard"
 msgstr ""
 
-#: src/window.rs:1276
+#: src/window.rs:1272
 msgid "Error copied to clipboard"
 msgstr ""
 
-#: src/window.rs:1291
+#: src/window.rs:1287
 msgid "Image converted"
 msgstr "Bild konverterad"
 
-#: src/window.rs:1292
+#: src/window.rs:1288
 msgid "Open"
 msgstr "Öppna"
 
-#: src/window.rs:1345
+#: src/window.rs:1341
 #, fuzzy
 msgid "Converting Cancelled"
 msgstr "Konverterar…"

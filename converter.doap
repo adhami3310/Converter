@@ -8,7 +8,7 @@
 	<shortdesc xml:lang="en">Convert and manipulate images</shortdesc>
 
 	<homepage rdf:resource="https://gitlab.com/adhami3310/Switcheroo"/>
-	<download-page rdf:resource="https://flathub.org/apps/details/io.gitlab.adhami3310.Switcheroo"/>
+	<download-page rdf:resource="https://flathub.org/apps/details/io.gitlab.adhami3310.Converter"/>
 	<bug-database rdf:resource="https://gitlab.com/adhami3310/Switcheroo/-/issues"/>
 
 	<programming-language>Rust</programming-language>

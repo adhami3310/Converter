@@ -8,7 +8,7 @@ project('switcheroo',
 i18n = import('i18n')
 gnome = import('gnome')
 
-base_id = 'io.gitlab.adhami3310.Switcheroo'
+base_id = 'io.gitlab.adhami3310.Converter'
 
 dependency('gtk4', version: '>= 4.6.0')
 dependency('libadwaita-1')
