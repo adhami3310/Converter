@@ -508,7 +508,7 @@ impl AppWindow {
             self.imp().input_file_store.append(file);
         }
 
-        fdlimit::raise_fd_limit();
+        let _ = fdlimit::raise_fd_limit();
 
         self.load_pixbuf();
     }
@@ -658,10 +658,6 @@ impl AppWindow {
         self.imp()
             .all_images_stack
             .set_visible_child_name("all_images");
-        println!(
-            "{:?}",
-            self.imp().navigation.visible_page().and_then(|x| x.tag())
-        );
         if matches!(self.imp().navigation.visible_page().and_then(|x| x.tag()), Some(x) if x == "main")
         {
             self.switch_to_stack_convert();
