@@ -2,21 +2,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Irénée THIRION <irenee.thirion@e.email>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-18 16:08-0500\n"
-"PO-Revision-Date: 2023-08-23 17:36+0200\n"
-"Last-Translator: Irénée Thirion <irenee.thirion@e.email>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2023-11-19 22:50+0100\n"
+"Last-Translator: Irénée THIRION <irenee.thirion@e.email>\n"
+"Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 45.3\n"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
@@ -80,8 +81,8 @@ msgstr "Khaleel Al-Adhami"
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:13
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
-"Convertissez entre différents types de fichiers image et redimensionnez-les "
-"facilement."
+"Effectuez des convertissions entre différents types de fichiers image et "
+"redimensionnez-les facilement."
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:29
 msgid "image"
@@ -146,7 +147,7 @@ msgstr "Menu principal"
 
 #: data/resources/blueprints/window.blp:58
 msgid "Click “Open Images…” or drag images here."
-msgstr "Cliquez sur « Ouvrir une image… » ou faites glisser les images ici."
+msgstr "Cliquez sur « Ouvrir des images… » ou faites glisser les images ici."
 
 #: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -239,14 +240,12 @@ msgstr ""
 "en charge."
 
 #: data/resources/blueprints/window.blp:309
-#, fuzzy
 msgid "Converting"
-msgstr "conversion"
+msgstr "Conversion"
 
 #: data/resources/blueprints/window.blp:310
-#, fuzzy
 msgid "This could take a while"
-msgstr "Cela peut prendre du temps."
+msgstr "Cela peut prendre du temps"
 
 #: data/resources/blueprints/window.blp:320 src/window.rs:756
 msgid "Loading…"
@@ -275,7 +274,7 @@ msgstr "Vider le contenu de la fenêtre"
 
 #: data/resources/blueprints/window.blp:437
 msgid "Show Less Popular Datatypes"
-msgstr "Afficher les types de données les moins populaires"
+msgstr "Afficher les données moins populaires"
 
 #: data/resources/blueprints/window.blp:444
 msgid "Keyboard Shortcuts"
@@ -364,7 +363,7 @@ msgstr "_Copier vers le presse-papiers"
 
 #: src/window.rs:1272
 msgid "Error copied to clipboard"
-msgstr "Erreure copié dans le presse-papier"
+msgstr "Erreur copiée vers le presse-papier"
 
 #: src/window.rs:1287
 msgid "Image converted"
