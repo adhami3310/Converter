@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 16:08-0500\n"
+"POT-Creation-Date: 2023-11-19 17:33-0500\n"
 "PO-Revision-Date: 2023-09-30 23:18+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -125,11 +125,30 @@ msgid "Quit"
 msgstr "Çık"
 
 #: data/resources/blueprints/help-overlay.blp:24
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Open New Images"
-msgstr "Yeni Resim Aç"
+msgid "New Window"
+msgstr "Yeni Pencere"
 
 #: data/resources/blueprints/help-overlay.blp:29
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr "Pencereyi Temizle"
+
+#: data/resources/blueprints/help-overlay.blp:34
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "Daha Az Gözde Veri Türlerini Göster"
+
+#: data/resources/blueprints/help-overlay.blp:39
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "Panodan yapıştır"
+
+#: data/resources/blueprints/help-overlay.blp:44
 msgctxt "shortcut window"
 msgid "Add Images"
 msgstr "Resim Ekle"
@@ -380,6 +399,10 @@ msgstr "Aç"
 #: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Dönüştürme İptal Edildi"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open New Images"
+#~ msgstr "Yeni Resim Aç"
 
 #~ msgid "Converting…"
 #~ msgstr "Dönüştürülüyor…"

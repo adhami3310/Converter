@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 16:08-0500\n"
+"POT-Creation-Date: 2023-11-19 17:33-0500\n"
 "PO-Revision-Date: 2023-11-19 22:50+0100\n"
 "Last-Translator: Irénée THIRION <irenee.thirion@e.email>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
@@ -124,11 +124,30 @@ msgid "Quit"
 msgstr "Quitter"
 
 #: data/resources/blueprints/help-overlay.blp:24
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Open New Images"
-msgstr "Ouvrir de nouvelles images"
+msgid "New Window"
+msgstr "Nouvelle fenêtre"
 
 #: data/resources/blueprints/help-overlay.blp:29
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr "Vider le contenu de la fenêtre"
+
+#: data/resources/blueprints/help-overlay.blp:34
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "Afficher les données moins populaires"
+
+#: data/resources/blueprints/help-overlay.blp:39
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "Copier depuis le presse-papiers"
+
+#: data/resources/blueprints/help-overlay.blp:44
 msgctxt "shortcut window"
 msgid "Add Images"
 msgstr "Ajouter des images"
@@ -376,6 +395,10 @@ msgstr "Ouvrir"
 #: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Conversion annulée"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open New Images"
+#~ msgstr "Ouvrir de nouvelles images"
 
 #~ msgid "Converter has been renamed to Switcheroo!"
 #~ msgstr "Convertisseur a été renommé Switcheroo !"

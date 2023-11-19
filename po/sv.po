@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 16:08-0500\n"
+"POT-Creation-Date: 2023-11-19 17:33-0500\n"
 "PO-Revision-Date: 2022-12-10 12:10+0100\n"
 "Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
 "Language-Team: Svenska Språkfiler <contactform@svenskasprakfiler.se>\n"
@@ -125,12 +125,27 @@ msgid "Quit"
 msgstr "Avsluta"
 
 #: data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
-msgid "Open New Images"
-msgstr "Öppna bild"
+msgid "New Window"
+msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:29
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr ""
+
+#: data/resources/blueprints/help-overlay.blp:34
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "Visa mindre populära datatyper"
+
+#: data/resources/blueprints/help-overlay.blp:39
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr ""
+
+#: data/resources/blueprints/help-overlay.blp:44
 #, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
@@ -388,6 +403,11 @@ msgstr "Öppna"
 #, fuzzy
 msgid "Converting Cancelled"
 msgstr "Konverterar…"
+
+#, fuzzy
+#~ msgctxt "shortcut window"
+#~ msgid "Open New Images"
+#~ msgstr "Öppna bild"
 
 #~ msgid "Converting…"
 #~ msgstr "Konverterar…"

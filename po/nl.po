@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 16:08-0500\n"
+"POT-Creation-Date: 2023-11-19 17:33-0500\n"
 "PO-Revision-Date: 2023-05-22 09:53+0200\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -126,12 +126,28 @@ msgid "Quit"
 msgstr "Sluiten"
 
 #: data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
-msgid "Open New Images"
-msgstr "Afbeelding openen"
+msgid "New Window"
+msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:29
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr ""
+
+#: data/resources/blueprints/help-overlay.blp:34
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "Minder gebruikte formaten tonen"
+
+#: data/resources/blueprints/help-overlay.blp:39
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "_Kopiëren naar klembord"
+
+#: data/resources/blueprints/help-overlay.blp:44
 #, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
@@ -388,6 +404,11 @@ msgstr "Openen"
 #: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Conversie geannuleerd"
+
+#, fuzzy
+#~ msgctxt "shortcut window"
+#~ msgid "Open New Images"
+#~ msgstr "Afbeelding openen"
 
 #~ msgid "Rust rewrite."
 #~ msgstr "Herschreven in Rust"

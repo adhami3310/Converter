@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 16:08-0500\n"
+"POT-Creation-Date: 2023-11-19 17:33-0500\n"
 "PO-Revision-Date: 2023-10-05 20:14+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -125,11 +125,30 @@ msgid "Quit"
 msgstr "Beenden"
 
 #: data/resources/blueprints/help-overlay.blp:24
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Open New Images"
-msgstr "Neue Bilder öffnen"
+msgid "New Window"
+msgstr "Neues Fenster"
 
 #: data/resources/blueprints/help-overlay.blp:29
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr "Fenster leeren"
+
+#: data/resources/blueprints/help-overlay.blp:34
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "Weniger gängige Datentypen anzeigen"
+
+#: data/resources/blueprints/help-overlay.blp:39
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "Aus der Zwischenablage einfügen"
+
+#: data/resources/blueprints/help-overlay.blp:44
 msgctxt "shortcut window"
 msgid "Add Images"
 msgstr "Bilder hinzufügen"
@@ -378,6 +397,10 @@ msgstr "Öffnen"
 #: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Umwandlung abgebrochen"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open New Images"
+#~ msgstr "Neue Bilder öffnen"
 
 #~ msgid "Made UI adjustments."
 #~ msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."

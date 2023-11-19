@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 16:08-0500\n"
+"POT-Creation-Date: 2023-11-19 17:33-0500\n"
 "PO-Revision-Date: 2023-01-06 19:15-0300\n"
 "Last-Translator: Fúlvio Alves <fga.fulvio@gmail.com>\n"
 "Language-Team: \n"
@@ -127,12 +127,28 @@ msgid "Quit"
 msgstr "Sair"
 
 #: data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
-msgid "Open New Images"
-msgstr "Abrir imagem"
+msgid "New Window"
+msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:29
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr ""
+
+#: data/resources/blueprints/help-overlay.blp:34
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "Mostrar tipos de dados menos populares"
+
+#: data/resources/blueprints/help-overlay.blp:39
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "_Copiar para a área de transferência"
+
+#: data/resources/blueprints/help-overlay.blp:44
 #, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
@@ -390,6 +406,11 @@ msgstr "Abrir"
 #: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Conversão cancelada"
+
+#, fuzzy
+#~ msgctxt "shortcut window"
+#~ msgid "Open New Images"
+#~ msgstr "Abrir imagem"
 
 #~ msgid "Converting…"
 #~ msgstr "Convertendo…"
