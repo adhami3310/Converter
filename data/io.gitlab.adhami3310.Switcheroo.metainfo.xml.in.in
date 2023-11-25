@@ -43,7 +43,7 @@
     </recommends>
 
     <screenshots>
-        <screenshot>
+        <screenshot type="default">
             <image>https://gitlab.com/adhami3310/Switcheroo/-/raw/main/data/resources/screenshots/0.png</image>
             <caption>Converting sample image from PNG to HEIF</caption>
         </screenshot>
@@ -59,6 +59,7 @@
     <url type="bugtracker">https://gitlab.com/adhami3310/Switcheroo/-/issues</url>
     <url type="help">https://gitlab.com/adhami3310/Switcheroo/-/issues</url>
     <url type="vcs-browser">https://gitlab.com/adhami3310/Switcheroo</url>
+    <url type="translate">https://gitlab.com/adhami3310/Switcheroo/-/tree/main/po</url>
     <url type="contribute">https://gitlab.com/adhami3310/Switcheroo</url>
     <url type="contact">https://matrix.to/#/@adhami:matrix.org</url>
 
