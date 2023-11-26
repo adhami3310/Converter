@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 17:33-0500\n"
+"POT-Creation-Date: 2023-11-26 12:19-0500\n"
 "PO-Revision-Date: 2023-07-06 14:39+0300\n"
 "Last-Translator: Сергей Ворон <voron@duck.com>\n"
 "Language-Team: \n"
@@ -39,7 +39,8 @@ msgid "Convert and manipulate images"
 msgstr "Конвертация и работа с изображениями"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
-msgid "image;convert;converting;processing"
+#, fuzzy
+msgid "converter;image;convert;converting;processing"
 msgstr "изображение;конвертация;конвертирование;обработка"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
@@ -105,6 +106,26 @@ msgstr "Конвертирование образца изображения и�
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr "Конвертирование нескольких образцов изображений из SVG в HEIF"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Updated a few translations and screenshots."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:78
+msgid "Converter has been renamed to Switcheroo!"
+msgstr "Конвертер был переименован в Switcheroo!"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:79
+msgid "Various design changes to enhance user experience."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:84
+msgid "Fix variety of bugs and rework UI."
+msgstr "Исправлено множество ошибок и переработан пользовательский интерфейс."
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:89
+msgid "Rust rewrite."
+msgstr "Переписано на Rust."
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -400,16 +421,6 @@ msgstr "Конвертация отменена"
 #~ msgctxt "shortcut window"
 #~ msgid "Open New Images"
 #~ msgstr "Открыть новые изображения"
-
-#~ msgid "Converter has been renamed to Switcheroo!"
-#~ msgstr "Конвертер был переименован в Switcheroo!"
-
-#~ msgid "Fix variety of bugs and rework UI."
-#~ msgstr ""
-#~ "Исправлено множество ошибок и переработан пользовательский интерфейс."
-
-#~ msgid "Rust rewrite."
-#~ msgstr "Переписано на Rust."
 
 #~ msgid "Converting…"
 #~ msgstr "Конвертация…"

@@ -7,7 +7,7 @@ Icon=@icon@
 Terminal=false
 Type=Application
 Categories=GTK;GNOME;Graphics;ImageProcessing;Utility;
-Keywords=image;convert;converting;processing
+Keywords=converter;image;convert;converting;processing
 StartupNotify=true
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;

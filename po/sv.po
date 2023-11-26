@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 17:33-0500\n"
+"POT-Creation-Date: 2023-11-26 12:19-0500\n"
 "PO-Revision-Date: 2022-12-10 12:10+0100\n"
 "Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
 "Language-Team: Svenska Språkfiler <contactform@svenskasprakfiler.se>\n"
@@ -39,7 +39,8 @@ msgid "Convert and manipulate images"
 msgstr "Konvertera och manipulera bilder"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
-msgid "image;convert;converting;processing"
+#, fuzzy
+msgid "converter;image;convert;converting;processing"
 msgstr "bild;konvertera;konvertering;behandling"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
@@ -107,6 +108,26 @@ msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Updated a few translations and screenshots."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:78
+msgid "Converter has been renamed to Switcheroo!"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:79
+msgid "Various design changes to enhance user experience."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:84
+msgid "Fix variety of bugs and rework UI."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:89
+msgid "Rust rewrite."
 msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:11

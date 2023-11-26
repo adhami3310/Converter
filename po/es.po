@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 17:33-0500\n"
+"POT-Creation-Date: 2023-11-26 12:19-0500\n"
 "PO-Revision-Date: 2023-09-22 20:23+0200\n"
 "Last-Translator: Sergio Varela <sergiovg01@outlook.com>\n"
 "Language-Team: Spanish - Spain <sergiovg01@outlook.com>\n"
@@ -39,7 +39,8 @@ msgid "Convert and manipulate images"
 msgstr "Convierte y manipula imágenes"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
-msgid "image;convert;converting;processing"
+#, fuzzy
+msgid "converter;image;convert;converting;processing"
 msgstr "imagen;convertir;conversión;procesamiento"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
@@ -107,6 +108,27 @@ msgstr "Conversión de una imagen de muestra de PNG a HEIF"
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:52
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr "Conversión de varias imágenes de muestra de SVG a HEIF"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Updated a few translations and screenshots."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:78
+msgid "Converter has been renamed to Switcheroo!"
+msgstr "¡Converter ha pasado a llamarse Switcheroo!"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:79
+msgid "Various design changes to enhance user experience."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:84
+msgid "Fix variety of bugs and rework UI."
+msgstr ""
+"Se han corregido varios errores y se ha rediseñado la interfaz de usuario."
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:89
+msgid "Rust rewrite."
+msgstr "Reescrito en Rust"
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -399,16 +421,6 @@ msgstr "Conversión cancelada"
 #~ msgctxt "shortcut window"
 #~ msgid "Open New Images"
 #~ msgstr "Abrir nuevas imágenes"
-
-#~ msgid "Converter has been renamed to Switcheroo!"
-#~ msgstr "¡Converter ha pasado a llamarse Switcheroo!"
-
-#~ msgid "Fix variety of bugs and rework UI."
-#~ msgstr ""
-#~ "Se han corregido varios errores y se ha rediseñado la interfaz de usuario."
-
-#~ msgid "Rust rewrite."
-#~ msgstr "Reescrito en Rust"
 
 #~ msgid "Converting…"
 #~ msgstr "Convirtiendo…"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 17:33-0500\n"
+"POT-Creation-Date: 2023-11-26 12:19-0500\n"
 "PO-Revision-Date: 2023-05-22 09:53+0200\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -37,7 +37,8 @@ msgid "Convert and manipulate images"
 msgstr "Converteer en bewerk afbeeldingen"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
-msgid "image;convert;converting;processing"
+#, fuzzy
+msgid "converter;image;convert;converting;processing"
 msgstr ""
 "image;convert;converting;processing;afbeelding;converteren;conversie;"
 "verwerking;bewerken;"
@@ -109,6 +110,26 @@ msgstr "Voorbeeldafbeelding converteren van PNG naar WebP"
 #, fuzzy
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr "Voorbeeldafbeelding converteren van PNG naar WebP"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:73
+msgid "Updated a few translations and screenshots."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:78
+msgid "Converter has been renamed to Switcheroo!"
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:79
+msgid "Various design changes to enhance user experience."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:84
+msgid "Fix variety of bugs and rework UI."
+msgstr ""
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:89
+msgid "Rust rewrite."
+msgstr "Herschreven in Rust"
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -409,9 +430,6 @@ msgstr "Conversie geannuleerd"
 #~ msgctxt "shortcut window"
 #~ msgid "Open New Images"
 #~ msgstr "Afbeelding openen"
-
-#~ msgid "Rust rewrite."
-#~ msgstr "Herschreven in Rust"
 
 #~ msgid "Converting…"
 #~ msgstr "Bezig met converteren…"
