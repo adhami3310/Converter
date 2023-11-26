@@ -1,13 +1,13 @@
 <div align="center">
-<h1>Converter</h1>
+<h1>Switcheroo</h1>
 
-A simple and easy-to-use Flatpak application built with libadwaita for converting and manipulating images.
+Convert and manipulate images
 
-<img src="data/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg" width="128" height="128" alt="Converter icon">
+<img src="data/resources/icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg" width="128" height="128" alt="Switcheroo icon">
 
 [![Installs](https://img.shields.io/flathub/downloads/io.gitlab.adhami3310.Converter?style=for-the-badge)](https://flathub.org/apps/details/io.gitlab.adhami3310.Converter)
-[![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Converter?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/tags)
-[![License](https://img.shields.io/gitlab/license/adhami3310/Converter?style=for-the-badge)](https://gitlab.com/adhami3310/Converter/-/raw/main/COPYING)
+[![Latest Tag](https://img.shields.io/gitlab/v/tag/adhami3310/Switcheroo?sort=date&style=for-the-badge)](https://gitlab.com/adhami3310/Switcheroo/-/tags)
+[![License](https://img.shields.io/gitlab/license/adhami3310/Switcheroo?style=for-the-badge)](https://gitlab.com/adhami3310/Switcheroo/-/raw/main/COPYING)
 
 
 </div>
@@ -15,21 +15,16 @@ A simple and easy-to-use Flatpak application built with libadwaita for convertin
 ## Installation
 <a href='https://flathub.org/apps/details/io.gitlab.adhami3310.Converter'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
-It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory.
-
-### Third Party Packages
-You may also be able to obtain Converter from your distribution's package manager. Note these packages are maintained independently and thus may differ from the official version on Flathub. Please report any issues experienced to the package maintainer.
-
-[![Packaging status](https://repology.org/badge/vertical-allrepos/converter.svg)](https://repology.org/project/converter/versions)
+It is advised that you manually give it "All user files" (filesystem=home) through Flatseal to overcome [this Flatpak issue](https://github.com/flatpak/xdg-desktop-portal/issues/477), so it can suggest you to save the output file in the same input directory. It will then also allow you to save files directly instead of compressing them when doing batch processing.
 
 ## About
 
-Converter is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Converter from various writers, content creators, etc.
+Switcheroo is designed to give you a simple, quick, and easy-to-use tool to convert and manipulate your images in whatever way you like. It is built on top of the most advanced image editing libraries, ImageMagick. See [Press](PRESS.md) for content mentioning Switcheroo from various writers, content creators, etc.
 
-<img src="data/screenshots/0.png" alt="Two Screenshots of Converter">
+<img src="data/resources/screenshots/0.png" alt="View of Switcheroo">
 
-Converter supports converting the following datatypes:
- - image/jpeg (RW)
+Switcheroo supports converting the following datatypes:
+ - image/jpeg (RW) (through MozJPEG)
  - image/png (RW)
  - image/webp (RW)
  - image/svg+xml (R) (with scaling)
@@ -67,14 +62,14 @@ The recommended method is to use GNOME Builder:
 
 1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/) from Flathub
 1. Open Builder and select "Clone Repository..."
-1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
+1. Clone `https://gitlab.com/adhami3310/Switcheroo.git` (or your fork)
 1. Press "Run Project" (▶) at the top, or `Ctrl`+`Shift`+`[Spacebar]`.
 
 ### Flatpak
-You can install Converter from the latest commit:
+You can install Switcheroo from the latest commit:
 
 1. Install [`org.flatpak.Builder`](https://github.com/flathub/org.flatpak.Builder) from Flathub
-1. Clone `https://gitlab.com/adhami3310/Converter.git` (or your fork)
+1. Clone `https://gitlab.com/adhami3310/Switcheroo.git` (or your fork)
 1. Run `flatpak run org.flatpak.Builder --install --user --force-clean build-dir io.gitlab.adhami3310.Converter.json` in the terminal from the root of the repository.
 
 ### Meson
