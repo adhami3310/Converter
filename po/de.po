@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-26 12:19-0500\n"
+"POT-Creation-Date: 2023-11-28 19:55-0500\n"
 "PO-Revision-Date: 2023-10-05 20:14+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -22,7 +22,6 @@ msgstr ""
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
-#: data/resources/blueprints/window.blp:28
 #: data/resources/blueprints/window.blp:57 src/main.rs:30
 #: src/widgets/about_window.rs:24
 msgid "Switcheroo"
@@ -182,147 +181,147 @@ msgstr "Alle anzeigen"
 msgid "Drop Here to Open"
 msgstr "Hier ablegen zum Öffnen"
 
-#: data/resources/blueprints/window.blp:42
+#: data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
 msgstr "Primäres Menü"
 
 #: data/resources/blueprints/window.blp:58
-msgid "Click “Open Images…” or drag images here."
-msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
+msgid "Drag and drop images here"
+msgstr ""
 
 #: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
 msgstr "Bilder ö_ffnen …"
 
-#: data/resources/blueprints/window.blp:120
+#: data/resources/blueprints/window.blp:122
 msgid "Export Format"
 msgstr "Exportformat"
 
-#: data/resources/blueprints/window.blp:125
+#: data/resources/blueprints/window.blp:127
 msgid "Save To ZIP"
 msgstr "Als Zip speichern"
 
-#: data/resources/blueprints/window.blp:138
+#: data/resources/blueprints/window.blp:140
 msgid "Quality"
 msgstr "Qualität"
 
-#: data/resources/blueprints/window.blp:158
+#: data/resources/blueprints/window.blp:160
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: data/resources/blueprints/window.blp:159
+#: data/resources/blueprints/window.blp:161
 msgid "Replaces original transparency layer"
 msgstr "Ersetzt die originale Transparenzebene"
 
-#: data/resources/blueprints/window.blp:173
+#: data/resources/blueprints/window.blp:175
 msgid "Pixel Density Per Inch"
 msgstr "Pixeldichte pro Zoll"
 
-#: data/resources/blueprints/window.blp:185
+#: data/resources/blueprints/window.blp:187
 msgid "Resize"
 msgstr "Größe ändern"
 
-#: data/resources/blueprints/window.blp:190
-#: data/resources/blueprints/window.blp:191
-#: data/resources/blueprints/window.blp:198
+#: data/resources/blueprints/window.blp:192
+#: data/resources/blueprints/window.blp:193
 #: data/resources/blueprints/window.blp:200
-#: data/resources/blueprints/window.blp:221
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:223
 msgid "Width"
 msgstr "Breite"
 
-#: data/resources/blueprints/window.blp:208
+#: data/resources/blueprints/window.blp:210
 msgid "Preserve aspect ratio"
 msgstr "Seitenverhältnis beibehalten"
 
-#: data/resources/blueprints/window.blp:213
-#: data/resources/blueprints/window.blp:214
-#: data/resources/blueprints/window.blp:222
+#: data/resources/blueprints/window.blp:215
+#: data/resources/blueprints/window.blp:216
+#: data/resources/blueprints/window.blp:224
 msgid "Height"
 msgstr "Höhe"
 
-#: data/resources/blueprints/window.blp:233
+#: data/resources/blueprints/window.blp:235
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 "Wählen zwischen Prozentpunkten oder genauer Pixelanzahl beim Größenändern"
 
-#: data/resources/blueprints/window.blp:237
+#: data/resources/blueprints/window.blp:239
 msgid "%"
 msgstr "%"
 
-#: data/resources/blueprints/window.blp:237
+#: data/resources/blueprints/window.blp:239
 msgid "px"
 msgstr "px"
 
-#: data/resources/blueprints/window.blp:246
+#: data/resources/blueprints/window.blp:248
 msgid "Resize Algorithm"
 msgstr "Größenänderungsalgorithmus"
 
-#: data/resources/blueprints/window.blp:252
+#: data/resources/blueprints/window.blp:254
 msgid "Default"
 msgstr "Standard"
 
-#: data/resources/blueprints/window.blp:256
+#: data/resources/blueprints/window.blp:258
 msgid "Pixel Art"
 msgstr "Pixelkunst"
 
-#: data/resources/blueprints/window.blp:270
+#: data/resources/blueprints/window.blp:272
 msgid "_Convert"
 msgstr "_Umwandeln"
 
-#: data/resources/blueprints/window.blp:296
+#: data/resources/blueprints/window.blp:298
 msgid "Could not Load Image"
 msgstr "Bild konnte nicht geladen werden"
 
-#: data/resources/blueprints/window.blp:297
+#: data/resources/blueprints/window.blp:299
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Dieses Bild könnte beschädigt sein oder ein nicht unterstütztes Dateiformat "
 "verwenden."
 
-#: data/resources/blueprints/window.blp:309
+#: data/resources/blueprints/window.blp:311
 #, fuzzy
 msgid "Converting"
 msgstr "Umwandlung läuft"
 
-#: data/resources/blueprints/window.blp:310
+#: data/resources/blueprints/window.blp:312
 #, fuzzy
 msgid "This could take a while"
 msgstr "Das kann eine Weile dauern."
 
-#: data/resources/blueprints/window.blp:320 src/window.rs:756
+#: data/resources/blueprints/window.blp:322 src/window.rs:756
 msgid "Loading…"
 msgstr "Ladevorgang …"
 
-#: data/resources/blueprints/window.blp:326 src/window.rs:432
+#: data/resources/blueprints/window.blp:328 src/window.rs:432
 #: src/window.rs:1319
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
-#: data/resources/blueprints/window.blp:349
+#: data/resources/blueprints/window.blp:352
 msgid "All Images"
 msgstr "Alle Bilder"
 
-#: data/resources/blueprints/window.blp:420
+#: data/resources/blueprints/window.blp:426
 msgid "Paste From Clipboard"
 msgstr "Aus der Zwischenablage einfügen"
 
-#: data/resources/blueprints/window.blp:425
+#: data/resources/blueprints/window.blp:431
 msgid "New Window"
 msgstr "Neues Fenster"
 
-#: data/resources/blueprints/window.blp:430
+#: data/resources/blueprints/window.blp:436
 msgid "Clear Window"
 msgstr "Fenster leeren"
 
-#: data/resources/blueprints/window.blp:437
+#: data/resources/blueprints/window.blp:443
 msgid "Show Less Popular Datatypes"
 msgstr "Weniger gängige Datentypen anzeigen"
 
-#: data/resources/blueprints/window.blp:444
+#: data/resources/blueprints/window.blp:450
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkürzel"
 
-#: data/resources/blueprints/window.blp:449
+#: data/resources/blueprints/window.blp:455
 msgid "About Switcheroo"
 msgstr "Info zu Switcheroo"
 
@@ -418,6 +417,9 @@ msgstr "Öffnen"
 #: src/window.rs:1341
 msgid "Converting Cancelled"
 msgstr "Umwandlung abgebrochen"
+
+#~ msgid "Click “Open Images…” or drag images here."
+#~ msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
 
 #~ msgctxt "shortcut window"
 #~ msgid "Open New Images"

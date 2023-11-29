@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-26 12:19-0500\n"
+"POT-Creation-Date: 2023-11-28 19:55-0500\n"
 "PO-Revision-Date: 2023-08-25 18:28+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
@@ -22,7 +22,6 @@ msgstr ""
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
-#: data/resources/blueprints/window.blp:28
 #: data/resources/blueprints/window.blp:57 src/main.rs:30
 #: src/widgets/about_window.rs:24
 msgid "Switcheroo"
@@ -178,146 +177,146 @@ msgstr "Afichar tot"
 msgid "Drop Here to Open"
 msgstr "Depausatz aicí per dobrir"
 
-#: data/resources/blueprints/window.blp:42
+#: data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
 msgstr "Menú principal"
 
 #: data/resources/blueprints/window.blp:58
-msgid "Click “Open Images…” or drag images here."
+msgid "Drag and drop images here"
 msgstr ""
 
 #: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
 msgstr "_Dobrir un imatge…"
 
-#: data/resources/blueprints/window.blp:120
+#: data/resources/blueprints/window.blp:122
 msgid "Export Format"
 msgstr "Format d'expòrt"
 
-#: data/resources/blueprints/window.blp:125
+#: data/resources/blueprints/window.blp:127
 msgid "Save To ZIP"
 msgstr "Enregistrar en ZIP"
 
-#: data/resources/blueprints/window.blp:138
+#: data/resources/blueprints/window.blp:140
 msgid "Quality"
 msgstr "Qualitat"
 
-#: data/resources/blueprints/window.blp:158
+#: data/resources/blueprints/window.blp:160
 msgid "Background Color"
 msgstr "Color del rèireplan"
 
-#: data/resources/blueprints/window.blp:159
+#: data/resources/blueprints/window.blp:161
 msgid "Replaces original transparency layer"
 msgstr "Remplaçar lo jaç de transparéncia d’origina"
 
-#: data/resources/blueprints/window.blp:173
+#: data/resources/blueprints/window.blp:175
 msgid "Pixel Density Per Inch"
 msgstr "Densitat de pixèl per poce"
 
-#: data/resources/blueprints/window.blp:185
+#: data/resources/blueprints/window.blp:187
 msgid "Resize"
 msgstr "Redimensionar"
 
-#: data/resources/blueprints/window.blp:190
-#: data/resources/blueprints/window.blp:191
-#: data/resources/blueprints/window.blp:198
+#: data/resources/blueprints/window.blp:192
+#: data/resources/blueprints/window.blp:193
 #: data/resources/blueprints/window.blp:200
-#: data/resources/blueprints/window.blp:221
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:223
 msgid "Width"
 msgstr "Largor"
 
-#: data/resources/blueprints/window.blp:208
+#: data/resources/blueprints/window.blp:210
 msgid "Preserve aspect ratio"
 msgstr "Servar lo racio"
 
-#: data/resources/blueprints/window.blp:213
-#: data/resources/blueprints/window.blp:214
-#: data/resources/blueprints/window.blp:222
+#: data/resources/blueprints/window.blp:215
+#: data/resources/blueprints/window.blp:216
+#: data/resources/blueprints/window.blp:224
 msgid "Height"
 msgstr "Nautor"
 
-#: data/resources/blueprints/window.blp:233
+#: data/resources/blueprints/window.blp:235
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:237
+#: data/resources/blueprints/window.blp:239
 msgid "%"
 msgstr "%"
 
-#: data/resources/blueprints/window.blp:237
+#: data/resources/blueprints/window.blp:239
 msgid "px"
 msgstr "px"
 
-#: data/resources/blueprints/window.blp:246
+#: data/resources/blueprints/window.blp:248
 msgid "Resize Algorithm"
 msgstr "Algoritmes per redimensionar"
 
-#: data/resources/blueprints/window.blp:252
+#: data/resources/blueprints/window.blp:254
 msgid "Default"
 msgstr "Per defaut"
 
-#: data/resources/blueprints/window.blp:256
+#: data/resources/blueprints/window.blp:258
 msgid "Pixel Art"
 msgstr "Pxiel Art"
 
-#: data/resources/blueprints/window.blp:270
+#: data/resources/blueprints/window.blp:272
 msgid "_Convert"
 msgstr "_Convertir"
 
-#: data/resources/blueprints/window.blp:296
+#: data/resources/blueprints/window.blp:298
 msgid "Could not Load Image"
 msgstr "Cargament impossible de l’imatge"
 
-#: data/resources/blueprints/window.blp:297
+#: data/resources/blueprints/window.blp:299
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Aqueste imatge poiriá èsser corromput o utilizar un format de fichièr pas "
 "pres en carga."
 
-#: data/resources/blueprints/window.blp:309
+#: data/resources/blueprints/window.blp:311
 #, fuzzy
 msgid "Converting"
 msgstr "conversion"
 
-#: data/resources/blueprints/window.blp:310
+#: data/resources/blueprints/window.blp:312
 #, fuzzy
 msgid "This could take a while"
 msgstr "Aquò pòt prendre de temps."
 
-#: data/resources/blueprints/window.blp:320 src/window.rs:756
+#: data/resources/blueprints/window.blp:322 src/window.rs:756
 msgid "Loading…"
 msgstr "Cargament…"
 
-#: data/resources/blueprints/window.blp:326 src/window.rs:432
+#: data/resources/blueprints/window.blp:328 src/window.rs:432
 #: src/window.rs:1319
 msgid "_Cancel"
 msgstr "_Anullar"
 
-#: data/resources/blueprints/window.blp:349
+#: data/resources/blueprints/window.blp:352
 msgid "All Images"
 msgstr "Totes los imatges"
 
-#: data/resources/blueprints/window.blp:420
+#: data/resources/blueprints/window.blp:426
 msgid "Paste From Clipboard"
 msgstr "Pegar a partir del quichapapièrs"
 
-#: data/resources/blueprints/window.blp:425
+#: data/resources/blueprints/window.blp:431
 msgid "New Window"
 msgstr "Fenèstra novèla"
 
-#: data/resources/blueprints/window.blp:430
+#: data/resources/blueprints/window.blp:436
 msgid "Clear Window"
 msgstr "Voidar la fenèstra"
 
-#: data/resources/blueprints/window.blp:437
+#: data/resources/blueprints/window.blp:443
 msgid "Show Less Popular Datatypes"
 msgstr "Afichar los tipes de donadas mens populars"
 
-#: data/resources/blueprints/window.blp:444
+#: data/resources/blueprints/window.blp:450
 msgid "Keyboard Shortcuts"
 msgstr "Acorchis clavièr"
 
-#: data/resources/blueprints/window.blp:449
+#: data/resources/blueprints/window.blp:455
 msgid "About Switcheroo"
 msgstr "A prepaus de Switcheroo"
 
