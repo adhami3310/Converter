@@ -1,0 +1,57 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ImageThumbnail : Widget {
+    overflow: hidden;
+    Box root {
+        Box child {
+            Overlay {
+                Box {
+                    orientation: vertical;
+                    hexpand: true;
+                    vexpand: true;
+                    Box {
+                        Picture picture {
+                            width-request: 150;
+                            height-request: 150;
+                            content-fit: cover;
+                            hexpand: true;
+                            vexpand: true;
+                        }
+                        Image image {
+                            width-request: 150;
+                            height-request: 150;
+                            hexpand: true;
+                            vexpand: true;
+                            icon-size: large;
+                        }
+                    }
+
+                    Adw.Bin {
+                        hexpand: true;
+                        vexpand: false;
+                        overflow: hidden;
+                        Box {
+                            halign: center;
+                            valign: center;
+                            Label content {}
+                        }
+                        styles ["image-caption", "caption"]
+                    }
+                }
+
+                [overlay]
+                Button remove_image {
+                    name: "remove_image";
+                    icon-name: "user-trash-symbolic";
+                    tooltip-text: _("Remove image");
+                    valign: start;
+                    halign: end;
+                    styles ["circular", "image-remove", "osd"]
+                }
+            }
+            styles ["image-container"]
+        }
+        styles ["card-content"]
+    }
+}

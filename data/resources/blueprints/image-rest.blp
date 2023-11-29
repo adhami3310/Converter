@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ImageRest : FlowBoxChild {
+    focusable: false;
+    Adw.Bin {
+        Button image {
+            icon-name: "view-more-horizontal-symbolic";
+            hexpand: true;
+            vexpand: true;
+            width-request: 150;
+            height-request: 150;
+            Box {
+                orientation: vertical;
+                halign: center;
+                valign: center;
+                Label content {
+                    styles ["large_number"]
+                }
+                Label {
+                    label: _("Show All");
+                }
+            }
+            styles ["image-container", "card", "image-rest-button"]
+        }
+    }
+    styles ["no-padding"]
+}
