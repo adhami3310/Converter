@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-26 12:19-0500\n"
-"PO-Revision-Date: 2023-11-20 20:44+0100\n"
+"PO-Revision-Date: 2023-11-28 19:00+0100\n"
 "Last-Translator: Albano Battistella\n"
 "Language-Team: italian\n"
 "Language: it\n"
@@ -39,11 +39,8 @@ msgid "Convert and manipulate images"
 msgstr "Converti e manipola immagini"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
-#, fuzzy
 msgid "converter;image;convert;converting;processing"
-msgstr ""
-"image;convert;converting;processing;immagine;converti;conversione;"
-"elaborazione"
+msgstr "convertitore;immagine;convertire;conversione;elaborazione"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
 msgid "Shows less popular datatypes in the menu"
