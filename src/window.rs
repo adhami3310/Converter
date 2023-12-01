@@ -1930,19 +1930,12 @@ impl FileOperations for AppWindow {
             ),
         };
 
-        let sandboxed = files.iter().any(|f| f.is_behind_sandbox());
-
-        let default_folder = match sandboxed {
-            true => None,
-            false => Some(
-                first_file_path
-                    .parent()
-                    .unwrap()
-                    .to_str()
-                    .unwrap()
-                    .to_owned(),
-            ),
-        };
+        let default_folder = first_file_path
+            .parent()
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .to_owned();
 
         if save_format != OutputType::Compression(CompressionType::Directory) {
             FileChooser::choose_output_file_wrapper(

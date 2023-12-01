@@ -112,7 +112,7 @@ impl FileChooser {
         parent: &AppWindow,
         default_name: String,
         format: OutputType,
-        default_folder: Option<String>,
+        default_folder: String,
         callback_success: A,
         callback_error: B,
     ) where
@@ -120,7 +120,7 @@ impl FileChooser {
         B: Fn(&AppWindow, Option<&str>) + 'static,
     {
         glib::MainContext::default().spawn_local(clone!(@strong parent => async move {
-            FileChooser::choose_output_file(&parent, default_name, format, default_folder, callback_success, callback_error).await;
+            FileChooser::choose_output_file(&parent, default_name, format, Some(default_folder), callback_success, callback_error).await;
         }));
     }
 
@@ -175,7 +175,7 @@ impl FileChooser {
 
     pub fn choose_output_folder_wrapper<A, B>(
         parent: &AppWindow,
-        default_folder: Option<String>,
+        default_folder: String,
         callback_success: A,
         callback_error: B,
     ) where
@@ -183,7 +183,7 @@ impl FileChooser {
         B: Fn(&AppWindow, Option<&str>) + 'static,
     {
         glib::MainContext::default().spawn_local(clone!(@strong parent => async move {
-            FileChooser::choose_output_folder(&parent, default_folder, callback_success, callback_error).await;
+            FileChooser::choose_output_folder(&parent, Some(default_folder), callback_success, callback_error).await;
         }));
     }
 
