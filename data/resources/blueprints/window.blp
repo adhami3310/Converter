@@ -123,6 +123,16 @@ template $AppWindow : Adw.ApplicationWindow {
                               model: StringList supported_output_filetypes {};
                             }
 
+                            Adw.ActionRow single_pdf {
+                              title: _("Save as multi-page PDF");
+                              activatable-widget: single_pdf_value;
+                              
+                              Switch single_pdf_value {
+                                active: false;
+                                valign: center;
+                              }
+                            }
+
                             Adw.ActionRow output_compression {
                               title: _("Save To ZIP");
                               activatable-widget: output_compression_value;

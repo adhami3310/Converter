@@ -126,6 +126,10 @@ mod imp {
         pub output_compression: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub output_compression_value: TemplateChild<gtk::Switch>,
+        #[template_child]
+        pub single_pdf: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub single_pdf_value: TemplateChild<gtk::Switch>,
 
         #[template_child]
         pub quality: TemplateChild<gtk::Scale>,
@@ -308,6 +312,10 @@ impl AppWindow {
                 this.update_advanced_options();
                 this.update_compression_options();
                 this.update_resize();
+            }));
+        imp.single_pdf_value
+            .connect_state_notify(clone!(@weak self as this => move |_| {
+                this.update_compression_options();
             }));
         imp.resize_type
             .connect_selected_notify(clone!(@weak self as this => move |_| {
@@ -1087,6 +1095,42 @@ impl ConvertOperations for AppWindow {
 
         self.set_collecting_progress();
         let receiver = match save_format {
+            OutputType::File(FileType::Pdf) if output_files.len() > 1 => {
+                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_multi_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+
+                    let shared_child: SharedChild = SharedChild::spawn(
+                        std::process::Command::new("gs")
+                            .arg("-dNOPAUSE")
+                            .arg("-sDEVICE=pdfwrite")
+                            .arg(format!("-sOUTPUTFILE={}", path))
+                            .arg("-dBATCH")
+                            .args(output_files),
+                    )
+                    .unwrap();
+                    let child_arc = std::sync::Arc::new(shared_child);
+
+                    sender
+                        .send(ArcOrOptionError::Child(child_arc.clone()))
+                        .expect("Concurrency Issues");
+
+                    sender
+                        .send(ArcOrOptionError::OptionError(
+                            match rt.block_on(wait_for_child(child_arc)) {
+                                Err(e) => Some(e),
+                                _ => None,
+                            },
+                        ))
+                        .expect("Concurrency Issues");
+                });
+
+                receiver
+            }
             OutputType::File(_) => {
                 let file = output_files.first().unwrap().to_owned();
 
@@ -1436,25 +1480,27 @@ impl WindowUI for AppWindow {
         let multiple_files = files.len() > 1;
         let multiple_frames = multiple_files || files.iter().map(|i| i.frames()).sum::<usize>() > 1;
         let output_option = self.selected_output().unwrap();
-        match (multiple_files, multiple_frames) {
-            (false, false) => {
-                self.imp().output_compression.set_visible(false);
-            }
-            (false, true) if output_option.supports_animation() => {
-                self.imp().output_compression.set_visible(false);
-            }
-            _ => {
-                let previous_option = self
-                    .selected_compression()
-                    .unwrap_or(self.load_selected_compression());
+        if multiple_files || multiple_frames && !output_option.supports_animation() {
+            let previous_option = self
+                .selected_compression()
+                .unwrap_or(self.load_selected_compression());
 
-                self.imp().output_compression.set_visible(true);
+            let pdf_selected = matches!(output_option, FileType::Pdf);
+            self.imp().single_pdf.set_visible(pdf_selected);
 
-                match previous_option {
-                    CompressionType::Zip => self.imp().output_compression_value.set_active(true),
-                    _ => self.imp().output_compression_value.set_active(false),
-                }
+            let single_pdf_enabled = self.imp().single_pdf_value.state();
+
+            self.imp()
+                .output_compression
+                .set_visible(!pdf_selected || !single_pdf_enabled);
+
+            match previous_option {
+                CompressionType::Zip => self.imp().output_compression_value.set_active(true),
+                _ => self.imp().output_compression_value.set_active(false),
             }
+        } else {
+            self.imp().output_compression.set_visible(false);
+            self.imp().single_pdf.set_visible(false);
         }
     }
 
@@ -1903,8 +1949,17 @@ impl FileOperations for AppWindow {
         let output_option = self.selected_output().unwrap();
         let first_file_path = files.first().unwrap().path();
         let first_file_path = std::path::Path::new(&first_file_path);
-        let (save_format, default_name) = match (multiple_files, multiple_frames) {
-            (false, false) => {
+        let (save_format, default_name) =
+            if multiple_files || multiple_frames && !output_option.supports_animation() {
+                if matches!(output_option, FileType::Pdf) && self.imp().single_pdf_value.state() {
+                    (OutputType::File(FileType::Pdf), "images".to_owned())
+                } else {
+                    (
+                        OutputType::Compression(self.selected_compression().unwrap()),
+                        "images".to_owned(),
+                    )
+                }
+            } else {
                 let file_stem = first_file_path
                     .file_stem()
                     .unwrap()
@@ -1913,22 +1968,7 @@ impl FileOperations for AppWindow {
                     .to_owned();
 
                 (OutputType::File(output_option), file_stem)
-            }
-            (false, true) if output_option.supports_animation() => {
-                let file_stem = first_file_path
-                    .file_stem()
-                    .unwrap()
-                    .to_str()
-                    .unwrap()
-                    .to_owned();
-
-                (OutputType::File(output_option), file_stem)
-            }
-            _ => (
-                OutputType::Compression(self.selected_compression().unwrap()),
-                "images".to_owned(),
-            ),
-        };
+            };
 
         let default_folder = first_file_path
             .parent()
