@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-11-19 22:50+0100\n"
+"PO-Revision-Date: 2023-12-27 16:33+0100\n"
 "Last-Translator: Irénée THIRION <irenee.thirion@e.email>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -35,25 +35,21 @@ msgid "Quit"
 msgstr "Quitter"
 
 #: ../data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "New Window"
 msgstr "Nouvelle fenêtre"
 
 #: ../data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Clear Window"
 msgstr "Vider le contenu de la fenêtre"
 
 #: ../data/resources/blueprints/help-overlay.blp:34
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Afficher les données moins populaires"
 
 #: ../data/resources/blueprints/help-overlay.blp:39
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
 msgstr "Copier depuis le presse-papiers"
@@ -84,7 +80,7 @@ msgstr "Menu principal"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Glissez et déposez des images ici"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -96,7 +92,7 @@ msgstr "Format d’exportation"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Enregistrer en PDF multi-pages"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
@@ -317,202 +313,3 @@ msgstr "Ouvrir"
 #: ../src/window.rs:1385
 msgid "Converting Cancelled"
 msgstr "Conversion annulée"
-
-#~ msgid "Image Converter"
-#~ msgstr "Convertisseur d’images"
-
-#~ msgid "Convert and manipulate images"
-#~ msgstr "Convertissez et manipulez des images"
-
-#, fuzzy
-#~ msgid "converter;image;convert;converting;processing"
-#~ msgstr "image;convertir;conversion;traitement;manipuler;"
-
-#~ msgid "Shows less popular datatypes in the menu"
-#~ msgstr "Affiche les types de données moins populaires dans le menu"
-
-#~ msgid "Window width"
-#~ msgstr "Largueur de la fenêtre"
-
-#~ msgid "Image quality"
-#~ msgstr "Qualité de l’image"
-
-#~ msgid "Image density per inch"
-#~ msgstr "Densité de l'image par pouce"
-
-#~ msgid "Window height"
-#~ msgstr "Taille de la fenêtre"
-
-#~ msgid "Window maximized state"
-#~ msgstr "État de la fenêtre maximizée"
-
-#~ msgid "Output format"
-#~ msgstr "Format de sortie"
-
-#~ msgid "Compression format"
-#~ msgstr "Format de compression"
-
-#~ msgid "Khaleel Al-Adhami"
-#~ msgstr "Khaleel Al-Adhami"
-
-#~ msgid "Convert between different image filetypes and resize them easily."
-#~ msgstr ""
-#~ "Effectuez des convertissions entre différents types de fichiers image et "
-#~ "redimensionnez-les facilement."
-
-#~ msgid "image"
-#~ msgstr "image"
-
-#~ msgid "convert"
-#~ msgstr "convertir"
-
-#~ msgid "converting"
-#~ msgstr "conversion"
-
-#~ msgid "processing"
-#~ msgstr "traitement"
-
-#~ msgid "Converting sample image from PNG to HEIF"
-#~ msgstr "Conversion de l’échantillon d’image de PNG à HEIF"
-
-#~ msgid "Converting multiple sample images from SVG to HEIF"
-#~ msgstr "Conversion de l’échantillon d’image de SVG à HEIF"
-
-#~ msgid "Converter has been renamed to Switcheroo!"
-#~ msgstr "Convertisseur a été renommé Switcheroo !"
-
-#~ msgid "Fix variety of bugs and rework UI."
-#~ msgstr "Correction de divers bogues et refont de l’interface utilisateur."
-
-#~ msgid "Rust rewrite."
-#~ msgstr "Réecriture en Rust."
-
-#~ msgid "Click “Open Images…” or drag images here."
-#~ msgstr ""
-#~ "Cliquez sur « Ouvrir des images… » ou faites glisser les images ici."
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open New Images"
-#~ msgstr "Ouvrir de nouvelles images"
-
-#~ msgid "Converting…"
-#~ msgstr "Conversion…"
-
-#~ msgid "_Dismiss"
-#~ msgstr "_Ignorer"
-
-#~ msgid "Converter"
-#~ msgstr "Convertisseur"
-
-#~ msgid "Properties"
-#~ msgstr "Propriétés"
-
-#, fuzzy
-#~ msgid "Image Type"
-#~ msgstr "Taille de l’image"
-
-#~ msgid "Image Size"
-#~ msgstr "Taille de l’image"
-
-#~ msgid "Save Method"
-#~ msgstr "Méthode de sauvearde"
-
-#~ msgid "Compress images or use a directory"
-#~ msgstr "Compresse les images ou utilise un dossier"
-
-#~ msgid "DPI"
-#~ msgstr "PPP"
-
-#~ msgid "Percentage"
-#~ msgstr "Pourcentage"
-
-#~ msgid "Exact Pixels"
-#~ msgstr "Pixels Exacts"
-
-#~ msgid "Point"
-#~ msgstr "Point"
-
-#~ msgid "Quadratic"
-#~ msgstr "Quadratique"
-
-#~ msgid "Cubic"
-#~ msgstr "Cubique"
-
-#~ msgid "Mitchell"
-#~ msgstr "Mitchell"
-
-#~ msgid "Gaussian"
-#~ msgstr "Gaussien"
-
-#~ msgid "Lanczos"
-#~ msgstr "Lanczos"
-
-#, fuzzy
-#~ msgid "Open Files…"
-#~ msgstr "Ouvrir des fichiers…"
-
-#, fuzzy
-#~ msgid "Paste Image…"
-#~ msgstr "Coller une image…"
-
-#~ msgid "About Converter"
-#~ msgstr "À propos de Convertisseur"
-
-#~ msgid "Overview"
-#~ msgstr "Vue d’ensemble"
-
-#, fuzzy
-#~ msgid "More options"
-#~ msgstr "Plus d’options"
-
-#~ msgid "Options"
-#~ msgstr "Options"
-
-#, fuzzy
-#~ msgid "Convert to"
-#~ msgstr "Convertir vers"
-
-#~ msgid "More Options"
-#~ msgstr "Plus d’options"
-
-#~ msgid "Convert"
-#~ msgstr "Convertir"
-
-#~ msgid "Convert and Manipulate images"
-#~ msgstr "Convertissez et manipulez des images"
-
-#, fuzzy, python-brace-format
-#~ msgid "’{input_ext}’ is not supported"
-#~ msgstr "’{}’ n’est pas pris en charge"
-
-#~ msgid "No file extension was specified"
-#~ msgstr "Aucune extension de fichier n’a été spécifiée"
-
-#, fuzzy, python-brace-format
-#~ msgid "’{file_ext}’ is of the wrong format"
-#~ msgstr "’{}’ est dans un format incorrect"
-
-#~ msgid "Select output location"
-#~ msgstr "Sélectionner un emplacement de sortie"
-
-#~ msgid "Datatype"
-#~ msgstr "Type de données"
-
-#~ msgid ""
-#~ "Converter allows you to convert and manipulate a given image. It is a "
-#~ "front-end for ImageMagick."
-#~ msgstr ""
-#~ "Convertisseur vous permet de convertir et de manipuler une image donnée. "
-#~ "Il s’agit d’une interface pour ImageMagick."
-
-#~ msgid "Save Location"
-#~ msgstr "Emplacement de sauvegarde"
-
-#~ msgid "(None)"
-#~ msgstr "(Aucun)"
-
-#~ msgid "Save location is missing."
-#~ msgstr "Emplacement de sauvegarde manquant."
-
-#~ msgid "Initial Converter release"
-#~ msgstr "Première version de Convertisseur"
