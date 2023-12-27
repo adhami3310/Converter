@@ -8,15 +8,14 @@ msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-10-05 20:14+0200\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
-"Language-Team: German <gnome-de@gnome.org>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -34,25 +33,21 @@ msgid "Quit"
 msgstr "Beenden"
 
 #: ../data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "New Window"
 msgstr "Neues Fenster"
 
 #: ../data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Clear Window"
 msgstr "Fenster leeren"
 
 #: ../data/resources/blueprints/help-overlay.blp:34
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Weniger gängige Datentypen anzeigen"
 
 #: ../data/resources/blueprints/help-overlay.blp:39
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
 msgstr "Aus der Zwischenablage einfügen"
@@ -83,7 +78,7 @@ msgstr "Primäres Menü"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Bilder hierher ziehen und ablegen"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -95,7 +90,7 @@ msgstr "Exportformat"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Als mehrseitiges PDF speichern"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
@@ -179,14 +174,12 @@ msgstr ""
 "verwenden."
 
 #: ../data/resources/blueprints/window.blp:321
-#, fuzzy
 msgid "Converting"
 msgstr "Umwandlung läuft"
 
 #: ../data/resources/blueprints/window.blp:322
-#, fuzzy
 msgid "This could take a while"
-msgstr "Das kann eine Weile dauern."
+msgstr "Das kann einen Moment dauern"
 
 #: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
 msgid "Loading…"
@@ -324,8 +317,7 @@ msgstr "Umwandlung abgebrochen"
 #~ msgid "Convert and manipulate images"
 #~ msgstr "Bilder umwandeln und bearbeiten"
 
-#, fuzzy
-#~ msgid "converter;image;convert;converting;processing"
+#~ msgid "image;convert;converting;processing"
 #~ msgstr ""
 #~ "image;convert;converting;processing;Bild;umwandeln;Umwandlung;"
 #~ "konvertieren;verarbeiten"
@@ -377,6 +369,9 @@ msgstr "Umwandlung abgebrochen"
 #~ msgid "Converting sample image from PNG to HEIF"
 #~ msgstr "Beispielbild wird von PNG nach HEIF umgewandelt"
 
+#~ msgid "Made UI adjustments."
+#~ msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
+
 #~ msgid "Converting multiple sample images from SVG to HEIF"
 #~ msgstr "Mehrere Beispieldateien werden von SVG nach HEIF umgewandelt"
 
@@ -389,15 +384,18 @@ msgstr "Umwandlung abgebrochen"
 #~ msgid "Rust rewrite."
 #~ msgstr "Neu geschrieben in Rust."
 
-#~ msgid "Click “Open Images…” or drag images here."
-#~ msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
-
 #~ msgctxt "shortcut window"
 #~ msgid "Open New Images"
 #~ msgstr "Neue Bilder öffnen"
 
-#~ msgid "Made UI adjustments."
-#~ msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
+#~ msgid "Click “Open Images…” or drag images here."
+#~ msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
+
+#, fuzzy
+#~ msgid "converter;image;convert;converting;processing"
+#~ msgstr ""
+#~ "image;convert;converting;processing;Bild;umwandeln;Umwandlung;"
+#~ "konvertieren;verarbeiten"
 
 #~ msgid "Converting…"
 #~ msgstr "Umwandlung läuft …"
