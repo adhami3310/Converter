@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: io.gitlab.adhami3310.Switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-09-30 23:18+0300\n"
+"PO-Revision-Date: 2023-12-27 18:25+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -35,28 +35,24 @@ msgid "Quit"
 msgstr "Çık"
 
 #: ../data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "New Window"
 msgstr "Yeni Pencere"
 
 #: ../data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Clear Window"
 msgstr "Pencereyi Temizle"
 
 #: ../data/resources/blueprints/help-overlay.blp:34
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Daha Az Gözde Veri Türlerini Göster"
 
 #: ../data/resources/blueprints/help-overlay.blp:39
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
-msgstr "Panodan yapıştır"
+msgstr "Panodan Yapıştır"
 
 #: ../data/resources/blueprints/help-overlay.blp:44
 msgctxt "shortcut window"
@@ -84,7 +80,7 @@ msgstr "Birincil Menü"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Resimleri sürükleyip buraya bırakın"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -96,7 +92,7 @@ msgstr "Dışa Aktarma Biçimi"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Çok sayfalı PDF olarak kaydet"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
@@ -181,14 +177,12 @@ msgstr ""
 "olabilir."
 
 #: ../data/resources/blueprints/window.blp:321
-#, fuzzy
 msgid "Converting"
-msgstr "dönüştürülüyor"
+msgstr "Dönüştürülüyor"
 
 #: ../data/resources/blueprints/window.blp:322
-#, fuzzy
 msgid "This could take a while"
-msgstr "Biraz uzun sürebilir."
+msgstr "Biraz uzun sürebilir"
 
 #: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
 msgid "Loading…"
