@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-01-06 19:15-0300\n"
+"PO-Revision-Date: 2023-12-27 23:10-0300\n"
 "Last-Translator: Fúlvio Alves <fga.fulvio@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -36,41 +36,38 @@ msgstr "Sair"
 #: ../data/resources/blueprints/help-overlay.blp:24
 msgctxt "shortcut window"
 msgid "New Window"
-msgstr ""
+msgstr "Nova janela"
 
 #: ../data/resources/blueprints/help-overlay.blp:29
 msgctxt "shortcut window"
 msgid "Clear Window"
-msgstr ""
+msgstr "Limpar janela"
 
 #: ../data/resources/blueprints/help-overlay.blp:34
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Mostrar tipos de dados menos populares"
 
 #: ../data/resources/blueprints/help-overlay.blp:39
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
-msgstr "_Copiar para a área de transferência"
+msgstr "Colar da área de transferência"
 
 #: ../data/resources/blueprints/help-overlay.blp:44
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Add Images"
-msgstr "Abrir imagem"
+msgstr "Adicionar imagens"
 
 #: ../data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
-msgstr ""
+msgstr "Mostrar tudo"
 
 #: ../data/resources/blueprints/window.blp:9
 #: ../data/resources/blueprints/window.blp:21
 #: ../data/resources/blueprints/window.blp:57 ../src/main.rs:30
 #: ../src/widgets/about_window.rs:24
 msgid "Switcheroo"
-msgstr ""
+msgstr "Switcheroo"
 
 #: ../data/resources/blueprints/window.blp:15
 msgid "Drop Here to Open"
@@ -78,28 +75,27 @@ msgstr "Solte aqui para abrir"
 
 #: ../data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
-msgstr ""
+msgstr "Menu principal"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Arraste e solte imagens aqui"
 
 #: ../data/resources/blueprints/window.blp:69
-#, fuzzy
 msgid "_Open Images…"
-msgstr "_Abrir imagem…"
+msgstr "_Abrir imagens…"
 
 #: ../data/resources/blueprints/window.blp:122
 msgid "Export Format"
-msgstr ""
+msgstr "Formato de exportação"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Salvar como PDF de várias páginas"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
-msgstr ""
+msgstr "Salvar em ZIP"
 
 #: ../data/resources/blueprints/window.blp:150
 msgid "Quality"
@@ -111,11 +107,11 @@ msgstr "Cor de fundo"
 
 #: ../data/resources/blueprints/window.blp:171
 msgid "Replaces original transparency layer"
-msgstr ""
+msgstr "Substituir a camada de transparência original"
 
 #: ../data/resources/blueprints/window.blp:185
 msgid "Pixel Density Per Inch"
-msgstr ""
+msgstr "Densidade de pixels por polegada"
 
 #: ../data/resources/blueprints/window.blp:197
 msgid "Resize"
@@ -130,7 +126,6 @@ msgid "Width"
 msgstr "Largura"
 
 #: ../data/resources/blueprints/window.blp:220
-#, fuzzy
 msgid "Preserve aspect ratio"
 msgstr "Preservar proporção"
 
@@ -142,28 +137,27 @@ msgstr "Altura"
 
 #: ../data/resources/blueprints/window.blp:245
 msgid "Choose between resizing with percentages or using exact pixels"
-msgstr ""
+msgstr "Escolha entre redimensionar com porcentagens ou usar pixeis exatos"
 
 #: ../data/resources/blueprints/window.blp:249
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../data/resources/blueprints/window.blp:249
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #: ../data/resources/blueprints/window.blp:258
 msgid "Resize Algorithm"
-msgstr ""
+msgstr "Algoritmo de redimensionamento"
 
 #: ../data/resources/blueprints/window.blp:264
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
 
 #: ../data/resources/blueprints/window.blp:268
-#, fuzzy
 msgid "Pixel Art"
-msgstr "Pixels"
+msgstr "Arte de pixel"
 
 #: ../data/resources/blueprints/window.blp:282
 msgid "_Convert"
@@ -175,18 +169,15 @@ msgstr "Não foi possível carregar a imagem"
 
 #: ../data/resources/blueprints/window.blp:309
 msgid "This image could be corrupted or may use an unsupported file format."
-msgstr ""
-"Esta imagem pode estar corrompida ou usar um formato de arquivo incompatível."
+msgstr "Esta imagem pode estar corrompida ou usar um formato de arquivo incompatível."
 
 #: ../data/resources/blueprints/window.blp:321
-#, fuzzy
 msgid "Converting"
-msgstr "convertendo"
+msgstr "Convertendo"
 
 #: ../data/resources/blueprints/window.blp:322
-#, fuzzy
 msgid "This could take a while"
-msgstr "Isso pode demorar um pouco."
+msgstr "Isso pode demorar um pouco"
 
 #: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
 msgid "Loading…"
@@ -199,19 +190,19 @@ msgstr "_Cancelar"
 
 #: ../data/resources/blueprints/window.blp:362
 msgid "All Images"
-msgstr ""
+msgstr "Todas as imagens"
 
 #: ../data/resources/blueprints/window.blp:436
 msgid "Paste From Clipboard"
-msgstr ""
+msgstr "Colar da área de transferência"
 
 #: ../data/resources/blueprints/window.blp:441
 msgid "New Window"
-msgstr ""
+msgstr "Nova janela"
 
 #: ../data/resources/blueprints/window.blp:446
 msgid "Clear Window"
-msgstr ""
+msgstr "Limpar janela"
 
 #: ../data/resources/blueprints/window.blp:453
 msgid "Show Less Popular Datatypes"
@@ -223,48 +214,44 @@ msgstr "Atalhos de teclado"
 
 #: ../data/resources/blueprints/window.blp:465
 msgid "About Switcheroo"
-msgstr ""
+msgstr "Sobre o Switcheroo"
 
 #: ../src/file_chooser.rs:39
-#, fuzzy
 msgid "Unsupported filetype"
-msgstr "Arquivos de imagem compatíveis"
+msgstr "Tipo de arquivo não suportado"
 
 #: ../src/file_chooser.rs:77
-#, fuzzy
 msgid "Images"
-msgstr "Abrir imagem"
+msgstr "Imagens"
 
 #: ../src/file_chooser.rs:80
-#, fuzzy
 msgid "_Select Images"
-msgstr "Selecione uma imagem"
+msgstr "_Selecionar imagens"
 
 #: ../src/file_chooser.rs:159
 msgid "Unspecified filetype"
-msgstr ""
+msgstr "Tipo de arquivo não especificado"
 
 #: ../src/file_chooser.rs:164
 msgid "Unknown filetype"
-msgstr ""
+msgstr "Tipo de arquivo desconhecido"
 
 #: ../src/file_chooser.rs:169
 msgid "Used the wrong filetype"
-msgstr ""
+msgstr "Usou o tipo de arquivo errado"
 
 #: ../src/magick.rs:156
-#, fuzzy
 msgid "Pasted Image"
-msgstr "Abrir imagem"
+msgstr "Imagem colada"
 
 #: ../src/magick.rs:364
 msgid "Unknown IO error happened"
-msgstr ""
+msgstr "Ocorreu um erro de IO desconhecido"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
 #: ../src/widgets/about_window.rs:28
 msgid "translator-credits"
-msgstr ""
+msgstr "Fúlvio Alves <fga.fulvio@gmail.com>"
 
 #: ../src/widgets/about_window.rs:35
 msgid "Code and Design Borrowed from"
@@ -276,7 +263,7 @@ msgstr "Imagem de exemplo de"
 
 #: ../src/window.rs:413
 msgid "Unable to access dropped files"
-msgstr ""
+msgstr "Não é possível acessar os arquivos soltos"
 
 #: ../src/window.rs:436 ../src/window.rs:1358
 msgid "Stop converting?"
@@ -292,19 +279,17 @@ msgstr "_Parar"
 
 #: ../src/window.rs:477
 msgid "Collecting files"
-msgstr ""
+msgstr "Coletando arquivos"
 
 #: ../src/window.rs:1286
-#, fuzzy
 msgid "Error While Processing"
-msgstr "Erro ao processar"
+msgstr "Erro durante o processamento"
 
 #: ../src/window.rs:1307
 msgid "_Close"
-msgstr ""
+msgstr "_Fechar"
 
 #: ../src/window.rs:1308
-#, fuzzy
 msgid "_Copy to Clipboard"
 msgstr "_Copiar para a área de transferência"
 
@@ -333,9 +318,7 @@ msgstr "Conversão cancelada"
 
 #, fuzzy
 #~ msgid "converter;image;convert;converting;processing"
-#~ msgstr ""
-#~ "image;convert;converting;processing;imagem;converter;conversão;"
-#~ "processamento"
+#~ msgstr "image;convert;converting;processing;imagem;converter;conversão;processamento"
 
 #~ msgid "Shows less popular datatypes in the menu"
 #~ msgstr "Mostrar tipos de dados menos populares no menu"
@@ -473,12 +456,8 @@ msgstr "Conversão cancelada"
 #~ msgid "Convert and Manipulate images"
 #~ msgstr "Converta e manipule imagens"
 
-#~ msgid ""
-#~ "A simple and easy-to-use Flatpak application built with libadwaita for "
-#~ "converting and manipulating images."
-#~ msgstr ""
-#~ "Um aplicativo Flatpak simples e fácil de usar construído com libadwaita "
-#~ "para converter e manipular imagens."
+#~ msgid "A simple and easy-to-use Flatpak application built with libadwaita for converting and manipulating images."
+#~ msgstr "Um aplicativo Flatpak simples e fácil de usar construído com libadwaita para converter e manipular imagens."
 
 #~ msgid "Made UI adjustments."
 #~ msgstr "Feito ajustes da interface do usuário"
