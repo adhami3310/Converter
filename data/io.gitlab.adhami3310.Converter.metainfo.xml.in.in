@@ -17,21 +17,6 @@
 
     <translation type="gettext">@gettext-package@</translation>
 
-    <categories>
-        <category>Graphics</category>
-        <category>ImageProcessing</category>
-        <category>GTK</category>
-        <category>GNOME</category>
-        <category>Utility</category>
-    </categories>
-
-    <keywords>
-        <keyword>image</keyword>
-        <keyword>convert</keyword>
-        <keyword>converting</keyword>
-        <keyword>processing</keyword>
-    </keywords>
-
     <requires>
         <internet>offline-only</internet>
     </requires>
