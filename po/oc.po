@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-08-25 18:28+0200\n"
+"PO-Revision-Date: 2024-01-25 09:47+0100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
 "Language: oc\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -34,25 +34,21 @@ msgid "Quit"
 msgstr "Sortir"
 
 #: ../data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "New Window"
 msgstr "Fenèstra novèla"
 
 #: ../data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Clear Window"
 msgstr "Voidar la fenèstra"
 
 #: ../data/resources/blueprints/help-overlay.blp:34
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Afichar los tipes de donadas mens populars"
 
 #: ../data/resources/blueprints/help-overlay.blp:39
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
 msgstr "Pegar a partir del quichapapièrs"
@@ -83,7 +79,7 @@ msgstr "Menú principal"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Lissar e depausar los imatges aicí"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -95,7 +91,7 @@ msgstr "Format d'expòrt"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Enregistrar coma PDF multipagina"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
@@ -142,6 +138,7 @@ msgstr "Nautor"
 #: ../data/resources/blueprints/window.blp:245
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
+"Causir entre retalhar en utilizant de percentatges o de pixèls exactes"
 
 #: ../data/resources/blueprints/window.blp:249
 msgid "%"
@@ -161,7 +158,7 @@ msgstr "Per defaut"
 
 #: ../data/resources/blueprints/window.blp:268
 msgid "Pixel Art"
-msgstr "Pxiel Art"
+msgstr "Pixel Art"
 
 #: ../data/resources/blueprints/window.blp:282
 msgid "_Convert"
@@ -178,14 +175,12 @@ msgstr ""
 "pres en carga."
 
 #: ../data/resources/blueprints/window.blp:321
-#, fuzzy
 msgid "Converting"
-msgstr "conversion"
+msgstr "Conversion"
 
 #: ../data/resources/blueprints/window.blp:322
-#, fuzzy
 msgid "This could take a while"
-msgstr "Aquò pòt prendre de temps."
+msgstr "Aquò pòt prendre de temps"
 
 #: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
 msgid "Loading…"
