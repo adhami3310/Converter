@@ -3,7 +3,11 @@
     <id>@app-id@</id>
 
     <name>Switcheroo</name>
-    <developer_name>Khaleel Al-Adhami</developer_name>
+    <!-- developer_name tag deprecated with Appstream 1.0 -->
+    <developer_name translatable="no">Khaleel Al-Adhami</developer_name>
+    <developer id="github.com">
+        <name translatable="no">Khaleel Al-Adhami</name>
+    </developer>
     <summary>Convert and manipulate images</summary>
 
     <metadata_license>CC-BY-SA-4.0</metadata_license>
@@ -16,21 +20,6 @@
     </description>
 
     <translation type="gettext">@gettext-package@</translation>
-
-    <categories>
-        <category>Graphics</category>
-        <category>ImageProcessing</category>
-        <category>GTK</category>
-        <category>GNOME</category>
-        <category>Utility</category>
-    </categories>
-
-    <keywords>
-        <keyword>image</keyword>
-        <keyword>convert</keyword>
-        <keyword>converting</keyword>
-        <keyword>processing</keyword>
-    </keywords>
 
     <requires>
         <internet>offline-only</internet>

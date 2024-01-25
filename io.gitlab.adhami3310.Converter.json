@@ -349,6 +349,7 @@
             "name": "switcheroo",
             "builddir": true,
             "buildsystem": "meson",
+            "run-test": true,
             "config-opts": [
                 "--buildtype=release",
                 "-Dprofile=development"
