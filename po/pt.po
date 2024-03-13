@@ -2,16 +2,16 @@
 # Copyright (C) 2023 THE switcheroo'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the switcheroo package.
 # Automatically generated, 2023.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2023.
+# Juliano de Souza Camargo <julianosc@protonmail.com>, 2023-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-11-24 17:47-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Language-Team: Portuguese <https://l10n.gnome.org/languages/pt/>\n"
+"PO-Revision-Date: 2024-01-01 14:14-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@protonmail.com>\n"
+"Language-Team: Portuguese <>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,7 +80,7 @@ msgstr "Menu principal"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Arrastar e largar imagens aqui"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -92,7 +92,7 @@ msgstr "Formato a exportar"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Gravar como PDF multi-páginas"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
