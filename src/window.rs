@@ -1178,14 +1178,18 @@ impl ConvertOperations for AppWindow {
                     .unwrap();
                     let child_arc = std::sync::Arc::new(shared_child);
 
-                    sender.send_blocking(ArcOrOptionError::Child(child_arc.clone())).expect("Concurrency Issues");
+                    sender
+                        .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
+                        .expect("Concurrency Issues");
 
-                    sender.send_blocking(ArcOrOptionError::OptionError(
-                        match rt.block_on(wait_for_child(child_arc)) {
-                            Err(e) => Some(e),
-                            _ => None,
-                        },
-                    )).expect("Concurrency Issues");
+                    sender
+                        .send_blocking(ArcOrOptionError::OptionError(
+                            match rt.block_on(wait_for_child(child_arc)) {
+                                Err(e) => Some(e),
+                                _ => None,
+                            },
+                        ))
+                        .expect("Concurrency Issues");
                 });
 
                 receiver
