@@ -40,7 +40,7 @@ action_icons = [
 
 install_data(
   action_icons,
-  install_dir: join_paths(get_option('datadir'), action_dir)
+  install_dir: join_paths(pkgdatadir, action_dir)
 )
 
 

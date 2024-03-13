@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+use std::os::fd::AsFd;
 use std::path::Path;
 use std::sync::atomic::AtomicUsize;
 
@@ -78,6 +79,8 @@ mod imp {
         cell::{Cell, RefCell},
         sync::atomic::AtomicBool,
     };
+
+    use crate::config::PKGDATADIR;
 
     use super::*;
 
@@ -203,6 +206,12 @@ mod imp {
     impl ObjectImpl for AppWindow {
         fn constructed(&self) {
             self.parent_constructed();
+
+            let theme = gtk::IconTheme::for_display(
+                &gtk::gdk::Display::default().expect("cannot find display"),
+            );
+            theme.add_search_path(PKGDATADIR.to_owned() + "/icons");
+
             let obj = self.obj();
             obj.load_window_size();
             obj.setup_gactions();
@@ -238,7 +247,7 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl AppWindow {
-    pub fn new<P: glib::IsA<gtk::Application>>(app: &P) -> Self {
+    pub fn new<P: glib::prelude::IsA<gtk::Application>>(app: &P) -> Self {
         let win = glib::Object::builder::<AppWindow>()
             .property("application", app)
             .build();
@@ -525,7 +534,7 @@ impl AppWindow {
         let files = self.files();
         let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
-        let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+        let (sender, receiver) = async_channel::bounded(1);
 
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
@@ -539,12 +548,11 @@ impl AppWindow {
 
             let res = rt.block_on(join_all(jobs));
 
-            sender.send(res).expect("concurrency failure");
+            sender.send_blocking(res).expect("Concurrency Issues");
         });
 
-        receiver.attach(
-            None,
-            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |image_info| {
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok(image_info) = receiver.recv().await {
                 let real_files = files.clone();
                 for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
                     f.set_frames(*frame);
@@ -560,11 +568,8 @@ impl AppWindow {
                 idle_add_local_once(clone!(@weak this as these => move || {
                     these.load_pixbuf_finished();
                 }));
-
-
-                glib::ControlFlow::Break
-            }),
-        );
+            }
+        }));
     }
 
     fn remove_file(&self, i: u32) {
@@ -704,7 +709,7 @@ impl AppWindow {
             .map(|f| (f.kind().supports_pixbuf(), f.path()))
             .collect_vec();
 
-        let (sender, receiver) = glib::MainContext::channel(glib::Priority::DEFAULT);
+        let (sender, receiver) = async_channel::bounded(1);
         std::thread::spawn(move || {
             let rt = tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -718,14 +723,14 @@ impl AppWindow {
                     async move {
                         spawn(async move {
                             sender
-                                .send((
+                                .send_blocking((
                                     i,
                                     match b {
                                         true => Some(Texture::from_filename(&path).unwrap()),
                                         false => None,
                                     },
                                 ))
-                                .expect("Concurrency issues");
+                                .expect("Concurrency Issues");
                         })
                         .await
                     }
@@ -738,9 +743,8 @@ impl AppWindow {
         let completed = std::sync::Arc::new(AtomicUsize::new(0));
         let total = self.files_count();
 
-        receiver.attach(
-            None,
-            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |(i, p)| {
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok((i,p)) = receiver.recv().await {
                 if let Some(p) = p {
                     this.imp().input_file_store.item(i as u32).and_downcast::<InputFile>().unwrap().set_pixbuf(p);
                 }
@@ -749,12 +753,10 @@ impl AppWindow {
                 let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
                 if x + 1 == total {
                     this.load_frames();
-                    glib::ControlFlow::Break
-                } else {
-                    glib::ControlFlow::Continue
+                    break;
                 }
-            }),
-        );
+            }
+        }));
     }
 
     async fn convert_start(&self, save_format: OutputType, path: String) {
@@ -895,7 +897,7 @@ impl AppWindow {
             })
             .collect_vec();
 
-        let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+        let (sender, receiver) = async_channel::bounded(1);
 
         let count = magick_jobs.iter().map(|mjs| mjs.len()).sum();
 
@@ -928,10 +930,10 @@ impl AppWindow {
                                 else {
                                     dbg!("panic");
                                     sender
-                                        .send(ArcOrOptionError::OptionError(Some(
+                                        .send_blocking(ArcOrOptionError::OptionError(Some(
                                             "cannot generate command".to_string(),
                                         )))
-                                        .expect("Concurrency Issue");
+                                        .expect("Concurrency Issues");
                                     return;
                                 };
                                 if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
@@ -939,8 +941,8 @@ impl AppWindow {
                                 }
                                 let child_arc = std::sync::Arc::new(shared_child);
                                 sender
-                                    .send(ArcOrOptionError::Child(child_arc.clone()))
-                                    .expect("Concurrency Issue");
+                                    .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
+                                    .expect("Concurrency Issues");
                                 let output = match wait_for_child(child_arc.clone()).await {
                                     Ok(_) => None,
                                     Err(e) => Some(e),
@@ -950,8 +952,8 @@ impl AppWindow {
                                 }
 
                                 sender
-                                    .send(ArcOrOptionError::OptionError(output))
-                                    .expect("Concurrency Issue");
+                                    .send_blocking(ArcOrOptionError::OptionError(output))
+                                    .expect("Concurrency Issues");
                             }
                         })
                         .await
@@ -969,9 +971,8 @@ impl AppWindow {
 
         let stop_flag_r = stop_flag;
 
-        receiver.attach(
-            None,
-            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |e| {
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok(e) = receiver.recv().await {
                 match e {
                     ArcOrOptionError::Child(c) => {
                         if stop_flag_r.load(std::sync::atomic::Ordering::SeqCst) {
@@ -982,26 +983,23 @@ impl AppWindow {
                         } else {
                             this.imp().current_jobs.borrow_mut().push(c);
                         }
-                        glib::ControlFlow::Continue
                     }
                     ArcOrOptionError::OptionError(e) => {
                         if let Some(e) = e {
                             this.convert_failed(e, dir_path.clone());
-                            return glib::ControlFlow::Break;
+                            break;
                         }
                         let c = completed.clone();
                         let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
                         this.set_convert_progress(x + 1, count);
                         if x + 1 == count {
                             this.move_output(save_format, path.clone(), output_files.clone(), dir_path.clone());
-                            glib::ControlFlow::Break
-                        } else {
-                            glib::ControlFlow::Continue
+                            break;
                         }
                     }
-                }
-            }),
-        );
+                };
+            }
+        }));
 
         self.switch_to_stack_converting();
     }
@@ -1096,7 +1094,7 @@ impl ConvertOperations for AppWindow {
         self.set_collecting_progress();
         let receiver = match save_format {
             OutputType::File(FileType::Pdf) if output_files.len() > 1 => {
-                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+                let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1116,11 +1114,11 @@ impl ConvertOperations for AppWindow {
                     let child_arc = std::sync::Arc::new(shared_child);
 
                     sender
-                        .send(ArcOrOptionError::Child(child_arc.clone()))
+                        .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
                         .expect("Concurrency Issues");
 
                     sender
-                        .send(ArcOrOptionError::OptionError(
+                        .send_blocking(ArcOrOptionError::OptionError(
                             match rt.block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
@@ -1134,7 +1132,7 @@ impl ConvertOperations for AppWindow {
             OutputType::File(_) => {
                 let file = output_files.first().unwrap().to_owned();
 
-                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+                let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1148,11 +1146,11 @@ impl ConvertOperations for AppWindow {
                     let child_arc = std::sync::Arc::new(shared_child);
 
                     sender
-                        .send(ArcOrOptionError::Child(child_arc.clone()))
+                        .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
                         .expect("Concurrency Issues");
 
                     sender
-                        .send(ArcOrOptionError::OptionError(
+                        .send_blocking(ArcOrOptionError::OptionError(
                             match rt.block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
@@ -1164,7 +1162,7 @@ impl ConvertOperations for AppWindow {
                 receiver
             }
             OutputType::Compression(CompressionType::Directory) => {
-                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+                let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1180,24 +1178,20 @@ impl ConvertOperations for AppWindow {
                     .unwrap();
                     let child_arc = std::sync::Arc::new(shared_child);
 
-                    sender
-                        .send(ArcOrOptionError::Child(child_arc.clone()))
-                        .expect("Concurrency Issues");
+                    sender.send_blocking(ArcOrOptionError::Child(child_arc.clone())).expect("Concurrency Issues");
 
-                    sender
-                        .send(ArcOrOptionError::OptionError(
-                            match rt.block_on(wait_for_child(child_arc)) {
-                                Err(e) => Some(e),
-                                _ => None,
-                            },
-                        ))
-                        .expect("Concurrency Issues");
+                    sender.send_blocking(ArcOrOptionError::OptionError(
+                        match rt.block_on(wait_for_child(child_arc)) {
+                            Err(e) => Some(e),
+                            _ => None,
+                        },
+                    )).expect("Concurrency Issues");
                 });
 
                 receiver
             }
             _ => {
-                let (sender, receiver) = MainContext::channel(glib::Priority::DEFAULT);
+                let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
@@ -1215,11 +1209,11 @@ impl ConvertOperations for AppWindow {
                     let child_arc = std::sync::Arc::new(shared_child);
 
                     sender
-                        .send(ArcOrOptionError::Child(child_arc.clone()))
+                        .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
                         .expect("Concurrency Issues");
 
                     sender
-                        .send(ArcOrOptionError::OptionError(
+                        .send_blocking(ArcOrOptionError::OptionError(
                             match rt.block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
@@ -1232,9 +1226,8 @@ impl ConvertOperations for AppWindow {
             }
         };
 
-        receiver.attach(
-            None,
-            clone!(@weak self as this => @default-return glib::ControlFlow::Break, move |x| {
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok(x) = receiver.recv().await {
                 match x {
                     ArcOrOptionError::Child(c) => {
                         if this.imp().is_canceled.load(std::sync::atomic::Ordering::SeqCst) {
@@ -1245,18 +1238,17 @@ impl ConvertOperations for AppWindow {
                         } else {
                             this.imp().current_jobs.borrow_mut().push(c);
                         }
-                        glib::ControlFlow::Continue
                     }
                     ArcOrOptionError::OptionError(x) => {
                         match x {
                             Some(e) => this.convert_failed(e, dir_path.clone()),
                             None => this.convert_success(dir_path.clone(), path_r.clone(), save_format)
                         }
-                        glib::ControlFlow::Break
+                        break;
                     }
-                }
-            }),
-        );
+                };
+            }
+        }));
     }
 
     fn convert_failed(&self, error_message: String, temp_dir_path: String) {
@@ -1335,10 +1327,10 @@ impl ConvertOperations for AppWindow {
             MainContext::default().spawn_local(clone!(@weak this as other_this => async move {
                 match save_format {
                     OutputType::Compression(CompressionType::Directory) => {
-                        ashpd::desktop::open_uri::OpenDirectoryRequest::default().send(&std::fs::File::open(&p).unwrap()).await.ok();
+                        ashpd::desktop::open_uri::OpenDirectoryRequest::default().send(&std::fs::File::open(&p).unwrap().as_fd()).await.ok();
                     }
                     _ => {
-                        ashpd::desktop::open_uri::OpenFileRequest::default().ask(true).send_file(&std::fs::File::open(&p).unwrap()).await.ok();
+                        ashpd::desktop::open_uri::OpenFileRequest::default().ask(true).send_file(&std::fs::File::open(&p).unwrap().as_fd()).await.ok();
                     }
                 }
             }));

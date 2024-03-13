@@ -2,8 +2,8 @@ use gettextrs::gettext;
 use glib::SignalHandlerId;
 use gtk::{
     gio, glib,
+    prelude::{ButtonExt, WidgetExt},
     subclass::prelude::*,
-    traits::{ButtonExt, WidgetExt},
 };
 
 mod imp {
