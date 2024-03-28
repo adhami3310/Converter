@@ -4,9 +4,9 @@
 
     <name>Switcheroo</name>
     <!-- developer_name tag deprecated with Appstream 1.0 -->
-    <developer_name translatable="no">Khaleel Al-Adhami</developer_name>
+    <developer_name translate="no">Khaleel Al-Adhami</developer_name>
     <developer id="io.gitlab.adhami3310">
-        <name translatable="no">Khaleel Al-Adhami</name>
+        <name translate="no">Khaleel Al-Adhami</name>
     </developer>
     <summary>Convert and manipulate images</summary>
 
@@ -58,28 +58,28 @@
 
     <releases>
         <release version="2.1.0" date="2024-03-13">
-            <description translatable="no">
+            <description translate="no">
                 <p>Support for saving images as a single PDF.</p>
             </description>
         </release>
         <release version="2.0.1" date="2023-11-26">
-            <description translatable="no">
+            <description translate="no">
                 <p>Updated a few translations and screenshots.</p>
             </description>
         </release>
         <release version="2.0.0" date="2023-11-18">
-            <description translatable="no">
+            <description translate="no">
                 <p>Converter has been renamed to Switcheroo!</p>
                 <p>Various design changes to enhance user experience.</p>
             </description>
         </release>
         <release version="1.6.1" date="2023-05-23">
-            <description translatable="no">
+            <description translate="no">
                 <p>Fix variety of bugs and rework UI.</p>
             </description>
         </release>
         <release version="1.6.0" date="2023-05-21">
-            <description translatable="no">
+            <description translate="no">
                 <p>Rust rewrite.</p>
             </description>
         </release>
