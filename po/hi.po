@@ -1,0 +1,311 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Scrambled777 <weblate.scrambled777@simplelogin.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Switcheroo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-27 08:05-0500\n"
+"PO-Revision-Date: 2024-03-29 14:07+0530\n"
+"Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
+"Language-Team: Hindi\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: ../data/resources/blueprints/help-overlay.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "जनरल"
+
+#: ../data/resources/blueprints/help-overlay.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "शॉर्टकट दिखाएँ"
+
+#: ../data/resources/blueprints/help-overlay.blp:19
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "छोड़ें"
+
+#: ../data/resources/blueprints/help-overlay.blp:24
+msgctxt "shortcut window"
+msgid "New Window"
+msgstr "नई विंडो"
+
+#: ../data/resources/blueprints/help-overlay.blp:29
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr "विंडो साफ़ करें"
+
+#: ../data/resources/blueprints/help-overlay.blp:34
+msgctxt "shortcut window"
+msgid "Show Less Popular Datatypes"
+msgstr "कम लोकप्रिय डेटाटाइप दिखाएँ"
+
+#: ../data/resources/blueprints/help-overlay.blp:39
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "क्लिपबोर्ड से पेस्ट करें"
+
+#: ../data/resources/blueprints/help-overlay.blp:44
+msgctxt "shortcut window"
+msgid "Add Images"
+msgstr "छवियां जोड़ें"
+
+#: ../data/resources/blueprints/image-rest.blp:21
+msgid "Show All"
+msgstr "सब दिखाएं"
+
+#: ../data/resources/blueprints/window.blp:9
+#: ../data/resources/blueprints/window.blp:21
+#: ../data/resources/blueprints/window.blp:57 ../src/main.rs:30
+#: ../src/widgets/about_window.rs:24
+msgid "Switcheroo"
+msgstr "Switcheroo"
+
+#: ../data/resources/blueprints/window.blp:15
+msgid "Drop Here to Open"
+msgstr "खोलने के लिए यहां छोड़ें"
+
+#: ../data/resources/blueprints/window.blp:40
+msgid "Primary Menu"
+msgstr "प्राथमिक मेन्यू"
+
+#: ../data/resources/blueprints/window.blp:58
+msgid "Drag and drop images here"
+msgstr "छवियों को यहां खींचें और छोड़ें"
+
+#: ../data/resources/blueprints/window.blp:69
+msgid "_Open Images…"
+msgstr "छवियाँ खोलें… (_O)"
+
+#: ../data/resources/blueprints/window.blp:122
+msgid "Export Format"
+msgstr "निर्यात प्रारूप"
+
+#: ../data/resources/blueprints/window.blp:127
+msgid "Save as multi-page PDF"
+msgstr "बहु-पृष्ठ PDF के रूप में सहेजें"
+
+#: ../data/resources/blueprints/window.blp:137
+msgid "Save To ZIP"
+msgstr "ZIP में सहेजें"
+
+#: ../data/resources/blueprints/window.blp:150
+msgid "Quality"
+msgstr "गुणवत्ता"
+
+#: ../data/resources/blueprints/window.blp:170
+msgid "Background Color"
+msgstr "पृष्ठभूमि का रंग"
+
+#: ../data/resources/blueprints/window.blp:171
+msgid "Replaces original transparency layer"
+msgstr "मूल पारदर्शिता परत को प्रतिस्थापित करता है"
+
+#: ../data/resources/blueprints/window.blp:185
+msgid "Pixel Density Per Inch"
+msgstr "प्रति इंच पिक्सेल घनत्व"
+
+#: ../data/resources/blueprints/window.blp:197
+msgid "Resize"
+msgstr "आकार बदलें"
+
+#: ../data/resources/blueprints/window.blp:202
+#: ../data/resources/blueprints/window.blp:203
+#: ../data/resources/blueprints/window.blp:210
+#: ../data/resources/blueprints/window.blp:212
+#: ../data/resources/blueprints/window.blp:233
+msgid "Width"
+msgstr "चौड़ाई"
+
+#: ../data/resources/blueprints/window.blp:220
+msgid "Preserve aspect ratio"
+msgstr "पहलू अनुपात को सुरक्षित रखें"
+
+#: ../data/resources/blueprints/window.blp:225
+#: ../data/resources/blueprints/window.blp:226
+#: ../data/resources/blueprints/window.blp:234
+msgid "Height"
+msgstr "ऊंचाई"
+
+#: ../data/resources/blueprints/window.blp:245
+msgid "Choose between resizing with percentages or using exact pixels"
+msgstr "प्रतिशत के साथ आकार बदलने या सटीक पिक्सेल का उपयोग करने के बीच चयन करें"
+
+#: ../data/resources/blueprints/window.blp:249
+msgid "%"
+msgstr "%"
+
+#: ../data/resources/blueprints/window.blp:249
+msgid "px"
+msgstr "px"
+
+#: ../data/resources/blueprints/window.blp:258
+msgid "Resize Algorithm"
+msgstr "आकार परिवर्तनक कलनविधि"
+
+#: ../data/resources/blueprints/window.blp:264
+msgid "Default"
+msgstr "डिफॉल्ट"
+
+#: ../data/resources/blueprints/window.blp:268
+msgid "Pixel Art"
+msgstr "पिक्सेल कला"
+
+#: ../data/resources/blueprints/window.blp:282
+msgid "_Convert"
+msgstr "परिवर्तित करें (_C)"
+
+#: ../data/resources/blueprints/window.blp:308
+msgid "Could not Load Image"
+msgstr "छवि लोड नहीं हो सकी"
+
+#: ../data/resources/blueprints/window.blp:309
+msgid "This image could be corrupted or may use an unsupported file format."
+msgstr "यह छवि दूषित हो सकती है या असमर्थित फाइल स्वरूप का उपयोग कर सकती है।"
+
+#: ../data/resources/blueprints/window.blp:321
+msgid "Converting"
+msgstr "परिवर्तित हो रहा है"
+
+#: ../data/resources/blueprints/window.blp:322
+msgid "This could take a while"
+msgstr "इसमें कुछ समय लग सकता है"
+
+#: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
+msgid "Loading…"
+msgstr "लोड हो रहा है…"
+
+#: ../data/resources/blueprints/window.blp:338 ../src/window.rs:440
+#: ../src/window.rs:1363
+msgid "_Cancel"
+msgstr "रद्द (_C)"
+
+#: ../data/resources/blueprints/window.blp:362
+msgid "All Images"
+msgstr "सभी छवियाँ"
+
+#: ../data/resources/blueprints/window.blp:436
+msgid "Paste From Clipboard"
+msgstr "क्लिपबोर्ड से पेस्ट करें"
+
+#: ../data/resources/blueprints/window.blp:441
+msgid "New Window"
+msgstr "नई विंडो"
+
+#: ../data/resources/blueprints/window.blp:446
+msgid "Clear Window"
+msgstr "विंडो साफ़ करें"
+
+#: ../data/resources/blueprints/window.blp:453
+msgid "Show Less Popular Datatypes"
+msgstr "कम लोकप्रिय डेटाटाइप दिखाएँ"
+
+#: ../data/resources/blueprints/window.blp:460
+msgid "Keyboard Shortcuts"
+msgstr "कीबोर्ड शॉर्टकट"
+
+#: ../data/resources/blueprints/window.blp:465
+msgid "About Switcheroo"
+msgstr "Switcheroo के बारे में"
+
+#: ../src/file_chooser.rs:39
+msgid "Unsupported filetype"
+msgstr "असमर्थित फाइल प्रकार"
+
+#: ../src/file_chooser.rs:77
+msgid "Images"
+msgstr "छवियाँ"
+
+#: ../src/file_chooser.rs:80
+msgid "_Select Images"
+msgstr "छवियाँ चुनें (_S)"
+
+#: ../src/file_chooser.rs:159
+msgid "Unspecified filetype"
+msgstr "अनिर्दिष्ट फाइल प्रकार"
+
+#: ../src/file_chooser.rs:164
+msgid "Unknown filetype"
+msgstr "अज्ञात फाइल प्रकार"
+
+#: ../src/file_chooser.rs:169
+msgid "Used the wrong filetype"
+msgstr "गलत फाइल प्रकार का उपयोग किया गया"
+
+#: ../src/magick.rs:156
+msgid "Pasted Image"
+msgstr "चिपकाई गई छवि"
+
+#: ../src/magick.rs:364
+msgid "Unknown IO error happened"
+msgstr "अज्ञात IO त्रुटि हुई"
+
+#. Translators: Replace "translator-credits" with your names, one name per line
+#: ../src/widgets/about_window.rs:28
+msgid "translator-credits"
+msgstr "Scrambled777 <weblate.scrambled777@simplelogin.com>"
+
+#: ../src/widgets/about_window.rs:35
+msgid "Code and Design Borrowed from"
+msgstr "कोड और डिज़ाइन इनसे उधार लिया गया"
+
+#: ../src/widgets/about_window.rs:47
+msgid "Sample Image from"
+msgstr "यहां से नमूना छवि"
+
+#: ../src/window.rs:413
+msgid "Unable to access dropped files"
+msgstr "छोड़ी गई फाइलों तक पहुँचने में असमर्थ"
+
+#: ../src/window.rs:436 ../src/window.rs:1358
+msgid "Stop converting?"
+msgstr "परिवर्तन बंद करें?"
+
+#: ../src/window.rs:437 ../src/window.rs:1359
+msgid "You will lose all progress."
+msgstr "आप सारी प्रगति खो देंगे."
+
+#: ../src/window.rs:441 ../src/window.rs:1363
+msgid "_Stop"
+msgstr "रोकें (_S)"
+
+#: ../src/window.rs:477
+msgid "Collecting files"
+msgstr "फाइलें एकत्रित कर रहे हैं"
+
+#: ../src/window.rs:1286
+msgid "Error While Processing"
+msgstr "प्रसंस्करण करते समय त्रुटि"
+
+#: ../src/window.rs:1307
+msgid "_Close"
+msgstr "बंद (_C)"
+
+#: ../src/window.rs:1308
+msgid "_Copy to Clipboard"
+msgstr "क्लिपबोर्ड पर कॉपी करें (_C)"
+
+#: ../src/window.rs:1316
+msgid "Error copied to clipboard"
+msgstr "त्रुटि क्लिपबोर्ड पर कॉपी की गई"
+
+#: ../src/window.rs:1331
+msgid "Image converted"
+msgstr "छवि परिवर्तित"
+
+#: ../src/window.rs:1332
+msgid "Open"
+msgstr "खोलें"
+
+#: ../src/window.rs:1385
+msgid "Converting Cancelled"
+msgstr "परिवर्तन रद्द किया गया"
