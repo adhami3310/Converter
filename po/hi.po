@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2024-03-29 14:07+0530\n"
+"PO-Revision-Date: 2024-04-01 15:18+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi\n"
 "Language: hi\n"
@@ -61,7 +61,7 @@ msgstr "छवियां जोड़ें"
 
 #: ../data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
-msgstr "सब दिखाएं"
+msgstr "सभी दिखाएँ"
 
 #: ../data/resources/blueprints/window.blp:9
 #: ../data/resources/blueprints/window.blp:21
@@ -76,7 +76,7 @@ msgstr "खोलने के लिए यहां छोड़ें"
 
 #: ../data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
-msgstr "प्राथमिक मेन्यू"
+msgstr "प्राथमिक मेनू"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
@@ -116,7 +116,7 @@ msgstr "प्रति इंच पिक्सेल घनत्व"
 
 #: ../data/resources/blueprints/window.blp:197
 msgid "Resize"
-msgstr "आकार बदलें"
+msgstr "पुनर्कार"
 
 #: ../data/resources/blueprints/window.blp:202
 #: ../data/resources/blueprints/window.blp:203
@@ -150,7 +150,7 @@ msgstr "px"
 
 #: ../data/resources/blueprints/window.blp:258
 msgid "Resize Algorithm"
-msgstr "आकार परिवर्तनक कलनविधि"
+msgstr "पुनर्कार कलनविधि"
 
 #: ../data/resources/blueprints/window.blp:264
 msgid "Default"
@@ -219,7 +219,7 @@ msgstr "Switcheroo के बारे में"
 
 #: ../src/file_chooser.rs:39
 msgid "Unsupported filetype"
-msgstr "असमर्थित फाइल प्रकार"
+msgstr "असमर्थित फाइलप्रकार"
 
 #: ../src/file_chooser.rs:77
 msgid "Images"
@@ -231,19 +231,19 @@ msgstr "छवियाँ चुनें (_S)"
 
 #: ../src/file_chooser.rs:159
 msgid "Unspecified filetype"
-msgstr "अनिर्दिष्ट फाइल प्रकार"
+msgstr "अनिर्दिष्ट फाइलप्रकार"
 
 #: ../src/file_chooser.rs:164
 msgid "Unknown filetype"
-msgstr "अज्ञात फाइल प्रकार"
+msgstr "अज्ञात फाइलप्रकार"
 
 #: ../src/file_chooser.rs:169
 msgid "Used the wrong filetype"
-msgstr "गलत फाइल प्रकार का उपयोग किया गया"
+msgstr "गलत फाइलप्रकार का उपयोग किया गया"
 
 #: ../src/magick.rs:156
 msgid "Pasted Image"
-msgstr "चिपकाई गई छवि"
+msgstr "पेस्ट की गई छवि"
 
 #: ../src/magick.rs:364
 msgid "Unknown IO error happened"
@@ -272,7 +272,7 @@ msgstr "परिवर्तन बंद करें?"
 
 #: ../src/window.rs:437 ../src/window.rs:1359
 msgid "You will lose all progress."
-msgstr "आप सारी प्रगति खो देंगे."
+msgstr "आप सारी प्रगति खो देंगे।"
 
 #: ../src/window.rs:441 ../src/window.rs:1363
 msgid "_Stop"
