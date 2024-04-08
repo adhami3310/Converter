@@ -7,6 +7,6 @@ fi
 
 meson translation-build
 meson compile -C translation-build switcheroo-pot
-meson compile -C translation-build switcheroo-update-po
+# meson compile -C translation-build switcheroo-update-po
 
 rm -r translation-build
