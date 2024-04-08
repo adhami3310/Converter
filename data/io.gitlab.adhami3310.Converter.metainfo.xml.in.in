@@ -44,13 +44,14 @@
 
     <launchable type="desktop-id">@app-id@.desktop</launchable>
 
-    <url type="homepage">https://gitlab.com/adhami3310/Switcheroo</url>
+    <url type="homepage">https://apps.gnome.org/Converter/</url>
+    <url type="donation">https://opencollective.com/switcheroo</url>
     <url type="bugtracker">https://gitlab.com/adhami3310/Switcheroo/-/issues</url>
     <url type="help">https://gitlab.com/adhami3310/Switcheroo/-/issues</url>
     <url type="vcs-browser">https://gitlab.com/adhami3310/Switcheroo</url>
     <url type="translate">https://gitlab.com/adhami3310/Switcheroo/-/tree/main/po</url>
     <url type="contribute">https://gitlab.com/adhami3310/Switcheroo</url>
-    <url type="contact">https://matrix.to/#/@adhami:matrix.org</url>
+    <url type="contact">https://matrix.to/#/@khaleela:gnome.org</url>
 
     <update_contact>khaleel.aladhami@gmail.com</update_contact>
 
