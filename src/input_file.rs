@@ -204,6 +204,10 @@ impl InputFile {
         self.imp().path.borrow().to_string()
     }
 
+    pub fn exists(&self) -> bool {
+        std::path::Path::new(&self.path()).exists()
+    }
+
     pub fn is_behind_sandbox(&self) -> bool {
         self.imp().is_behind_sandbox.get()
     }

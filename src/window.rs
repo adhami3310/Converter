@@ -513,7 +513,11 @@ impl AppWindow {
 
     async fn open_success(&self, mut files: Vec<InputFile>) {
         let prev_files = self.active_files();
-        files = files.into_iter().chain(prev_files.into_iter()).collect();
+        files = files
+            .into_iter()
+            .chain(prev_files.into_iter())
+            .filter(|f| f.exists())
+            .collect();
 
         self.imp().input_file_store.remove_all();
         self.imp().removed.replace(HashSet::new());
@@ -726,7 +730,7 @@ impl AppWindow {
                                 .send_blocking((
                                     i,
                                     match b {
-                                        true => Some(Texture::from_filename(&path).unwrap()),
+                                        true => Some(Texture::from_filename(&path)),
                                         false => None,
                                     },
                                 ))
@@ -745,7 +749,7 @@ impl AppWindow {
 
         glib::spawn_future_local(clone!(@weak self as this => async move {
             while let Ok((i,p)) = receiver.recv().await {
-                if let Some(p) = p {
+                if let Some(Ok(p)) = p {
                     this.imp().input_file_store.item(i as u32).and_downcast::<InputFile>().unwrap().set_pixbuf(p);
                 }
                 glib::MainContext::default().iteration(true);
