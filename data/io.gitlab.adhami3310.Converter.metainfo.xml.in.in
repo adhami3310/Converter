@@ -31,6 +31,11 @@
         <control>touch</control>
     </recommends>
 
+    <branding>
+        <color type="primary" scheme_preference="light">#f18e57</color>
+        <color type="primary" scheme_preference="dark">#980e8c</color>
+    </branding>
+
     <screenshots>
         <screenshot type="default">
             <image>https://gitlab.com/adhami3310/Switcheroo/-/raw/main/data/resources/screenshots/0.png</image>
