@@ -131,6 +131,11 @@ msgstr ""
 msgid "Drop Here to Open"
 msgstr ""
 
+#: data/resources/blueprints/window.blp:29
+#: data/resources/blueprints/window.blp:370
+msgid "Add Images (Ctrl+O)"
+msgstr ""
+
 #: data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
 msgstr ""
