@@ -1,6 +1,6 @@
 [package]
 name = "switcheroo"
-version = "2.1.0"
+version = "2.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -8,11 +8,16 @@ edition = "2021"
 [dependencies]
 gettext-rs = { version = "0.7.0", features = ["gettext-system"] }
 glib = "0.19"
-gtk = { version = "0.8", package = "gtk4", features = ["blueprint", "gnome_46"] }
-gtk-macros = { version = "0.8", package = "gtk4-macros", features = ["blueprint"] }
+gtk = { version = "0.8", package = "gtk4", features = [
+    "blueprint",
+    "gnome_46",
+] }
+gtk-macros = { version = "0.8", package = "gtk4-macros", features = [
+    "blueprint",
+] }
 adw = { version = "0.6", package = "libadwaita", features = ["v1_5"] }
 log = "0.4.17"
-once_cell = "1.17.1"    
+once_cell = "1.17.1"
 pretty_env_logger = "0.5.0"
 itertools = "0.12.0"
 tokio = { version = "1.27.0", features = ["process", "rt", "rt-multi-thread"] }
