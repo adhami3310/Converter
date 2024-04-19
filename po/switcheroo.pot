@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-08 19:25-0400\n"
+"POT-Creation-Date: 2024-04-19 13:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,11 +75,11 @@ msgstr ""
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:37
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:42
 msgid "Converting sample image from PNG to HEIF"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:41
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:46
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr ""
 
