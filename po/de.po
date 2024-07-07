@@ -2,357 +2,393 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the converter package.
 # Jürgen Benvenuti <gastornis@posteo.org>, 2022-2023.
+# Milo Ivir <mail@milotype.de> 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-27 08:05-0500\n"
+"POT-Creation-Date: 2024-04-19 13:36-0400\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"Last-Translator: Milo Ivir <mail@mivirtype.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: ../data/resources/blueprints/help-overlay.blp:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
+#: data/resources/blueprints/window.blp:9
+#: data/resources/blueprints/window.blp:21
+#: data/resources/blueprints/window.blp:57 src/main.rs:30
+#: src/widgets/about_window.rs:24
+msgid "Switcheroo"
+msgstr "Switcheroo"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+msgid "Image Converter"
+msgstr "Bildumwandler"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:11
+msgid "Convert and manipulate images"
+msgstr "Bilder umwandeln und bearbeiten"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
+msgid "converter;image;convert;converting;processing"
+msgstr ""
+"image;convert;converting;processing;Bild;umwandeln;Umwandlung;konvertieren;"
+"verarbeiten"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
+msgid "Shows less popular datatypes in the menu"
+msgstr "Weniger gängige Datentypen im Menü anzeigen"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
+msgid "Window width"
+msgstr "Fensterbreite"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
+msgid "Image quality"
+msgstr "Bildqualität"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
+msgid "Image density per inch"
+msgstr "Bilddichte pro Zoll"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
+msgid "Window height"
+msgstr "Fensterhöhe"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
+msgid "Window maximized state"
+msgstr "Maximierungszustand des Fensters"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
+msgid "Output format"
+msgstr "Ausgabeformat"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:54
+msgid "Compression format"
+msgstr "Kompressionsformat"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:17
+msgid "Convert between different image filetypes and resize them easily."
+msgstr ""
+"Zwischen verschiedenen Bilddateitypen umwandeln und auf einfache Weise die "
+"Größe ändern."
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:42
+msgid "Converting sample image from PNG to HEIF"
+msgstr "Beispielbild wird von PNG nach HEIF umgewandelt"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:46
+msgid "Converting multiple sample images from SVG to HEIF"
+msgstr "Mehrere Beispieldateien werden von SVG nach HEIF umgewandelt"
+
+#: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Allgemein"
 
-#: ../data/resources/blueprints/help-overlay.blp:14
+#: data/resources/blueprints/help-overlay.blp:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Tastenkürzel anzeigen"
 
-#: ../data/resources/blueprints/help-overlay.blp:19
+#: data/resources/blueprints/help-overlay.blp:19
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Beenden"
 
-#: ../data/resources/blueprints/help-overlay.blp:24
+#: data/resources/blueprints/help-overlay.blp:24
 msgctxt "shortcut window"
 msgid "New Window"
 msgstr "Neues Fenster"
 
-#: ../data/resources/blueprints/help-overlay.blp:29
+#: data/resources/blueprints/help-overlay.blp:29
 msgctxt "shortcut window"
 msgid "Clear Window"
 msgstr "Fenster leeren"
 
-#: ../data/resources/blueprints/help-overlay.blp:34
+#: data/resources/blueprints/help-overlay.blp:34
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Weniger gängige Datentypen anzeigen"
 
-#: ../data/resources/blueprints/help-overlay.blp:39
+#: data/resources/blueprints/help-overlay.blp:39
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
 msgstr "Aus der Zwischenablage einfügen"
 
-#: ../data/resources/blueprints/help-overlay.blp:44
+#: data/resources/blueprints/help-overlay.blp:44
 msgctxt "shortcut window"
 msgid "Add Images"
 msgstr "Bilder hinzufügen"
 
-#: ../data/resources/blueprints/image-rest.blp:21
+#: data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
 msgstr "Alle anzeigen"
 
-#: ../data/resources/blueprints/window.blp:9
-#: ../data/resources/blueprints/window.blp:21
-#: ../data/resources/blueprints/window.blp:57 ../src/main.rs:30
-#: ../src/widgets/about_window.rs:24
-msgid "Switcheroo"
-msgstr "Switcheroo"
-
-#: ../data/resources/blueprints/window.blp:15
+#: data/resources/blueprints/window.blp:15
 msgid "Drop Here to Open"
 msgstr "Hier ablegen zum Öffnen"
 
-#: ../data/resources/blueprints/window.blp:40
+#: data/resources/blueprints/window.blp:29
+#: data/resources/blueprints/window.blp:370
+#| msgctxt "shortcut window"
+#| msgid "Add Images"
+msgid "Add Images (Ctrl+O)"
+msgstr "Bilder hinzufügen (Ctrl+O)"
+
+#: data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
 msgstr "Primäres Menü"
 
-#: ../data/resources/blueprints/window.blp:58
+#: data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
 msgstr "Bilder hierher ziehen und ablegen"
 
-#: ../data/resources/blueprints/window.blp:69
+#: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
 msgstr "Bilder ö_ffnen …"
 
-#: ../data/resources/blueprints/window.blp:122
+#: data/resources/blueprints/window.blp:122
 msgid "Export Format"
 msgstr "Exportformat"
 
-#: ../data/resources/blueprints/window.blp:127
+#: data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
 msgstr "Als mehrseitiges PDF speichern"
 
-#: ../data/resources/blueprints/window.blp:137
+#: data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
 msgstr "Als Zip speichern"
 
-#: ../data/resources/blueprints/window.blp:150
+#: data/resources/blueprints/window.blp:150
 msgid "Quality"
 msgstr "Qualität"
 
-#: ../data/resources/blueprints/window.blp:170
+#: data/resources/blueprints/window.blp:170
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: ../data/resources/blueprints/window.blp:171
+#: data/resources/blueprints/window.blp:171
 msgid "Replaces original transparency layer"
 msgstr "Ersetzt die originale Transparenzebene"
 
-#: ../data/resources/blueprints/window.blp:185
+#: data/resources/blueprints/window.blp:185
 msgid "Pixel Density Per Inch"
 msgstr "Pixeldichte pro Zoll"
 
-#: ../data/resources/blueprints/window.blp:197
+#: data/resources/blueprints/window.blp:197
 msgid "Resize"
 msgstr "Größe ändern"
 
-#: ../data/resources/blueprints/window.blp:202
-#: ../data/resources/blueprints/window.blp:203
-#: ../data/resources/blueprints/window.blp:210
-#: ../data/resources/blueprints/window.blp:212
-#: ../data/resources/blueprints/window.blp:233
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:203
+#: data/resources/blueprints/window.blp:210
+#: data/resources/blueprints/window.blp:212
+#: data/resources/blueprints/window.blp:233
 msgid "Width"
 msgstr "Breite"
 
-#: ../data/resources/blueprints/window.blp:220
+#: data/resources/blueprints/window.blp:220
 msgid "Preserve aspect ratio"
 msgstr "Seitenverhältnis beibehalten"
 
-#: ../data/resources/blueprints/window.blp:225
-#: ../data/resources/blueprints/window.blp:226
-#: ../data/resources/blueprints/window.blp:234
+#: data/resources/blueprints/window.blp:225
+#: data/resources/blueprints/window.blp:226
+#: data/resources/blueprints/window.blp:234
 msgid "Height"
 msgstr "Höhe"
 
-#: ../data/resources/blueprints/window.blp:245
+#: data/resources/blueprints/window.blp:245
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 "Wählen zwischen Prozentpunkten oder genauer Pixelanzahl beim Größenändern"
 
-#: ../data/resources/blueprints/window.blp:249
+#: data/resources/blueprints/window.blp:249
 msgid "%"
 msgstr "%"
 
-#: ../data/resources/blueprints/window.blp:249
+#: data/resources/blueprints/window.blp:249
 msgid "px"
 msgstr "px"
 
-#: ../data/resources/blueprints/window.blp:258
+#: data/resources/blueprints/window.blp:258
 msgid "Resize Algorithm"
 msgstr "Größenänderungsalgorithmus"
 
-#: ../data/resources/blueprints/window.blp:264
+#: data/resources/blueprints/window.blp:264
 msgid "Default"
 msgstr "Standard"
 
-#: ../data/resources/blueprints/window.blp:268
+#: data/resources/blueprints/window.blp:268
 msgid "Pixel Art"
 msgstr "Pixelkunst"
 
-#: ../data/resources/blueprints/window.blp:282
+#: data/resources/blueprints/window.blp:282
 msgid "_Convert"
 msgstr "_Umwandeln"
 
-#: ../data/resources/blueprints/window.blp:308
+#: data/resources/blueprints/window.blp:308
 msgid "Could not Load Image"
 msgstr "Bild konnte nicht geladen werden"
 
-#: ../data/resources/blueprints/window.blp:309
+#: data/resources/blueprints/window.blp:309
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Dieses Bild könnte beschädigt sein oder ein nicht unterstütztes Dateiformat "
 "verwenden."
 
-#: ../data/resources/blueprints/window.blp:321
+#: data/resources/blueprints/window.blp:321
 msgid "Converting"
 msgstr "Umwandlung läuft"
 
-#: ../data/resources/blueprints/window.blp:322
+#: data/resources/blueprints/window.blp:322
 msgid "This could take a while"
 msgstr "Das kann einen Moment dauern"
 
-#: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
+#: data/resources/blueprints/window.blp:332 src/window.rs:770
 msgid "Loading…"
 msgstr "Ladevorgang …"
 
-#: ../data/resources/blueprints/window.blp:338 ../src/window.rs:440
-#: ../src/window.rs:1363
+#: data/resources/blueprints/window.blp:338 src/window.rs:449
+#: src/window.rs:1363
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
-#: ../data/resources/blueprints/window.blp:362
+#: data/resources/blueprints/window.blp:362
 msgid "All Images"
 msgstr "Alle Bilder"
 
-#: ../data/resources/blueprints/window.blp:436
+#: data/resources/blueprints/window.blp:436
 msgid "Paste From Clipboard"
 msgstr "Aus der Zwischenablage einfügen"
 
-#: ../data/resources/blueprints/window.blp:441
+#: data/resources/blueprints/window.blp:441
 msgid "New Window"
 msgstr "Neues Fenster"
 
-#: ../data/resources/blueprints/window.blp:446
+#: data/resources/blueprints/window.blp:446
 msgid "Clear Window"
 msgstr "Fenster leeren"
 
-#: ../data/resources/blueprints/window.blp:453
+#: data/resources/blueprints/window.blp:453
 msgid "Show Less Popular Datatypes"
 msgstr "Weniger gängige Datentypen anzeigen"
 
-#: ../data/resources/blueprints/window.blp:460
+#: data/resources/blueprints/window.blp:460
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkürzel"
 
-#: ../data/resources/blueprints/window.blp:465
+#: data/resources/blueprints/window.blp:465
 msgid "About Switcheroo"
 msgstr "Info zu Switcheroo"
 
-#: ../src/file_chooser.rs:39
+#: src/file_chooser.rs:39
 msgid "Unsupported filetype"
 msgstr "Nicht-unterstützter Dateityp"
 
-#: ../src/file_chooser.rs:77
+#: src/file_chooser.rs:77
 msgid "Images"
 msgstr "Bilder"
 
-#: ../src/file_chooser.rs:80
+#: src/file_chooser.rs:80
 msgid "_Select Images"
 msgstr "Bilder _auswählen"
 
-#: ../src/file_chooser.rs:159
+#: src/file_chooser.rs:159
 msgid "Unspecified filetype"
 msgstr "Unbestimmter Dateityp"
 
-#: ../src/file_chooser.rs:164
+#: src/file_chooser.rs:164
 msgid "Unknown filetype"
 msgstr "Unbekannter Dateityp"
 
-#: ../src/file_chooser.rs:169
+#: src/file_chooser.rs:169
 msgid "Used the wrong filetype"
 msgstr "Der falsche Dateityp wurde verwendet"
 
-#: ../src/magick.rs:156
+#: src/magick.rs:156
 msgid "Pasted Image"
 msgstr "Eingefügtes Bild"
 
-#: ../src/magick.rs:364
+#: src/magick.rs:364
 msgid "Unknown IO error happened"
 msgstr "Ein unbekannter E/A-Fehler ist aufgetreten"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
-#: ../src/widgets/about_window.rs:28
+#: src/widgets/about_window.rs:28
 msgid "translator-credits"
 msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2022, 2023"
 
-#: ../src/widgets/about_window.rs:35
+#: src/widgets/about_window.rs:35
 msgid "Code and Design Borrowed from"
 msgstr "Code und Design entlehnt von"
 
-#: ../src/widgets/about_window.rs:47
+#: src/widgets/about_window.rs:47
 msgid "Sample Image from"
 msgstr "Beispielbild von"
 
-#: ../src/window.rs:413
+#: src/window.rs:422
 msgid "Unable to access dropped files"
 msgstr "Auf abgelegte Dateien konnte nicht zugegriffen werden"
 
-#: ../src/window.rs:436 ../src/window.rs:1358
+#: src/window.rs:445 src/window.rs:1358
 msgid "Stop converting?"
 msgstr "Umwandlung stoppen?"
 
-#: ../src/window.rs:437 ../src/window.rs:1359
+#: src/window.rs:446 src/window.rs:1359
 msgid "You will lose all progress."
 msgstr "Sie werden den gesamten Fortschritt verlieren."
 
-#: ../src/window.rs:441 ../src/window.rs:1363
+#: src/window.rs:450 src/window.rs:1363
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: ../src/window.rs:477
+#: src/window.rs:486
 msgid "Collecting files"
 msgstr "Dateien werden gesammelt"
 
-#: ../src/window.rs:1286
+#: src/window.rs:1286
 msgid "Error While Processing"
 msgstr "Fehler bei der Verarbeitung"
 
-#: ../src/window.rs:1307
+#: src/window.rs:1307
 msgid "_Close"
 msgstr "_Schließen"
 
-#: ../src/window.rs:1308
+#: src/window.rs:1308
 msgid "_Copy to Clipboard"
 msgstr "In die Zwischenablage _kopieren"
 
-#: ../src/window.rs:1316
+#: src/window.rs:1316
 msgid "Error copied to clipboard"
 msgstr "Fehler in die Zwischenablage kopiert"
 
-#: ../src/window.rs:1331
+#: src/window.rs:1331
 msgid "Image converted"
 msgstr "Bild wurde umgewandelt"
 
-#: ../src/window.rs:1332
+#: src/window.rs:1332
 msgid "Open"
 msgstr "Öffnen"
 
-#: ../src/window.rs:1385
+#: src/window.rs:1385
 msgid "Converting Cancelled"
 msgstr "Umwandlung abgebrochen"
-
-#~ msgid "Image Converter"
-#~ msgstr "Bildumwandler"
-
-#~ msgid "Convert and manipulate images"
-#~ msgstr "Bilder umwandeln und bearbeiten"
 
 #~ msgid "image;convert;converting;processing"
 #~ msgstr ""
 #~ "image;convert;converting;processing;Bild;umwandeln;Umwandlung;"
 #~ "konvertieren;verarbeiten"
 
-#~ msgid "Shows less popular datatypes in the menu"
-#~ msgstr "Weniger gängige Datentypen im Menü anzeigen"
-
-#~ msgid "Window width"
-#~ msgstr "Fensterbreite"
-
-#~ msgid "Image quality"
-#~ msgstr "Bildqualität"
-
-#~ msgid "Image density per inch"
-#~ msgstr "Bilddichte pro Zoll"
-
-#~ msgid "Window height"
-#~ msgstr "Fensterhöhe"
-
-#~ msgid "Window maximized state"
-#~ msgstr "Maximierungszustand des Fensters"
-
-#~ msgid "Output format"
-#~ msgstr "Ausgabeformat"
-
-#~ msgid "Compression format"
-#~ msgstr "Kompressionsformat"
-
 #~ msgid "Khaleel Al-Adhami"
 #~ msgstr "Khaleel Al-Adhami"
-
-#~ msgid "Convert between different image filetypes and resize them easily."
-#~ msgstr ""
-#~ "Zwischen verschiedenen Bilddateitypen umwandeln und auf einfache Weise "
-#~ "die Größe ändern."
 
 #~ msgid "image"
 #~ msgstr "Bild"
@@ -366,14 +402,8 @@ msgstr "Umwandlung abgebrochen"
 #~ msgid "processing"
 #~ msgstr "Verarbeitung läuft"
 
-#~ msgid "Converting sample image from PNG to HEIF"
-#~ msgstr "Beispielbild wird von PNG nach HEIF umgewandelt"
-
 #~ msgid "Made UI adjustments."
 #~ msgstr "Anpassungen an der Benutzeroberfläche vorgenommen."
-
-#~ msgid "Converting multiple sample images from SVG to HEIF"
-#~ msgstr "Mehrere Beispieldateien werden von SVG nach HEIF umgewandelt"
 
 #~ msgid "Converter has been renamed to Switcheroo!"
 #~ msgstr "Converter wurde in Switcheroo umbenannt!"
@@ -390,12 +420,6 @@ msgstr "Umwandlung abgebrochen"
 
 #~ msgid "Click “Open Images…” or drag images here."
 #~ msgstr "Klicken Sie auf »Bilder öffnen …« oder ziehen Sie Bilder hierher."
-
-#, fuzzy
-#~ msgid "converter;image;convert;converting;processing"
-#~ msgstr ""
-#~ "image;convert;converting;processing;Bild;umwandeln;Umwandlung;"
-#~ "konvertieren;verarbeiten"
 
 #~ msgid "Converting…"
 #~ msgstr "Umwandlung läuft …"
