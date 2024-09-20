@@ -60,10 +60,12 @@ impl ImageRest {
 
         bin.setup_callbacks();
 
-        bin.imp().content.set_label(&gettext!("+{}", count));
         bin.imp()
-            .image
-            .set_tooltip_text(Some(&gettext!("Show {} more images", count)));
+            .content
+            .set_label(&gettext("+{}").replace("{}", &format!("{}", count)));
+        bin.imp().image.set_tooltip_text(Some(
+            &gettext("Show {} more images").replace("{}", &format!("{}", count)),
+        ));
 
         bin
     }

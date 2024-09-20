@@ -266,29 +266,49 @@ impl AppWindow {
     fn setup_gactions(&self) {
         self.add_action_entries([
             gio::ActionEntry::builder("close")
-                .activate(clone!(@weak self as window => move |_,_, _| {
-                    window.destroy();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=window)]
+                    self,
+                    move |_, _, _| {
+                        window.destroy();
+                    }
+                ))
                 .build(),
             gio::ActionEntry::builder("add")
-                .activate(clone!(@weak self as window => move |_, _, _| {
-                    window.add_dialog();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=window)]
+                    self,
+                    move |_, _, _| {
+                        window.add_dialog();
+                    }
+                ))
                 .build(),
             gio::ActionEntry::builder("clear")
-                .activate(clone!(@weak self as window => move |_, _, _| {
-                    window.clear();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=window)]
+                    self,
+                    move |_, _, _| {
+                        window.clear();
+                    }
+                ))
                 .build(),
             gio::ActionEntry::builder("about")
-                .activate(clone!(@weak self as window => move |_, _, _| {
-                    window.show_about();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=window)]
+                    self,
+                    move |_, _, _| {
+                        window.show_about();
+                    }
+                ))
                 .build(),
             gio::ActionEntry::builder("paste")
-                .activate(clone!(@weak self as window => move |_, _, _| {
-                    window.load_clipboard();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=window)]
+                    self,
+                    move |_, _, _| {
+                        window.load_clipboard();
+                    }
+                ))
                 .build(),
         ]);
     }
@@ -296,115 +316,196 @@ impl AppWindow {
     fn setup_callbacks(&self) {
         //load imp
         let imp = self.imp();
-        imp.open_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+        imp.open_button.connect_clicked(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.add_dialog();
-            }));
-        imp.add_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.add_button.connect_clicked(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.add_dialog();
-            }));
-        imp.other_add_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.other_add_button.connect_clicked(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.add_dialog();
-            }));
-        imp.convert_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.convert_button.connect_clicked(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.save_files();
-            }));
-        imp.cancel_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.cancel_button.connect_clicked(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.convert_cancel();
-            }));
-        imp.output_filetype
-            .connect_selected_notify(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.output_filetype.connect_selected_notify(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.update_advanced_options();
                 this.update_compression_options();
                 this.update_resize();
-            }));
-        imp.single_pdf_value
-            .connect_state_notify(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.single_pdf_value.connect_state_notify(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.update_compression_options();
-            }));
-        imp.resize_type
-            .connect_selected_notify(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.resize_type.connect_selected_notify(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.update_resize();
-            }));
-        imp.resize_width_value
-            .connect_changed(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.resize_width_value.connect_changed(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.update_height_from_width();
-            }));
-        imp.resize_height_value
-            .connect_changed(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.resize_height_value.connect_changed(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 this.update_width_from_height();
-            }));
-        imp.link_axis
-            .connect_clicked(clone!(@weak self as this => move |_| {
+            }
+        ));
+        imp.link_axis.connect_clicked(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
                     this.imp().link_axis.set_icon_name("chain-link-symbolic");
-                    let old_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
-                    let new_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
+                    let old_value = this
+                        .imp()
+                        .resize_scale_width_value
+                        .text()
+                        .as_str()
+                        .to_owned();
+                    let new_value = this
+                        .imp()
+                        .resize_scale_height_value
+                        .text()
+                        .as_str()
+                        .to_owned();
                     if old_value != new_value && !new_value.is_empty() {
                         this.imp().resize_scale_width_value.set_text(&new_value);
                     }
                     this.update_width_from_height();
                 } else {
-                    this.imp().link_axis.set_icon_name("chain-link-loose-symbolic");
+                    this.imp()
+                        .link_axis
+                        .set_icon_name("chain-link-loose-symbolic");
                 }
-            }));
+            }
+        ));
 
-        imp.resize_scale_height_value
-            .connect_changed(clone!(@weak self as this => move |_| {
+        imp.resize_scale_height_value.connect_changed(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
-                    let old_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
-                    let new_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
+                    let old_value = this
+                        .imp()
+                        .resize_scale_width_value
+                        .text()
+                        .as_str()
+                        .to_owned();
+                    let new_value = this
+                        .imp()
+                        .resize_scale_height_value
+                        .text()
+                        .as_str()
+                        .to_owned();
                     if old_value != new_value && !new_value.is_empty() {
                         this.imp().resize_scale_width_value.set_text(&new_value);
                     }
                 }
-            }));
+            }
+        ));
 
-        imp.resize_scale_width_value
-            .connect_changed(clone!(@weak self as this => move |_| {
+        imp.resize_scale_width_value.connect_changed(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |_| {
                 if this.imp().link_axis.is_active() && this.imp().link_axis.is_visible() {
-                    let old_value = this.imp().resize_scale_height_value.text().as_str().to_owned();
-                    let new_value = this.imp().resize_scale_width_value.text().as_str().to_owned();
+                    let old_value = this
+                        .imp()
+                        .resize_scale_height_value
+                        .text()
+                        .as_str()
+                        .to_owned();
+                    let new_value = this
+                        .imp()
+                        .resize_scale_width_value
+                        .text()
+                        .as_str()
+                        .to_owned();
                     if old_value != new_value && !new_value.is_empty() {
                         this.imp().resize_scale_height_value.set_text(&new_value);
                     }
                 }
-            }));
-        imp.image_container.set_filter_func(clone!(@weak self as this => @default-return false, move |f| {
-            return (f.index() as usize) >= this.imp().elements.get() || !this.imp().removed.borrow().contains(&(f.index() as u32));
-        }));
-        imp.full_image_container.set_filter_func(
-            clone!(@weak self as this => @default-return false, move |f| {
+            }
+        ));
+        imp.image_container.set_filter_func(clone!(
+            #[weak(rename_to=this)]
+            self,
+            #[upgrade_or_default]
+            move |f| {
+                return (f.index() as usize) >= this.imp().elements.get()
+                    || !this.imp().removed.borrow().contains(&(f.index() as u32));
+            }
+        ));
+        imp.full_image_container.set_filter_func(clone!(
+            #[weak(rename_to=this)]
+            self,
+            #[upgrade_or_default]
+            move |f| {
                 return !this.imp().removed.borrow().contains(&(f.index() as u32));
-            }),
-        );
-        imp.resize_filter_default
-            .connect_toggled(clone!(@weak self as this => move |f| {
-                match (f.is_active(), this.imp().resize_filter_pixel.is_active()) {
-                    (x, y) if x == y => {
-                        this.imp().resize_filter_pixel.set_active(!x);
-                    }
-                    _ => {}
+            }
+        ));
+        imp.resize_filter_default.connect_toggled(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |f| {
+                if f.is_active() == this.imp().resize_filter_pixel.is_active() {
+                    this.imp().resize_filter_pixel.set_active(!f.is_active());
                 }
-            }));
-        imp.resize_filter_pixel
-            .connect_toggled(clone!(@weak self as this => move |f| {
-                match (f.is_active(), this.imp().resize_filter_default.is_active()) {
-                    (x, y) if x == y => {
-                        this.imp().resize_filter_default.set_active(!x);
-                    }
-                    _ => {}
+            }
+        ));
+        imp.resize_filter_pixel.connect_toggled(clone!(
+            #[weak(rename_to=this)]
+            self,
+            move |f| {
+                if f.is_active() == this.imp().resize_filter_default.is_active() {
+                    this.imp().resize_filter_default.set_active(!f.is_active());
                 }
-            }));
-        imp.bgcolor
-            .connect_rgba_notify(clone!(@weak self as this => move |x| {
-                let y = Color::from(x.rgba()).as_hex_string();
-                x.first_child().unwrap().update_property(&[Property::Label(&gettext!("New transparency layer color: {}", y))]);
-            }));
+            }
+        ));
+        imp.bgcolor.connect_rgba_notify(move |x| {
+            let y = Color::from(x.rgba()).as_hex_string();
+            x.first_child().unwrap().update_property(&[Property::Label(
+                &gettext("New transparency layer color: {}").replace("{}", &y),
+            )]);
+        });
         self.load_options();
     }
 
@@ -415,8 +516,11 @@ impl AppWindow {
             .formats(&gdk::ContentFormats::for_type(gdk::FileList::static_type()))
             .build();
 
-        drop_target.connect_drop(
-            clone!(@weak self as win => @default-return false, move |_, value, _, _| {
+        drop_target.connect_drop(clone!(
+            #[weak(rename_to=win)]
+            self,
+            #[upgrade_or_default]
+            move |_, value, _, _| {
                 if let Ok(file_list) = value.get::<gdk::FileList>() {
                     if file_list.files().is_empty() {
                         win.show_toast(&gettext("Unable to access dropped files"));
@@ -429,8 +533,8 @@ impl AppWindow {
                 }
 
                 false
-            }),
-        );
+            }
+        ));
 
         self.imp().drag_overlay.set_drop_target(&drop_target);
     }
@@ -440,8 +544,7 @@ impl AppWindow {
     }
 
     fn close_dialog(&self) {
-        let stop_converting_dialog = adw::MessageDialog::new(
-            Some(self),
+        let stop_converting_dialog = adw::AlertDialog::new(
             Some(&gettext("Stop converting?")),
             Some(&gettext("You will lose all progress.")),
         );
@@ -452,30 +555,34 @@ impl AppWindow {
             .set_response_appearance("stop", adw::ResponseAppearance::Destructive);
         stop_converting_dialog.connect_response(
             None,
-            clone!(@weak self as this => move |_, response_id| {
-                if response_id == "stop" {
-                    this.imp()
-                        .is_canceled
-                        .store(true, std::sync::atomic::Ordering::SeqCst);
-                    let mut current_jobs = this.imp().current_jobs.borrow_mut();
-                    for x in current_jobs.iter() {
-                        match x.kill() {
-                            Ok(_) => {}
-                            Err(_) => {
-                                x.wait().ok();
+            clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |_, response_id| {
+                    if response_id == "stop" {
+                        this.imp()
+                            .is_canceled
+                            .store(true, std::sync::atomic::Ordering::SeqCst);
+                        let mut current_jobs = this.imp().current_jobs.borrow_mut();
+                        for x in current_jobs.iter() {
+                            match x.kill() {
+                                Ok(_) => {}
+                                Err(_) => {
+                                    x.wait().ok();
+                                }
                             }
                         }
+                        current_jobs.clear();
+                        this.close();
                     }
-                    current_jobs.clear();
-                    this.close();
                 }
-            }),
+            ),
         );
-        stop_converting_dialog.present();
+        stop_converting_dialog.present(Some(self));
     }
 
     fn set_convert_progress(&self, done: usize, total: usize) {
-        let msg = gettext!("{}/{}", done, total);
+        let msg = format!("{}/{}", done, total);
         self.imp().progress_bar.set_text(Some(&msg));
         self.imp()
             .progress_bar
@@ -490,24 +597,36 @@ impl AppWindow {
     pub fn load_clipboard(&self) {
         let clipboard = self.clipboard();
         if clipboard.formats().contain_mime_type("image/png") {
-            MainContext::default().spawn_local(clone!(@weak self as this => async move {
-                let t = clipboard.read_texture_future().await;
-                if let Ok(Some(t)) = t {
-                    let interim = JobFile::from_clipboard();
-                    t.save_to_png(interim.as_filename()).ok();
-                    let file = InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
-                    this.open_success(vec![file]).await;
+            MainContext::default().spawn_local(clone!(
+                #[weak(rename_to=this)]
+                self,
+                async move {
+                    let t = clipboard.read_texture_future().await;
+                    if let Ok(Some(t)) = t {
+                        let interim = JobFile::from_clipboard();
+                        t.save_to_png(interim.as_filename()).ok();
+                        let file =
+                            InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
+                        this.open_success(vec![file]).await;
+                    }
                 }
-            }));
+            ));
         } else if clipboard
             .formats()
             .contain_mime_type("application/vnd.portal.files")
         {
-            MainContext::default().spawn_local(clone!(@weak self as this => async move {
-                let t = clipboard.read_text_future().await.unwrap().unwrap();
-                let files = t.lines().flat_map(|p| InputFile::new(&gio::File::for_path(p))).collect();
-                this.open_success(files).await;
-            }));
+            MainContext::default().spawn_local(clone!(
+                #[weak(rename_to=this)]
+                self,
+                async move {
+                    let t = clipboard.read_text_future().await.unwrap().unwrap();
+                    let files = t
+                        .lines()
+                        .flat_map(|p| InputFile::new(&gio::File::for_path(p)))
+                        .collect();
+                    this.open_success(files).await;
+                }
+            ));
         }
     }
 
@@ -555,25 +674,37 @@ impl AppWindow {
             sender.send_blocking(res).expect("Concurrency Issues");
         });
 
-        glib::spawn_future_local(clone!(@weak self as this => async move {
-            while let Ok(image_info) = receiver.recv().await {
-                let real_files = files.clone();
-                for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
-                    f.set_frames(*frame);
-                    let dims = *dims;
-                    idle_add_local_once(clone!(@weak f as ff => move || {
-                        if let Some((width, height)) = dims {
-                            ff.set_width(width);
-                            ff.set_height(height);
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to=this)]
+            self,
+            async move {
+                while let Ok(image_info) = receiver.recv().await {
+                    let real_files = files.clone();
+                    for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
+                        f.set_frames(*frame);
+                        let dims = *dims;
+                        idle_add_local_once(clone!(
+                            #[weak(rename_to=ff)]
+                            f,
+                            move || {
+                                if let Some((width, height)) = dims {
+                                    ff.set_width(width);
+                                    ff.set_height(height);
+                                }
+                            }
+                        ));
+                        glib::MainContext::default().iteration(true);
+                    }
+                    idle_add_local_once(clone!(
+                        #[weak(rename_to=these)]
+                        this,
+                        move || {
+                            these.load_pixbuf_finished();
                         }
-                    }));
-                    glib::MainContext::default().iteration(true);
+                    ));
                 }
-                idle_add_local_once(clone!(@weak this as these => move || {
-                    these.load_pixbuf_finished();
-                }));
             }
-        }));
+        ));
     }
 
     fn remove_file(&self, i: u32) {
@@ -666,9 +797,13 @@ impl AppWindow {
 
         self.construct_short_thumbnail();
 
-        idle_add_local_once(clone!(@weak self as that => move || {
-            that.update_full_image_container();
-        }));
+        idle_add_local_once(clone!(
+            #[weak(rename_to=that)]
+            self,
+            move || {
+                that.update_full_image_container();
+            }
+        ));
 
         self.update_options();
         self.switch_back_from_loading();
@@ -747,20 +882,29 @@ impl AppWindow {
         let completed = std::sync::Arc::new(AtomicUsize::new(0));
         let total = self.files_count();
 
-        glib::spawn_future_local(clone!(@weak self as this => async move {
-            while let Ok((i,p)) = receiver.recv().await {
-                if let Some(Ok(p)) = p {
-                    this.imp().input_file_store.item(i as u32).and_downcast::<InputFile>().unwrap().set_pixbuf(p);
-                }
-                glib::MainContext::default().iteration(true);
-                let c = completed.clone();
-                let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-                if x + 1 == total {
-                    this.load_frames();
-                    break;
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to=this)]
+            self,
+            async move {
+                while let Ok((i, p)) = receiver.recv().await {
+                    if let Some(Ok(p)) = p {
+                        this.imp()
+                            .input_file_store
+                            .item(i as u32)
+                            .and_downcast::<InputFile>()
+                            .unwrap()
+                            .set_pixbuf(p);
+                    }
+                    glib::MainContext::default().iteration(true);
+                    let c = completed.clone();
+                    let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                    if x + 1 == total {
+                        this.load_frames();
+                        break;
+                    }
                 }
             }
-        }));
+        ));
     }
 
     async fn convert_start(&self, save_format: OutputType, path: String) {
@@ -794,7 +938,7 @@ impl AppWindow {
                 (f, stripped_stem)
             })
             .sorted_by_key(|(_, s)| s.to_owned())
-            .group_by(|(_, s)| s.to_owned())
+            .chunk_by(|(_, s)| s.to_owned())
             .into_iter()
             .flat_map(|(_, fs)| {
                 fs.enumerate().map(|(i, (f, s))| match i {
@@ -975,35 +1119,46 @@ impl AppWindow {
 
         let stop_flag_r = stop_flag;
 
-        glib::spawn_future_local(clone!(@weak self as this => async move {
-            while let Ok(e) = receiver.recv().await {
-                match e {
-                    ArcOrOptionError::Child(c) => {
-                        if stop_flag_r.load(std::sync::atomic::Ordering::SeqCst) {
-                            match c.kill() {
-                                Ok(_) => {}
-                                Err(_) => {c.wait().ok();}
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to=this)]
+            self,
+            async move {
+                while let Ok(e) = receiver.recv().await {
+                    match e {
+                        ArcOrOptionError::Child(c) => {
+                            if stop_flag_r.load(std::sync::atomic::Ordering::SeqCst) {
+                                match c.kill() {
+                                    Ok(_) => {}
+                                    Err(_) => {
+                                        c.wait().ok();
+                                    }
+                                }
+                            } else {
+                                this.imp().current_jobs.borrow_mut().push(c);
                             }
-                        } else {
-                            this.imp().current_jobs.borrow_mut().push(c);
                         }
-                    }
-                    ArcOrOptionError::OptionError(e) => {
-                        if let Some(e) = e {
-                            this.convert_failed(e, dir_path.clone());
-                            break;
+                        ArcOrOptionError::OptionError(e) => {
+                            if let Some(e) = e {
+                                this.convert_failed(e, dir_path.clone());
+                                break;
+                            }
+                            let c = completed.clone();
+                            let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                            this.set_convert_progress(x + 1, count);
+                            if x + 1 == count {
+                                this.move_output(
+                                    save_format,
+                                    path.clone(),
+                                    output_files.clone(),
+                                    dir_path.clone(),
+                                );
+                                break;
+                            }
                         }
-                        let c = completed.clone();
-                        let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-                        this.set_convert_progress(x + 1, count);
-                        if x + 1 == count {
-                            this.move_output(save_format, path.clone(), output_files.clone(), dir_path.clone());
-                            break;
-                        }
-                    }
-                };
+                    };
+                }
             }
-        }));
+        ));
 
         self.switch_to_stack_converting();
     }
@@ -1076,9 +1231,13 @@ trait SettingsStore {
 
 impl ConvertOperations for AppWindow {
     fn convert_start_wrapper(&self, save_format: OutputType, path: String) {
-        MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.convert_start(save_format, path).await;
-        }));
+        MainContext::default().spawn_local(clone!(
+            #[weak(rename_to=this)]
+            self,
+            async move {
+                this.convert_start(save_format, path).await;
+            }
+        ));
     }
 
     fn move_output(
@@ -1234,29 +1393,43 @@ impl ConvertOperations for AppWindow {
             }
         };
 
-        glib::spawn_future_local(clone!(@weak self as this => async move {
-            while let Ok(x) = receiver.recv().await {
-                match x {
-                    ArcOrOptionError::Child(c) => {
-                        if this.imp().is_canceled.load(std::sync::atomic::Ordering::SeqCst) {
-                            match c.kill() {
-                                Ok(_) => {}
-                                Err(_) => {c.wait().ok();}
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to=this)]
+            self,
+            async move {
+                while let Ok(x) = receiver.recv().await {
+                    match x {
+                        ArcOrOptionError::Child(c) => {
+                            if this
+                                .imp()
+                                .is_canceled
+                                .load(std::sync::atomic::Ordering::SeqCst)
+                            {
+                                match c.kill() {
+                                    Ok(_) => {}
+                                    Err(_) => {
+                                        c.wait().ok();
+                                    }
+                                }
+                            } else {
+                                this.imp().current_jobs.borrow_mut().push(c);
                             }
-                        } else {
-                            this.imp().current_jobs.borrow_mut().push(c);
                         }
-                    }
-                    ArcOrOptionError::OptionError(x) => {
-                        match x {
-                            Some(e) => this.convert_failed(e, dir_path.clone()),
-                            None => this.convert_success(dir_path.clone(), path_r.clone(), save_format)
+                        ArcOrOptionError::OptionError(x) => {
+                            match x {
+                                Some(e) => this.convert_failed(e, dir_path.clone()),
+                                None => this.convert_success(
+                                    dir_path.clone(),
+                                    path_r.clone(),
+                                    save_format,
+                                ),
+                            }
+                            break;
                         }
-                        break;
-                    }
-                };
+                    };
+                }
             }
-        }));
+        ));
     }
 
     fn convert_failed(&self, error_message: String, temp_dir_path: String) {
@@ -1282,8 +1455,7 @@ impl ConvertOperations for AppWindow {
         }
         current_jobs.clear();
 
-        let dialog =
-            adw::MessageDialog::new(Some(self), Some(&gettext("Error While Processing")), None);
+        let dialog = adw::AlertDialog::new(Some(&gettext("Error While Processing")), None);
 
         let sw = gtk::ScrolledWindow::new();
         sw.set_min_content_height(200);
@@ -1310,15 +1482,19 @@ impl ConvertOperations for AppWindow {
         dialog.set_response_appearance("copy", adw::ResponseAppearance::Suggested);
         dialog.connect_response(
             None,
-            clone!(@weak self as this => move |d, response_id| {
-                if response_id == "copy" {
-                    this.clipboard().set_text(&error_message);
-                    this.show_toast(&gettext("Error copied to clipboard"));
+            clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |d, response_id| {
+                    if response_id == "copy" {
+                        this.clipboard().set_text(&error_message);
+                        this.show_toast(&gettext("Error copied to clipboard"));
+                    }
+                    d.close();
                 }
-                d.close();
-            }),
+            ),
         );
-        dialog.present();
+        dialog.present(Some(self));
 
         self.switch_to_stack_convert();
     }
@@ -1330,19 +1506,26 @@ impl ConvertOperations for AppWindow {
             .store(true, std::sync::atomic::Ordering::SeqCst);
         let toast = adw::Toast::new(&gettext("Image converted"));
         toast.set_button_label(Some(&gettext("Open")));
-        toast.connect_button_clicked(clone!(@weak self as this => move |_| {
+        toast.connect_button_clicked(move |_| {
             let p = path.clone();
-            MainContext::default().spawn_local(clone!(@weak this as other_this => async move {
+            MainContext::default().spawn_local(async move {
                 match save_format {
                     OutputType::Compression(CompressionType::Directory) => {
-                        ashpd::desktop::open_uri::OpenDirectoryRequest::default().send(&std::fs::File::open(&p).unwrap().as_fd()).await.ok();
+                        ashpd::desktop::open_uri::OpenDirectoryRequest::default()
+                            .send(&std::fs::File::open(&p).unwrap().as_fd())
+                            .await
+                            .ok();
                     }
                     _ => {
-                        ashpd::desktop::open_uri::OpenFileRequest::default().ask(true).send_file(&std::fs::File::open(&p).unwrap().as_fd()).await.ok();
+                        ashpd::desktop::open_uri::OpenFileRequest::default()
+                            .ask(true)
+                            .send_file(&std::fs::File::open(&p).unwrap().as_fd())
+                            .await
+                            .ok();
                     }
                 }
-            }));
-        }));
+            });
+        });
         self.imp().toast_overlay.add_toast(toast);
         self.switch_to_stack_convert();
     }
@@ -1353,8 +1536,7 @@ impl ConvertOperations for AppWindow {
     }
 
     fn convert_cancel(&self) {
-        let stop_converting_dialog = adw::MessageDialog::new(
-            Some(self),
+        let stop_converting_dialog = adw::AlertDialog::new(
             Some(&gettext("Stop converting?")),
             Some(&gettext("You will lose all progress.")),
         );
@@ -1366,28 +1548,32 @@ impl ConvertOperations for AppWindow {
 
         stop_converting_dialog.connect_response(
             None,
-            clone!(@weak self as this => move |_, response_id| {
-                if response_id == "stop" {
-                    this.imp()
-                        .is_canceled
-                        .store(true, std::sync::atomic::Ordering::SeqCst);
-                    let mut current_jobs = this.imp().current_jobs.borrow_mut();
-                    for x in current_jobs.iter() {
-                        match x.kill() {
-                            Ok(_) => {}
-                            Err(_) => {
-                                x.wait().ok();
+            clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |_, response_id| {
+                    if response_id == "stop" {
+                        this.imp()
+                            .is_canceled
+                            .store(true, std::sync::atomic::Ordering::SeqCst);
+                        let mut current_jobs = this.imp().current_jobs.borrow_mut();
+                        for x in current_jobs.iter() {
+                            match x.kill() {
+                                Ok(_) => {}
+                                Err(_) => {
+                                    x.wait().ok();
+                                }
                             }
                         }
+                        current_jobs.clear();
+                        this.switch_to_stack_convert();
+                        this.show_toast(&gettext("Converting Cancelled"));
                     }
-                    current_jobs.clear();
-                    this.switch_to_stack_convert();
-                    this.show_toast(&gettext("Converting Cancelled"));
                 }
-            }),
+            ),
         );
 
-        stop_converting_dialog.present();
+        stop_converting_dialog.present(Some(self));
     }
 }
 
@@ -1695,11 +1881,15 @@ impl WindowUI for AppWindow {
             image_flow_box_child.update_property(&[Property::Label(&caption)]);
 
             imp.full_image_container.append(&image_flow_box_child);
-            image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
-                this.remove_file(i as u32);
-                this.imp().image_container.invalidate_filter();
-                this.imp().full_image_container.invalidate_filter();
-            }));
+            image_thumbnail.connect_remove_clicked(clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |_| {
+                    this.remove_file(i as u32);
+                    this.imp().image_container.invalidate_filter();
+                    this.imp().full_image_container.invalidate_filter();
+                }
+            ));
         }
     }
 
@@ -1742,11 +1932,15 @@ impl WindowUI for AppWindow {
                     image_flow_box_child.update_property(&[Property::Label(&caption)]);
 
                     imp.image_container.append(&image_flow_box_child);
-                    image_thumbnail.connect_remove_clicked(clone!(@weak self as this => move |_| {
-                        this.remove_file(i as u32);
-                        this.imp().image_container.invalidate_filter();
-                        this.imp().full_image_container.invalidate_filter();
-                    }));
+                    image_thumbnail.connect_remove_clicked(clone!(
+                        #[weak(rename_to=this)]
+                        self,
+                        move |_| {
+                            this.remove_file(i as u32);
+                            this.imp().image_container.invalidate_filter();
+                            this.imp().full_image_container.invalidate_filter();
+                        }
+                    ));
                 }
                 true => {
                     imp.image_container.append(&gtk::FlowBoxChild::new());
@@ -1762,9 +1956,13 @@ impl WindowUI for AppWindow {
             image_flow_box_child.set_child(Some(&image_rest));
             image_flow_box_child.set_focusable(false);
             imp.image_container.append(&image_flow_box_child);
-            image_rest.connect_clicked(clone!(@weak self as this => move |_| {
-                this.imp().navigation.push_by_tag("all_images");
-            }));
+            image_rest.connect_clicked(clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |_| {
+                    this.imp().navigation.push_by_tag("all_images");
+                }
+            ));
         }
 
         match self.files_count() {
@@ -2018,9 +2216,13 @@ impl FileOperations for AppWindow {
     }
 
     fn add_success_wrapper(&self, files: Vec<InputFile>) {
-        MainContext::default().spawn_local(clone!(@weak self as this => async move {
-            this.open_success(files).await;
-        }));
+        MainContext::default().spawn_local(clone!(
+            #[weak(rename_to=this)]
+            self,
+            async move {
+                this.open_success(files).await;
+            }
+        ));
     }
 }
 

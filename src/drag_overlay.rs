@@ -120,11 +120,13 @@ impl DragOverlay {
             }
         }
 
-        let handler_id = drop_target.connect_current_drop_notify(
-            glib::clone!(@weak priv_.revealer as revealer => move |target| {
+        let handler_id = drop_target.connect_current_drop_notify(glib::clone!(
+            #[weak(rename_to=revealer)]
+            priv_.revealer,
+            move |target| {
                 revealer.set_reveal_child(target.current_drop().is_some());
-            }),
-        );
+            }
+        ));
         priv_.handler_id.replace(Some(handler_id));
 
         self.add_controller(drop_target.clone());

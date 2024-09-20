@@ -54,9 +54,20 @@ impl FileChooser {
         B: Fn(&AppWindow, Vec<InputFile>) + 'static,
         C: Fn(&AppWindow, Option<&str>) + 'static,
     {
-        glib::MainContext::default().spawn_local(clone!(@strong parent => async move {
-            FileChooser::open_files(&parent, current_paths, callback_start, callback_success, callback_error).await;
-        }));
+        glib::MainContext::default().spawn_local(clone!(
+            #[strong]
+            parent,
+            async move {
+                FileChooser::open_files(
+                    &parent,
+                    current_paths,
+                    callback_start,
+                    callback_success,
+                    callback_error,
+                )
+                .await;
+            }
+        ));
     }
 
     pub async fn open_files<A, B, C>(
@@ -119,9 +130,21 @@ impl FileChooser {
         A: Fn(&AppWindow, OutputType, String) + 'static,
         B: Fn(&AppWindow, Option<&str>) + 'static,
     {
-        glib::MainContext::default().spawn_local(clone!(@strong parent => async move {
-            FileChooser::choose_output_file(&parent, default_name, format, Some(default_folder), callback_success, callback_error).await;
-        }));
+        glib::MainContext::default().spawn_local(clone!(
+            #[strong]
+            parent,
+            async move {
+                FileChooser::choose_output_file(
+                    &parent,
+                    default_name,
+                    format,
+                    Some(default_folder),
+                    callback_success,
+                    callback_error,
+                )
+                .await;
+            }
+        ));
     }
 
     pub async fn choose_output_file<A, B>(
@@ -182,9 +205,19 @@ impl FileChooser {
         A: Fn(&AppWindow, OutputType, String) + 'static,
         B: Fn(&AppWindow, Option<&str>) + 'static,
     {
-        glib::MainContext::default().spawn_local(clone!(@strong parent => async move {
-            FileChooser::choose_output_folder(&parent, Some(default_folder), callback_success, callback_error).await;
-        }));
+        glib::MainContext::default().spawn_local(clone!(
+            #[strong]
+            parent,
+            async move {
+                FileChooser::choose_output_folder(
+                    &parent,
+                    Some(default_folder),
+                    callback_success,
+                    callback_error,
+                )
+                .await;
+            }
+        ));
     }
 
     pub async fn choose_output_folder<A, B>(

@@ -106,42 +106,61 @@ impl App {
     fn setup_settings(&self) {
         self.imp().settings.connect_changed(
             Some("show-less-popular"),
-            clone!(@weak self as this => move |_, _| {
-                if let Some(window) = this.active_window() {
-                    window.downcast_ref::<AppWindow>().unwrap().update_output_options();
+            clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |_, _| {
+                    if let Some(window) = this.active_window() {
+                        window
+                            .downcast_ref::<AppWindow>()
+                            .unwrap()
+                            .update_output_options();
+                    }
                 }
-            }),
+            ),
         );
     }
 
     fn setup_gactions(&self) {
         self.add_action_entries([
             gio::ActionEntry::builder("quit")
-                .activate(clone!(@weak self as app => move |_,_, _| {
-                    app.quit();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=app)]
+                    self,
+                    move |_, _, _| {
+                        app.quit();
+                    }
+                ))
                 .build(),
             gio::ActionEntry::builder("new-window")
-                .activate(clone!(@weak self as app => move |_, _, _| {
-                    app.present_main_window();
-                }))
+                .activate(clone!(
+                    #[weak(rename_to=app)]
+                    self,
+                    move |_, _, _| {
+                        app.present_main_window();
+                    }
+                ))
                 .build(),
         ]);
 
         let show_hidden = self.imp().settings.boolean("show-less-popular");
         self.add_action_entries([gio::ActionEntry::builder("popular")
             .state(show_hidden.to_variant())
-            .activate(clone!(@weak self as this => move |_, action, _| {
-                let state = action.state().unwrap();
-                let action_state: bool = state.get().unwrap();
-                let show_hidden = !action_state;
-                action.set_state(&show_hidden.to_variant());
+            .activate(clone!(
+                #[weak(rename_to=this)]
+                self,
+                move |_, action, _| {
+                    let state = action.state().unwrap();
+                    let action_state: bool = state.get().unwrap();
+                    let show_hidden = !action_state;
+                    action.set_state(&show_hidden.to_variant());
 
-                this.imp()
-                    .settings
-                    .set_boolean("show-less-popular", show_hidden)
-                    .expect("Unable to store show-less-popular setting");
-            }))
+                    this.imp()
+                        .settings
+                        .set_boolean("show-less-popular", show_hidden)
+                        .expect("Unable to store show-less-popular setting");
+                }
+            ))
             .build()]);
     }
 

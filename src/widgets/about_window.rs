@@ -1,9 +1,8 @@
 use crate::config::{APP_ID, VERSION};
 use adw::prelude::*;
-use adw::AboutWindow;
 use gettextrs::gettext;
 use glib::object::IsA;
-use gtk::{License, Window};
+use gtk::License;
 
 //code 'inspired' by https://gitlab.com/news-flash/news_flash_gtk/-/blob/master/src/about_dialog.rs
 
@@ -16,10 +15,8 @@ pub const DEVELOPERS: &[&str] = &["Khaleel Al-Adhami <khaleel.aladhami@gmail.com
 pub struct SwitcherooAbout;
 
 impl SwitcherooAbout {
-    pub fn show<W: IsA<Window> + GtkWindowExt>(window: &W) {
-        let about_window = AboutWindow::builder()
-            .transient_for(window)
-            .modal(true)
+    pub fn show<W: IsA<gtk::Widget>>(window: &W) {
+        let about_window = adw::AboutDialog::builder()
             .application_icon(APP_ID)
             .application_name(gettext("Switcheroo"))
             .developer_name("Khaleel Al-Adhami")
@@ -48,6 +45,6 @@ impl SwitcherooAbout {
             &["Samuel Custodio https://github.com/samuelcust/flappy-bird-assets"],
         );
         about_window.add_legal_section("ImageMagick", None, License::MitX11, None);
-        about_window.present();
+        about_window.present(Some(window));
     }
 }
