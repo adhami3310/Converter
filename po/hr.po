@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-19 13:36-0400\n"
-"PO-Revision-Date: 2024-07-07 20:18+0200\n"
+"PO-Revision-Date: 2024-10-03 19:51+0200\n"
 "Last-Translator: Milo Ivir <mail@mivirtype.de>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
@@ -55,7 +55,7 @@ msgstr "Kvaliteta slike"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
 msgid "Image density per inch"
-msgstr "Gustoća slike po inču"
+msgstr "Broj piksela po inču"
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
 msgid "Window height"
@@ -81,11 +81,11 @@ msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:42
 msgid "Converting sample image from PNG to HEIF"
-msgstr "Konvertiranje uzorka slike iz PNG u HEIF"
+msgstr "Konvertiranje slike iz PNG u HEIF format"
 
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:46
 msgid "Converting multiple sample images from SVG to HEIF"
-msgstr "Konvertiranje više uzoraka slika iz PNG u HEIF"
+msgstr "Konvertiranje više slika iz SVG u HEIF format"
 
 #: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -180,7 +180,7 @@ msgstr "Zamjenjuje izvorni sloj transparentnosti"
 
 #: data/resources/blueprints/window.blp:185
 msgid "Pixel Density Per Inch"
-msgstr "Gustoća piksela po inču"
+msgstr "Broj piksela po inču"
 
 #: data/resources/blueprints/window.blp:197
 msgid "Resize"
@@ -206,7 +206,7 @@ msgstr "Visina"
 
 #: data/resources/blueprints/window.blp:245
 msgid "Choose between resizing with percentages or using exact pixels"
-msgstr "Promijeni veličinu koristeći postotke ili točan broj piksela"
+msgstr "Promijeni veličinu postotkom ili koristeći točan broj piksela"
 
 #: data/resources/blueprints/window.blp:249
 msgid "%"
@@ -222,11 +222,11 @@ msgstr "Algoritam za mijenjanje veličine"
 
 #: data/resources/blueprints/window.blp:264
 msgid "Default"
-msgstr "Zadano"
+msgstr "Standardno"
 
 #: data/resources/blueprints/window.blp:268
 msgid "Pixel Art"
-msgstr "Pixel Art"
+msgstr "Pikselasto"
 
 #: data/resources/blueprints/window.blp:282
 msgid "_Convert"
