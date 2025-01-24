@@ -1,565 +1,382 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# SPDX-FileCopyrightText: 2025 Sergey Kazorin <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-07-06 14:39+0300\n"
-"Last-Translator: Сергей Ворон <voron@duck.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-01-22 11:34+0300\n"
+"Last-Translator: Sergey Kazorin <translation-team@basealt.ru>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
-#: ../data/resources/blueprints/help-overlay.blp:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
+#: data/resources/blueprints/window.blp:9
+#: data/resources/blueprints/window.blp:21
+#: data/resources/blueprints/window.blp:57 src/main.rs:30
+#: src/widgets/about_window.rs:24
+msgid "Switcheroo"
+msgstr "Switcheroo"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+msgid "Image Converter"
+msgstr "Конвертер изображений"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:11
+msgid "Convert and manipulate images"
+msgstr "Конвертирование и обработка изображений"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
+msgid "converter;image;convert;converting;processing"
+msgstr "изображение;конвертация;конвертирование;обработка"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
+msgid "Shows less popular datatypes in the menu"
+msgstr "Показывать менее популярные типы данных в меню"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
+msgid "Window width"
+msgstr "Ширина окна"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
+msgid "Image quality"
+msgstr "Качество изображения"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
+msgid "Image density per inch"
+msgstr "Плотность изображения на дюйм"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
+msgid "Window height"
+msgstr "Высота окна"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
+msgid "Window maximized state"
+msgstr "Окно развёрнуто"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
+msgid "Output format"
+msgstr "Формат вывода"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:54
+msgid "Compression format"
+msgstr "Формат сжатия"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:17
+msgid "Convert between different image filetypes and resize them easily."
+msgstr ""
+"Позволяет конвертировать изображения различных типов и удобно изменять их"
+" размер."
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:42
+msgid "Converting sample image from PNG to HEIF"
+msgstr "Конвертирование образца изображения из PNG в HEIF7"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:46
+msgid "Converting multiple sample images from SVG to HEIF"
+msgstr "Конвертирование нескольких образцов изображений из SVG в HEIF"
+
+#: data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Общие"
 
-#: ../data/resources/blueprints/help-overlay.blp:14
+#: data/resources/blueprints/help-overlay.blp:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Показать комбинации клавиш"
 
-#: ../data/resources/blueprints/help-overlay.blp:19
+#: data/resources/blueprints/help-overlay.blp:19
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Выйти"
 
-#: ../data/resources/blueprints/help-overlay.blp:24
-#, fuzzy
+#: data/resources/blueprints/help-overlay.blp:24
 msgctxt "shortcut window"
 msgid "New Window"
 msgstr "Новое окно"
 
-#: ../data/resources/blueprints/help-overlay.blp:29
-#, fuzzy
+#: data/resources/blueprints/help-overlay.blp:29
 msgctxt "shortcut window"
 msgid "Clear Window"
 msgstr "Очистить окно"
 
-#: ../data/resources/blueprints/help-overlay.blp:34
-#, fuzzy
+#: data/resources/blueprints/help-overlay.blp:34
 msgctxt "shortcut window"
 msgid "Show Less Popular Datatypes"
 msgstr "Показать менее популярные типы данных"
 
-#: ../data/resources/blueprints/help-overlay.blp:39
-#, fuzzy
+#: data/resources/blueprints/help-overlay.blp:39
 msgctxt "shortcut window"
 msgid "Paste From Clipboard"
 msgstr "Вставить из буфера обмена"
 
-#: ../data/resources/blueprints/help-overlay.blp:44
+#: data/resources/blueprints/help-overlay.blp:44
 msgctxt "shortcut window"
 msgid "Add Images"
 msgstr "Добавить изображения"
 
-#: ../data/resources/blueprints/image-rest.blp:21
+#: data/resources/blueprints/image-rest.blp:21
 msgid "Show All"
 msgstr "Показать все"
 
-#: ../data/resources/blueprints/window.blp:9
-#: ../data/resources/blueprints/window.blp:21
-#: ../data/resources/blueprints/window.blp:57 ../src/main.rs:30
-#: ../src/widgets/about_window.rs:24
-msgid "Switcheroo"
-msgstr "Switcheroo"
-
-#: ../data/resources/blueprints/window.blp:15
+#: data/resources/blueprints/window.blp:15
 msgid "Drop Here to Open"
 msgstr "Перетащите сюда, чтобы открыть"
 
-#: ../data/resources/blueprints/window.blp:40
+#: data/resources/blueprints/window.blp:29
+#: data/resources/blueprints/window.blp:370
+msgid "Add Images (Ctrl+O)"
+msgstr "Добавить изображения (Ctrl+O)"
+
+#: data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
 msgstr "Основное меню"
 
-#: ../data/resources/blueprints/window.blp:58
+#: data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Перетащите изображения сюда"
 
-#: ../data/resources/blueprints/window.blp:69
+#: data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
-msgstr "_Открыть изображение…"
+msgstr "_Открыть изображения…"
 
-#: ../data/resources/blueprints/window.blp:122
+#: data/resources/blueprints/window.blp:122
 msgid "Export Format"
 msgstr "Формат экспорта"
 
-#: ../data/resources/blueprints/window.blp:127
+#: data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Сохранить как многостраничный документ PDF"
 
-#: ../data/resources/blueprints/window.blp:137
+#: data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
 msgstr "Сохранить в ZIP"
 
-#: ../data/resources/blueprints/window.blp:150
+#: data/resources/blueprints/window.blp:150
 msgid "Quality"
 msgstr "Качество"
 
-#: ../data/resources/blueprints/window.blp:170
+#: data/resources/blueprints/window.blp:170
 msgid "Background Color"
 msgstr "Цвет фона"
 
-#: ../data/resources/blueprints/window.blp:171
+#: data/resources/blueprints/window.blp:171
 msgid "Replaces original transparency layer"
-msgstr "Заменяет оригинальный слой прозрачности"
+msgstr "Заменяет исходный слой прозрачности"
 
-#: ../data/resources/blueprints/window.blp:185
+#: data/resources/blueprints/window.blp:185
 msgid "Pixel Density Per Inch"
-msgstr "Плотность пикселей на дюйм"
+msgstr "Плотность пикселов на дюйм"
 
-#: ../data/resources/blueprints/window.blp:197
+#: data/resources/blueprints/window.blp:197
 msgid "Resize"
 msgstr "Изменить размер"
 
-#: ../data/resources/blueprints/window.blp:202
-#: ../data/resources/blueprints/window.blp:203
-#: ../data/resources/blueprints/window.blp:210
-#: ../data/resources/blueprints/window.blp:212
-#: ../data/resources/blueprints/window.blp:233
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:203
+#: data/resources/blueprints/window.blp:210
+#: data/resources/blueprints/window.blp:212
+#: data/resources/blueprints/window.blp:233
 msgid "Width"
 msgstr "Ширина"
 
-#: ../data/resources/blueprints/window.blp:220
+#: data/resources/blueprints/window.blp:220
 msgid "Preserve aspect ratio"
 msgstr "Сохранить соотношение сторон"
 
-#: ../data/resources/blueprints/window.blp:225
-#: ../data/resources/blueprints/window.blp:226
-#: ../data/resources/blueprints/window.blp:234
+#: data/resources/blueprints/window.blp:225
+#: data/resources/blueprints/window.blp:226
+#: data/resources/blueprints/window.blp:234
 msgid "Height"
 msgstr "Высота"
 
-#: ../data/resources/blueprints/window.blp:245
+#: data/resources/blueprints/window.blp:245
 msgid "Choose between resizing with percentages or using exact pixels"
 msgstr ""
 "Выберите между изменением размера в процентах или использованием точных "
-"пикселей"
+"пикселов"
 
-#: ../data/resources/blueprints/window.blp:249
+#: data/resources/blueprints/window.blp:249
 msgid "%"
 msgstr "%"
 
-#: ../data/resources/blueprints/window.blp:249
+#: data/resources/blueprints/window.blp:249
 msgid "px"
 msgstr "px"
 
-#: ../data/resources/blueprints/window.blp:258
+#: data/resources/blueprints/window.blp:258
 msgid "Resize Algorithm"
 msgstr "Алгоритм изменения размера"
 
-#: ../data/resources/blueprints/window.blp:264
+#: data/resources/blueprints/window.blp:264
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../data/resources/blueprints/window.blp:268
+#: data/resources/blueprints/window.blp:268
 msgid "Pixel Art"
-msgstr "Пиксель арт"
+msgstr "Пиксел арт"
 
-#: ../data/resources/blueprints/window.blp:282
+#: data/resources/blueprints/window.blp:282
 msgid "_Convert"
 msgstr "_ Конвертировать"
 
-#: ../data/resources/blueprints/window.blp:308
+#: data/resources/blueprints/window.blp:308
 msgid "Could not Load Image"
 msgstr "Не удалось загрузить изображение"
 
-#: ../data/resources/blueprints/window.blp:309
+#: data/resources/blueprints/window.blp:309
 msgid "This image could be corrupted or may use an unsupported file format."
 msgstr ""
 "Это изображение может быть повреждено или использует неподдерживаемый формат "
 "файла."
 
-#: ../data/resources/blueprints/window.blp:321
-#, fuzzy
+#: data/resources/blueprints/window.blp:321
 msgid "Converting"
-msgstr "конвертация"
+msgstr "Конвертирование"
 
-#: ../data/resources/blueprints/window.blp:322
-#, fuzzy
+#: data/resources/blueprints/window.blp:322
 msgid "This could take a while"
 msgstr "Это может занять некоторое время."
 
-#: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
+#: data/resources/blueprints/window.blp:332 src/window.rs:770
 msgid "Loading…"
 msgstr "Загрузка…"
 
-#: ../data/resources/blueprints/window.blp:338 ../src/window.rs:440
-#: ../src/window.rs:1363
+#: data/resources/blueprints/window.blp:338 src/window.rs:449
+#: src/window.rs:1363
 msgid "_Cancel"
 msgstr "_Отмена"
 
-#: ../data/resources/blueprints/window.blp:362
+#: data/resources/blueprints/window.blp:362
 msgid "All Images"
 msgstr "Все изображения"
 
-#: ../data/resources/blueprints/window.blp:436
+#: data/resources/blueprints/window.blp:436
 msgid "Paste From Clipboard"
 msgstr "Вставить из буфера обмена"
 
-#: ../data/resources/blueprints/window.blp:441
+#: data/resources/blueprints/window.blp:441
 msgid "New Window"
 msgstr "Новое окно"
 
-#: ../data/resources/blueprints/window.blp:446
+#: data/resources/blueprints/window.blp:446
 msgid "Clear Window"
 msgstr "Очистить окно"
 
-#: ../data/resources/blueprints/window.blp:453
+#: data/resources/blueprints/window.blp:453
 msgid "Show Less Popular Datatypes"
 msgstr "Показать менее популярные типы данных"
 
-#: ../data/resources/blueprints/window.blp:460
+#: data/resources/blueprints/window.blp:460
 msgid "Keyboard Shortcuts"
 msgstr "Комбинации клавиш"
 
-#: ../data/resources/blueprints/window.blp:465
+#: data/resources/blueprints/window.blp:465
 msgid "About Switcheroo"
 msgstr "О программе"
 
-#: ../src/file_chooser.rs:39
+#: src/file_chooser.rs:39
 msgid "Unsupported filetype"
 msgstr "Неподдерживаемый тип файла"
 
-#: ../src/file_chooser.rs:77
+#: src/file_chooser.rs:77
 msgid "Images"
 msgstr "Изображений"
 
-#: ../src/file_chooser.rs:80
+#: src/file_chooser.rs:80
 msgid "_Select Images"
 msgstr "_Выберите изображения"
 
-#: ../src/file_chooser.rs:159
+#: src/file_chooser.rs:159
 msgid "Unspecified filetype"
 msgstr "Неуказанный тип файла"
 
-#: ../src/file_chooser.rs:164
+#: src/file_chooser.rs:164
 msgid "Unknown filetype"
 msgstr "Неизвестный тип файла"
 
-#: ../src/file_chooser.rs:169
+#: src/file_chooser.rs:169
 msgid "Used the wrong filetype"
 msgstr "Используется неверный тип файла"
 
-#: ../src/magick.rs:156
+#: src/magick.rs:156
 msgid "Pasted Image"
 msgstr "Вставленное изображение"
 
-#: ../src/magick.rs:364
+#: src/magick.rs:364
 msgid "Unknown IO error happened"
 msgstr "Произошла неизвестная ошибка ввода-вывода"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
-#: ../src/widgets/about_window.rs:28
+#: src/widgets/about_window.rs:28
 msgid "translator-credits"
-msgstr "Сергей Ворон <voron@duck.com>"
+msgstr ""
+"Сергей Ворон <voron@duck.com>; Сергей Казорин <translation-team@basealt.ru>"
 
-#: ../src/widgets/about_window.rs:35
+#: src/widgets/about_window.rs:35
 msgid "Code and Design Borrowed from"
 msgstr "Код и дизайн заимствованы из"
 
-#: ../src/widgets/about_window.rs:47
+#: src/widgets/about_window.rs:47
 msgid "Sample Image from"
 msgstr "Образец изображения из"
 
-#: ../src/window.rs:413
+#: src/window.rs:422
 msgid "Unable to access dropped files"
 msgstr "Невозможно получить доступ к удаленным файлам"
 
-#: ../src/window.rs:436 ../src/window.rs:1358
+#: src/window.rs:445 src/window.rs:1358
 msgid "Stop converting?"
 msgstr "Остановить конвертацию?"
 
-#: ../src/window.rs:437 ../src/window.rs:1359
+#: src/window.rs:446 src/window.rs:1359
 msgid "You will lose all progress."
 msgstr "Вы потеряете весь прогресс."
 
-#: ../src/window.rs:441 ../src/window.rs:1363
+#: src/window.rs:450 src/window.rs:1363
 msgid "_Stop"
 msgstr "_Остановить"
 
-#: ../src/window.rs:477
+#: src/window.rs:486
 msgid "Collecting files"
 msgstr "Сбор файлов"
 
-#: ../src/window.rs:1286
+#: src/window.rs:1286
 msgid "Error While Processing"
 msgstr "Ошибка при обработке"
 
-#: ../src/window.rs:1307
+#: src/window.rs:1307
 msgid "_Close"
 msgstr "_Закрыть"
 
-#: ../src/window.rs:1308
+#: src/window.rs:1308
 msgid "_Copy to Clipboard"
 msgstr "_Скопировать в буфер обмена"
 
-#: ../src/window.rs:1316
+#: src/window.rs:1316
 msgid "Error copied to clipboard"
 msgstr "Ошибка скопирована в буфер обмена"
 
-#: ../src/window.rs:1331
+#: src/window.rs:1331
 msgid "Image converted"
 msgstr "Изображение конвертировано"
 
-#: ../src/window.rs:1332
+#: src/window.rs:1332
 msgid "Open"
 msgstr "Открыть"
 
-#: ../src/window.rs:1385
+#: src/window.rs:1385
 msgid "Converting Cancelled"
 msgstr "Конвертация отменена"
 
-#~ msgid "Image Converter"
-#~ msgstr "Конвертер изображений"
-
-#~ msgid "Convert and manipulate images"
-#~ msgstr "Конвертация и работа с изображениями"
-
-#, fuzzy
-#~ msgid "converter;image;convert;converting;processing"
-#~ msgstr "изображение;конвертация;конвертирование;обработка"
-
-#~ msgid "Shows less popular datatypes in the menu"
-#~ msgstr "Показывать менее популярные типы данных в меню"
-
-#~ msgid "Window width"
-#~ msgstr "Ширина окна"
-
-#~ msgid "Image quality"
-#~ msgstr "Качество изображения"
-
-#~ msgid "Image density per inch"
-#~ msgstr "Плотность изображения на дюйм"
-
-#~ msgid "Window height"
-#~ msgstr "Высота окна"
-
-#~ msgid "Window maximized state"
-#~ msgstr "Окно развернуто"
-
-#~ msgid "Output format"
-#~ msgstr "Выходной формат"
-
-#~ msgid "Compression format"
-#~ msgstr "Формат сжатия"
-
-#~ msgid "Khaleel Al-Adhami"
-#~ msgstr "Khaleel Al-Adhami"
-
-#~ msgid "Convert between different image filetypes and resize them easily."
-#~ msgstr ""
-#~ "Конвертируйте изображения различных типов и легко изменяйте их размер."
-
-#~ msgid "image"
-#~ msgstr "изображение"
-
-#~ msgid "convert"
-#~ msgstr "конвертировать"
-
-#~ msgid "converting"
-#~ msgstr "конвертация"
-
-#~ msgid "processing"
-#~ msgstr "обработка"
-
-#~ msgid "Converting sample image from PNG to HEIF"
-#~ msgstr "Конвертирование образца изображения из PNG в HEIF"
-
-#~ msgid "Converting multiple sample images from SVG to HEIF"
-#~ msgstr "Конвертирование нескольких образцов изображений из SVG в HEIF"
-
-#~ msgid "Converter has been renamed to Switcheroo!"
-#~ msgstr "Конвертер был переименован в Switcheroo!"
-
-#~ msgid "Fix variety of bugs and rework UI."
-#~ msgstr ""
-#~ "Исправлено множество ошибок и переработан пользовательский интерфейс."
-
-#~ msgid "Rust rewrite."
-#~ msgstr "Переписано на Rust."
-
-#~ msgid "Click “Open Images…” or drag images here."
-#~ msgstr "Нажмите \"Открыть изображение…\" или перетащите изображения сюда."
-
-#, fuzzy
-#~ msgctxt "shortcut window"
-#~ msgid "Open New Images"
-#~ msgstr "Открыть новые изображения"
-
-#~ msgid "Converting…"
-#~ msgstr "Конвертация…"
-
-#~ msgid "_Dismiss"
-#~ msgstr "_Отклонить"
-
-#~ msgid "Converter"
-#~ msgstr "Конвертер"
-
-#~ msgid "Properties"
-#~ msgstr "Свойства"
-
-#~ msgid "Image Type"
-#~ msgstr "Тип изображения"
-
-#~ msgid "Image Size"
-#~ msgstr "Размер изображения"
-
-#~ msgid "Save Method"
-#~ msgstr "Метод сохранения"
-
-#~ msgid "Compress images or use a directory"
-#~ msgstr "Сжать изображения или использовать каталог"
-
-#~ msgid "DPI"
-#~ msgstr "Точек на дюйм"
-
-#~ msgid "Percentage"
-#~ msgstr "В процентах"
-
-#~ msgid "Exact Pixels"
-#~ msgstr "В пикселях"
-
-#~ msgid "Point"
-#~ msgstr "Точечный"
-
-#~ msgid "Quadratic"
-#~ msgstr "Квадратичный"
-
-#~ msgid "Cubic"
-#~ msgstr "Кубический"
-
-#~ msgid "Mitchell"
-#~ msgstr "Митчелла"
-
-#~ msgid "Gaussian"
-#~ msgstr "Гаусса"
-
-#~ msgid "Lanczos"
-#~ msgstr "Ланцоша"
-
-#~ msgid "Open Files…"
-#~ msgstr "Открыть файл…"
-
-#~ msgid "Paste Image…"
-#~ msgstr "Вставить изображение…"
-
-#~ msgid "About Converter"
-#~ msgstr "О Конвертере"
-
-#~ msgid "Overview"
-#~ msgstr "Обзор"
-
-#, fuzzy
-#~ msgid "More options"
-#~ msgstr "Дополнительные параметры"
-
-#~ msgid "Options"
-#~ msgstr "Параметры"
-
-#, fuzzy
-#~ msgid "Convert to"
-#~ msgstr "Конвертировать"
-
-#~ msgid "More Options"
-#~ msgstr "Дополнительные параметры"
-
-#~ msgid "Scale Preserving Ratio"
-#~ msgstr "Коэффициент сохранения масштаба"
-
-#~ msgid "Dimension"
-#~ msgstr "Размер"
-
-#~ msgid "Width in Pixels"
-#~ msgstr "Ширина в пикселях"
-
-#~ msgid "Height in Pixels"
-#~ msgstr "Высота в пикселях"
-
-#~ msgid "Filter"
-#~ msgstr "Фильтр"
-
-#~ msgid "Size"
-#~ msgstr "Размер"
-
-#~ msgid "Minimum Pixels"
-#~ msgstr "Минимум пикселей"
-
-#~ msgid "Maximum Pixels"
-#~ msgstr "Максимум пикселей"
-
-#~ msgid "Ratio"
-#~ msgstr "Коэффициент"
-
-#~ msgid "Width Percentage Scale"
-#~ msgstr "Шкала ширины в процентах"
-
-#~ msgid "Height Percentage Scale"
-#~ msgstr "Шкала высоты в процентах"
-
-#~ msgid "Convert"
-#~ msgstr "Конвертировать"
-
-#~ msgid "Convert and Manipulate images"
-#~ msgstr "Конвертация и Изменение Изображения"
-
-#, fuzzy
-#~ msgid ""
-#~ "A simple and easy-to-use Flatpak application built with libadwaita for "
-#~ "converting and manipulating images."
-#~ msgstr ""
-#~ "Простое и удобное приложение Flatpak, созданное на основе libadwaita, для "
-#~ "конвертирования и работы с изображениями."
-
-#, python-brace-format
-#~ msgid "’{input_ext}’ is not supported"
-#~ msgstr "'{input_ext}' не поддерживается"
-
-#~ msgid "No file extension was specified"
-#~ msgstr "Не указано расширение файла"
-
-#, python-brace-format
-#~ msgid "’{file_ext}’ is of the wrong format"
-#~ msgstr "'{file_ext}' имеет неправильный формат"
-
-#~ msgid "Select output location"
-#~ msgstr "Выберите место сохранения"
-
-#, fuzzy
-#~ msgid ""
-#~ "Jürgen Benvenuti <gastornis@posteo.org>\n"
-#~ "Irénée Thirion <irenee.thirion@e.email>\n"
-#~ "Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
-#~ "Heimen Stoffels\n"
-#~ "Sergio <sergiovg01@outlook.com>\n"
-#~ "Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
-#~ "Sabri Ünal <libreajans@gmail.com>\n"
-#~ "Azat Zinnetullin"
-#~ msgstr ""
-#~ "Jürgen Benvenuti <gastornis@posteo.org>\n"
-#~ "Irénée Thirion <irenee.thirion@e.email>\n"
-#~ "Mattia Borda <mattiagiovanni.borda@icloud.com>\n"
-#~ "Heimen Stoffels\n"
-#~ "Sergio <sergiovg01@outlook.com>"
-
-#~ msgid "…or just drop it"
-#~ msgstr "...или просто перетащите его"
-
-#~ msgid "Drop the image to load it"
-#~ msgstr "Перетащите изображение, чтобы загрузить его"
-
-#~ msgid "Added AVIF and JXL support."
-#~ msgstr "Добавлена поддержка AVIF и JXL."
-
-#~ msgid "Datatype"
-#~ msgstr "Тип данных"
