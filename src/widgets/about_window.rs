@@ -23,7 +23,7 @@ impl SwitcherooAbout {
             .developers(DEVELOPERS)
             // Translators: Replace "translator-credits" with your names, one name per line
             .translator_credits(gettext("translator-credits"))
-            .license_type(License::Gpl30)
+            .license_type(License::Gpl30Only)
             .version(VERSION)
             .website(WEBSITE)
             .issue_url(ISSUE_TRACKER)
