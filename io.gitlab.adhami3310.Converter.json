@@ -1,7 +1,7 @@
 {
     "app-id": "io.gitlab.adhami3310.Converter",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "46",
+    "runtime-version": "47",
     "sdk": "org.gnome.Sdk",
     "sdk-extensions": [
         "org.freedesktop.Sdk.Extension.rust-stable"
@@ -39,8 +39,8 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-                    "tag": "v0.8.1",
-                    "commit": "aa7679618e864748f4f4d8f15283906e712752fe"
+                    "tag": "v0.16.0",
+                    "commit": "04ef0944db56ab01307a29aaa7303df6067cb3c0"
                 }
             ]
         },
@@ -55,8 +55,8 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gdk-pixbuf.git",
-                    "tag": "2.42.9",
-                    "commit": "9b74d8dced44955b778fa1eac4fd0d29d5809e9d"
+                    "tag": "2.42.12",
+                    "commit": "e4315fb8553776e13d39e3f2e0ea8792db61720c"
                 }
             ]
         },
@@ -103,8 +103,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/aruiz/webp-pixbuf-loader.git",
-                    "tag": "0.2.4",
-                    "commit": "a35014104a226265e44fe30fcdb4df9305af3466"
+                    "tag": "0.2.7",
+                    "commit": "52232e4ba282b2fed68e8fcb4b5d45ed0eaa4ed3"
                 }
             ]
         },
@@ -113,7 +113,7 @@
             "cleanup": [
                 "/bin"
             ],
-            "buildsystem": "cmake",
+            "buildsystem": "cmake-ninja",
             "modules": [
                 {
                     "name": "libde265",
@@ -128,8 +128,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.11/libde265-1.0.11.tar.gz",
-                            "sha256": "2f8f12cabbdb15e53532b7c1eb964d4e15d444db1be802505e6ac97a25035bab"
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.15/libde265-1.0.15.tar.gz",
+                            "sha256": "00251986c29d34d3af7117ed05874950c875dd9292d016be29d3b3762666511d"
                         }
                     ]
                 },
@@ -149,8 +149,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
-                            "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8"
+                            "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
+                            "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29"
                         },
                         {
                             "type": "shell",
@@ -167,6 +167,7 @@
                             "buildsystem": "cmake",
                             "subdir": "source",
                             "config-opts": [
+                                "-DCMAKE_BUILD_TYPE=Release",
                                 "-DHIGH_BIT_DEPTH=ON",
                                 "-DEXPORT_C_API=OFF",
                                 "-DENABLE_SHARED=OFF",
@@ -176,8 +177,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
-                                    "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8"
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
+                                    "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29"
                                 }
                             ],
                             "post-install": [
@@ -190,6 +191,7 @@
                             "subdir": "source",
                             "config-opts": [
                                 "-DHIGH_BIT_DEPTH=ON",
+                                "-DCMAKE_BUILD_TYPE=Release",
                                 "-DEXPORT_C_API=OFF",
                                 "-DENABLE_SHARED=OFF",
                                 "-DENABLE_CLI=OFF",
@@ -199,8 +201,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
-                                    "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8"
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz",
+                                    "sha256": "a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29"
                                 }
                             ],
                             "post-install": [
@@ -210,11 +212,16 @@
                     ]
                 }
             ],
+            "config-opts": [
+                "-DCMAKE_COMPILE_WARNING_AS_ERROR=OFF",
+                "-DBUILD_TESTING=OFF",
+                "-DWITH_EXAMPLES=OFF"
+            ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.16.1/libheif-1.16.1.tar.gz",
-                    "sha256": "ac15b54b6d7c315710e156d119b8a1bfc89f29621e99222b2750b1f31c9c3558"
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.19.5/libheif-1.19.5.tar.gz",
+                    "sha256": "d3cf0a76076115a070f9bc87cf5259b333a1f05806500045338798486d0afbaf"
                 }
             ]
         },
@@ -225,7 +232,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/carlobaldassi/liblqr.git",
-                    "commit": "7b88c05cec2f0e60125e1cfcad18c79721a2b27c"
+                    "commit": "29bf27b47e8d467c61337e50b1fbd638dff0ecf0"
                 }
             ]
         },
@@ -235,8 +242,24 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.7.tar.gz",
-                    "sha256": "bff1fa140f4af0e7f02c6cb78d41b9a7d5508e6bcdfda3a583e35460eb6d4b47"
+                    "url": "https://github.com/AcademySoftwareFoundation/Imath/releases/download/v3.1.12/Imath-3.1.12.tar.gz",
+                    "sha256": "cb8ca9ca77ac4338ebbee911fc90c886011ac5b00088630bacf8ef6c6e522f0a"
+                }
+            ]
+        },
+        {
+            "name": "libdeflate",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/ebiggers/libdeflate.git",
+                    "tag": "v1.23",
+                    "x-checker-data": {
+                        "type": "git"
+                    },
+                    "commit": "78051988f96dc8d8916310d8b24021f01bd9e102"
                 }
             ]
         },
@@ -245,9 +268,11 @@
             "buildsystem": "cmake",
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.7.tar.gz",
-                    "sha256": "78dbca39115a1c526e6728588753955ee75fa7f5bb1a6e238bed5b6d66f91fd7"
+                    "type": "git",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr.git",
+                    "tag": "v3.3.2",
+                    "commit": "55d1a1404cec5b4b187009d9f7fe55a5622ac4e5",
+                    "disable-submodules": false
                 }
             ]
         },
@@ -271,7 +296,6 @@
                 "-DJPEGXL_WARNINGS_AS_ERRORS=OFF"
             ],
             "buildsystem": "cmake-ninja",
-            "builddir": true,
             "modules": [
                 {
                     "name": "libhwy",
@@ -287,17 +311,18 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/google/highway/archive/refs/tags/1.0.4.tar.gz",
-                            "sha256": "faccd343935c9e98afd1016e9d20e0b8b89d908508d1af958496f8c2d3004ac2"
+                            "url": "https://github.com/google/highway/releases/download/1.2.0/highway-1.2.0.tar.gz",
+                            "sha256": "58e9d5d41d6573ad15245ad76aec53a69499ca7480c092d899c4424812ed906f"
                         }
                     ]
                 }
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/libjxl/libjxl/archive/refs/tags/v0.8.1.tar.gz",
-                    "sha256": "60f43921ad3209c9e180563025eda0c0f9b1afac51a2927b9ff59fff3950dc56"
+                    "type": "git",
+                    "url": "https://github.com/libjxl/libjxl.git",
+                    "tag": "v0.11.1",
+                    "commit": "794a5dcf0d54f9f0b20d288a12e87afb91d20dfc"
                 }
             ]
         },
@@ -307,8 +332,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs1000/ghostscript-10.0.0.tar.gz",
-                    "sha256": "a57764d70caf85e2fc0b0f59b83b92e25775631714dcdb97cc6e0cea414bb5a3"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostscript-10.04.0.tar.gz",
+                    "sha256": "c764dfbb7b13fc71a7a05c634e014f9bb1fb83b899fe39efc0b6c3522a9998b1"
                 }
             ]
         },
@@ -324,8 +349,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/ImageMagick/ImageMagick.git",
-                    "tag": "7.1.1-9",
-                    "commit": "776a88df6a893d6aba78b2b184490f959d8b9d04"
+                    "tag": "7.1.1-43",
+                    "commit": "a2d96f40e707ba54b57e7d98c3277d3ea6611ace"
                 }
             ]
         },
@@ -340,8 +365,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.com/wg1/jpeg-xl/-/archive/6e459e032a978886fced9714fad59567a39fd47d/jpeg-xl-6e459e032a978886fced9714fad59567a39fd47d.tar.gz?path=plugins/gdk-pixbuf",
-                    "sha256": "dd965108bbf342c060b721f4cca9880ebacc2bd36dae3db5e8e2ca3fdc86fe02"
+                    "url": "https://gitlab.com/wg1/jpeg-xl/-/archive/4bc3dbae9950359ed0d385d3a0b35a66b960dc0d/jpeg-xl-4bc3dbae9950359ed0d385d3a0b35a66b960dc0d.tar.gz?path=plugins/gdk-pixbuf",
+                    "sha256": "9fb854a15bbb445e1bb63c46315d197b417e0e380daeb3b1c2f344ffbe2dc823"
                 }
             ]
         },
