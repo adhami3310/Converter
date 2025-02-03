@@ -38,11 +38,13 @@
 
     <screenshots>
         <screenshot type="default">
-            <image>https://gitlab.com/adhami3310/Switcheroo/-/raw/main/data/resources/screenshots/0.png</image>
+            <image>
+                https://gitlab.com/adhami3310/Switcheroo/-/raw/main/data/resources/screenshots/0.png</image>
             <caption>Converting sample image from PNG to HEIF</caption>
         </screenshot>
         <screenshot>
-            <image>https://gitlab.com/adhami3310/Switcheroo/-/raw/main/data/resources/screenshots/1.png</image>
+            <image>
+                https://gitlab.com/adhami3310/Switcheroo/-/raw/main/data/resources/screenshots/1.png</image>
             <caption>Converting multiple sample images from SVG to HEIF</caption>
         </screenshot>
     </screenshots>
@@ -63,11 +65,17 @@
     <content_rating type="oars-1.1" />
 
     <releases>
+        <release version="2.3.0" date="2025-02-03">
+            <description translate="no">
+                <p>Update runtime to GNOME 47.</p>
+            </description>
+        </release>
         <release version="2.2.0" date="2024-04-19">
             <description translate="no">
                 <p>Update runtime to GNOME 46.</p>
             </description>
-        </release>        <release version="2.1.0" date="2024-03-13">
+        </release>
+        <release version="2.1.0" date="2024-03-13">
             <description translate="no">
                 <p>Support for saving images as a single PDF.</p>
             </description>
