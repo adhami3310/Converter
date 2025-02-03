@@ -1,6 +1,6 @@
 [package]
 name = "switcheroo"
-version = "2.3.0"
+version = "2.3.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -22,9 +22,7 @@ pretty_env_logger = "0.5"
 itertools = "0.14"
 tokio = { version = "1.40", features = ["process", "rt", "rt-multi-thread"] }
 futures = "0.3"
-ashpd = { version = "0.10.2", features = [
-    "async-std",
-], default-features = false }
+ashpd = { version = "0.10.2" }
 tempfile = "3.12"
 regex = "1.10"
 rand = "0.9"

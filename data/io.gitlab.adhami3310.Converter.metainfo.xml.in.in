@@ -65,6 +65,11 @@
     <content_rating type="oars-1.1" />
 
     <releases>
+        <release version="2.3.1" date="2025-02-03">
+            <description translate="no">
+                <p>Fix open image after conversion panic.</p>
+            </description>
+        </release>
         <release version="2.3.0" date="2025-02-03">
             <description translate="no">
                 <p>Update runtime to GNOME 47.</p>
