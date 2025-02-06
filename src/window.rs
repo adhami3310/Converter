@@ -13,6 +13,7 @@ use crate::magick::{
     count_frames, generate_job, wait_for_child, GhostScriptConvertJob, JobFile, MagickConvertJob,
     ResizeArgument,
 };
+use crate::runtime;
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use crate::widgets::about_window::SwitcherooAbout;
 use crate::widgets::image_rest::ImageRest;
@@ -1508,28 +1509,22 @@ impl ConvertOperations for AppWindow {
         toast.set_button_label(Some(&gettext("Open")));
         toast.connect_button_clicked(move |_| {
             let p = path.clone();
-            MainContext::default().spawn_local(async move {
-                tokio::runtime::Builder::new_current_thread()
-                    .enable_all()
-                    .build()
-                    .unwrap()
-                    .block_on(async {
-                        match save_format {
-                            OutputType::Compression(CompressionType::Directory) => {
-                                ashpd::desktop::open_uri::OpenDirectoryRequest::default()
-                                    .send(&std::fs::File::open(&p).unwrap().as_fd())
-                                    .await
-                                    .ok();
-                            }
-                            _ => {
-                                ashpd::desktop::open_uri::OpenFileRequest::default()
-                                    .ask(true)
-                                    .send_file(&std::fs::File::open(&p).unwrap().as_fd())
-                                    .await
-                                    .ok();
-                            }
-                        }
-                    });
+            runtime().spawn(async move {
+                match save_format {
+                    OutputType::Compression(CompressionType::Directory) => {
+                        ashpd::desktop::open_uri::OpenDirectoryRequest::default()
+                            .send(&std::fs::File::open(&p).unwrap().as_fd())
+                            .await
+                            .ok();
+                    }
+                    _ => {
+                        ashpd::desktop::open_uri::OpenFileRequest::default()
+                            .ask(true)
+                            .send_file(&std::fs::File::open(&p).unwrap().as_fd())
+                            .await
+                            .ok();
+                    }
+                }
             });
         });
         self.imp().toast_overlay.add_toast(toast);

@@ -11,12 +11,20 @@ mod temp;
 mod widgets;
 mod window;
 
+use std::sync::OnceLock;
+
 use gettextrs::{gettext, LocaleCategory};
 use glib::ExitCode;
 use gtk::{gio, glib};
+use tokio::runtime::Runtime;
 
 use self::application::App;
 use self::config::{GETTEXT_PACKAGE, LOCALEDIR, RESOURCES_FILE};
+
+fn runtime() -> &'static Runtime {
+    static RUNTIME: OnceLock<Runtime> = OnceLock::new();
+    RUNTIME.get_or_init(|| Runtime::new().expect("Setting up tokio runtime needs to succeed."))
+}
 
 fn main() -> ExitCode {
     // Initialize logger
