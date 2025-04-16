@@ -2126,6 +2126,10 @@ impl SettingsStore for AppWindow {
 impl FileOperations for AppWindow {
     fn open_files(&self, files: Vec<Option<InputFile>>) {
         let files = files.into_iter().flatten().collect_vec();
+        if files.is_empty() {
+            self.show_toast(&gettext("Unsupported filetype"));
+            return;
+        }
         self.add_success_wrapper(files);
     }
 
