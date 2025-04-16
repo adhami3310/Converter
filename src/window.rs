@@ -633,8 +633,10 @@ impl AppWindow {
 
     async fn open_success(&self, mut files: Vec<InputFile>) {
         let prev_files = self.active_files();
+        let prev_files_paths = prev_files.iter().map(|f| f.path()).collect_vec();
         files = files
             .into_iter()
+            .filter(|f| !prev_files_paths.contains(&f.path()))
             .chain(prev_files.into_iter())
             .filter(|f| f.exists())
             .collect();
