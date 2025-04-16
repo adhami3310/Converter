@@ -106,8 +106,9 @@ impl FileType {
 
     pub fn output_formats() -> Iter<'static, Self> {
         static ALL_FILETYPES: [FileType; 13] = [
-            Png, Jpg, Webp, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds,
+            Avif, Bmp, Dds, Gif, Heic, Heif, Ico, Jpg, Jxl, Pdf, Png, Tiff, Webp,
         ];
+
         ALL_FILETYPES.iter()
     }
 

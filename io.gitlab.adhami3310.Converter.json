@@ -1,7 +1,7 @@
 {
     "app-id": "io.gitlab.adhami3310.Converter",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "47",
+    "runtime-version": "48",
     "sdk": "org.gnome.Sdk",
     "sdk-extensions": [
         "org.freedesktop.Sdk.Extension.rust-stable"
@@ -220,8 +220,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.19.5/libheif-1.19.5.tar.gz",
-                    "sha256": "d3cf0a76076115a070f9bc87cf5259b333a1f05806500045338798486d0afbaf"
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.19.7/libheif-1.19.7.tar.gz",
+                    "sha256": "161c042d2102665fcee3ded851c78a0eb5f2d4bfe39fba48ba6e588fd6e964f3"
                 }
             ]
         },
@@ -270,8 +270,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/AcademySoftwareFoundation/openexr.git",
-                    "tag": "v3.3.2",
-                    "commit": "55d1a1404cec5b4b187009d9f7fe55a5622ac4e5",
+                    "tag": "v3.3.3",
+                    "commit": "da760aa4b6bee4b9d74b8c6a151221b035fc47b7",
                     "disable-submodules": false
                 }
             ]
@@ -332,8 +332,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostscript-10.04.0.tar.gz",
-                    "sha256": "c764dfbb7b13fc71a7a05c634e014f9bb1fb83b899fe39efc0b6c3522a9998b1"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10050/ghostscript-10.05.0.tar.gz",
+                    "sha256": "56e77833de683825c420d0af8cb90aa8ba7da71ea6fb5624290cbc1b53fe7942"
                 }
             ]
         },
@@ -349,8 +349,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/ImageMagick/ImageMagick.git",
-                    "tag": "7.1.1-43",
-                    "commit": "a2d96f40e707ba54b57e7d98c3277d3ea6611ace"
+                    "tag": "7.1.1-47",
+                    "commit": "82572afc879b439cbf8c9c6f3a9ac7626adf98fb"
                 }
             ]
         },

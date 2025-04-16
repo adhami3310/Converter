@@ -242,7 +242,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct AppWindow(ObjectSubclass<imp::AppWindow>)
-        @extends gtk::Widget, gtk::Window,  gtk::ApplicationWindow,
+        @extends gtk::Widget, gtk::Window,  gtk::ApplicationWindow, adw::ApplicationWindow,
         @implements gio::ActionMap, gio::ActionGroup, gtk::Root;
 }
 
