@@ -32,11 +32,11 @@ impl SwitcherooAbout {
             Some(&gettext("Code and Design Borrowed from")),
             &[
                 "GTK-Rust-Template https://gitlab.gnome.org/World/Rust/gtk-rust-template",
-                "Amberol https://gitlab.gnome.org/GNOME/gimp",
-                "Upscaler https://gitlab.com/TheEvilSkeleton/Upscaler",
+                "Amberol https://gitlab.gnome.org/World/amberol",
+                "Upscaler https://gitlab.gnome.org/World/Upscaler",
                 "Avvie https://github.com/Taiko2k/Avvie",
                 "Bottles https://github.com/bottlesdevs/Bottles",
-                "Loupe https://gitlab.gnome.org/BrainBlasted/loupe",
+                "Loupe https://gitlab.gnome.org/GNOME/loupe",
                 "Totem https://gitlab.gnome.org/GNOME/totem",
             ],
         );
