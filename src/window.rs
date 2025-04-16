@@ -949,16 +949,12 @@ impl AppWindow {
             })
             .flat_map(|(f, output_stem)| {
                 let (path, input_filetype, frames) = (f.path(), f.kind(), f.frames());
-                let path = Path::new(&path);
-                let parent = path.parent().unwrap().to_str().unwrap();
-                let stem = path.file_stem().unwrap().to_str().unwrap();
-                let input_ext = path.extension().unwrap().to_str().unwrap();
                 match (input_filetype, output_type, frames) {
                     (_, _, 0) => unreachable!("an image cannot have zero frames"),
                     (Pdf, _, c) => (0..c)
                         .map(|f| {
                             (
-                                format!("{parent}/{stem}.{input_ext}"),
+                                path.clone(),
                                 input_filetype,
                                 format!("{output_stem}_{f}.{}", output_type.as_extension()),
                                 f,
@@ -966,13 +962,13 @@ impl AppWindow {
                         })
                         .collect_vec(),
                     (_, _, 1) => vec![(
-                        format!("{parent}/{stem}.{input_ext}[0]"),
+                        format!("{path}[0]"),
                         input_filetype,
                         format!("{output_stem}.{}", output_type.as_extension()),
                         0,
                     )],
                     (Webp | Gif, Webp | Gif, _) => vec![(
-                        format!("{parent}/{stem}.{input_ext}"),
+                        path,
                         input_filetype,
                         format!("{output_stem}.{}", output_type.as_extension()),
                         0,
@@ -980,7 +976,7 @@ impl AppWindow {
                     (Webp | Gif, _, count) => (0..count)
                         .map(|f| {
                             (
-                                format!("{parent}/{stem}.{input_ext}[{f}]"),
+                                format!("{path}[{f}]"),
                                 input_filetype,
                                 format!("{output_stem}_{f}.{}", output_type.as_extension()),
                                 f,
@@ -988,7 +984,7 @@ impl AppWindow {
                         })
                         .collect_vec(),
                     _ => vec![(
-                        format!("{parent}/{stem}.{input_ext}[0]"),
+                        format!("{path}[0]"),
                         input_filetype,
                         format!("{output_stem}.{}", output_type.as_extension()),
                         0,
