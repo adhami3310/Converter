@@ -104,15 +104,11 @@ impl FileType {
         FILETYPES.iter()
     }
 
-    pub fn output_formats(hidden: bool) -> Iter<'static, Self> {
+    pub fn output_formats() -> Iter<'static, Self> {
         static ALL_FILETYPES: [FileType; 13] = [
             Png, Jpg, Webp, Heif, Heic, Bmp, Avif, Jxl, Tiff, Pdf, Gif, Ico, Dds,
         ];
-        static POPULAR_FILETYPES: [FileType; 7] = [Png, Jpg, Webp, Heif, Pdf, Gif, Ico];
-        match hidden {
-            true => ALL_FILETYPES.iter(),
-            false => POPULAR_FILETYPES.iter(),
-        }
+        ALL_FILETYPES.iter()
     }
 
     pub fn as_mime(&self) -> &'static str {

@@ -1650,8 +1650,7 @@ impl WindowUI for AppWindow {
             .unwrap_or(self.load_selected_output());
 
         let new_options = gtk::StringList::new(&[]);
-        let new_list = FileType::output_formats(self.imp().settings.boolean("show-less-popular"))
-            .collect_vec();
+        let new_list = FileType::output_formats().collect_vec();
         for ft in new_list.iter() {
             new_options.append(&ft.as_display_string());
         }
@@ -1697,8 +1696,7 @@ impl WindowUI for AppWindow {
         let input_files = self.active_files();
         let input_filetypes: Vec<FileType> = input_files.iter().map(|inf| inf.kind()).collect();
         let Some(output_filetype) =
-            FileType::output_formats(self.imp().settings.boolean("show-less-popular"))
-                .nth(imp.output_filetype.selected() as usize)
+            FileType::output_formats().nth(imp.output_filetype.selected() as usize)
         else {
             return;
         };
@@ -2091,7 +2089,7 @@ impl SettingsStore for AppWindow {
 
         let output_format = self.selected_output().unwrap();
 
-        let pos = FileType::output_formats(true)
+        let pos = FileType::output_formats()
             .position(|&x| x == output_format)
             .unwrap();
 
@@ -2103,7 +2101,7 @@ impl SettingsStore for AppWindow {
     fn load_selected_output(&self) -> FileType {
         let imp = self.imp();
 
-        *FileType::output_formats(true).collect_vec()[imp.settings.enum_("output-format") as usize]
+        *FileType::output_formats().collect_vec()[imp.settings.enum_("output-format") as usize]
     }
 
     fn save_selected_compression(&self) -> Result<(), glib::BoolError> {

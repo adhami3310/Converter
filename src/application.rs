@@ -5,7 +5,7 @@ use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
 use crate::config::{APP_ID, PKGDATADIR, PROFILE, VERSION};
 use crate::input_file::InputFile;
-use crate::window::{AppWindow, WindowUI};
+use crate::window::AppWindow;
 
 mod imp {
 
@@ -39,7 +39,6 @@ mod imp {
             let obj = self.obj();
             obj.setup_gactions();
             obj.setup_accels();
-            obj.setup_settings();
         }
     }
 
@@ -103,24 +102,6 @@ impl App {
         Self::default()
     }
 
-    fn setup_settings(&self) {
-        self.imp().settings.connect_changed(
-            Some("show-less-popular"),
-            clone!(
-                #[weak(rename_to=this)]
-                self,
-                move |_, _| {
-                    if let Some(window) = this.active_window() {
-                        window
-                            .downcast_ref::<AppWindow>()
-                            .unwrap()
-                            .update_output_options();
-                    }
-                }
-            ),
-        );
-    }
-
     fn setup_gactions(&self) {
         self.add_action_entries([
             gio::ActionEntry::builder("quit")
@@ -142,32 +123,11 @@ impl App {
                 ))
                 .build(),
         ]);
-
-        let show_hidden = self.imp().settings.boolean("show-less-popular");
-        self.add_action_entries([gio::ActionEntry::builder("popular")
-            .state(show_hidden.to_variant())
-            .activate(clone!(
-                #[weak(rename_to=this)]
-                self,
-                move |_, action, _| {
-                    let state = action.state().unwrap();
-                    let action_state: bool = state.get().unwrap();
-                    let show_hidden = !action_state;
-                    action.set_state(&show_hidden.to_variant());
-
-                    this.imp()
-                        .settings
-                        .set_boolean("show-less-popular", show_hidden)
-                        .expect("Unable to store show-less-popular setting");
-                }
-            ))
-            .build()]);
     }
 
     // Sets up keyboard shortcuts
     fn setup_accels(&self) {
         self.set_accels_for_action("app.new-window", &["<Control>n"]);
-        self.set_accels_for_action("app.popular", &["<Control>h"]);
         self.set_accels_for_action("app.quit", &["<Control>q"]);
         self.set_accels_for_action("win.clear", &["<Control>r"]);
         self.set_accels_for_action("win.add", &["<Control>o"]);

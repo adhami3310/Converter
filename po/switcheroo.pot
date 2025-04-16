@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 13:36-0400\n"
+"POT-Creation-Date: 2025-04-15 22:26-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,57 +17,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:2
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
-#: data/resources/blueprints/window.blp:57 src/main.rs:30
-#: src/widgets/about_window.rs:24
+#: data/resources/blueprints/window.blp:57 src/main.rs:38
+#: src/widgets/about_window.rs:21
 msgid "Switcheroo"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
 msgid "Image Converter"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:5
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:11
 msgid "Convert and manipulate images"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.desktop.in.in:11
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:10
 msgid "converter;image;convert;converting;processing"
 msgstr ""
 
 #: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
-msgid "Shows less popular datatypes in the menu"
-msgstr ""
-
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
 msgid "Window width"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
 msgid "Image quality"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
 msgid "Image density per inch"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
 msgid "Window height"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
 msgid "Window maximized state"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
 msgid "Output format"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:54
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
 msgid "Compression format"
 msgstr ""
 
@@ -75,11 +71,11 @@ msgstr ""
 msgid "Convert between different image filetypes and resize them easily."
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:42
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:43
 msgid "Converting sample image from PNG to HEIF"
 msgstr ""
 
-#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:46
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
 msgid "Converting multiple sample images from SVG to HEIF"
 msgstr ""
 
@@ -110,15 +106,10 @@ msgstr ""
 
 #: data/resources/blueprints/help-overlay.blp:34
 msgctxt "shortcut window"
-msgid "Show Less Popular Datatypes"
-msgstr ""
-
-#: data/resources/blueprints/help-overlay.blp:39
-msgctxt "shortcut window"
 msgid "Paste From Clipboard"
 msgstr ""
 
-#: data/resources/blueprints/help-overlay.blp:44
+#: data/resources/blueprints/help-overlay.blp:39
 msgctxt "shortcut window"
 msgid "Add Images"
 msgstr ""
@@ -242,12 +233,12 @@ msgstr ""
 msgid "This could take a while"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:332 src/window.rs:770
+#: data/resources/blueprints/window.blp:332 src/window.rs:915
 msgid "Loading…"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:338 src/window.rs:449
-#: src/window.rs:1363
+#: data/resources/blueprints/window.blp:338 src/window.rs:553
+#: src/window.rs:1546
 msgid "_Cancel"
 msgstr ""
 
@@ -268,14 +259,10 @@ msgid "Clear Window"
 msgstr ""
 
 #: data/resources/blueprints/window.blp:453
-msgid "Show Less Popular Datatypes"
-msgstr ""
-
-#: data/resources/blueprints/window.blp:460
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:465
+#: data/resources/blueprints/window.blp:458
 msgid "About Switcheroo"
 msgstr ""
 
@@ -283,23 +270,23 @@ msgstr ""
 msgid "Unsupported filetype"
 msgstr ""
 
-#: src/file_chooser.rs:77
+#: src/file_chooser.rs:88
 msgid "Images"
 msgstr ""
 
-#: src/file_chooser.rs:80
+#: src/file_chooser.rs:91
 msgid "_Select Images"
 msgstr ""
 
-#: src/file_chooser.rs:159
+#: src/file_chooser.rs:182
 msgid "Unspecified filetype"
 msgstr ""
 
-#: src/file_chooser.rs:164
+#: src/file_chooser.rs:187
 msgid "Unknown filetype"
 msgstr ""
 
-#: src/file_chooser.rs:169
+#: src/file_chooser.rs:192
 msgid "Used the wrong filetype"
 msgstr ""
 
@@ -312,62 +299,67 @@ msgid "Unknown IO error happened"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your names, one name per line
-#: src/widgets/about_window.rs:28
+#: src/widgets/about_window.rs:25
 msgid "translator-credits"
 msgstr ""
 
-#: src/widgets/about_window.rs:35
+#: src/widgets/about_window.rs:32
 msgid "Code and Design Borrowed from"
 msgstr ""
 
-#: src/widgets/about_window.rs:47
+#: src/widgets/about_window.rs:44
 msgid "Sample Image from"
 msgstr ""
 
-#: src/window.rs:422
+#: src/window.rs:507
+#, rust-format
+msgid "New transparency layer color: {}"
+msgstr ""
+
+#: src/window.rs:527
 msgid "Unable to access dropped files"
 msgstr ""
 
-#: src/window.rs:445 src/window.rs:1358
+#: src/window.rs:549 src/window.rs:1541
 msgid "Stop converting?"
 msgstr ""
 
-#: src/window.rs:446 src/window.rs:1359
+#: src/window.rs:550 src/window.rs:1542
 msgid "You will lose all progress."
 msgstr ""
 
-#: src/window.rs:450 src/window.rs:1363
+#: src/window.rs:554 src/window.rs:1546
 msgid "_Stop"
 msgstr ""
 
-#: src/window.rs:486
+#: src/window.rs:594
 msgid "Collecting files"
 msgstr ""
 
-#: src/window.rs:1286
+#: src/window.rs:1459
 msgid "Error While Processing"
 msgstr ""
 
-#: src/window.rs:1307
+#: src/window.rs:1480
 msgid "_Close"
 msgstr ""
 
-#: src/window.rs:1308
+#: src/window.rs:1481
 msgid "_Copy to Clipboard"
 msgstr ""
 
-#: src/window.rs:1316
+#: src/window.rs:1492
 msgid "Error copied to clipboard"
 msgstr ""
 
-#: src/window.rs:1331
+#: src/window.rs:1508
 msgid "Image converted"
 msgstr ""
 
-#: src/window.rs:1332
+#: src/window.rs:1509
 msgid "Open"
 msgstr ""
 
-#: src/window.rs:1385
+#: src/window.rs:1571
 msgid "Converting Cancelled"
 msgstr ""

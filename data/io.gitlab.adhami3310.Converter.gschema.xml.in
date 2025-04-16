@@ -21,10 +21,6 @@
 	</enum>
 
 	<schema id="@app-id@" path="/io/gitlab/adhami3310/Converter/" gettext-domain="@gettext-package@">
-		<key type="b" name="show-less-popular">
-			<default>false</default>
-			<summary>Shows less popular datatypes in the menu</summary>
-		</key>
 		<key name="window-width" type="i">
 			<default>750</default>
 			<summary>Window width</summary>
