@@ -969,13 +969,17 @@ impl AppWindow {
                         format!("{output_stem}.{}", output_type.as_extension()),
                         0,
                     )],
-                    (Webp | Gif, Webp | Gif, _) => vec![(
-                        path,
-                        input_filetype,
-                        format!("{output_stem}.{}", output_type.as_extension()),
-                        0,
-                    )],
-                    (Webp | Gif, _, count) => (0..count)
+                    (input, output, _)
+                        if input.supports_animation() && output.supports_animation() =>
+                    {
+                        vec![(
+                            path,
+                            input_filetype,
+                            format!("{output_stem}.{}", output_type.as_extension()),
+                            0,
+                        )]
+                    }
+                    (input, _, count) if input.supports_animation() => (0..count)
                         .map(|f| {
                             (
                                 format!("{path}[{f}]"),

@@ -316,14 +316,16 @@ pub fn generate_job(
             ))
             .collect()
         }
-        (Gif, Webp) | (Webp, Gif) => std::iter::once(ConvertJob::Magick(MagickConvertJob {
-            input_file: input_path.to_owned(),
-            output_file: output_path.to_owned(),
-            first_frame: false,
-            coalesce: false,
-            ..*default_arguments.0
-        }))
-        .collect(),
+        (input, output) if input.supports_animation() && output.supports_animation() => {
+            std::iter::once(ConvertJob::Magick(MagickConvertJob {
+                input_file: input_path.to_owned(),
+                output_file: output_path.to_owned(),
+                first_frame: false,
+                coalesce: false,
+                ..*default_arguments.0
+            }))
+            .collect()
+        }
         _ => std::iter::once(ConvertJob::Magick(MagickConvertJob {
             input_file: input_path.to_owned(),
             output_file: output_path.to_owned(),

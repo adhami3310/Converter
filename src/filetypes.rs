@@ -62,7 +62,7 @@ impl FileType {
     }
 
     pub fn supports_animation(&self) -> bool {
-        matches!(self, Webp | Gif)
+        matches!(self, Webp | Gif | Heic | Heif)
     }
 
     pub fn is_lossy(&self) -> bool {
