@@ -26,6 +26,9 @@ fn runtime() -> &'static Runtime {
     RUNTIME.get_or_init(|| Runtime::new().expect("Setting up tokio runtime needs to succeed."))
 }
 
+const GHOST_SCRIPT_BINARY_NAME: &str = "gs";
+const ZIP_BINARY_NAME: &str = "zip";
+
 fn main() -> ExitCode {
     // Initialize logger
     pretty_env_logger::init();

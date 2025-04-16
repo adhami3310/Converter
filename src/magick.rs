@@ -1,4 +1,5 @@
 use crate::temp::get_temp_file_path;
+use crate::GHOST_SCRIPT_BINARY_NAME;
 use crate::{color::Color, filetypes::FileType, window::ResizeFilter};
 use gettextrs::gettext;
 // use glib::Bytes;
@@ -172,7 +173,7 @@ impl JobFile {
 
 impl GhostScriptConvertJob {
     pub fn get_command(&self) -> Command {
-        let mut command = Command::new("gs");
+        let mut command = Command::new(GHOST_SCRIPT_BINARY_NAME);
 
         command
             .arg("-sDEVICE=png16m")

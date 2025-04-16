@@ -13,11 +13,11 @@ use crate::magick::{
     count_frames, generate_job, wait_for_child, GhostScriptConvertJob, JobFile, MagickConvertJob,
     ResizeArgument,
 };
-use crate::runtime;
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use crate::widgets::about_window::SwitcherooAbout;
 use crate::widgets::image_rest::ImageRest;
 use crate::widgets::image_thumbnail::ImageThumbnail;
+use crate::{runtime, GHOST_SCRIPT_BINARY_NAME, ZIP_BINARY_NAME};
 use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
@@ -1072,17 +1072,32 @@ impl AppWindow {
                                 if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
                                     return;
                                 }
-                                let std::io::Result::Ok(shared_child) =
-                                    SharedChild::spawn(&mut mj_command)
-                                else {
-                                    dbg!("panic");
-                                    sender
-                                        .send_blocking(ArcOrOptionError::OptionError(Some(
-                                            "cannot generate command".to_string(),
-                                        )))
-                                        .expect("Concurrency Issues");
-                                    return;
+
+                                let mj_command_str =
+                                    mj_command.get_program().to_str().unwrap().to_string();
+
+                                let shared_child = match SharedChild::spawn(&mut mj_command) {
+                                    std::io::Result::Ok(shared_child) => shared_child,
+                                    std::io::Result::Err(e) => {
+                                        if mj_command_str == GHOST_SCRIPT_BINARY_NAME
+                                            && e.kind() == std::io::ErrorKind::NotFound
+                                        {
+                                            sender
+                                                .send_blocking(ArcOrOptionError::OptionError(Some(
+                                                    gs_missing(),
+                                                )))
+                                                .expect("Concurrency Issues");
+                                            return;
+                                        }
+                                        sender
+                                            .send_blocking(ArcOrOptionError::OptionError(Some(
+                                                mj_command_str + ": " + &e.to_string(),
+                                            )))
+                                            .expect("Concurrency Issues");
+                                        return;
+                                    }
                                 };
+
                                 if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
                                     return;
                                 }
@@ -1228,6 +1243,23 @@ trait SettingsStore {
     fn load_selected_compression(&self) -> CompressionType;
 }
 
+fn does_binary_exist(binary: &str) -> bool {
+    std::process::Command::new("which")
+        .arg(binary)
+        .stdout(std::process::Stdio::null())
+        .status()
+        .map(|status| status.success())
+        .unwrap_or(false)
+}
+
+fn gs_missing() -> String {
+    gettext("The 'gs' (GhostScript) command is not available on your system. Please install GhostScript to convert multiple files to PDF.")
+}
+
+fn zip_missing() -> String {
+    gettext("The 'zip' command is not available on your system. Please install zip to convert multiple files to ZIP.")
+}
+
 impl ConvertOperations for AppWindow {
     fn convert_start_wrapper(&self, save_format: OutputType, path: String) {
         MainContext::default().spawn_local(clone!(
@@ -1256,6 +1288,11 @@ impl ConvertOperations for AppWindow {
         self.set_collecting_progress();
         let receiver = match save_format {
             OutputType::File(FileType::Pdf) if output_files.len() > 1 => {
+                if !does_binary_exist(GHOST_SCRIPT_BINARY_NAME) {
+                    self.convert_failed(gs_missing(), dir_path.clone());
+                    return;
+                }
+
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
@@ -1265,7 +1302,7 @@ impl ConvertOperations for AppWindow {
                         .unwrap();
 
                     let shared_child: SharedChild = SharedChild::spawn(
-                        std::process::Command::new("gs")
+                        std::process::Command::new(GHOST_SCRIPT_BINARY_NAME)
                             .arg("-dNOPAUSE")
                             .arg("-sDEVICE=pdfwrite")
                             .arg(format!("-sOUTPUTFILE={}", path))
@@ -1359,6 +1396,11 @@ impl ConvertOperations for AppWindow {
             _ => {
                 let (sender, receiver) = async_channel::bounded(1);
 
+                if !does_binary_exist(ZIP_BINARY_NAME) {
+                    self.convert_failed(zip_missing(), dir_path.clone());
+                    return;
+                }
+
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
                         .enable_all()
@@ -1366,7 +1408,7 @@ impl ConvertOperations for AppWindow {
                         .unwrap();
 
                     let shared_child: SharedChild = SharedChild::spawn(
-                        std::process::Command::new("zip")
+                        std::process::Command::new(ZIP_BINARY_NAME)
                             .arg("-jFSm0")
                             .arg(path)
                             .args(output_files),
