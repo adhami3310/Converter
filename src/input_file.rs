@@ -196,6 +196,11 @@ impl InputFile {
         self.imp().height.replace(Some(f));
     }
 
+    pub fn area(&self) -> Option<usize> {
+        let (w, h) = (self.width(), self.height());
+        w.and_then(|w| h.map(|h| w * h))
+    }
+
     pub fn set_pixbuf(&self, p: Texture) {
         self.imp().pixbuf.replace(Some(p));
     }

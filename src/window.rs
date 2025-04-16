@@ -653,7 +653,7 @@ impl AppWindow {
 
         let _ = fdlimit::raise_fd_limit();
 
-        self.load_pixbuf();
+        self.load_frames();
     }
 
     fn load_frames(&self) {
@@ -702,7 +702,7 @@ impl AppWindow {
                         #[weak(rename_to=these)]
                         this,
                         move || {
-                            these.load_pixbuf_finished();
+                            these.load_pixbuf();
                         }
                     ));
                 }
@@ -848,7 +848,25 @@ impl AppWindow {
 
         let file_path_things = files
             .iter()
-            .map(|f| (f.kind().supports_pixbuf(), f.path()))
+            .map(|f| {
+                (
+                    f.kind().supports_pixbuf()
+                        && f.area().map(|x| x < 2000 * 2000).unwrap_or_default(), // image isn't too big
+                    f.path(),
+                )
+            })
+            .scan(0, |i, (b, path)| {
+                // only load 10 images
+                if b {
+                    *i += 1;
+                }
+
+                if *i > 10 {
+                    Some((false, path))
+                } else {
+                    Some((b, path))
+                }
+            })
             .collect_vec();
 
         let (sender, receiver) = async_channel::bounded(1);
@@ -902,7 +920,7 @@ impl AppWindow {
                     let c = completed.clone();
                     let x = c.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
                     if x + 1 == total {
-                        this.load_frames();
+                        this.load_pixbuf_finished();
                         break;
                     }
                 }
@@ -1253,7 +1271,7 @@ fn does_binary_exist(binary: &str) -> bool {
         .stdout(std::process::Stdio::null())
         .status()
         .map(|status| status.success())
-        .unwrap_or(false)
+        .unwrap_or_default()
 }
 
 fn gs_missing() -> String {
@@ -1806,7 +1824,7 @@ impl WindowUI for AppWindow {
                 }
 
                 let other_way = generate_height_from_width(
-                    old_value.parse().unwrap_or(0),
+                    old_value.parse().unwrap_or_default(),
                     (image_width, image_height),
                 )
                 .to_string();
@@ -1816,7 +1834,7 @@ impl WindowUI for AppWindow {
                 }
 
                 let new_value = generate_width_from_height(
-                    other_text.parse().unwrap_or(0),
+                    other_text.parse().unwrap_or_default(),
                     (image_width, image_height),
                 )
                 .to_string();
@@ -1840,7 +1858,7 @@ impl WindowUI for AppWindow {
                 }
 
                 let other_way = generate_width_from_height(
-                    old_value.parse().unwrap_or(0),
+                    old_value.parse().unwrap_or_default(),
                     (image_width, image_height),
                 )
                 .to_string();
@@ -1850,7 +1868,7 @@ impl WindowUI for AppWindow {
                 }
 
                 let new_value = generate_height_from_width(
-                    other_text.parse().unwrap_or(0),
+                    other_text.parse().unwrap_or_default(),
                     (image_width, image_height),
                 )
                 .to_string();
@@ -1913,7 +1931,7 @@ impl WindowUI for AppWindow {
                 None => file_type.as_display_string().to_owned(),
             };
 
-            let (w, h) = dims.unwrap_or((0, 0));
+            let (w, h) = dims.unwrap_or_default();
 
             let image_thumbnail =
                 ImageThumbnail::new(f.pixbuf().as_ref(), &caption, w as u32, h as u32);
@@ -1964,7 +1982,7 @@ impl WindowUI for AppWindow {
                         None => file_type.as_display_string().to_owned(),
                     };
 
-                    let (w, h) = dims.unwrap_or((0, 0));
+                    let (w, h) = dims.unwrap_or_default();
 
                     let image_thumbnail =
                         ImageThumbnail::new(f.pixbuf().as_ref(), &caption, w as u32, h as u32);
