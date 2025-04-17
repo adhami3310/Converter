@@ -1040,6 +1040,7 @@ impl AppWindow {
             resize_arg: self.get_resize_argument(),
             coalesce: false,
             first_frame: false,
+            remove_alpha: false,
         };
 
         let ghost_arguments = GhostScriptConvertJob {

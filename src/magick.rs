@@ -122,6 +122,7 @@ pub struct MagickConvertJob {
     pub first_frame: bool,
     pub filter: Option<ResizeFilter>,
     pub resize_arg: ResizeArgument,
+    pub remove_alpha: bool,
 }
 
 pub struct GhostScriptConvertJob {
@@ -239,7 +240,13 @@ impl MagickConvertJob {
                 .args(size_arg)
                 .args(["-background", &self.background.as_hex_string()])
                 .arg(self.input_file.clone())
-                .arg("-flatten")
+                .arg("-flatten");
+
+            if self.remove_alpha {
+                command.arg("-alpha").arg("off");
+            }
+
+            command
                 .args(["-quality".to_string(), format!("{}", self.quality)])
                 .args(self.filter.get_argument())
                 .args(resize_arg)
@@ -326,11 +333,12 @@ pub fn generate_job(
             }))
             .collect()
         }
-        _ => std::iter::once(ConvertJob::Magick(MagickConvertJob {
+        (input, output) => std::iter::once(ConvertJob::Magick(MagickConvertJob {
             input_file: input_path.to_owned(),
             output_file: output_path.to_owned(),
             first_frame: true,
             coalesce: false,
+            remove_alpha: !input.supports_alpha() && output.supports_alpha(),
             ..*default_arguments.0
         }))
         .collect(),
