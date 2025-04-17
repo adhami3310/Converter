@@ -951,21 +951,27 @@ impl AppWindow {
         let job_input = files
             .into_iter()
             .map(|f| {
-                let path = f.path();
-                let path = Path::new(&path);
-                let stem = path.file_stem().unwrap().to_str().unwrap().to_owned();
-                let re = regex::Regex::new(r"(_\d+)*$").unwrap();
-                let stripped_stem = re.replace(&stem, "").to_string();
-                (f, stripped_stem)
+                let stem = Path::new(&f.path())
+                    .file_stem()
+                    .unwrap()
+                    .to_str()
+                    .unwrap()
+                    .to_owned();
+                (f, stem)
             })
             .sorted_by_key(|(_, s)| s.to_owned())
-            .chunk_by(|(_, s)| s.to_owned())
-            .into_iter()
-            .flat_map(|(_, fs)| {
-                fs.enumerate().map(|(i, (f, s))| match i {
-                    0 => (f, s),
-                    x => (f, format!("{s}_{x}")),
-                })
+            .scan(HashSet::new(), |s, (f, stem)| {
+                let stem = if s.contains(&stem) {
+                    let mut i = 1;
+                    while s.contains(&format!("{stem}_{i}")) {
+                        i += 1;
+                    }
+                    format!("{stem}_{i}")
+                } else {
+                    stem
+                };
+                s.insert(stem.clone());
+                Some((f, stem))
             })
             .flat_map(|(f, output_stem)| {
                 let (path, input_filetype, frames) = (f.path(), f.kind(), f.frames());
@@ -976,7 +982,7 @@ impl AppWindow {
                             (
                                 path.clone(),
                                 input_filetype,
-                                format!("{output_stem}_{f}.{}", output_type.as_extension()),
+                                format!("{output_stem}[{f}].{}", output_type.as_extension()),
                                 f,
                             )
                         })
@@ -1002,7 +1008,7 @@ impl AppWindow {
                             (
                                 format!("{path}[{f}]"),
                                 input_filetype,
-                                format!("{output_stem}_{f}.{}", output_type.as_extension()),
+                                format!("{output_stem}[{f}].{}", output_type.as_extension()),
                                 f,
                             )
                         })
