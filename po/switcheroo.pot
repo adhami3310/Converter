@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: switcheroo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-15 22:26-0700\n"
+"POT-Creation-Date: 2025-04-16 23:34-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
 #: data/resources/blueprints/window.blp:9
 #: data/resources/blueprints/window.blp:21
-#: data/resources/blueprints/window.blp:57 src/main.rs:38
+#: data/resources/blueprints/window.blp:57 src/main.rs:41
 #: src/widgets/about_window.rs:21
 msgid "Switcheroo"
 msgstr ""
@@ -233,12 +233,12 @@ msgstr ""
 msgid "This could take a while"
 msgstr ""
 
-#: data/resources/blueprints/window.blp:332 src/window.rs:915
+#: data/resources/blueprints/window.blp:332 src/window.rs:935
 msgid "Loading…"
 msgstr ""
 
 #: data/resources/blueprints/window.blp:338 src/window.rs:553
-#: src/window.rs:1546
+#: src/window.rs:1615
 msgid "_Cancel"
 msgstr ""
 
@@ -266,7 +266,7 @@ msgstr ""
 msgid "About Switcheroo"
 msgstr ""
 
-#: src/file_chooser.rs:39
+#: src/file_chooser.rs:39 src/window.rs:2203
 msgid "Unsupported filetype"
 msgstr ""
 
@@ -290,11 +290,11 @@ msgstr ""
 msgid "Used the wrong filetype"
 msgstr ""
 
-#: src/magick.rs:156
+#: src/magick.rs:158
 msgid "Pasted Image"
 msgstr ""
 
-#: src/magick.rs:364
+#: src/magick.rs:375
 msgid "Unknown IO error happened"
 msgstr ""
 
@@ -320,15 +320,15 @@ msgstr ""
 msgid "Unable to access dropped files"
 msgstr ""
 
-#: src/window.rs:549 src/window.rs:1541
+#: src/window.rs:549 src/window.rs:1610
 msgid "Stop converting?"
 msgstr ""
 
-#: src/window.rs:550 src/window.rs:1542
+#: src/window.rs:550 src/window.rs:1611
 msgid "You will lose all progress."
 msgstr ""
 
-#: src/window.rs:554 src/window.rs:1546
+#: src/window.rs:554 src/window.rs:1615
 msgid "_Stop"
 msgstr ""
 
@@ -336,30 +336,42 @@ msgstr ""
 msgid "Collecting files"
 msgstr ""
 
-#: src/window.rs:1459
+#: src/window.rs:1285
+msgid ""
+"The 'gs' (GhostScript) command is not available on your system. Please "
+"install GhostScript to convert multiple files to PDF."
+msgstr ""
+
+#: src/window.rs:1289
+msgid ""
+"The 'zip' command is not available on your system. Please install zip to "
+"convert multiple files to ZIP."
+msgstr ""
+
+#: src/window.rs:1528
 msgid "Error While Processing"
 msgstr ""
 
-#: src/window.rs:1480
+#: src/window.rs:1549
 msgid "_Close"
 msgstr ""
 
-#: src/window.rs:1481
+#: src/window.rs:1550
 msgid "_Copy to Clipboard"
 msgstr ""
 
-#: src/window.rs:1492
+#: src/window.rs:1561
 msgid "Error copied to clipboard"
 msgstr ""
 
-#: src/window.rs:1508
+#: src/window.rs:1577
 msgid "Image converted"
 msgstr ""
 
-#: src/window.rs:1509
+#: src/window.rs:1578
 msgid "Open"
 msgstr ""
 
-#: src/window.rs:1571
+#: src/window.rs:1640
 msgid "Converting Cancelled"
 msgstr ""
