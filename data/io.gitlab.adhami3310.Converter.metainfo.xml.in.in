@@ -3,8 +3,6 @@
     <id>@app-id@</id>
 
     <name>Switcheroo</name>
-    <!-- developer_name tag deprecated with Appstream 1.0 -->
-    <developer_name translate="no">Khaleel Al-Adhami</developer_name>
     <developer id="io.gitlab.adhami3310">
         <name translate="no">Khaleel Al-Adhami</name>
     </developer>
@@ -22,6 +20,7 @@
     <translation type="gettext">@gettext-package@</translation>
 
     <requires>
+        <display_length compare="ge">360</display_length>
         <internet>offline-only</internet>
     </requires>
 
@@ -65,6 +64,24 @@
     <content_rating type="oars-1.1" />
 
     <releases>
+        <release version="2.4.0" date="2025-04-17">
+            <description translate="no">
+                <p>Update runtime to GNOME 48 and fix various bugs.</p>
+                <ul>
+                    <li>Remove hidden formats logic to improve discoverability.</li>
+                    <li>Fix broken inspiration links.</li>
+                    <li>Fix panic when handling files without extenstions.</li>
+                    <li>Exit gracefully when drag-and-dropped unsupported files.</li>
+                    <li>Keep input images unique instead of duplicating them.</li>
+                    <li>Display helpful message when ghostscript or zip isn't available.</li>
+                    <li>Support HEIC and HEIF images with animations.</li>
+                    <li>Only load previews for a few files and with a maximum pixel count.</li>
+                    <li>Do not produce alpha channel when not necessary.</li>
+                    <li>Rewrite bactch naming logic to produce fewer errors.</li>
+                </ul>
+                <p>Dependencies have been updated to the latest versions.</p>
+            </description>
+        </release>
         <release version="2.3.1" date="2025-02-03">
             <description translate="no">
                 <p>Fix open image after conversion panic.</p>
