@@ -9,6 +9,7 @@ Type=Application
 Categories=GTK;GNOME;Graphics;ImageProcessing;Utility;
 Keywords=converter;image;convert;converting;processing
 StartupNotify=true
+DBusActivatable=true
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;
 MimeType=image/png;image/jpeg;image/webp;image/svg+xml;image/heic;image/heif;image/bmp;image/avif;image/jxl;image/tiff;application/pdf;image/gif;image/x-icon;image/vnd-ms.dds
