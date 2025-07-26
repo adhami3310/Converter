@@ -1,6 +1,7 @@
 use glib::{clone, ExitCode};
-use log::{debug, info};
+use log::{debug, error, info};
 
+use gettextrs::gettext;
 use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
 use crate::config::{APP_ID, PKGDATADIR, PROFILE, VERSION};
@@ -37,6 +38,16 @@ mod imp {
             self.parent_constructed();
 
             let obj = self.obj();
+
+            obj.add_main_option(
+                "new-window",
+                glib::Char::from(b'w'),
+                glib::OptionFlags::NONE,
+                glib::OptionArg::None,
+                &gettext("Open a new window"),
+                None,
+            );
+
             obj.setup_gactions();
             obj.setup_accels();
         }
@@ -45,8 +56,14 @@ mod imp {
     impl ApplicationImpl for App {
         fn activate(&self) {
             debug!("Application::activate");
+            self.parent_activate();
 
-            self.obj().present_main_window();
+            let application = self.obj();
+            if let Some(window) = application.active_window() {
+                window.present();
+            } else {
+                application.present_main_window();
+            }
         }
 
         fn startup(&self) {
@@ -74,6 +91,24 @@ mod imp {
                     .unwrap()
                     .open_files(files);
             }
+        }
+
+        fn handle_local_options(&self, options: &glib::VariantDict) -> glib::ExitCode {
+            debug!("Application::handle_local_options");
+
+            let application = self.obj();
+            if options.contains("new-window") {
+                if let Err(err) = application.register(None::<&gio::Cancellable>) {
+                    error!("Failed to register the application: {err}");
+                }
+
+                if application.is_remote() {
+                    application.activate_action("new-window", None);
+                    return glib::ExitCode::SUCCESS;
+                }
+            }
+
+            self.parent_handle_local_options(options)
         }
     }
 
