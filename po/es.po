@@ -84,7 +84,7 @@ msgstr "Menú principal"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Arrastra y suelta imágenes aquí"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -96,7 +96,7 @@ msgstr "Exportar formato"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Guardar como PDF de múltiples páginas"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
@@ -181,12 +181,12 @@ msgstr ""
 #: ../data/resources/blueprints/window.blp:321
 #, fuzzy
 msgid "Converting"
-msgstr "convirtiendo"
+msgstr "Convirtiendo"
 
 #: ../data/resources/blueprints/window.blp:322
 #, fuzzy
 msgid "This could take a while"
-msgstr "Esto podría llevar un rato."
+msgstr "Esto podría llevar un tiempo"
 
 #: ../data/resources/blueprints/window.blp:332 ../src/window.rs:764
 msgid "Loading…"
@@ -373,7 +373,7 @@ msgstr "Conversión cancelada"
 #~ msgstr "procesando"
 
 #~ msgid "Converting sample image from PNG to HEIF"
-#~ msgstr "Conversión de una imagen de muestra de PNG a HEIF"
+#~ msgstr "Conversión de una imágen de muestra de PNG a HEIF"
 
 #~ msgid "Converting multiple sample images from SVG to HEIF"
 #~ msgstr "Conversión de varias imágenes de muestra de SVG a HEIF"
@@ -386,7 +386,7 @@ msgstr "Conversión cancelada"
 #~ "Se han corregido varios errores y se ha rediseñado la interfaz de usuario."
 
 #~ msgid "Rust rewrite."
-#~ msgstr "Reescrito en Rust"
+#~ msgstr "Reescrito en Rust."
 
 #~ msgid "Click “Open Images…” or drag images here."
 #~ msgstr "Haga clic en «Abrir imágenes…» o arrastre las imágenes hasta aquí."
