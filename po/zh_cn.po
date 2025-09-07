@@ -1,0 +1,380 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the switcheroo package.
+# 阳光<012340713.ccu@vip.163.com>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: switcheroo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-16 23:34-0700\n"
+"PO-Revision-Date: Y2025-07-12 15:45+0800\n"
+"Last-Translator: 阳光<012340713.ccu@vip.163.com>\n"
+"Language-Team: \n"
+"Language:zh_CN \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:2
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
+#: data/resources/blueprints/window.blp:9
+#: data/resources/blueprints/window.blp:21
+#: data/resources/blueprints/window.blp:57 src/main.rs:41
+#: src/widgets/about_window.rs:21
+msgid "Switcheroo"
+msgstr "Switcheroo"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+msgid "Image Converter"
+msgstr "图片转换器"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:11
+msgid "Convert and manipulate images"
+msgstr "转换和处理图像"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:10
+msgid "converter;image;convert;converting;processing"
+msgstr "转换器;图像;开始转换;转换中;处理中"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
+msgid "Window width"
+msgstr "窗口宽度"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
+msgid "Image quality"
+msgstr "图像质量"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
+msgid "Image density per inch"
+msgstr "图像分辨率"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
+msgid "Window height"
+msgstr "窗口高度"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
+msgid "Window maximized state"
+msgstr "最大化窗口"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
+msgid "Output format"
+msgstr "输出格式"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
+msgid "Compression format"
+msgstr "压缩格式"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:17
+msgid "Convert between different image filetypes and resize them easily."
+msgstr "轻松转换多种图片格式并调整尺寸"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:43
+msgid "Converting sample image from PNG to HEIF"
+msgstr "正在将示例图片从 PNG 转换为 HEIF 格式"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:48
+msgid "Converting multiple sample images from SVG to HEIF"
+msgstr "正在将多个示例图片从 SVG 批量转换为 HEIF 格式"
+
+#: data/resources/blueprints/help-overlay.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "通用"
+
+#: data/resources/blueprints/help-overlay.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "显示快捷键"
+
+#: data/resources/blueprints/help-overlay.blp:19
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "退出"
+
+#: data/resources/blueprints/help-overlay.blp:24
+msgctxt "shortcut window"
+msgid "New Window"
+msgstr "打开新窗口"
+
+#: data/resources/blueprints/help-overlay.blp:29
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr "关闭所有图片操作窗口"
+
+#: data/resources/blueprints/help-overlay.blp:34
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "从剪贴板粘贴"
+
+#: data/resources/blueprints/help-overlay.blp:39
+msgctxt "shortcut window"
+msgid "Add Images"
+msgstr "添加图片"
+
+#: data/resources/blueprints/image-rest.blp:21
+msgid "Show All"
+msgstr "显示所有内容"
+
+#: data/resources/blueprints/window.blp:15
+msgid "Drop Here to Open"
+msgstr "拖拽至此打开"
+
+#: data/resources/blueprints/window.blp:29
+#: data/resources/blueprints/window.blp:370
+msgid "Add Images (Ctrl+O)"
+msgstr "添加图片 (Ctrl+O)"
+
+#: data/resources/blueprints/window.blp:40
+msgid "Primary Menu"
+msgstr "主菜单"
+
+#: data/resources/blueprints/window.blp:58
+msgid "Drag and drop images here"
+msgstr "拖入图片到此处"
+
+#: data/resources/blueprints/window.blp:69
+msgid "_Open Images…"
+msgstr "_打开图片…"
+
+#: data/resources/blueprints/window.blp:122
+msgid "Export Format"
+msgstr "导出格式"
+
+#: data/resources/blueprints/window.blp:127
+msgid "Save as multi-page PDF"
+msgstr "另存为多页PDF"
+
+#: data/resources/blueprints/window.blp:137
+msgid "Save To ZIP"
+msgstr "保存到ZIP文件"
+
+#: data/resources/blueprints/window.blp:150
+msgid "Quality"
+msgstr "质量"
+
+#: data/resources/blueprints/window.blp:170
+msgid "Background Color"
+msgstr "背景颜色"
+
+#: data/resources/blueprints/window.blp:171
+msgid "Replaces original transparency layer"
+msgstr "替换原始透明层"
+
+#: data/resources/blueprints/window.blp:185
+msgid "Pixel Density Per Inch"
+msgstr "每英寸像素密度"
+
+#: data/resources/blueprints/window.blp:197
+msgid "Resize"
+msgstr "尺寸"
+
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:203
+#: data/resources/blueprints/window.blp:210
+#: data/resources/blueprints/window.blp:212
+#: data/resources/blueprints/window.blp:233
+msgid "Width"
+msgstr "宽度"
+
+#: data/resources/blueprints/window.blp:220
+msgid "Preserve aspect ratio"
+msgstr "保持宽高比"
+
+#: data/resources/blueprints/window.blp:225
+#: data/resources/blueprints/window.blp:226
+#: data/resources/blueprints/window.blp:234
+msgid "Height"
+msgstr "高度"
+
+#: data/resources/blueprints/window.blp:245
+msgid "Choose between resizing with percentages or using exact pixels"
+msgstr "选择调整方式：按百分比缩放或指定精确像素"
+
+#: data/resources/blueprints/window.blp:249
+msgid "%"
+msgstr "%"
+
+#: data/resources/blueprints/window.blp:249
+msgid "px"
+msgstr "px"
+
+#: data/resources/blueprints/window.blp:258
+msgid "Resize Algorithm"
+msgstr "缩放方式"
+
+#: data/resources/blueprints/window.blp:264
+msgid "Default"
+msgstr "默认"
+
+#: data/resources/blueprints/window.blp:268
+msgid "Pixel Art"
+msgstr "像素画模式"
+
+#: data/resources/blueprints/window.blp:282
+msgid "_Convert"
+msgstr "_转换"
+
+#: data/resources/blueprints/window.blp:308
+msgid "Could not Load Image"
+msgstr "无法载入图片"
+
+#: data/resources/blueprints/window.blp:309
+msgid "This image could be corrupted or may use an unsupported file format."
+msgstr "该图像可能已损坏或使用了不受支持的文件格式"
+
+#: data/resources/blueprints/window.blp:321
+msgid "Converting"
+msgstr "转换中"
+
+#: data/resources/blueprints/window.blp:322
+msgid "This could take a while"
+msgstr "此操作可能需要一段时间"
+
+#: data/resources/blueprints/window.blp:332 src/window.rs:935
+msgid "Loading…"
+msgstr "加载中…"
+
+#: data/resources/blueprints/window.blp:338 src/window.rs:553
+#: src/window.rs:1615
+msgid "_Cancel"
+msgstr "_取消"
+
+#: data/resources/blueprints/window.blp:362
+msgid "All Images"
+msgstr "所有图片"
+
+#: data/resources/blueprints/window.blp:436
+msgid "Paste From Clipboard"
+msgstr "从剪贴板粘贴"
+
+#: data/resources/blueprints/window.blp:441
+msgid "New Window"
+msgstr "新窗口"
+
+#: data/resources/blueprints/window.blp:446
+msgid "Clear Window"
+msgstr "清除图像操作窗口"
+
+#: data/resources/blueprints/window.blp:453
+msgid "Keyboard Shortcuts"
+msgstr "快捷键"
+
+#: data/resources/blueprints/window.blp:458
+msgid "About Switcheroo"
+msgstr "关于Switcheroo"
+
+#: src/file_chooser.rs:39 src/window.rs:2203
+msgid "Unsupported filetype"
+msgstr "不支持的文件类型"
+
+#: src/file_chooser.rs:88
+msgid "Images"
+msgstr "图片"
+
+#: src/file_chooser.rs:91
+msgid "_Select Images"
+msgstr "_选取图片"
+
+#: src/file_chooser.rs:182
+msgid "Unspecified filetype"
+msgstr "未指定的文件类型"
+
+#: src/file_chooser.rs:187
+msgid "Unknown filetype"
+msgstr "未知文件类型"
+
+#: src/file_chooser.rs:192
+msgid "Used the wrong filetype"
+msgstr "使用了错误的文件类型"
+
+#: src/magick.rs:158
+msgid "Pasted Image"
+msgstr "粘贴图片"
+
+#: src/magick.rs:375
+msgid "Unknown IO error happened"
+msgstr "发生了未知的IO错误"
+
+#. Translators: Replace "translator-credits" with your names, one name per line
+#: src/widgets/about_window.rs:25
+msgid "translator-credits"
+msgstr "阳光<012340713.ccu@vip.163.com>"
+
+#: src/widgets/about_window.rs:32
+msgid "Code and Design Borrowed from"
+msgstr ""
+
+#: src/widgets/about_window.rs:44
+msgid "Sample Image from"
+msgstr "代码及设计源自"
+
+#: src/window.rs:507
+#, rust-format
+msgid "New transparency layer color: {}"
+msgstr "新建透明层颜色：{}"
+
+#: src/window.rs:527
+msgid "Unable to access dropped files"
+msgstr "无法访问拖放的文件"
+
+#: src/window.rs:549 src/window.rs:1610
+msgid "Stop converting?"
+msgstr "停止转换?"
+
+#: src/window.rs:550 src/window.rs:1611
+msgid "You will lose all progress."
+msgstr "所有进度将会丢失"
+
+#: src/window.rs:554 src/window.rs:1615
+msgid "_Stop"
+msgstr "_停止"
+
+#: src/window.rs:594
+msgid "Collecting files"
+msgstr "收集文件"
+
+#: src/window.rs:1285
+msgid ""
+"The 'gs' (GhostScript) command is not available on your system. Please "
+"install GhostScript to convert multiple files to PDF."
+msgstr ""
+"您的系统中未找到 'gs' (GhostScript) 命令"
+"请安装 GhostScript 以实现多文件合并为 PDF 的功能"
+
+#: src/window.rs:1289
+msgid ""
+"The 'zip' command is not available on your system. Please install zip to "
+"convert multiple files to ZIP."
+msgstr ""
+"您的系统中未找到 'zip' 命令"
+"请安装 zip 工具以支持多文件压缩为 ZIP 的功能"
+
+#: src/window.rs:1528
+msgid "Error While Processing"
+msgstr "处理时出错"
+
+#: src/window.rs:1549
+msgid "_Close"
+msgstr "_关闭"
+
+#: src/window.rs:1550
+msgid "_Copy to Clipboard"
+msgstr "_复制到剪贴板"
+
+#: src/window.rs:1561
+msgid "Error copied to clipboard"
+msgstr "在复制到剪贴板中出错"
+
+#: src/window.rs:1577
+msgid "Image converted"
+msgstr "图片已转换"
+
+#: src/window.rs:1578
+msgid "Open"
+msgstr "打开"
+
+#: src/window.rs:1640
+msgid "Converting Cancelled"
+msgstr "转换被取消"
