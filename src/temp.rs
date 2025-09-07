@@ -1,5 +1,5 @@
 use std::{env::var, path::PathBuf};
-use tempfile::{tempdir, tempdir_in, TempDir};
+use tempfile::{TempDir, tempdir, tempdir_in};
 
 use crate::magick::JobFile;
 

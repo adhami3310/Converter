@@ -1,4 +1,4 @@
-use glib::{clone, ExitCode};
+use glib::{ExitCode, clone};
 use log::{debug, error, info};
 
 use gettextrs::gettext;
@@ -79,9 +79,8 @@ mod imp {
 
             let files: Vec<Option<InputFile>> = files
                 .iter()
-                .cloned()
                 .filter(|file| file.query_exists(gio::Cancellable::NONE))
-                .map(|file| InputFile::new(&file))
+                .map(InputFile::new)
                 .collect();
 
             let application = self.obj();
@@ -181,9 +180,9 @@ impl App {
     }
 
     pub fn run(&self) -> ExitCode {
-        info!("Switcheroo ({})", APP_ID);
-        info!("Version: {} ({})", VERSION, PROFILE);
-        info!("Datadir: {}", PKGDATADIR);
+        info!("Switcheroo ({APP_ID})");
+        info!("Version: {VERSION} ({PROFILE})");
+        info!("Datadir: {PKGDATADIR}");
 
         ApplicationExtManual::run(self)
     }

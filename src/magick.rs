@@ -1,5 +1,5 @@
-use crate::temp::get_temp_file_path;
 use crate::GHOST_SCRIPT_BINARY_NAME;
+use crate::temp::get_temp_file_path;
 use crate::{color::Color, filetypes::FileType, window::ResizeFilter};
 use gettextrs::gettext;
 // use glib::Bytes;
@@ -118,7 +118,6 @@ pub struct MagickConvertJob {
     pub output_file: String,
     pub background: Color,
     pub quality: usize,
-    pub coalesce: bool,
     pub first_frame: bool,
     pub filter: Option<ResizeFilter>,
     pub resize_arg: ResizeArgument,
@@ -328,7 +327,6 @@ pub fn generate_job(
                 input_file: input_path.to_owned(),
                 output_file: output_path.to_owned(),
                 first_frame: false,
-                coalesce: false,
                 ..*default_arguments.0
             }))
             .collect()
@@ -337,7 +335,6 @@ pub fn generate_job(
             input_file: input_path.to_owned(),
             output_file: output_path.to_owned(),
             first_frame: true,
-            coalesce: false,
             remove_alpha: !input.supports_alpha() && output.supports_alpha(),
             ..*default_arguments.0
         }))

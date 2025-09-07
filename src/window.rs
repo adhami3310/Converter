@@ -10,18 +10,18 @@ use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
 use crate::input_file::InputFile;
 use crate::magick::{
-    count_frames, generate_job, wait_for_child, GhostScriptConvertJob, JobFile, MagickConvertJob,
-    ResizeArgument,
+    GhostScriptConvertJob, JobFile, MagickConvertJob, ResizeArgument, count_frames, generate_job,
+    wait_for_child,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use crate::widgets::about_window::SwitcherooAbout;
 use crate::widgets::image_rest::ImageRest;
 use crate::widgets::image_thumbnail::ImageThumbnail;
-use crate::{runtime, GHOST_SCRIPT_BINARY_NAME, ZIP_BINARY_NAME};
+use crate::{GHOST_SCRIPT_BINARY_NAME, ZIP_BINARY_NAME, runtime};
 use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
-use glib::{clone, idle_add_local_once, MainContext};
+use glib::{MainContext, clone, idle_add_local_once};
 use gtk::accessible::Property;
 use gtk::gdk::Texture;
 use gtk::{gdk, gio, glib, subclass::prelude::*};
@@ -584,7 +584,7 @@ impl AppWindow {
     }
 
     fn set_convert_progress(&self, done: usize, total: usize) {
-        let msg = format!("{}/{}", done, total);
+        let msg = format!("{done}/{total}");
         self.imp().progress_bar.set_text(Some(&msg));
         self.imp()
             .progress_bar
@@ -1034,7 +1034,6 @@ impl AppWindow {
             quality: self.get_quality_argument(),
             filter: self.get_filter_argument(),
             resize_arg: self.get_resize_argument(),
-            coalesce: false,
             first_frame: false,
             remove_alpha: false,
         };
@@ -1118,10 +1117,7 @@ impl AppWindow {
                             sender
                                 .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
                                 .expect("Concurrency Issues");
-                            let output = match wait_for_child(child_arc.clone()).await {
-                                Ok(_) => None,
-                                Err(e) => Some(e),
-                            };
+                            let output = wait_for_child(child_arc.clone()).await.err();
                             if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
                                 return;
                             }
@@ -1263,11 +1259,15 @@ fn does_binary_exist(binary: &str) -> bool {
 }
 
 fn gs_missing() -> String {
-    gettext("The 'gs' (GhostScript) command is not available on your system. Please install GhostScript to convert multiple files to PDF.")
+    gettext(
+        "The 'gs' (GhostScript) command is not available on your system. Please install GhostScript to convert multiple files to PDF.",
+    )
 }
 
 fn zip_missing() -> String {
-    gettext("The 'zip' command is not available on your system. Please install zip to convert multiple files to ZIP.")
+    gettext(
+        "The 'zip' command is not available on your system. Please install zip to convert multiple files to ZIP.",
+    )
 }
 
 impl ConvertOperations for AppWindow {
@@ -1310,7 +1310,7 @@ impl ConvertOperations for AppWindow {
                         std::process::Command::new(GHOST_SCRIPT_BINARY_NAME)
                             .arg("-dNOPAUSE")
                             .arg("-sDEVICE=pdfwrite")
-                            .arg(format!("-sOUTPUTFILE={}", path))
+                            .arg(format!("-sOUTPUTFILE={path}"))
                             .arg("-dBATCH")
                             .args(output_files),
                     )
@@ -1323,10 +1323,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match runtime().block_on(wait_for_child(child_arc)) {
-                                Err(e) => Some(e),
-                                _ => None,
-                            },
+                            runtime().block_on(wait_for_child(child_arc)).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1350,10 +1347,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match runtime().block_on(wait_for_child(child_arc)) {
-                                Err(e) => Some(e),
-                                _ => None,
-                            },
+                            runtime().block_on(wait_for_child(child_arc)).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1378,10 +1372,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match runtime().block_on(wait_for_child(child_arc)) {
-                                Err(e) => Some(e),
-                                _ => None,
-                            },
+                            runtime().block_on(wait_for_child(child_arc)).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1412,10 +1403,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match runtime().block_on(wait_for_child(child_arc)) {
-                                Err(e) => Some(e),
-                                _ => None,
-                            },
+                            runtime().block_on(wait_for_child(child_arc)).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1772,78 +1760,75 @@ impl WindowUI for AppWindow {
             imp.resize_filter_row.set_visible(true);
         }
 
-        if input_filetypes
-            .iter()
-            .any(|input_filetype| *input_filetype == FileType::Pdf)
-        {
+        if input_filetypes.contains(&FileType::Pdf) {
             imp.dpi_row.set_visible(true);
         }
     }
 
     fn update_width_from_height(&self) {
-        if self.imp().link_axis.is_active() && self.imp().link_axis.is_visible() {
-            if let (Some(image_width), Some(image_height)) =
+        if self.imp().link_axis.is_active()
+            && self.imp().link_axis.is_visible()
+            && let (Some(image_width), Some(image_height)) =
                 (self.imp().image_width.get(), self.imp().image_height.get())
-            {
-                let old_value = self.imp().resize_width_value.text().as_str().to_owned();
-                let other_text = self.imp().resize_height_value.text().as_str().to_owned();
-                if other_text.is_empty() {
-                    return;
-                }
+        {
+            let old_value = self.imp().resize_width_value.text().as_str().to_owned();
+            let other_text = self.imp().resize_height_value.text().as_str().to_owned();
+            if other_text.is_empty() {
+                return;
+            }
 
-                let other_way = generate_height_from_width(
-                    old_value.parse().unwrap_or_default(),
-                    (image_width, image_height),
-                )
-                .to_string();
+            let other_way = generate_height_from_width(
+                old_value.parse().unwrap_or_default(),
+                (image_width, image_height),
+            )
+            .to_string();
 
-                if other_way == other_text {
-                    return;
-                }
+            if other_way == other_text {
+                return;
+            }
 
-                let new_value = generate_width_from_height(
-                    other_text.parse().unwrap_or_default(),
-                    (image_width, image_height),
-                )
-                .to_string();
+            let new_value = generate_width_from_height(
+                other_text.parse().unwrap_or_default(),
+                (image_width, image_height),
+            )
+            .to_string();
 
-                if old_value != new_value && new_value != "0" {
-                    self.imp().resize_width_value.set_text(&new_value);
-                }
+            if old_value != new_value && new_value != "0" {
+                self.imp().resize_width_value.set_text(&new_value);
             }
         }
     }
 
     fn update_height_from_width(&self) {
-        if self.imp().link_axis.is_active() && self.imp().link_axis.is_visible() {
-            if let (Some(image_width), Some(image_height)) =
+        if self.imp().link_axis.is_active()
+            && self.imp().link_axis.is_visible()
+            && let (Some(image_width), Some(image_height)) =
                 (self.imp().image_width.get(), self.imp().image_height.get())
-            {
-                let old_value = self.imp().resize_height_value.text().as_str().to_owned();
-                let other_text = self.imp().resize_width_value.text().as_str().to_owned();
-                if other_text.is_empty() {
-                    return;
-                }
+        {
+            let old_value = self.imp().resize_height_value.text().as_str().to_owned();
+            let other_text = self.imp().resize_width_value.text().as_str().to_owned();
+            if other_text.is_empty() {
+                return;
+            }
 
-                let other_way = generate_width_from_height(
-                    old_value.parse().unwrap_or_default(),
-                    (image_width, image_height),
-                )
-                .to_string();
+            let other_way = generate_width_from_height(
+                old_value.parse().unwrap_or_default(),
+                (image_width, image_height),
+            )
+            .to_string();
 
-                if other_way == other_text {
-                    return;
-                }
+            if other_way == other_text {
+                return;
+            }
 
-                let new_value = generate_height_from_width(
-                    other_text.parse().unwrap_or_default(),
-                    (image_width, image_height),
-                )
-                .to_string();
+            let new_value = generate_height_from_width(
+                other_text.parse().unwrap_or_default(),
+                (image_width, image_height),
+            )
+            .to_string();
 
-                if old_value != new_value && new_value != "0" {
-                    self.imp().resize_height_value.set_text(&new_value);
-                }
+            if old_value != new_value && new_value != "0" {
+                self.imp().resize_height_value.set_text(&new_value);
             }
         }
     }

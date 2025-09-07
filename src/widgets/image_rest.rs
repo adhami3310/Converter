@@ -62,9 +62,9 @@ impl ImageRest {
 
         bin.imp()
             .content
-            .set_label(&gettext("+{}").replace("{}", &format!("{}", count)));
+            .set_label(&gettext("+{}").replace("{}", &count.to_string()));
         bin.imp().image.set_tooltip_text(Some(
-            &gettext("Show {} more images").replace("{}", &format!("{}", count)),
+            &gettext("Show {} more images").replace("{}", &count.to_string()),
         ));
 
         bin

@@ -13,7 +13,7 @@ mod window;
 
 use std::sync::OnceLock;
 
-use gettextrs::{gettext, LocaleCategory};
+use gettextrs::{LocaleCategory, gettext};
 use glib::ExitCode;
 use gtk::{gio, glib};
 use tokio::runtime::Runtime;

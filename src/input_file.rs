@@ -1,7 +1,7 @@
 use glib::{ParamSpec, ParamSpecEnum, ParamSpecString, Value};
 use gtk::{
     // cairo,
-    gdk::{gdk_pixbuf::Pixbuf, Texture},
+    gdk::{Texture, gdk_pixbuf::Pixbuf},
     gio,
     glib,
     prelude::*,
