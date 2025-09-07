@@ -12,3 +12,10 @@ StartupNotify=true
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;
 MimeType=image/png;image/jpeg;image/webp;image/svg+xml;image/heic;image/heif;image/bmp;image/avif;image/jxl;image/tiff;application/pdf;image/gif;image/x-icon;image/vnd-ms.dds
+Actions=new-window;
+
+[Desktop Action new-window]
+Exec=switcheroo --new-window
+Name=New Window
+# TRANSLATORS: Do NOT translate or transliterate this text (this is an icon file name)!
+Icon=window-new
