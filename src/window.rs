@@ -28,7 +28,6 @@ use gtk::{gdk, gio, glib, subclass::prelude::*};
 use itertools::Itertools;
 use shared_child::SharedChild;
 use std::sync::Arc;
-use tokio::spawn;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ResizeFilter {
@@ -243,7 +242,9 @@ mod imp {
 glib::wrapper! {
     pub struct AppWindow(ObjectSubclass<imp::AppWindow>)
         @extends gtk::Widget, gtk::Window,  gtk::ApplicationWindow, adw::ApplicationWindow,
-        @implements gio::ActionMap, gio::ActionGroup, gtk::Root;
+        @implements gio::ActionMap, gio::ActionGroup,
+                    gtk::Root, gtk::Native, gtk::ShortcutManager,
+                    gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 #[gtk::template_callbacks]
@@ -663,16 +664,12 @@ impl AppWindow {
         let (sender, receiver) = async_channel::bounded(1);
 
         std::thread::spawn(move || {
-            let rt = tokio::runtime::Builder::new_multi_thread()
-                .enable_all()
-                .build()
-                .unwrap();
             let jobs = file_paths
                 .into_iter()
                 .map(|f| async move { count_frames(f).await.unwrap_or((1, None)) })
                 .collect_vec();
 
-            let res = rt.block_on(join_all(jobs));
+            let res = runtime().block_on(join_all(jobs));
 
             sender.send_blocking(res).expect("Concurrency Issues");
         });
@@ -871,33 +868,26 @@ impl AppWindow {
 
         let (sender, receiver) = async_channel::bounded(1);
         std::thread::spawn(move || {
-            let rt = tokio::runtime::Builder::new_multi_thread()
-                .enable_all()
-                .build()
-                .unwrap();
             let file_paths_pixbuf = file_path_things
                 .into_iter()
                 .enumerate()
                 .map(|(i, (b, path))| {
                     let sender = sender.clone();
                     async move {
-                        spawn(async move {
-                            sender
-                                .send_blocking((
-                                    i,
-                                    match b {
-                                        true => Some(Texture::from_filename(&path)),
-                                        false => None,
-                                    },
-                                ))
-                                .expect("Concurrency Issues");
-                        })
-                        .await
+                        sender
+                            .send_blocking((
+                                i,
+                                match b {
+                                    true => Some(Texture::from_filename(&path)),
+                                    false => None,
+                                },
+                            ))
+                            .expect("Concurrency Issues");
                     }
                 })
                 .collect_vec();
 
-            rt.block_on(join_all(file_paths_pixbuf));
+            runtime().block_on(join_all(file_paths_pixbuf));
         });
 
         let completed = std::sync::Arc::new(AtomicUsize::new(0));
@@ -1083,11 +1073,6 @@ impl AppWindow {
         let stop_flag_s = stop_flag.clone();
 
         std::thread::spawn(move || {
-            let rt = tokio::runtime::Builder::new_multi_thread()
-                .enable_all()
-                .build()
-                .unwrap();
-
             let stop_flag = stop_flag_s.clone();
 
             let jobs = magick_jobs
@@ -1096,64 +1081,60 @@ impl AppWindow {
                     let stop_flag = stop_flag.clone();
                     let sender = sender.clone();
                     async move {
-                        spawn(async move {
-                            for mut mj_command in mjs.into_iter().map(|mj| mj.get_command()) {
-                                if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
-                                    return;
-                                }
+                        for mut mj_command in mjs.into_iter().map(|mj| mj.get_command()) {
+                            if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                return;
+                            }
 
-                                let mj_command_str =
-                                    mj_command.get_program().to_str().unwrap().to_string();
+                            let mj_command_str =
+                                mj_command.get_program().to_str().unwrap().to_string();
 
-                                let shared_child = match SharedChild::spawn(&mut mj_command) {
-                                    std::io::Result::Ok(shared_child) => shared_child,
-                                    std::io::Result::Err(e) => {
-                                        if mj_command_str == GHOST_SCRIPT_BINARY_NAME
-                                            && e.kind() == std::io::ErrorKind::NotFound
-                                        {
-                                            sender
-                                                .send_blocking(ArcOrOptionError::OptionError(Some(
-                                                    gs_missing(),
-                                                )))
-                                                .expect("Concurrency Issues");
-                                            return;
-                                        }
+                            let shared_child = match SharedChild::spawn(&mut mj_command) {
+                                std::io::Result::Ok(shared_child) => shared_child,
+                                std::io::Result::Err(e) => {
+                                    if mj_command_str == GHOST_SCRIPT_BINARY_NAME
+                                        && e.kind() == std::io::ErrorKind::NotFound
+                                    {
                                         sender
                                             .send_blocking(ArcOrOptionError::OptionError(Some(
-                                                mj_command_str + ": " + &e.to_string(),
+                                                gs_missing(),
                                             )))
                                             .expect("Concurrency Issues");
                                         return;
                                     }
-                                };
-
-                                if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                    sender
+                                        .send_blocking(ArcOrOptionError::OptionError(Some(
+                                            mj_command_str + ": " + &e.to_string(),
+                                        )))
+                                        .expect("Concurrency Issues");
                                     return;
                                 }
-                                let child_arc = std::sync::Arc::new(shared_child);
-                                sender
-                                    .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
-                                    .expect("Concurrency Issues");
-                                let output = match wait_for_child(child_arc.clone()).await {
-                                    Ok(_) => None,
-                                    Err(e) => Some(e),
-                                };
-                                if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
-                                    return;
-                                }
+                            };
 
-                                sender
-                                    .send_blocking(ArcOrOptionError::OptionError(output))
-                                    .expect("Concurrency Issues");
+                            if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                return;
                             }
-                        })
-                        .await
-                        .ok();
+                            let child_arc = std::sync::Arc::new(shared_child);
+                            sender
+                                .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
+                                .expect("Concurrency Issues");
+                            let output = match wait_for_child(child_arc.clone()).await {
+                                Ok(_) => None,
+                                Err(e) => Some(e),
+                            };
+                            if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
+                                return;
+                            }
+
+                            sender
+                                .send_blocking(ArcOrOptionError::OptionError(output))
+                                .expect("Concurrency Issues");
+                        }
                     }
                 })
                 .collect_vec();
 
-            rt.block_on(join_all(jobs));
+            runtime().block_on(join_all(jobs));
         });
 
         let dir_path = dir.path().to_str().unwrap().to_string();
@@ -1325,11 +1306,6 @@ impl ConvertOperations for AppWindow {
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
-                    let rt = tokio::runtime::Builder::new_multi_thread()
-                        .enable_all()
-                        .build()
-                        .unwrap();
-
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new(GHOST_SCRIPT_BINARY_NAME)
                             .arg("-dNOPAUSE")
@@ -1347,7 +1323,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match rt.block_on(wait_for_child(child_arc)) {
+                            match runtime().block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
                             },
@@ -1363,11 +1339,6 @@ impl ConvertOperations for AppWindow {
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
-                    let rt = tokio::runtime::Builder::new_multi_thread()
-                        .enable_all()
-                        .build()
-                        .unwrap();
-
                     let shared_child: SharedChild =
                         SharedChild::spawn(std::process::Command::new("mv").arg(file).arg(path))
                             .unwrap();
@@ -1379,7 +1350,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match rt.block_on(wait_for_child(child_arc)) {
+                            match runtime().block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
                             },
@@ -1393,11 +1364,6 @@ impl ConvertOperations for AppWindow {
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
-                    let rt = tokio::runtime::Builder::new_multi_thread()
-                        .enable_all()
-                        .build()
-                        .unwrap();
-
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new("mv")
                             .args(output_files)
@@ -1412,7 +1378,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match rt.block_on(wait_for_child(child_arc)) {
+                            match runtime().block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
                             },
@@ -1431,11 +1397,6 @@ impl ConvertOperations for AppWindow {
                 }
 
                 std::thread::spawn(move || {
-                    let rt = tokio::runtime::Builder::new_multi_thread()
-                        .enable_all()
-                        .build()
-                        .unwrap();
-
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new(ZIP_BINARY_NAME)
                             .arg("-jFSm0")
@@ -1451,7 +1412,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            match rt.block_on(wait_for_child(child_arc)) {
+                            match runtime().block_on(wait_for_child(child_arc)) {
                                 Err(e) => Some(e),
                                 _ => None,
                             },

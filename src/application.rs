@@ -94,7 +94,10 @@ mod imp {
             }
         }
 
-        fn handle_local_options(&self, options: &glib::VariantDict) -> glib::ExitCode {
+        fn handle_local_options(
+            &self,
+            options: &glib::VariantDict,
+        ) -> std::ops::ControlFlow<glib::ExitCode> {
             debug!("Application::handle_local_options");
 
             let application = self.obj();
@@ -105,7 +108,7 @@ mod imp {
 
                 if application.is_remote() {
                     application.activate_action("new-window", None);
-                    return glib::ExitCode::SUCCESS;
+                    return std::ops::ControlFlow::Break(glib::ExitCode::SUCCESS);
                 }
             }
 

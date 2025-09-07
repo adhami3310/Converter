@@ -50,7 +50,7 @@ mod imp {
 glib::wrapper! {
     pub struct ImageRest(ObjectSubclass<imp::ImageRest>)
         @extends gtk::FlowBoxChild, gtk::Widget,
-        @implements gio::ActionMap, gio::ActionGroup, gtk::Root;
+        @implements gio::ActionMap, gio::ActionGroup, gtk::Root, gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 #[gtk::template_callbacks]

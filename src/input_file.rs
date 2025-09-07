@@ -163,7 +163,7 @@ impl InputFile {
     //     Ok(())
     // }
 
-    pub fn pixbuf(&self) -> Ref<Option<Texture>> {
+    pub fn pixbuf(&self) -> Ref<'_, Option<Texture>> {
         self.imp().pixbuf.borrow()
     }
 
