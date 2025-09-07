@@ -80,6 +80,7 @@ mod imp {
             let files: Vec<Option<InputFile>> = files
                 .iter()
                 .cloned()
+                .filter(|file| file.query_exists(gio::Cancellable::NONE))
                 .map(|file| InputFile::new(&file))
                 .collect();
 
