@@ -1,19 +1,14 @@
-use crate::GHOST_SCRIPT_BINARY_NAME;
-use crate::temp::get_temp_file_path;
 use crate::{color::Color, filetypes::FileType, window::ResizeFilter};
 use gettextrs::gettext;
-// use glib::Bytes;
-// use gtk::gio::Cancellable;
-// use gtk::prelude::{FileExt, InputStreamExt};
 use itertools::Itertools;
 use shared_child::SharedChild;
 use std::io::Read;
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicUsize, Ordering};
-use tempfile::TempDir;
 
 pub async fn count_frames(path: String) -> Result<(usize, Option<(usize, usize)>), ()> {
     let command = tokio::process::Command::new("magick")
+        .stdout(std::process::Stdio::piped())
         .arg("identify")
         .arg(path)
         .output()
@@ -50,14 +45,6 @@ pub async fn count_frames(path: String) -> Result<(usize, Option<(usize, usize)>
         _ => Err(()),
     }
 }
-
-// pub async fn pixbuf_bytes(path: String) -> Bytes {
-//     let stream = gtk::gio::File::for_path(path)
-//         .read(Cancellable::NONE)
-//         .unwrap();
-
-//     stream.read_bytes(1073741824, Cancellable::NONE).unwrap()
-// }
 
 pub trait MagickArgument {
     fn get_argument(&self) -> Vec<String>;
@@ -121,14 +108,8 @@ pub struct MagickConvertJob {
     pub first_frame: bool,
     pub filter: Option<ResizeFilter>,
     pub resize_arg: ResizeArgument,
+    pub density: Option<usize>,
     pub remove_alpha: bool,
-}
-
-pub struct GhostScriptConvertJob {
-    pub input_file: String,
-    pub output_file: String,
-    pub page: usize,
-    pub dpi: usize,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -171,49 +152,24 @@ impl JobFile {
     }
 }
 
-impl GhostScriptConvertJob {
-    pub fn get_command(&self) -> Command {
-        let mut command = Command::new(GHOST_SCRIPT_BINARY_NAME);
-
-        command
-            .arg("-sDEVICE=png16m")
-            .arg("-dTextAlphaBits=4")
-            .arg(format!("-dFirstPage={}", self.page + 1))
-            .arg(format!("-dLastPage={}", self.page + 1))
-            .args(vec!["-o", &self.output_file])
-            .arg(format!("-r{}", &self.dpi.to_string()))
-            .arg(self.input_file.clone())
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped());
-
-        command
-    }
-}
-
-pub enum ConvertJob {
-    GhostScript(GhostScriptConvertJob),
-    Magick(MagickConvertJob),
-}
-
-impl ConvertJob {
-    pub fn get_command(&self) -> Command {
-        match self {
-            ConvertJob::GhostScript(g) => g.get_command(),
-            ConvertJob::Magick(g) => g.get_command(),
-        }
-    }
-}
-
 impl MagickConvertJob {
     pub fn get_command(&self) -> Command {
         let mut command = Command::new("magick");
 
         dbg!(self);
 
-        let is_svg = self.input_file.ends_with(".svg[0]");
+        let input_file_ext = self
+            .input_file
+            .rsplit('.')
+            .next()
+            .unwrap_or("")
+            .split("[")
+            .next()
+            .unwrap_or("")
+            .to_lowercase();
 
-        let (resize_arg, size_arg) = match is_svg {
-            true => (
+        let (resize_arg, size_arg) = match input_file_ext.as_str() {
+            "svg" => (
                 vec![],
                 match self.resize_arg {
                     ResizeArgument::ExactPixels { width, height } => {
@@ -228,7 +184,15 @@ impl MagickConvertJob {
                     }
                 },
             ),
-            false => (self.resize_arg.get_argument(), vec![]),
+            "pdf" => (
+                self.resize_arg.get_argument(),
+                if let Some(density) = self.density {
+                    vec!["-density".to_owned(), density.to_string()]
+                } else {
+                    vec![]
+                },
+            ),
+            _ => (self.resize_arg.get_argument(), vec![]),
         };
 
         dbg!(&resize_arg);
@@ -246,7 +210,7 @@ impl MagickConvertJob {
             }
 
             command
-                .args(["-quality".to_string(), format!("{}", self.quality)])
+                .args(["-quality".to_string(), self.quality.to_string()])
                 .args(self.filter.get_argument())
                 .args(resize_arg)
                 .arg(self.output_file.clone());
@@ -260,7 +224,7 @@ impl MagickConvertJob {
                     "-opaque",
                     "none",
                 ])
-                .args(vec!["-quality".to_string(), format!("{}", self.quality)])
+                .args(vec!["-quality".to_string(), self.quality.to_string()])
                 .args(self.filter.get_argument())
                 .args(resize_arg)
                 .arg(self.output_file.clone());
@@ -274,84 +238,40 @@ impl MagickConvertJob {
 
 pub fn generate_job(
     input_path: &str,
-    frame: usize,
     input_type: &FileType,
     output_path: &str,
     output_type: &FileType,
-    dir: &TempDir,
-    default_arguments: (&MagickConvertJob, &GhostScriptConvertJob),
-) -> Vec<ConvertJob> {
+    pdf_dpi: usize,
+    default_arguments: &MagickConvertJob,
+) -> Vec<MagickConvertJob> {
     use FileType::*;
     match (input_type, output_type) {
-        (Pdf, Png) => std::iter::once(ConvertJob::GhostScript(GhostScriptConvertJob {
+        (Pdf, _) => std::iter::once(MagickConvertJob {
             input_file: input_path.to_owned(),
             output_file: output_path.to_owned(),
-            page: frame,
-            ..*default_arguments.1
-        }))
+            density: Some(pdf_dpi),
+            ..*default_arguments
+        })
         .collect(),
-        (Pdf, _) => {
-            let interm = get_temp_file_path(dir, JobFile::new(FileType::Png, None))
-                .to_str()
-                .unwrap()
-                .to_owned();
-            generate_job(
-                input_path,
-                frame,
-                input_type,
-                &interm,
-                &FileType::Png,
-                dir,
-                default_arguments,
-            )
-            .into_iter()
-            .chain(generate_job(
-                &interm,
-                0,
-                &FileType::Png,
-                output_path,
-                output_type,
-                dir,
-                (
-                    &MagickConvertJob {
-                        resize_arg: ResizeArgument::default(),
-                        ..default_arguments.0.to_owned()
-                    },
-                    default_arguments.1,
-                ),
-            ))
-            .collect()
-        }
         (input, output) if input.supports_animation() && output.supports_animation() => {
-            std::iter::once(ConvertJob::Magick(MagickConvertJob {
+            std::iter::once(MagickConvertJob {
                 input_file: input_path.to_owned(),
                 output_file: output_path.to_owned(),
                 first_frame: false,
-                ..*default_arguments.0
-            }))
+                ..*default_arguments
+            })
             .collect()
         }
-        (input, output) => std::iter::once(ConvertJob::Magick(MagickConvertJob {
+        (input, output) => std::iter::once(MagickConvertJob {
             input_file: input_path.to_owned(),
             output_file: output_path.to_owned(),
             first_frame: true,
             remove_alpha: !input.supports_alpha() && output.supports_alpha(),
-            ..*default_arguments.0
-        }))
+            ..*default_arguments
+        })
         .collect(),
     }
 }
-
-// pub async fn convert(job: ConvertJob) -> Result<(), String> {
-//     let command = job.get_command().await;
-//     match command {
-//         Ok(output) => match output.status.success() {
-//             true => Ok(()),
-//             false => Err(std::str::from_utf8(&output.stderr).unwrap().to_owned()),
-//         },
-//         Err(_) => Err(gettext("Unknown IO error happened")),
-//     }
-// }
 
 pub async fn wait_for_child(child: std::sync::Arc<SharedChild>) -> Result<(), String> {
     let command = child.wait();
@@ -372,45 +292,3 @@ pub async fn wait_for_child(child: std::sync::Arc<SharedChild>) -> Result<(), St
         Err(_) => Err(gettext("Unknown IO error happened")),
     }
 }
-
-// pub async fn compress(files: Vec<String>, output: String) -> Result<(), String> {
-//     let command = tokio::process::Command::new("zip")
-//         .arg("-FSm")
-//         .arg(output)
-//         .args(files)
-//         .output()
-//         .await;
-//     match command {
-//         Ok(output) => match output.status.success() {
-//             true => Ok(()),
-//             false => Err(std::str::from_utf8(&output.stderr).unwrap().to_owned()),
-//         },
-//         Err(_) => Err(gettext("Unknown IO error happened")),
-//     }
-// }
-
-// pub async fn move_files(files: Vec<String>, output_dir: String) -> Result<(), String> {
-//     let command = tokio::process::Command::new("mv")
-//         .args(files)
-//         .arg(output_dir)
-//         .output()
-//         .await;
-//     match command {
-//         Ok(output) => match output.status.success() {
-//             true => Ok(()),
-//             false => Err(std::str::from_utf8(&output.stderr).unwrap().to_owned()),
-//         },
-//         Err(_) => Err(gettext("Unknown IO error happened")),
-//     }
-// }
-
-// pub async fn move_file(file: String, target_file: String) -> Result<(), String> {
-//     let command = tokio::process::Command::new("mv").arg(file).arg(target_file).output().await;
-//     match command {
-//         Ok(output) => match output.status.success() {
-//             true => Ok(()),
-//             false => Err(std::str::from_utf8(&output.stderr).unwrap().to_owned()),
-//         },
-//         Err(_) => Err(gettext("Unknown IO error happened")),
-//     }
-// }

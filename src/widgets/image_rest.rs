@@ -58,8 +58,6 @@ impl ImageRest {
     pub fn new(count: usize) -> Self {
         let bin = glib::Object::builder::<ImageRest>().build();
 
-        bin.setup_callbacks();
-
         bin.imp()
             .content
             .set_label(&gettext("+{}").replace("{}", &count.to_string()));
@@ -68,11 +66,6 @@ impl ImageRest {
         ));
 
         bin
-    }
-
-    fn setup_callbacks(&self) {
-        //load imp
-        // let imp = self.imp();
     }
 
     pub fn connect_clicked<F>(&self, func: F) -> SignalHandlerId

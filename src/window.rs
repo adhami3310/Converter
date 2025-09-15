@@ -10,8 +10,7 @@ use crate::file_chooser::FileChooser;
 use crate::filetypes::{CompressionType, FileType, OutputType};
 use crate::input_file::InputFile;
 use crate::magick::{
-    GhostScriptConvertJob, JobFile, MagickConvertJob, ResizeArgument, count_frames, generate_job,
-    wait_for_child,
+    JobFile, MagickConvertJob, ResizeArgument, count_frames, generate_job, wait_for_child,
 };
 use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use crate::widgets::about_window::SwitcherooAbout;
@@ -646,7 +645,6 @@ impl AppWindow {
         self.imp().removed.replace(HashSet::new());
 
         self.switch_to_stack_loading_generally();
-        // self.switch_to_stack_loading();
 
         for file in files.iter() {
             self.imp().input_file_store.append(file);
@@ -661,7 +659,7 @@ impl AppWindow {
         let files = self.files();
         let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
-        let (sender, receiver) = async_channel::bounded(1);
+        let (sender, receiver) = tokio::sync::oneshot::channel();
 
         std::thread::spawn(move || {
             let jobs = file_paths
@@ -671,14 +669,14 @@ impl AppWindow {
 
             let res = runtime().block_on(join_all(jobs));
 
-            sender.send_blocking(res).expect("Concurrency Issues");
+            sender.send(res).expect("Concurrency Issues");
         });
 
         glib::spawn_future_local(clone!(
             #[weak(rename_to=this)]
             self,
             async move {
-                while let Ok(image_info) = receiver.recv().await {
+                if let Ok(image_info) = receiver.await {
                     let real_files = files.clone();
                     for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
                         f.set_frames(*frame);
@@ -970,10 +968,9 @@ impl AppWindow {
                     (Pdf, _, c) => (0..c)
                         .map(|f| {
                             (
-                                path.clone(),
+                                format!("{path}[{f}]"),
                                 input_filetype,
                                 format!("{output_stem}[{f}].{}", output_type.as_extension()),
-                                f,
                             )
                         })
                         .collect_vec(),
@@ -981,7 +978,6 @@ impl AppWindow {
                         format!("{path}[0]"),
                         input_filetype,
                         format!("{output_stem}.{}", output_type.as_extension()),
-                        0,
                     )],
                     (input, output, _)
                         if input.supports_animation() && output.supports_animation() =>
@@ -990,7 +986,6 @@ impl AppWindow {
                             path,
                             input_filetype,
                             format!("{output_stem}.{}", output_type.as_extension()),
-                            0,
                         )]
                     }
                     (input, _, count) if input.supports_animation() => (0..count)
@@ -999,7 +994,6 @@ impl AppWindow {
                                 format!("{path}[{f}]"),
                                 input_filetype,
                                 format!("{output_stem}[{f}].{}", output_type.as_extension()),
-                                f,
                             )
                         })
                         .collect_vec(),
@@ -1007,7 +1001,6 @@ impl AppWindow {
                         format!("{path}[0]"),
                         input_filetype,
                         format!("{output_stem}.{}", output_type.as_extension()),
-                        0,
                     )],
                 }
             })
@@ -1017,7 +1010,7 @@ impl AppWindow {
 
         let output_files = job_input
             .iter()
-            .map(|(_, _, o, _)| {
+            .map(|(_, _, o)| {
                 get_temp_file_path(&dir, JobFile::new(output_type, Some(o.to_string())))
                     .to_str()
                     .unwrap()
@@ -1034,30 +1027,23 @@ impl AppWindow {
             quality: self.get_quality_argument(),
             filter: self.get_filter_argument(),
             resize_arg: self.get_resize_argument(),
+            density: None,
             first_frame: false,
             remove_alpha: false,
         };
 
-        let ghost_arguments = GhostScriptConvertJob {
-            input_file: "".to_string(),
-            output_file: "".to_string(),
-            page: 0,
-            dpi: self.get_dpi_argument(),
-        };
-
         let magick_jobs = job_input
             .into_iter()
-            .map(|(f, ft, os, frame)| {
+            .map(|(f, ft, os)| {
                 generate_job(
                     &f,
-                    frame,
                     &ft,
                     get_temp_file_path(&dir, JobFile::new(output_type, Some(os)))
                         .to_str()
                         .unwrap(),
                     &output_type,
-                    &dir,
-                    (&magick_arguments, &ghost_arguments),
+                    self.get_dpi_argument(),
+                    &magick_arguments,
                 )
             })
             .collect_vec();
@@ -1091,16 +1077,6 @@ impl AppWindow {
                             let shared_child = match SharedChild::spawn(&mut mj_command) {
                                 std::io::Result::Ok(shared_child) => shared_child,
                                 std::io::Result::Err(e) => {
-                                    if mj_command_str == GHOST_SCRIPT_BINARY_NAME
-                                        && e.kind() == std::io::ErrorKind::NotFound
-                                    {
-                                        sender
-                                            .send_blocking(ArcOrOptionError::OptionError(Some(
-                                                gs_missing(),
-                                            )))
-                                            .expect("Concurrency Issues");
-                                        return;
-                                    }
                                     sender
                                         .send_blocking(ArcOrOptionError::OptionError(Some(
                                             mj_command_str + ": " + &e.to_string(),
@@ -1307,12 +1283,11 @@ impl ConvertOperations for AppWindow {
 
                 std::thread::spawn(move || {
                     let shared_child: SharedChild = SharedChild::spawn(
-                        std::process::Command::new(GHOST_SCRIPT_BINARY_NAME)
-                            .arg("-dNOPAUSE")
-                            .arg("-sDEVICE=pdfwrite")
-                            .arg(format!("-sOUTPUTFILE={path}"))
-                            .arg("-dBATCH")
-                            .args(output_files),
+                        std::process::Command::new("magick")
+                            .stdout(std::process::Stdio::piped())
+                            .stderr(std::process::Stdio::piped())
+                            .args(output_files)
+                            .arg(path),
                     )
                     .unwrap();
                     let child_arc = std::sync::Arc::new(shared_child);
@@ -1336,9 +1311,14 @@ impl ConvertOperations for AppWindow {
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
-                    let shared_child: SharedChild =
-                        SharedChild::spawn(std::process::Command::new("mv").arg(file).arg(path))
-                            .unwrap();
+                    let shared_child: SharedChild = SharedChild::spawn(
+                        std::process::Command::new("mv")
+                            .stdout(std::process::Stdio::piped())
+                            .stderr(std::process::Stdio::piped())
+                            .arg(file)
+                            .arg(path),
+                    )
+                    .unwrap();
                     let child_arc = std::sync::Arc::new(shared_child);
 
                     sender
@@ -1360,6 +1340,8 @@ impl ConvertOperations for AppWindow {
                 std::thread::spawn(move || {
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new("mv")
+                            .stdout(std::process::Stdio::piped())
+                            .stderr(std::process::Stdio::piped())
                             .args(output_files)
                             .arg(path),
                     )
@@ -1380,19 +1362,21 @@ impl ConvertOperations for AppWindow {
                 receiver
             }
             _ => {
-                let (sender, receiver) = async_channel::bounded(1);
-
                 if !does_binary_exist(ZIP_BINARY_NAME) {
                     self.convert_failed(zip_missing(), dir_path.clone());
                     return;
                 }
+
+                let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
                     let shared_child: SharedChild = SharedChild::spawn(
                         std::process::Command::new(ZIP_BINARY_NAME)
                             .arg("-jFSm0")
                             .arg(path)
-                            .args(output_files),
+                            .args(output_files)
+                            .stdout(std::process::Stdio::piped())
+                            .stderr(std::process::Stdio::piped()),
                     )
                     .unwrap();
                     let child_arc = std::sync::Arc::new(shared_child);

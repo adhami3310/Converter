@@ -77,7 +77,6 @@ mod imp {
                         .expect("Value must be a Pixbuf");
                     match p {
                         Some(p) => {
-                            // self.image.set_from_pixbuf(Some(&get_reduced(&p)));
                             self.picture.set_paintable(Some(p));
                             self.picture.set_visible(true);
                             self.image.set_visible(false);
@@ -115,10 +114,6 @@ mod imp {
         fn dispose(&self) {
             self.root.unparent();
         }
-
-        // // fn constructed(&self) {
-        // //     self.parent_constructed();
-        // // }
     }
 
     impl WidgetImpl for ImageThumbnail {

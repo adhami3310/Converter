@@ -1,9 +1,7 @@
 use glib::{ParamSpec, ParamSpecEnum, ParamSpecString, Value};
 use gtk::{
-    // cairo,
     gdk::{Texture, gdk_pixbuf::Pixbuf},
-    gio,
-    glib,
+    gio, glib,
     prelude::*,
     subclass::prelude::*,
 };
@@ -138,31 +136,6 @@ impl InputFile {
         glib::Object::new()
     }
 
-    // pub async fn generate_pixbuf(
-    //     &self,
-    //     high_quality: bool,
-    // ) -> Result<(), Box<dyn std::error::Error>> {
-    //     if !self.kind().supports_pixbuf() || self.pixbuf().is_some() {
-    //         return Ok(());
-    //     }
-
-    //     let stream = gio::File::for_path(self.path())
-    //         .read_future(glib::PRIORITY_DEFAULT)
-    //         .await?;
-
-    //     let mut pixbuf = gtk::gdk_pixbuf::Pixbuf::from_stream_future(&stream).await?;
-
-    //     if !high_quality {
-    //         pixbuf = get_reduced(&pixbuf, 300);
-    //     } else {
-    //         pixbuf = get_reduced(&pixbuf, 800);
-    //     }
-
-    //     self.set_property("pixbuf", pixbuf);
-
-    //     Ok(())
-    // }
-
     pub fn pixbuf(&self) -> Ref<'_, Option<Texture>> {
         self.imp().pixbuf.borrow()
     }
@@ -221,38 +194,3 @@ impl InputFile {
         self.imp().kind.get()
     }
 }
-
-// fn get_reduced(p: &Pixbuf, min_side: usize) -> Pixbuf {
-//     let min_side = min_side as f64;
-//     let (width, height) = (p.width() as f64, p.height() as f64);
-//     let min_original_side = std::cmp::min(width as usize, height as usize) as f64;
-//     if min_original_side < min_side {
-//         return p.to_owned();
-//     }
-//     let (scaled_width, scaled_height) = (
-//         width * min_side / min_original_side,
-//         height * min_side / min_original_side,
-//     );
-//     let surface = cairo::ImageSurface::create(
-//         cairo::Format::ARgb32,
-//         scaled_width as i32,
-//         scaled_height as i32,
-//     )
-//     .unwrap();
-//     let context = cairo::Context::new(&surface).unwrap();
-//     context.scale(scaled_width / width, scaled_height / height);
-//     context.set_source_pixbuf(p, 0.0, 0.0);
-//     context.paint().unwrap();
-//     context.scale(width / scaled_width, height / scaled_height);
-//     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, scaled_width as i32, scaled_height as i32)
-//         .unwrap()
-// }
-
-// pub fn get_square(p: &Pixbuf) -> Pixbuf {
-//     let side = std::cmp::min(p.width(), p.height());
-//     let surface = cairo::ImageSurface::create(cairo::Format::ARgb32, side, side).unwrap();
-//     let context = cairo::Context::new(&surface).unwrap();
-//     context.set_source_pixbuf(&p, ((p.width() - side) as f64) / -2.0, ((p.height() - side) as f64) / -2.0);
-//     context.paint().unwrap();
-//     gtk::gdk::pixbuf_get_from_surface(&surface, 0, 0, side, side).unwrap()
-// }

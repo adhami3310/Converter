@@ -129,8 +129,6 @@ impl FileType {
             Gif => "image/gif",
             Ico => "image/x-icon",
             Dds => "image/vnd-ms.dds",
-            // ZIP => "application/zip",
-            // TAR => "application/gzip",
             Unknown => "",
         }
     }
@@ -173,8 +171,6 @@ impl FileType {
             Gif => "gif",
             Ico => "ico",
             Dds => "dds",
-            // ZIP => "zip",
-            // TAR => "tar.gz",
             Unknown => "",
         }
     }
@@ -200,8 +196,6 @@ impl FileType {
             "gif" => Some(Gif),
             "ico" => Some(Ico),
             "dds" => Some(Dds),
-            // "zip" => Some(ZIP),
-            // "tar.gz" => Some(TAR),
             _ => None,
         }
     }
@@ -315,11 +309,4 @@ impl OutputType {
             OutputType::Compression(f) => f.as_extension(),
         }
     }
-
-    // pub fn as_display_string(&self) -> String {
-    //     match self {
-    //         OutputType::Compression(x) => x.as_display_string(),
-    //         x => x.as_extension().to_uppercase(),
-    //     }
-    // }
 }
