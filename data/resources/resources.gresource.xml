@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
     <gresource prefix="/io/gitlab/adhami3310/Converter/">
+        <file alias="io.gitlab.adhami3310.Converter.metainfo.xml" preprocess="xml-stripblanks">../io.gitlab.adhami3310.Converter.metainfo.xml</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-thumbnail.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-rest.ui</file>
         <file compressed="true">style.css</file>
         <file compressed="true">style-hc.css</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/symbolic/apps/io.gitlab.adhami3310.Converter-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.svg</file>
+        <file preprocess="xml-stripblanks">icons/hicolor/scalable/apps/io.gitlab.adhami3310.Converter.Devel.svg</file>
+    </gresource>
+
+    <gresource prefix="/io/gitlab/adhami3310/Converter/icons/scalable/apps/">
+        <file alias="io.gitlab.adhami3310.Impression.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/apps/io.gitlab.adhami3310.Impression.svg</file>
+        <file alias="io.gitlab.adhami3310.Footage.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/apps/io.gitlab.adhami3310.Footage.svg</file>
+    </gresource>
+
+    <gresource prefix="/io/gitlab/adhami3310/Converter/icons/scalable/actions/">
+        <file alias="im-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/im-symbolic.svg</file>
+        <file alias="image-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/image-symbolic.svg</file>
+        <file alias="view-more-horizontal-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/view-more-horizontal-symbolic.svg</file>
+        <file alias="plus-large-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/plus-large-symbolic.svg</file>
+        <file alias="user-trash-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/user-trash-symbolic.svg</file>
+        <file alias="chain-link-loose-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/chain-link-loose-symbolic.svg</file>
+        <file alias="chain-link-symbolic.svg" compressed="true" preprocess="xml-stripblanks">icons/hicolor/scalable/actions/chain-link-symbolic.svg</file>
     </gresource>
 </gresources>

@@ -8,40 +8,20 @@ blueprints = custom_target('blueprints',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
+scalable_dir = 'icons' / 'hicolor' / 'scalable' / 'apps'
 install_data(
-  join_paths(scalable_dir, ('@0@.svg').format(application_id)),
-  install_dir: join_paths(get_option('datadir'), scalable_dir)
+  [
+    scalable_dir / ('@0@.svg').format(base_id),
+    scalable_dir / ('@0@.svg').format(application_id)
+  ],
+  install_dir: datadir /scalable_dir
 )
 
+symbolic_dir = 'icons' / 'hicolor' / 'symbolic' / 'apps'
 install_data(
-  join_paths(scalable_dir, ('@0@.svg').format(base_id)),
-  install_dir: join_paths(get_option('datadir'), scalable_dir)
+  symbolic_dir / ('@0@-symbolic.svg').format(base_id),
+  install_dir: datadir / symbolic_dir
 )
-
-symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
-install_data(
-  join_paths(symbolic_dir, ('@0@-symbolic.svg').format('io.gitlab.adhami3310.Converter')),
-  install_dir: join_paths(get_option('datadir'), symbolic_dir)
-)
-
-action_dir = join_paths('icons', 'hicolor', 'scalable', 'actions')
-action_icons = [
-    # each icon must be registered here
-    join_paths(action_dir, 'im-symbolic.svg'),
-    join_paths(action_dir, 'image-symbolic.svg'),
-    join_paths(action_dir, 'view-more-horizontal-symbolic.svg'),
-    join_paths(action_dir, 'plus-large-symbolic.svg'),
-    join_paths(action_dir, 'user-trash-symbolic.svg'),
-    join_paths(action_dir, 'chain-link-loose-symbolic.svg'),
-    join_paths(action_dir, 'chain-link-symbolic.svg')
-]
-
-install_data(
-  action_icons,
-  install_dir: join_paths(pkgdatadir, action_dir)
-)
-
 
 # Resources
 resources = gnome.compile_resources(

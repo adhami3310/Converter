@@ -38,18 +38,20 @@ appdata_file = i18n.merge_file(
     output: '@BASENAME@',
     configuration: appdata_conf
   ),
-  output: '@0@.metainfo.xml'.format(application_id),
+  output: '@0@.metainfo.xml'.format(base_id),
   po_dir: podir,
   install: true,
   install_dir: datadir / 'metainfo'
 )
 
 # Validate Appdata
-if (appstreamcli.found())
-  test('validate-appdata',
-    appstreamcli,
-    args: ['validate', '--no-net', '--explain', appdata_file],
-    workdir: meson.current_build_dir()
+if appstreamcli.found()
+  test(
+    'validate-appdata', appstreamcli,
+    args: [
+      'validate', '--no-net', appdata_file.full_path()
+    ],
+    depends: appdata_file,
   )
 endif
 
@@ -83,5 +85,6 @@ configure_file(
   input: '@0@.service.in'.format(base_id),
   output: '@0@.service'.format(application_id),
   configuration: service_conf,
+  install: true,
   install_dir: datadir / 'dbus-1' / 'services'
 )
