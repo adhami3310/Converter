@@ -1,6 +1,5 @@
 blueprints = custom_target('blueprints',
   input: files(
-    'blueprints/help-overlay.blp',
     'blueprints/window.blp',
     'blueprints/image-thumbnail.blp',
     'blueprints/image-rest.blp',

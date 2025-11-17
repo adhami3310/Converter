@@ -168,6 +168,8 @@ mod imp {
         pub dpi_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub navigation: TemplateChild<adw::NavigationView>,
+        #[template_child]
+        pub help_overlay: TemplateChild<adw::ShortcutsDialog>,
 
         pub provider: gtk::CssProvider,
         #[derivative(Default(value = "gio::ListStore::new::<InputFile>()"))]
@@ -290,6 +292,15 @@ impl AppWindow {
                     self,
                     move |_, _, _| {
                         window.clear();
+                    }
+                ))
+                .build(),
+            gio::ActionEntry::builder("show-help-overlay")
+                .activate(clone!(
+                    #[weak(rename_to=window)]
+                    self,
+                    move |_, _, _| {
+                        window.show_help_overlay();
                     }
                 ))
                 .build(),
@@ -542,6 +553,10 @@ impl AppWindow {
 
     fn show_about(&self) {
         SwitcherooAbout::show(self);
+    }
+
+    fn show_help_overlay(&self) {
+        self.imp().help_overlay.present(Some(self));
     }
 
     fn close_dialog(&self) {

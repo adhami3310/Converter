@@ -171,6 +171,7 @@ impl App {
         self.set_accels_for_action("win.add", &["<Control>o"]);
         self.set_accels_for_action("win.close", &["<Control>w"]);
         self.set_accels_for_action("win.paste", &["<Control>v"]);
+        self.set_accels_for_action("win.show-help-overlay", &["<Control>question"]);
     }
 
     fn present_main_window(&self) {

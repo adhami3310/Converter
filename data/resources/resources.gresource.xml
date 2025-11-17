@@ -4,7 +4,6 @@
         <file compressed="true" preprocess="xml-stripblanks">blueprints/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-thumbnail.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">blueprints/image-rest.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">blueprints/help-overlay.ui</file>
         <file compressed="true">style.css</file>
         <file compressed="true">style-hc.css</file>
     </gresource>

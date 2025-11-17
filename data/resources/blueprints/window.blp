@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $AppWindow : Adw.ApplicationWindow {
+template $AppWindow: Adw.ApplicationWindow {
   default-width: 750;
   default-height: 750;
   width-request: 300;
@@ -13,22 +13,24 @@ template $AppWindow : Adw.ApplicationWindow {
 
     $DragOverlay drag_overlay {
       title: _("Drop Here to Open");
-      child:
-      Adw.ToastOverlay toast_overlay {
+
+      child: Adw.ToastOverlay toast_overlay {
         Adw.NavigationView navigation {
           Adw.NavigationPage {
             tag: "main";
             title: _("Switcheroo");
 
-            child:
-            Adw.ToolbarView {
+            child: Adw.ToolbarView {
               [top]
               Adw.HeaderBar headerbar {
                 Button add_button {
                   icon-name: 'plus-large-symbolic';
                   tooltip-text: _("Add Images (Ctrl+O)");
                   visible: false;
-                  styles ['flat']
+
+                  styles [
+                    'flat',
+                  ]
                 }
 
                 show-title: false;
@@ -40,26 +42,25 @@ template $AppWindow : Adw.ApplicationWindow {
                   tooltip-text: _("Primary Menu");
                   primary: true;
                 }
-
               }
 
-              content:
-              WindowHandle {
+              content: WindowHandle {
                 vexpand: true;
+
                 Stack stack {
                   transition-type: crossfade;
 
                   StackPage {
                     name: "stack_welcome_page";
-                    child:
-                    Adw.StatusPage {
+
+                    child: Adw.StatusPage {
                       icon-name: "io.gitlab.adhami3310.Converter";
                       title: _("Switcheroo");
                       description: _("Drag and drop images here");
                       hexpand: true;
                       vexpand: true;
-                      child:
-                      Box {
+
+                      child: Box {
                         orientation: vertical;
                         spacing: 12;
 
@@ -74,35 +75,31 @@ template $AppWindow : Adw.ApplicationWindow {
                             "pill",
                           ]
                         }
-                      }
+                      };
 
-                      ;
-
-                      styles ["icon-dropshadow"]
-                    }
-
-                    ;
+                      styles [
+                        "icon-dropshadow",
+                      ]
+                    };
                   }
 
                   StackPage {
                     name: "stack_loading";
-                    child:
-                    Adw.StatusPage {
+
+                    child: Adw.StatusPage {
                       Spinner loading_spinner {
                         valign: center;
                         halign: center;
                         height-request: 32;
                         width-request: 32;
                       }
-                    }
-
-                    ;
+                    };
                   }
 
                   StackPage {
                     name: "stack_convert";
-                    child:
-                    Adw.Bin {
+
+                    child: Adw.Bin {
                       Adw.Bin {
                         Adw.PreferencesPage {
                           Adw.PreferencesGroup {
@@ -117,16 +114,16 @@ template $AppWindow : Adw.ApplicationWindow {
                           }
 
                           Adw.PreferencesGroup {
-
                             Adw.ComboRow output_filetype {
                               title: _("Export Format");
+
                               model: StringList supported_output_filetypes {};
                             }
 
                             Adw.ActionRow single_pdf {
                               title: _("Save as multi-page PDF");
                               activatable-widget: single_pdf_value;
-                              
+
                               Switch single_pdf_value {
                                 active: false;
                                 valign: center;
@@ -136,13 +133,12 @@ template $AppWindow : Adw.ApplicationWindow {
                             Adw.ActionRow output_compression {
                               title: _("Save To ZIP");
                               activatable-widget: output_compression_value;
-                              
+
                               Switch output_compression_value {
                                 active: false;
                                 valign: center;
                               }
                             }
-
                           }
 
                           Adw.PreferencesGroup {
@@ -155,9 +151,11 @@ template $AppWindow : Adw.ApplicationWindow {
                                   upper: 100;
                                   step-increment: 1;
                                 };
+
                                 accessibility {
                                   labelled-by: quality_row;
                                 }
+
                                 hexpand: true;
                                 vexpand: true;
                                 digits: 0;
@@ -169,12 +167,12 @@ template $AppWindow : Adw.ApplicationWindow {
                             Adw.ActionRow bgcolor_row {
                               title: _("Background Color");
                               subtitle: _("Replaces original transparency layer");
-
                               activatable-widget: bgcolor;
 
                               ColorDialogButton bgcolor {
                                 valign: center;
                                 rgba: "#00000000";
+
                                 dialog: ColorDialog {
                                   with-alpha: true;
                                 };
@@ -183,7 +181,6 @@ template $AppWindow : Adw.ApplicationWindow {
 
                             Adw.ActionRow dpi_row {
                               title: _("Pixel Density Per Inch");
-                              
                               activatable-widget: dpi_value;
 
                               Adw.Bin {
@@ -195,8 +192,10 @@ template $AppWindow : Adw.ApplicationWindow {
 
                             Adw.ActionRow resize_amount_row {
                               title: _("Resize");
+
                               Box {
                                 spacing: 5;
+
                                 Entry resize_width_value {
                                   valign: center;
                                   placeholder-text: _("Width");
@@ -205,6 +204,7 @@ template $AppWindow : Adw.ApplicationWindow {
                                   max-width-chars: 8;
                                   hexpand: false;
                                 }
+
                                 Entry resize_scale_width_value {
                                   valign: center;
                                   placeholder-text: _("Width");
@@ -213,13 +213,20 @@ template $AppWindow : Adw.ApplicationWindow {
                                   max-width-chars: 8;
                                   hexpand: false;
                                 }
+
                                 ToggleButton link_axis {
                                   active: true;
                                   valign: center;
                                   icon-name: 'chain-link-symbolic';
                                   tooltip-text: _("Preserve aspect ratio");
-                                  styles ['raised', 'circular', 'lock']
+
+                                  styles [
+                                    'raised',
+                                    'circular',
+                                    'lock',
+                                  ]
                                 }
+
                                 Entry resize_height_value {
                                   valign: center;
                                   placeholder-text: _("Height");
@@ -228,6 +235,7 @@ template $AppWindow : Adw.ApplicationWindow {
                                   max-width-chars: 8;
                                   hexpand: false;
                                 }
+
                                 Entry resize_scale_height_value {
                                   valign: center;
                                   placeholder-text: _("Width");
@@ -237,37 +245,51 @@ template $AppWindow : Adw.ApplicationWindow {
                                   hexpand: false;
                                 }
                               }
+
                               Adw.Bin {
                                 Box {
                                   DropDown resize_type {
                                     valign: center;
+
                                     accessibility {
                                       label: _("Choose between resizing with percentages or using exact pixels");
                                     }
-                                    model:
-                                    StringList resize_types {
-                                      strings [_("%"),_("px")]
-                                    }
-                                    ;
-                                    styles ["flat", "unit-drop"]
+
+                                    model: StringList resize_types {
+                                      strings [
+                                        _("%"),
+                                        _("px"),
+                                      ]
+                                    };
+
+                                    styles [
+                                      "flat",
+                                      "unit-drop",
+                                    ]
                                   }
                                 }
                               }
                             }
+
                             Adw.ActionRow resize_filter_row {
                               title: _("Resize Algorithm");
-                              
+
                               Box {
                                 valign: center;
+
                                 ToggleButton resize_filter_default {
                                   active: true;
                                   label: _("Default");
                                 }
+
                                 ToggleButton resize_filter_pixel {
                                   active: false;
                                   label: _("Pixel Art");
                                 }
-                                styles ["linked"]
+
+                                styles [
+                                  "linked",
+                                ]
                               }
                             }
                           }
@@ -285,39 +307,31 @@ template $AppWindow : Adw.ApplicationWindow {
                               styles [
                                 "suggested-action",
                                 "pill",
-                                "long"
+                                "long",
                               ]
                             }
-
                           }
                         }
-                        
                       }
-
-
-                    }
-
-                    ;
+                    };
                   }
 
                   StackPage {
                     name: "stack_invalid_image";
-                    child:
-                    Adw.StatusPage invalid_image {
+
+                    child: Adw.StatusPage invalid_image {
                       icon-name: "im-symbolic";
                       title: _("Could not Load Image");
                       description: _("This image could be corrupted or may use an unsupported file format.");
                       hexpand: true;
                       vexpand: true;
-                    }
-
-                    ;
+                    };
                   }
 
                   StackPage {
                     name: "stack_converting";
-                    child:
-                    Adw.StatusPage {
+
+                    child: Adw.StatusPage {
                       title: _("Converting");
                       description: _("This could take a while");
 
@@ -344,45 +358,43 @@ template $AppWindow : Adw.ApplicationWindow {
                           ]
                         }
                       }
-                    }
-
-                    ;
+                    };
                   }
                 }
-              }
-
-              ;
-            }
-
-            ;
+              };
+            };
           }
 
           Adw.NavigationPage {
             tag: "all_images";
             title: _("All Images");
 
-            child:
-            Adw.ToolbarView {
+            child: Adw.ToolbarView {
               [top]
               Adw.HeaderBar {
                 Button other_add_button {
                   icon-name: 'plus-large-symbolic';
                   tooltip-text: _("Add Images (Ctrl+O)");
-                  styles ['flat']
+
+                  styles [
+                    'flat',
+                  ]
                 }
               }
 
-              content:
-              WindowHandle {
+              content: WindowHandle {
                 vexpand: true;
+
                 Stack all_images_stack {
                   transition-type: crossfade;
+
                   StackPage {
                     name: "all_images";
-                    child:
-                    ScrolledWindow {
+
+                    child: ScrolledWindow {
                       vexpand: true;
                       hexpand: true;
+
                       FlowBox full_image_container {
                         homogeneous: true;
                         halign: center;
@@ -396,36 +408,63 @@ template $AppWindow : Adw.ApplicationWindow {
                         max-children-per-line: 4;
                         selection-mode: none;
                       }
-                    }
-                    ;
+                    };
                   }
 
                   StackPage {
                     name: "stack_loading";
-                    child:
-                    Adw.StatusPage {
+
+                    child: Adw.StatusPage {
                       Spinner loading_spinner_images {
                         valign: center;
                         halign: center;
                         height-request: 32;
                         width-request: 32;
                       }
-                    }
-
-                    ;
+                    };
                   }
                 }
-              }
-
-              ;
-            }
-
-            ;
+              };
+            };
           }
         }
-      }
+      };
+    }
+  }
+}
 
-      ;
+Adw.ShortcutsDialog help_overlay {
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "General");
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Show Shortcuts");
+      action-name: "win.show-help-overlay";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Quit");
+      action-name: "app.quit";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "New Window");
+      action-name: "app.new-window";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Clear Window");
+      action-name: "win.clear";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Paste From Clipboard");
+      action-name: "win.paste";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Add Images");
+      action-name: "win.add";
     }
   }
 }
