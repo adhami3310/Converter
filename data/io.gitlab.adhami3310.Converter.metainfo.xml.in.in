@@ -64,6 +64,11 @@
     <content_rating type="oars-1.1" />
 
     <releases>
+        <release version="2.5.1" date="2025-11-20">
+            <description translate="no">
+                <p>Fix wrong check to ghostscript.</p>
+            </description>
+        </release>
         <release version="2.5.0" date="2025-11-17">
             <description translate="no">
                 <p>Update runtime to GNOME 49 and simplify dependencies.</p>

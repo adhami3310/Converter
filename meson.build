@@ -1,6 +1,6 @@
 project('switcheroo',
   'rust',
-  version: '2.5.0',
+  version: '2.5.1',
   meson_version: '>= 0.59.0',
   license: 'GPLv3',
 )
