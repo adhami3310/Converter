@@ -16,7 +16,7 @@ use crate::temp::{clean_dir, create_temporary_dir, get_temp_file_path};
 use crate::widgets::about_window::SwitcherooAbout;
 use crate::widgets::image_rest::ImageRest;
 use crate::widgets::image_thumbnail::ImageThumbnail;
-use crate::{GHOST_SCRIPT_BINARY_NAME, ZIP_BINARY_NAME, runtime};
+use crate::{ZIP_BINARY_NAME, runtime};
 use adw::prelude::*;
 use futures::future::join_all;
 use gettextrs::gettext;
@@ -1240,27 +1240,6 @@ trait SettingsStore {
     fn load_selected_compression(&self) -> CompressionType;
 }
 
-fn does_binary_exist(binary: &str) -> bool {
-    std::process::Command::new("which")
-        .arg(binary)
-        .stdout(std::process::Stdio::null())
-        .status()
-        .map(|status| status.success())
-        .unwrap_or_default()
-}
-
-fn gs_missing() -> String {
-    gettext(
-        "The 'gs' (GhostScript) command is not available on your system. Please install GhostScript to convert multiple files to PDF.",
-    )
-}
-
-fn zip_missing() -> String {
-    gettext(
-        "The 'zip' command is not available on your system. Please install zip to convert multiple files to ZIP.",
-    )
-}
-
 impl ConvertOperations for AppWindow {
     fn convert_start_wrapper(&self, save_format: OutputType, path: String) {
         MainContext::default().spawn_local(clone!(
@@ -1289,22 +1268,26 @@ impl ConvertOperations for AppWindow {
         self.set_collecting_progress();
         let receiver = match save_format {
             OutputType::File(FileType::Pdf) if output_files.len() > 1 => {
-                if !does_binary_exist(GHOST_SCRIPT_BINARY_NAME) {
-                    self.convert_failed(gs_missing(), dir_path.clone());
-                    return;
-                }
-
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
-                    let shared_child: SharedChild = SharedChild::spawn(
+                    let shared_child: SharedChild = match SharedChild::spawn(
                         std::process::Command::new("magick")
                             .stdout(std::process::Stdio::piped())
                             .stderr(std::process::Stdio::piped())
                             .args(output_files)
                             .arg(path),
-                    )
-                    .unwrap();
+                    ) {
+                        Ok(shared_child) => shared_child,
+                        Err(e) => {
+                            sender
+                                .send_blocking(ArcOrOptionError::OptionError(Some(
+                                    "magick: ".to_string() + &e.to_string(),
+                                )))
+                                .expect("Concurrency Issues");
+                            return;
+                        }
+                    };
                     let child_arc = std::sync::Arc::new(shared_child);
 
                     sender
@@ -1377,23 +1360,28 @@ impl ConvertOperations for AppWindow {
                 receiver
             }
             _ => {
-                if !does_binary_exist(ZIP_BINARY_NAME) {
-                    self.convert_failed(zip_missing(), dir_path.clone());
-                    return;
-                }
-
                 let (sender, receiver) = async_channel::bounded(1);
 
                 std::thread::spawn(move || {
-                    let shared_child: SharedChild = SharedChild::spawn(
+                    let shared_child = match SharedChild::spawn(
                         std::process::Command::new(ZIP_BINARY_NAME)
                             .arg("-jFSm0")
                             .arg(path)
                             .args(output_files)
                             .stdout(std::process::Stdio::piped())
                             .stderr(std::process::Stdio::piped()),
-                    )
-                    .unwrap();
+                    ) {
+                        Ok(shared_child) => shared_child,
+                        Err(e) => {
+                            sender
+                                .send_blocking(ArcOrOptionError::OptionError(Some(
+                                    ZIP_BINARY_NAME.to_string() + ": " + &e.to_string(),
+                                )))
+                                .expect("Concurrency Issues");
+                            return;
+                        }
+                    };
+
                     let child_arc = std::sync::Arc::new(shared_child);
 
                     sender

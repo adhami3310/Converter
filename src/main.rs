@@ -31,7 +31,6 @@ fn runtime() -> &'static Runtime {
     })
 }
 
-const GHOST_SCRIPT_BINARY_NAME: &str = "gs";
 const ZIP_BINARY_NAME: &str = "zip";
 
 fn main() -> ExitCode {
