@@ -623,7 +623,7 @@ impl AppWindow {
                         t.save_to_png(interim.as_filename()).ok();
                         let file =
                             InputFile::new(&gio::File::for_path(interim.as_filename())).unwrap();
-                        this.open_success(vec![file]).await;
+                        this.open_success(vec![file]);
                     }
                 }
             ));
@@ -640,19 +640,19 @@ impl AppWindow {
                         .lines()
                         .flat_map(|p| InputFile::new(&gio::File::for_path(p)))
                         .collect();
-                    this.open_success(files).await;
+                    this.open_success(files);
                 }
             ));
         }
     }
 
-    async fn open_success(&self, mut files: Vec<InputFile>) {
+    fn open_success(&self, mut files: Vec<InputFile>) {
         let prev_files = self.active_files();
         let prev_files_paths = prev_files.iter().map(|f| f.path()).collect_vec();
         files = files
             .into_iter()
             .filter(|f| !prev_files_paths.contains(&f.path()))
-            .chain(prev_files.into_iter())
+            .chain(prev_files)
             .filter(|f| f.exists())
             .collect();
 
@@ -674,7 +674,7 @@ impl AppWindow {
         let files = self.files();
         let file_paths = files.iter().map(|f| f.path()).collect_vec();
 
-        let (sender, receiver) = tokio::sync::oneshot::channel();
+        let (sender, receiver) = async_channel::bounded(1);
 
         std::thread::spawn(move || {
             let jobs = file_paths
@@ -684,14 +684,14 @@ impl AppWindow {
 
             let res = runtime().block_on(join_all(jobs));
 
-            sender.send(res).expect("Concurrency Issues");
+            sender.send_blocking(res).expect("Concurrency Issues");
         });
 
         glib::spawn_future_local(clone!(
             #[weak(rename_to=this)]
             self,
             async move {
-                if let Ok(image_info) = receiver.await {
+                if let Ok(image_info) = receiver.recv().await {
                     let real_files = files.clone();
                     for (f, (frame, dims)) in real_files.iter().zip(image_info.iter()) {
                         f.set_frames(*frame);
@@ -931,7 +931,7 @@ impl AppWindow {
         ));
     }
 
-    async fn convert_start(&self, save_format: OutputType, path: String) {
+    fn convert_start(&self, save_format: OutputType, path: String) {
         use FileType::*;
 
         self.imp().convert_button.set_sensitive(false);
@@ -949,7 +949,7 @@ impl AppWindow {
 
         let files = self.active_files();
 
-        let dir = create_temporary_dir().await.unwrap();
+        let dir = runtime().block_on(create_temporary_dir()).unwrap();
 
         let job_input = files
             .into_iter()
@@ -1108,7 +1108,7 @@ impl AppWindow {
                             sender
                                 .send_blocking(ArcOrOptionError::Child(child_arc.clone()))
                                 .expect("Concurrency Issues");
-                            let output = wait_for_child(child_arc.clone()).await.err();
+                            let output = wait_for_child(child_arc.clone()).err();
                             if stop_flag.load(std::sync::atomic::Ordering::SeqCst) {
                                 return;
                             }
@@ -1242,13 +1242,7 @@ trait SettingsStore {
 
 impl ConvertOperations for AppWindow {
     fn convert_start_wrapper(&self, save_format: OutputType, path: String) {
-        MainContext::default().spawn_local(clone!(
-            #[weak(rename_to=this)]
-            self,
-            async move {
-                this.convert_start(save_format, path).await;
-            }
-        ));
+        self.convert_start(save_format, path);
     }
 
     fn move_output(
@@ -1296,7 +1290,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            runtime().block_on(wait_for_child(child_arc)).err(),
+                            wait_for_child(child_arc).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1325,7 +1319,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            runtime().block_on(wait_for_child(child_arc)).err(),
+                            wait_for_child(child_arc).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1352,7 +1346,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            runtime().block_on(wait_for_child(child_arc)).err(),
+                            wait_for_child(child_arc).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -1390,7 +1384,7 @@ impl ConvertOperations for AppWindow {
 
                     sender
                         .send_blocking(ArcOrOptionError::OptionError(
-                            runtime().block_on(wait_for_child(child_arc)).err(),
+                            wait_for_child(child_arc).err(),
                         ))
                         .expect("Concurrency Issues");
                 });
@@ -2221,13 +2215,7 @@ impl FileOperations for AppWindow {
     }
 
     fn add_success_wrapper(&self, files: Vec<InputFile>) {
-        MainContext::default().spawn_local(clone!(
-            #[weak(rename_to=this)]
-            self,
-            async move {
-                this.open_success(files).await;
-            }
-        ));
+        self.open_success(files);
     }
 }
 

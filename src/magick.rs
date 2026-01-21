@@ -273,7 +273,7 @@ pub fn generate_job(
     }
 }
 
-pub async fn wait_for_child(child: std::sync::Arc<SharedChild>) -> Result<(), String> {
+pub fn wait_for_child(child: std::sync::Arc<SharedChild>) -> Result<(), String> {
     let command = child.wait();
     match command {
         Ok(output) => match output.success() {
