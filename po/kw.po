@@ -1,0 +1,387 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the switcheroo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Flynn Peck <cirilla@tuta.io>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: switcheroo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-20 15:54-0800\n"
+"PO-Revision-Date: 2026-01-05 16:01+0000\n"
+"Last-Translator: Flynn Peck <cirilla@tuta.io>\n"
+"Language-Team: kw\n"
+"Language: kw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 49.0\n"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:2
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:5
+#: data/resources/blueprints/window.blp:9
+#: data/resources/blueprints/window.blp:21
+#: data/resources/blueprints/window.blp:58 src/main.rs:45
+msgid "Switcheroo"
+msgstr "Switcheroo"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:3
+msgid "Image Converter"
+msgstr "Treylyer Avenyow"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:4
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:9
+msgid "Convert and manipulate images"
+msgstr "Treyla ha handla avenyow"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:10
+msgid "converter;image;convert;converting;processing"
+msgstr "treylyer;aven;treylya;treylyans;argerdh"
+
+#: data/io.gitlab.adhami3310.Converter.desktop.in.in:20
+#: data/resources/blueprints/window.blp:480
+msgid "New Window"
+msgstr "Fenester Nowydh"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:26
+msgid "Window width"
+msgstr "Lester fenester"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:30
+msgid "Image quality"
+msgstr "Kwalita aven"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:34
+msgid "Image density per inch"
+msgstr "Tewder aven dre meusva"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:38
+msgid "Window height"
+msgstr "Ughelder fenester"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:42
+msgid "Window maximized state"
+msgstr "Studh fenester kowlvoghhys"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:46
+msgid "Output format"
+msgstr "Furvas Eskorrans"
+
+#: data/io.gitlab.adhami3310.Converter.gschema.xml.in:50
+msgid "Compression format"
+msgstr "Furvas gwaskyans"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:15
+msgid "Convert between different image filetypes and resize them easily."
+msgstr "Treylya tredh eghennow avenyow dyffrans ha chanjya aga braster i yn es"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:42
+msgid "Converting sample image from PNG to HEIF"
+msgstr "Treylya aven sampel dhyworth PNG dhe HEIF"
+
+#: data/io.gitlab.adhami3310.Converter.metainfo.xml.in.in:47
+msgid "Converting multiple sample images from SVG to HEIF"
+msgstr "Treylya avenyow sampel liesek dhyworth SVG dhe HEIF"
+
+#: data/resources/blueprints/image-rest.blp:21
+msgid "Show All"
+msgstr "Diskwedhes Oll"
+
+#: data/resources/blueprints/window.blp:15
+msgid "Drop Here to Open"
+msgstr "Droppya Omma rag Ygeri"
+
+#: data/resources/blueprints/window.blp:28
+#: data/resources/blueprints/window.blp:377
+msgid "Add Images (Ctrl+O)"
+msgstr "Addya Avenyow (Ctrl+O)"
+
+#: data/resources/blueprints/window.blp:42
+msgid "Primary Menu"
+msgstr "Rol Chif"
+
+#: data/resources/blueprints/window.blp:59
+msgid "Drag and drop images here"
+msgstr "Draylya ha droppya avenyow omma"
+
+#: data/resources/blueprints/window.blp:70
+msgid "_Open Images…"
+msgstr "_Ygeri Avenyow…"
+
+#: data/resources/blueprints/window.blp:118
+msgid "Export Format"
+msgstr "Esperthi Furvas"
+
+#: data/resources/blueprints/window.blp:124
+msgid "Save as multi-page PDF"
+msgstr "Sawya avel PDF folennow liesek"
+
+#: data/resources/blueprints/window.blp:134
+msgid "Save To ZIP"
+msgstr "Sawya dhe ZIP"
+
+#: data/resources/blueprints/window.blp:146
+msgid "Quality"
+msgstr "Kwalita"
+
+#: data/resources/blueprints/window.blp:168
+msgid "Background Color"
+msgstr "Kolor Kilva"
+
+#: data/resources/blueprints/window.blp:169
+msgid "Replaces original transparency layer"
+msgstr "Aslea gwiskas klerder gwreydhek"
+
+#: data/resources/blueprints/window.blp:183
+msgid "Pixel Density Per Inch"
+msgstr "Teder Pyskel Dre Meusva"
+
+#: data/resources/blueprints/window.blp:194
+msgid "Resize"
+msgstr "Chanjya Braster"
+
+#: data/resources/blueprints/window.blp:201
+#: data/resources/blueprints/window.blp:202
+#: data/resources/blueprints/window.blp:210
+#: data/resources/blueprints/window.blp:212
+#: data/resources/blueprints/window.blp:241
+msgid "Width"
+msgstr "Lester"
+
+#: data/resources/blueprints/window.blp:221
+msgid "Preserve aspect ratio"
+msgstr "Gwitha komparriv braster"
+
+#: data/resources/blueprints/window.blp:232
+#: data/resources/blueprints/window.blp:233
+#: data/resources/blueprints/window.blp:242
+msgid "Height"
+msgstr "Ughelder"
+
+#: data/resources/blueprints/window.blp:255
+msgid "Choose between resizing with percentages or using exact pixels"
+msgstr "Dewis tredh chanjya braster gans kansrannow po devnydhya pyskels kewar"
+
+#: data/resources/blueprints/window.blp:260
+msgid "%"
+msgstr "%"
+
+#: data/resources/blueprints/window.blp:261
+msgid "px"
+msgstr "pks"
+
+#: data/resources/blueprints/window.blp:275
+msgid "Resize Algorithm"
+msgstr "Argerdh rag Chanjya Braster"
+
+#: data/resources/blueprints/window.blp:282
+msgid "Default"
+msgstr "Defowt"
+
+#: data/resources/blueprints/window.blp:287
+msgid "Pixel Art"
+msgstr "Art Pyksel"
+
+#: data/resources/blueprints/window.blp:304
+msgid "_Convert"
+msgstr "_Treylya"
+
+#: data/resources/blueprints/window.blp:324
+msgid "Could not Load Image"
+msgstr "Y fyllis dhe Karga Aven"
+
+#: data/resources/blueprints/window.blp:325
+msgid "This image could be corrupted or may use an unsupported file format."
+msgstr ""
+"An aven ma yw martesen legrys po devnydhya unn furvas restren anskoodhys."
+
+#: data/resources/blueprints/window.blp:335
+msgid "Converting"
+msgstr "Treylya"
+
+#: data/resources/blueprints/window.blp:336
+msgid "This could take a while"
+msgstr "An argerdh ma gallos yw pellder"
+
+#: data/resources/blueprints/window.blp:346 src/window.rs:938
+msgid "Loading…"
+msgstr "Karga…"
+
+#: data/resources/blueprints/window.blp:352 src/window.rs:568
+#: src/window.rs:1551
+msgid "_Cancel"
+msgstr "_Hedhi"
+
+#: data/resources/blueprints/window.blp:370
+msgid "All Images"
+msgstr "Oll Avenyow"
+
+#: data/resources/blueprints/window.blp:438
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Ollgemmyn"
+
+#: data/resources/blueprints/window.blp:441
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Diskwedhes Kesunyansow Bysowek"
+
+#: data/resources/blueprints/window.blp:446
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Kwytya"
+
+#: data/resources/blueprints/window.blp:451
+msgctxt "shortcut window"
+msgid "New Window"
+msgstr "Fenester Nowydh"
+
+#: data/resources/blueprints/window.blp:456
+msgctxt "shortcut window"
+msgid "Clear Window"
+msgstr "Gwakhe Fenester"
+
+#: data/resources/blueprints/window.blp:461
+msgctxt "shortcut window"
+msgid "Paste From Clipboard"
+msgstr "Dasskrifa Dhyworth Astel Glypp"
+
+#: data/resources/blueprints/window.blp:466
+msgctxt "shortcut window"
+msgid "Add Images"
+msgstr "Addya Avenyow"
+
+#: data/resources/blueprints/window.blp:475
+msgid "Paste From Clipboard"
+msgstr "Dasskrifa Dhyworth Astel Glypp"
+
+#: data/resources/blueprints/window.blp:485
+msgid "Clear Window"
+msgstr "Gwakhe Fenester"
+
+#: data/resources/blueprints/window.blp:492
+msgid "Keyboard Shortcuts"
+msgstr "Kesunyansow Bysowek"
+
+#: data/resources/blueprints/window.blp:497
+msgid "About Switcheroo"
+msgstr "A-dro Switcheroo"
+
+#: src/file_chooser.rs:39 src/window.rs:2136
+msgid "Unsupported filetype"
+msgstr "Eghen restren anskoodhys"
+
+#: src/file_chooser.rs:88
+msgid "Images"
+msgstr "Avenyow"
+
+#: src/file_chooser.rs:91
+msgid "_Select Images"
+msgstr "_Dewis Avenyow"
+
+#: src/file_chooser.rs:182
+msgid "Unspecified filetype"
+msgstr "Eghen restren anragnotys"
+
+#: src/file_chooser.rs:187
+msgid "Unknown filetype"
+msgstr "Eghen restren ankoth"
+
+#: src/file_chooser.rs:192
+msgid "Used the wrong filetype"
+msgstr "Devnydhys an eghen restren kamm"
+
+#: src/magick.rs:138
+msgid "Pasted Image"
+msgstr "Dasskrifys Aven"
+
+#: src/magick.rs:292
+msgid "Unknown IO error happened"
+msgstr "Error IO ankoth happys"
+
+#: src/widgets/about_window.rs:21
+msgid "translator-credits"
+msgstr "Flynn <cirilla@tuta.io>"
+
+#. Translators: Metainfo for the app Impression. <https://gitlab.com/adhami3310/Impression>
+#: src/widgets/about_window.rs:26
+msgid "Impression"
+msgstr "Sel"
+
+#. Translators: Metainfo for the app Impression. <https://gitlab.com/adhami3310/Impression>
+#: src/widgets/about_window.rs:28
+msgid "Create bootable drives"
+msgstr "Gul kyf kov eksekutadow"
+
+#. Translators: Metainfo for the app Footage. <https://gitlab.com/adhami3310/Footage>
+#: src/widgets/about_window.rs:33
+msgid "Footage"
+msgstr "Fylmhys"
+
+#. Translators: Metainfo for the app Footage. <https://gitlab.com/adhami3310/Footage>
+#: src/widgets/about_window.rs:35
+msgid "Polish your videos"
+msgstr "Polsya dha gwydhyowyow"
+
+#: src/widgets/about_window.rs:38
+msgid "Code and Design Borrowed from"
+msgstr "Kod ha Desin Chevisys dhyworth"
+
+#: src/widgets/about_window.rs:50
+msgid "Sample Image from"
+msgstr "Aven Sampel dhyworth"
+
+#: src/window.rs:518
+#, rust-format
+msgid "New transparency layer color: {}"
+msgstr "Kolor gwiskas klerder: {}"
+
+#: src/window.rs:538
+msgid "Unable to access dropped files"
+msgstr "Anabel dhe drehedhes restrennow droppys"
+
+#: src/window.rs:564 src/window.rs:1546
+msgid "Stop converting?"
+msgstr "Astel treylyans?"
+
+#: src/window.rs:565 src/window.rs:1547
+msgid "You will lose all progress."
+msgstr "Ty a wra kelli oll avonsyans."
+
+#: src/window.rs:569 src/window.rs:1551
+msgid "_Stop"
+msgstr "_Astel"
+
+#: src/window.rs:609
+msgid "Collecting files"
+msgstr "Kuntel restrennow"
+
+#: src/window.rs:1464
+msgid "Error While Processing"
+msgstr "Error Dres Argerdhes"
+
+#: src/window.rs:1485
+msgid "_Close"
+msgstr "_Degea"
+
+#: src/window.rs:1486
+msgid "_Copy to Clipboard"
+msgstr "_Kopia war Astel Glypp"
+
+#: src/window.rs:1497
+msgid "Error copied to clipboard"
+msgstr "Error kopia war astel glypp"
+
+#: src/window.rs:1513
+msgid "Image converted"
+msgstr "Aven treylys"
+
+#: src/window.rs:1514
+msgid "Open"
+msgstr "Ygeri"
+
+#: src/window.rs:1576
+msgid "Converting Cancelled"
+msgstr "Treylyans Hedhys"
