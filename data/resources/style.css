@@ -4,7 +4,7 @@ row.property label.title {
 }
 
 row.property label.subtitle {
-  opacity: 1.0;
+  opacity: 1;
   font-size: 11pt;
 }
 
@@ -68,4 +68,8 @@ value {
 
 .no-padding {
   padding: 0;
+}
+
+.output-filetype-drop popover > contents {
+  min-width: 7em;
 }
