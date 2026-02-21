@@ -72,7 +72,7 @@ msgstr "Switcheroo"
 
 #: ../data/resources/blueprints/window.blp:15
 msgid "Drop Here to Open"
-msgstr "Faitent glisser une image ici pour ouvrir"
+msgstr "Faites glisser une image ici pour ouvrir"
 
 #: ../data/resources/blueprints/window.blp:40
 msgid "Primary Menu"
