@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-27 08:05-0500\n"
-"PO-Revision-Date: 2023-11-28 19:00+0100\n"
+"PO-Revision-Date: 2026-03-16 20:45+0100\n"
 "Last-Translator: Albano Battistella\n"
 "Language-Team: italian\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.9\n"
 
 #: ../data/resources/blueprints/help-overlay.blp:11
 msgctxt "shortcut window"
@@ -80,7 +80,7 @@ msgstr "Menu principale"
 
 #: ../data/resources/blueprints/window.blp:58
 msgid "Drag and drop images here"
-msgstr ""
+msgstr "Trascina e rilascia le immagini qui"
 
 #: ../data/resources/blueprints/window.blp:69
 msgid "_Open Images…"
@@ -92,7 +92,7 @@ msgstr "Formato di esportazione"
 
 #: ../data/resources/blueprints/window.blp:127
 msgid "Save as multi-page PDF"
-msgstr ""
+msgstr "Salva come PDF multipagina"
 
 #: ../data/resources/blueprints/window.blp:137
 msgid "Save To ZIP"
@@ -138,8 +138,7 @@ msgstr "Altezza"
 
 #: ../data/resources/blueprints/window.blp:245
 msgid "Choose between resizing with percentages or using exact pixels"
-msgstr ""
-"Scegli tra il ridimensionamento con percentuali o l'utilizzo di pixel esatti"
+msgstr "Scegli tra il ridimensionamento con percentuali o l'utilizzo di pixel esatti"
 
 #: ../data/resources/blueprints/window.blp:249
 msgid "%"
@@ -171,8 +170,7 @@ msgstr "Impossibile caricare l'immagine"
 
 #: ../data/resources/blueprints/window.blp:309
 msgid "This image could be corrupted or may use an unsupported file format."
-msgstr ""
-"Questa immagine potrebbe essere danneggiata o in un formato non supportato."
+msgstr "Questa immagine potrebbe essere danneggiata o in un formato non supportato."
 
 #: ../data/resources/blueprints/window.blp:321
 msgid "Converting"
@@ -350,8 +348,7 @@ msgstr "Conversione annullata"
 #~ msgstr "Khaleel Al-Adhami"
 
 #~ msgid "Convert between different image filetypes and resize them easily."
-#~ msgstr ""
-#~ "Converti tra diversi tipi di file immagine e ridimensionali facilmente."
+#~ msgstr "Converti tra diversi tipi di file immagine e ridimensionali facilmente."
 
 #~ msgid "image"
 #~ msgstr "immagine"
@@ -468,12 +465,8 @@ msgstr "Conversione annullata"
 #~ msgid "Convert and Manipulate images"
 #~ msgstr "Converti e manipola immagini"
 
-#~ msgid ""
-#~ "A simple and easy-to-use Flatpak application built with libadwaita for "
-#~ "converting and manipulating images."
-#~ msgstr ""
-#~ "Un'applicazione Flatpak semplice e facile da usare creata con libadwaita "
-#~ "per la conversione e manipolazione di immagini."
+#~ msgid "A simple and easy-to-use Flatpak application built with libadwaita for converting and manipulating images."
+#~ msgstr "Un'applicazione Flatpak semplice e facile da usare creata con libadwaita per la conversione e manipolazione di immagini."
 
 #~ msgid "Made UI adjustments."
 #~ msgstr "Apportate modifiche all'interfaccia utente."
@@ -515,12 +508,8 @@ msgstr "Conversione annullata"
 #~ msgid "Datatype"
 #~ msgstr "Tipo di immagine"
 
-#~ msgid ""
-#~ "Converter allows you to convert and manipulate a given image. It is a "
-#~ "front-end for ImageMagick."
-#~ msgstr ""
-#~ "Converter permette di convertire e manipolare un'immagine. È "
-#~ "un'interfaccia grafica di ImageMagick."
+#~ msgid "Converter allows you to convert and manipulate a given image. It is a front-end for ImageMagick."
+#~ msgstr "Converter permette di convertire e manipolare un'immagine. È un'interfaccia grafica di ImageMagick."
 
 #~ msgid "Save Location"
 #~ msgstr "Posizione di salvataggio"
